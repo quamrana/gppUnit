@@ -1,0 +1,2 @@
+env=DefaultEnvironment()
+env.StaticLibrary('P1', Glob('*.cpp'))

@@ -1,0 +1,60 @@
+New Design Notes
+
+$001	TestCase
+	Interface where setup and teardown are virtual concrete empty methods.
+	test() is just pure virtual.
+	Sample TestCase can be called through the interface.
+	
+$002	Runner
+	Run the three methods of one test instance.
+	There is not yet an idea of setup failing.
+
+$003	Run multiple tests
+	Iterate through 2 or more test cases
+
+$004	Time individual methods
+	Report the time through a separate interface. (Goes to description)
+	Introduce an interface so that tests can supply a nominal time value,
+	but real code can use a real timer.
+
+$005	Report Test Results
+	Every method can report any number of Test Results
+	Report the result through an interface. (Goes to notification)
+	
+$006	Report starting and ending each method
+	Report contains a method description:
+	Name, time, number of results
+	
+$007	Catch exceptions from all methods
+	Return a bool to indicate No Exception(true), Exception Caught(false)
+	(Future, allow a client to add their own catch clause).
+	Report the exception text through a separate interface. (Goes to notification)
+
+$008	Avoid running the test if setup catches an exception.
+
+$009	Report each method to ClassDescription
+	After method is notified, it can be collected by ClassDescription
+
+$010	Report each class
+	The description reported has class name, number of methods run (2 or 3)
+	Plus accumulated time, plus number of test results.
+	Class name should be sufficiently demangled.
+		I will want to separate the namespace from the test name.
+		This could allow 'collecting' tests within suites.
+
+$011	Report whole project
+	The description reported has project name, number of classes
+	Plus accumulated time, plus number of test results.
+	Plus elapsed time.
+
+$012	Auto-Collect tests
+	Tests can be collected to a global vector.
+	Global runner supplies them to a project and runs them
+
+$013	Auto Options
+	Create a default options free function which supplies a console notification.
+	(This function can be overridden at link time by the user)
+	It should be possible for the user to supply:
+		Project Name.
+		A number of Notifications.
+		Exception catchers which describe themselves.

@@ -1,0 +1,2 @@
+env=DefaultEnvironment()
+env.StaticLibrary('gppUnit1.5', Glob('*.cpp'))
