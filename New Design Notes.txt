@@ -58,3 +58,19 @@ $013	Auto Options
 		Project Name.
 		A number of Notifications.
 		Exception catchers which describe themselves.
+
+
+
+Infrastructure
+	Hudson
+		Create a new job (copy previous one)
+	Scons
+		Working from command line
+	cppCheck
+		Just use batch command from Hudson
+	AStyle
+		Needs to be command line only, but checked-in
+		Copy astyle.options to src
+
+
+
