@@ -8,6 +8,7 @@
 #include "FineGrainedMethodDescription.h"
 #include "ClassDescription.h"
 #include "AutoTest.h"
+#include "AutoTimer.h"
 
 #include "TestResult.h"
 
@@ -15,16 +16,14 @@
 #include <iostream>
 
 using namespace Prototype1;
-//using Prototype1::MethodTimer;
 using Prototype1::Internal::MethodCaller;
-//using Prototype1::TimeReport;
 using Prototype1::Internal::ClassContext;
-//using Prototype1::Notification;
 
 
 class MainNotifier: public Notification{
 	const ProjectDescription* project;
 	const ClassDescription* classDesc;
+	bool classShown;
 	const FineGrainedMethodDescription* method;
 	std::stringstream out;
 	virtual void StartProject(const ProjectDescription& description){
@@ -35,25 +34,35 @@ class MainNotifier: public Notification{
 	virtual void StartClass(const ClassDescription& description){
 		//out << " Start Class: " << description.name() << std::endl;
 		classDesc=&description;
+		classShown=false;
 	}
 	virtual void StartFineGrainedMethod(const FineGrainedMethodDescription& description){
 		//out << "  Start Method: " << description.name() << std::endl;
 		method=&description;
 	}
+	void ShowClass(){
+		if(!classShown){
+			out << " In Class: " << classDesc->name() << std::endl;
+			classShown=true;
+		}
+	}
 	virtual void Result(const TestResult& result){
-		//if (!result.result)
-		out << "   Result: " << result.result << std::endl;
-		out << "    Message: " << result.message << std::endl;
+		if (!result.result){
+			ShowClass();
+			out << "   Result: " << result.result << std::endl;
+			out << "    Message: " << result.message << std::endl;
+		}
 	}
 	virtual void Exception(const std::string& what){
+		ShowClass();
 		out << "   Exception: " << what << std::endl;
 	}
 
 	virtual void EndFineGrainedMethod(){ 
-		out << "  End Method, time:" << method->run_time() << " results:" << method->results() << std::endl; 
+		//out << "  End Method, time:" << method->run_time() << " results:" << method->results() << std::endl; 
 	}
 	virtual void EndClass(){ 
-		out << " End Class, time:" << classDesc->run_time() << " results:" << classDesc->results() << std::endl; 
+		//out << " End Class, time:" << classDesc->run_time() << " results:" << classDesc->results() << std::endl; 
 	}
 	virtual void EndProject(){ 
 		out << "End Project" <<  std::endl; 
@@ -66,8 +75,8 @@ public:
 }notifier;
 
 class DefaultMethodTimer: public MethodTimer{
-	void timeMethod(MethodCaller& caller, TimeReport& /* report */){
-		// Only forward the call, we don't do timings yet
+	void timeMethod(MethodCaller& caller, TimeReport& report){
+		AutoTimer timer(report);
 		caller.forward();
 	}
 }timer;
