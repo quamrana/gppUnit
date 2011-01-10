@@ -49,7 +49,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="4"
 				DebugInformationFormat="4"
-				DisableSpecificWarnings="4512"
+				DisableSpecificWarnings="4512;4250"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -184,12 +184,20 @@
 				RelativePath=".\main.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\TestTestCase.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\AutoRun.h"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>
