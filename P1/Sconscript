@@ -1,2 +1,2 @@
 env=DefaultEnvironment()
-env.StaticLibrary('P1', Glob('*.cpp'))
+env.StaticLibrary('P1', Glob('*.cpp')+Glob('unix\*.cpp'))
