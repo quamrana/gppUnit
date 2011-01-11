@@ -25,11 +25,13 @@ class MainNotifier: public Notification{
 	const ClassDescription* classDesc;
 	bool classShown;
 	const FineGrainedMethodDescription* method;
+	bool finalResult;
 	std::stringstream out;
 	virtual void StartProject(const ProjectDescription& description){
 		out << "Start Project: " << description.name() << std::endl;
 		out << "Number of Classes: " << description.numClasses() << std::endl;
 		project=&description;
+		finalResult=true;
 	}
 	virtual void StartClass(const ClassDescription& description){
 		//out << " Start Class: " << description.name() << std::endl;
@@ -51,6 +53,7 @@ class MainNotifier: public Notification{
 			ShowClass();
 			out << "   Result: " << result.result << std::endl;
 			out << "    Message: " << result.message << std::endl;
+			finalResult=false;
 		}
 	}
 	virtual void Exception(const std::string& what){
@@ -72,6 +75,7 @@ class MainNotifier: public Notification{
 	}
 public:
 	void printOutput(std::ostream& output){ output << out.str(); }
+	bool Result(){ return finalResult; }
 }notifier;
 
 class DefaultMethodTimer: public MethodTimer{
@@ -83,9 +87,10 @@ class DefaultMethodTimer: public MethodTimer{
 
 ClassContext context(notifier,timer);
 
-void DoAutoRun(const char* title)
+bool DoAutoRun(const char* title)
 {
 	ProjectFixture fixture;
 	fixture.run(title,Auto::autoTests(),context);
 	notifier.printOutput(std::cout);
+	return notifier.Result();
 }
