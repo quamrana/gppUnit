@@ -16,8 +16,9 @@ namespace Prototype1{
 
 	class Confirm: public AssertBase{
 	public:
-		void fail(const char* message="");
-		void pass(const char* message="");
+		void fail(const char* message="fail");
+		void pass(const char* message="pass");
+		void isTrue(bool result, const char* message="Should be True");
 	};
 	class Expect: public Confirm{
 		void Result(const TestResult& result);

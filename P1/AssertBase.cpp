@@ -23,6 +23,13 @@ namespace Prototype1{
 		result.message=message;
 		Result(result);
 	}
+	void Confirm::isTrue(bool result, const char* message){
+		if(result){
+			pass(message);
+		} else {
+			fail(message);
+		}
+	}
 
 	void Expect::Result(const TestResult& result){
 		AssertBase::Result(result);
