@@ -10,6 +10,6 @@ int main(int , char* [])
 	std::cout << "Press return...";
 	std::cin.get();
 #endif
-	return result;
+	return !result;
 }
 
