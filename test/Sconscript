@@ -1,9 +1,10 @@
 env=DefaultEnvironment()
 
-includes=[Dir('#\src'),Dir('#\P1')]
+cppIncludes=[Dir('#\P1'),Dir('#')]
+libIncludes=[Dir('#\P1'),Dir('#\src')]
 
 env.Program('test', Glob('*.cpp'),
 	LIBS=['gppUnit1.5','P1'], 
-	LIBPATH=includes,
-	CPPPATH=includes
+	LIBPATH=libIncludes,
+	CPPPATH=cppIncludes
 	)

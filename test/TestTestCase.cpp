@@ -1,16 +1,9 @@
 #include "AutoRun.h"
 
+#include "src\TestCase.h"
 #include <sstream>
-//using Auto::Testcase;
 
-namespace gppUnit{
-	class TestCase{
-	public:
-		virtual void setup(){}
-		virtual void test()=0;
-		virtual void teardown(){}
-	};
-}
+
 namespace TestTestCase {
 	class MockTestCase: public gppUnit::TestCase{
 		std::stringstream collect;
@@ -23,8 +16,8 @@ namespace TestTestCase {
 	std::string setupString(){ return "setup"; }
 	std::string testString(){ return "test"; }
 	std::string teardownString(){ return "teardown"; }
-	std::string setuptestteardownString(){ return setupString()+'.'+testString()+'.'+teardownString()+'.'; }
-	class Test: public Auto::TestCase{
+	std::string setuptestteardownString(){ return setupString()+'.'+testString()+'.'+teardownString()+';'; }
+	class AllThreeMethodsCalled: public Auto::TestCase{
 		MockTestCase testcase;
 
 		void call(gppUnit::TestCase& testcase){
