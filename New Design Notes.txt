@@ -12,15 +12,15 @@ $002	Runner
 $003	Run multiple tests
 	Iterate through 2 or more test cases
 
-$004	Time individual methods
+$004	Report Test Results
+	Every method can report any number of Test Results
+	Report the result through an interface. (Goes to notification)
+	
+$005	Time individual methods
 	Report the time through a separate interface. (Goes to description)
 	Introduce an interface so that tests can supply a nominal time value,
 	but real code can use a real timer.
 
-$005	Report Test Results
-	Every method can report any number of Test Results
-	Report the result through an interface. (Goes to notification)
-	
 $006	Report starting and ending each method
 	Report contains a method description:
 	Name, time, number of results
