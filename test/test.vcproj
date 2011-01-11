@@ -188,6 +188,14 @@
 				RelativePath=".\TestTestCase.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\TestTestResults.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\TestUtilities.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -196,6 +204,10 @@
 			>
 			<File
 				RelativePath=".\AutoRun.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TestUtilities.h"
 				>
 			</File>
 		</Filter>

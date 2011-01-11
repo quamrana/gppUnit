@@ -1,13 +1,9 @@
-#include "AutoRun.h"
-
-#include "src\TestCase.h"
+#include "TestUtilities.h"
 
 #include <sstream>
-#include <algorithm>
-#include <functional>
 
 namespace TestTestCase {
-	class MockTestCase: public gppUnit::TestCase{
+	class MockTestCase: public Utilities::MockTestCase{
 		std::stringstream collect;
 		void setup(){ collect << "setup" << '.'; }
 		void test(){ collect << "test" << '.'; }
@@ -20,28 +16,7 @@ namespace TestTestCase {
 	std::string teardownString(){ return "teardown"; }
 	std::string setuptestteardownString(){ return setupString()+'.'+testString()+'.'+teardownString()+'.'; }
 
-	class TestCaseCaller: public Auto::TestCase{
-		gppUnit::TestCaseList cases;
-		void call(gppUnit::TestCase* testcase){
-			testcase->setup();
-			testcase->test();
-			testcase->teardown();
-		}
-	protected:
-		void add(gppUnit::TestCase& testcase){
-			cases.push_back(&testcase);
-		}
-		void whenCalled(){
-			std::for_each(cases.begin(),cases.end(),
-				std::bind1st(
-					std::mem_fun(&TestCaseCaller::call),
-					this
-				)
-			);
-		}
-	};
-
-	class AllThreeMethodsCalled: public TestCaseCaller{
+	class AllThreeMethodsCalled: public Utilities::TestCaseCaller{
 		MockTestCase testcase;
 
 		void givenMockTestCase(){
@@ -57,7 +32,7 @@ namespace TestTestCase {
 		}
 	}GPPUNIT_INSTANCE;
 
-	class TwoTestCasesCalled: public TestCaseCaller{
+	class TwoTestCasesCalled: public Utilities::TestCaseCaller{
 		MockTestCase testcase1;
 		MockTestCase testcase2;
 		void givenTwoTestCases(){

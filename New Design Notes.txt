@@ -59,12 +59,16 @@ $013	Auto Options
 		A number of Notifications.
 		Exception catchers which describe themselves.
 
-
+$014	Hamcrest style matchers (I)
+	Add TestResult so that automated results can describe themselves
+	
+$015	Hamcrest style matchers (II)
+	Add TestResult so that automated results can describe themselves
 
 Infrastructure
-	Hudson
+#	Hudson
 		Create a new job (copy previous one)
-	Scons
+#	Scons
 		Working from command line
 	cppCheck
 		Just use batch command from Hudson
