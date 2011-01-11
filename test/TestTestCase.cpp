@@ -1,5 +1,6 @@
 #include "AutoRun.h"
 
+#include <sstream>
 //using Auto::Testcase;
 
 namespace gppUnit{
@@ -12,10 +13,17 @@ namespace gppUnit{
 }
 namespace TestTestCase {
 	class MockTestCase: public gppUnit::TestCase{
-		void test(){}
+		std::stringstream collect;
+		void setup(){ collect << "setup" << '.'; }
+		void test(){ collect << "test" << '.'; }
+		void teardown(){ collect << "teardown" << '.'; }
 	public:
-		std::string result(){return "x";}
+		std::string result(){return collect.str();}
 	};
+	std::string setupString(){ return "setup"; }
+	std::string testString(){ return "test"; }
+	std::string teardownString(){ return "teardown"; }
+	std::string setuptestteardownString(){ return setupString()+'.'+testString()+'.'+teardownString()+'.'; }
 	class Test: public Auto::TestCase{
 		MockTestCase testcase;
 
@@ -30,14 +38,9 @@ namespace TestTestCase {
 			call(testcase);
 		}
 		void thenAllThreeMethodsCalled(){
-			if(testcase.result()=="setup.test.teardown."){
-				confirm.pass(testcase.result().c_str());
-			} else {
-				confirm.fail(testcase.result().c_str());
-			}
+			confirm.isTrue(testcase.result()==setuptestteardownString(),"Should have called three methods");
 		}
 		void test(){ 
-			//expect.fail("Failing TestCase");
 			givenMockTestCase();
 			whenCalled();
 			thenAllThreeMethodsCalled();
