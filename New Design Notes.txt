@@ -1,29 +1,29 @@
 New Design Notes
 
-$001	TestCase
+#$001	TestCase
 	Interface where setup and teardown are virtual concrete empty methods.
 	test() is just pure virtual.
 	Sample TestCase can be called through the interface.
 	
-$002	Runner
+#$002	Runner
 	Run the three methods of one test instance.
 	There is not yet an idea of setup failing.
 
-$003	Run multiple tests
+#$003	Run multiple tests
 	Iterate through 2 or more test cases
 
-$004	Report Test Results
+#$004	Report Test Results
 	Every method can report any number of Test Results
 	Report the result through an interface. (Goes to notification)
+
+$005	Report starting and ending each method
+	Report contains a method description:
+	Name, time, number of results
 	
-$005	Time individual methods
+$006	Time individual methods
 	Report the time through a separate interface. (Goes to description)
 	Introduce an interface so that tests can supply a nominal time value,
 	but real code can use a real timer.
-
-$006	Report starting and ending each method
-	Report contains a method description:
-	Name, time, number of results
 	
 $007	Catch exceptions from all methods
 	Return a bool to indicate No Exception(true), Exception Caught(false)
