@@ -14,6 +14,8 @@
 
 #include <sstream>
 #include <iostream>
+#include <algorithm>
+#include <functional>
 
 using namespace Prototype1;
 using Prototype1::Internal::MethodCaller;
@@ -48,11 +50,19 @@ class MainNotifier: public Notification{
 			classShown=true;
 		}
 	}
+	void Show(const std::string output){ out << "     " << output << std::endl; }
 	virtual void Result(const TestResult& result){
 		if (!result.result){
 			ShowClass();
-			out << "   Result: " << result.result << std::endl;
+			out << "   Test Failed!" << std::endl;
 			out << "    Message: " << result.message << std::endl;
+			std::for_each(result.description.begin(),result.description.end(),
+				std::bind1st(
+					std::mem_fun(&MainNotifier::Show),
+					this
+				)
+			);
+
 			finalResult=false;
 		}
 	}
