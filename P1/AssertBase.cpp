@@ -30,6 +30,21 @@ namespace Prototype1{
 			fail(message);
 		}
 	}
+	void Confirm::equals(const std::string& expected, const std::string& actual, const char* message){
+		TestResult result;
+		result.result=(expected==actual);
+		result.message=message;
+		if(result.result){
+			result.description.push_back("Both expected and actual are equal to:");
+			result.description.push_back(actual);
+		} else {
+			result.description.push_back("Expected:");
+			result.description.push_back(expected);
+			result.description.push_back("But got :");
+			result.description.push_back(actual);
+		}
+		Result(result);
+	}
 
 	void Expect::Result(const TestResult& result){
 		AssertBase::Result(result);
