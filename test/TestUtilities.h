@@ -4,19 +4,22 @@
 #include "AutoRun.h"
 
 #include "src\TestCase.h"
+#include "src\Notification.h"
 
 namespace Utilities{
 	class TestCaseCaller: public Auto::TestCase{
 		gppUnit::TestCaseList cases;
 		void call(gppUnit::PrototypeTestCase* testcase);
 		gppUnit::ReportResult* reporter;
+		gppUnit::Notification* notify;
 	protected:
 		void add(gppUnit::PrototypeTestCase& testcase){
 			cases.push_back(&testcase);
 		}
 		void givenReporter(gppUnit::ReportResult* report){ reporter=report; }
+		void givenNotification(gppUnit::Notification* notified){ notify=notified; }
 		void whenCalled();
-		TestCaseCaller():reporter(0){}
+		TestCaseCaller():reporter(0),notify(0){}
 	};
 	class MockTestCase: public gppUnit::PrototypeTestCase{
 		void setReport(gppUnit::ReportResult*report){ reporter=report; }
