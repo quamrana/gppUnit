@@ -185,6 +185,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TestStartEndMethod.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\TestTestCase.cpp"
 				>
 			</File>
