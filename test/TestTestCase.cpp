@@ -5,16 +5,18 @@
 namespace TestTestCase {
 	class MockTestCase: public Utilities::MockTestCase{
 		std::stringstream collect;
-		void setup(){ collect << "setup" << '.'; }
-		void test(){ collect << "test" << '.'; }
-		void teardown(){ collect << "teardown" << '.'; }
+		void setup(){ collect << Utilities::setupString() << '.'; }
+		void test(){ collect << Utilities::testString() << '.'; }
+		void teardown(){ collect << Utilities::teardownString() << '.'; }
 	public:
 		std::string result(){return collect.str();}
 	};
-	std::string setupString(){ return "setup"; }
-	std::string testString(){ return "test"; }
-	std::string teardownString(){ return "teardown"; }
-	std::string setuptestteardownString(){ return setupString()+'.'+testString()+'.'+teardownString()+'.'; }
+
+	std::string setuptestteardownString(){ 
+		return Utilities::setupString()+'.'+
+			Utilities::testString()+'.'+
+			Utilities::teardownString()+'.'; 
+	}
 
 	class TestMethodNames: public Auto::TestCase{
 		void test(){
@@ -22,16 +24,16 @@ namespace TestTestCase {
 			std::string actual;
 
 			expected="setup";
-			actual=setupString();
-			confirm.isTrue(actual==expected,"Should be setup");
+			actual=Utilities::setupString();
+			confirm.equals(expected,actual,"Should be setup");
 
 			expected="test";
-			actual=testString();
-			confirm.isTrue(actual==expected,"Should be test");
+			actual=Utilities::testString();
+			confirm.equals(expected,actual,"Should be test");
 
 			expected="teardown";
-			actual=teardownString();
-			confirm.isTrue(actual==expected,"Should be teardown");
+			actual=Utilities::teardownString();
+			confirm.equals(expected,actual,"Should be teardown");
 		}
 	}GPPUNIT_INSTANCE;
 
@@ -61,7 +63,7 @@ namespace TestTestCase {
 		void thenSixMethodsCalled(){
 			std::string expected=setuptestteardownString()+setuptestteardownString();
 			std::string actual=testcase1.result()+testcase2.result();
-			confirm.isTrue(actual==expected,"Should have called six methods");
+			confirm.equals(expected,actual,"Should have called six methods");
 		}
 		void test(){
 			givenTwoTestCases();

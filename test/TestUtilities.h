@@ -26,6 +26,10 @@ namespace Utilities{
 	protected:
 		gppUnit::ReportResult* reporter;
 	};
+
+	std::string setupString();
+	std::string testString();
+	std::string teardownString();
 }
 
 #endif // TESTUTILITIES_H_B22D7F0E_4A0D_4EFB_9092_AE3C8B950C52

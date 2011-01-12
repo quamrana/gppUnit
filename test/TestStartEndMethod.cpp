@@ -7,6 +7,12 @@ namespace TestStartEndMethod{
 	class MockTestCase: public Utilities::MockTestCase{
 		void test(){ }
 	};
+
+	std::string setuptestteardownString(){ 
+		return Utilities::setupString()+".end."+
+			Utilities::testString()+".end."+
+			Utilities::teardownString()+".end."; 
+	}
 	class Test: public Utilities::TestCaseCaller, gppUnit::Notification{
 		std::stringstream collect;
 		MockTestCase testcase;
@@ -22,7 +28,7 @@ namespace TestStartEndMethod{
 			givenNotification(this);
 		}
 		void thenEachMethodStartedAndEnded(){
-			confirm.equals("setup.end.test.end.teardown.end.",collect.str(),"Should have called three methods");
+			confirm.equals(setuptestteardownString(),collect.str(),"Should have called three methods");
 		}
 		void test(){
 			givenMockTestCase();

@@ -4,18 +4,22 @@
 #include <functional>
 
 namespace Utilities{
+	std::string setupString(){ return "setup"; }
+	std::string testString(){ return "test"; }
+	std::string teardownString(){ return "teardown"; }
+
 	void TestCaseCaller::call(gppUnit::PrototypeTestCase* testcase){
 		testcase->setReport(reporter);
 
-		if (notify) notify->StartMethod("setup");
+		if (notify) notify->StartMethod(setupString());
 		testcase->setup();
 		if (notify) notify->EndMethod();
 
-		if (notify) notify->StartMethod("test");
+		if (notify) notify->StartMethod(testString());
 		testcase->test();
 		if (notify) notify->EndMethod();
 
-		if (notify) notify->StartMethod("teardown");
+		if (notify) notify->StartMethod(teardownString());
 		testcase->teardown();
 		if (notify) notify->EndMethod();
 	}
