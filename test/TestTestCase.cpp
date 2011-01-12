@@ -16,6 +16,25 @@ namespace TestTestCase {
 	std::string teardownString(){ return "teardown"; }
 	std::string setuptestteardownString(){ return setupString()+'.'+testString()+'.'+teardownString()+'.'; }
 
+	class TestMethodNames: public Auto::TestCase{
+		void test(){
+			std::string expected;
+			std::string actual;
+
+			expected="setup";
+			actual=setupString();
+			confirm.isTrue(actual==expected,"Should be setup");
+
+			expected="test";
+			actual=testString();
+			confirm.isTrue(actual==expected,"Should be test");
+
+			expected="teardown";
+			actual=teardownString();
+			confirm.isTrue(actual==expected,"Should be teardown");
+		}
+	}GPPUNIT_INSTANCE;
+
 	class AllThreeMethodsCalled: public Utilities::TestCaseCaller{
 		MockTestCase testcase;
 
