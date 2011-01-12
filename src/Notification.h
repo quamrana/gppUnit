@@ -5,6 +5,7 @@ namespace gppUnit{
 	class Notification{
 	public:
 		virtual void StartMethod(const std::string& /* name */){}
+		virtual void EndMethod(){}
 	};
 }
 

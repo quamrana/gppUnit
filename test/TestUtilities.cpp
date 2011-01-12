@@ -6,12 +6,18 @@
 namespace Utilities{
 	void TestCaseCaller::call(gppUnit::PrototypeTestCase* testcase){
 		testcase->setReport(reporter);
+
 		if (notify) notify->StartMethod("setup");
 		testcase->setup();
+		if (notify) notify->EndMethod();
+
 		if (notify) notify->StartMethod("test");
 		testcase->test();
+		if (notify) notify->EndMethod();
+
 		if (notify) notify->StartMethod("teardown");
 		testcase->teardown();
+		if (notify) notify->EndMethod();
 	}
 	void TestCaseCaller::whenCalled(){
 		std::for_each(cases.begin(),cases.end(),

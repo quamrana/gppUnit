@@ -14,12 +14,15 @@ namespace TestStartEndMethod{
 		void StartMethod(const std::string& name){
 			collect << name << '.';
 		}
+		void EndMethod(){
+			collect << "end.";
+		}
 		void givenMockTestCase(){
 			add(testcase);
 			givenNotification(this);
 		}
 		void thenEachMethodStartedAndEnded(){
-			confirm.equals("setup.test.teardown.",collect.str(),"Should have called three methods");
+			confirm.equals("setup.end.test.end.teardown.end.",collect.str(),"Should have called three methods");
 		}
 		void test(){
 			givenMockTestCase();
