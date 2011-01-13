@@ -1,22 +1,24 @@
 #include "TestUtilities.h"
 
+#include "src\MethodNames.h"
+
 #include <sstream>
 
 namespace TestTestCase {
 	class MockTestCase: public Utilities::MockTestCase{
 		std::stringstream collect;
-		void setup(){ collect << Utilities::setupString() << '.'; }
-		void test(){ collect << Utilities::testString() << '.'; }
-		void teardown(){ collect << Utilities::teardownString() << '.'; }
+		void setup(){ collect << gppUnit::setupMethodName() << '.'; }
+		void test(){ collect << gppUnit::testMethodName() << '.'; }
+		void teardown(){ collect << gppUnit::teardownMethodName() << '.'; }
 	public:
 		std::string result(){return collect.str();}
 	};
 
 	std::string setuptestteardownString(){ 
-		return Utilities::setupString()+'.'+
-			Utilities::testString()+'.'+
-			Utilities::teardownString()+'.'; 
-	}
+			return std::string(gppUnit::setupMethodName())+'.'+
+			gppUnit::testMethodName()+'.'+
+			gppUnit::teardownMethodName()+'.'; 
+}
 
 	class TestMethodNames: public Auto::TestCase{
 		void test(){
@@ -24,15 +26,15 @@ namespace TestTestCase {
 			std::string actual;
 
 			expected="setup";
-			actual=Utilities::setupString();
+			actual=gppUnit::setupMethodName();
 			confirm.equals(expected,actual,"Should be setup");
 
 			expected="test";
-			actual=Utilities::testString();
+			actual=gppUnit::testMethodName();
 			confirm.equals(expected,actual,"Should be test");
 
 			expected="teardown";
-			actual=Utilities::teardownString();
+			actual=gppUnit::teardownMethodName();
 			confirm.equals(expected,actual,"Should be teardown");
 		}
 	}GPPUNIT_INSTANCE;

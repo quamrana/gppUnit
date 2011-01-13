@@ -1,6 +1,8 @@
 #include "TestUtilities.h"
 
 #include "src\Notification.h"
+#include "src\MethodNames.h"
+
 #include <sstream>
 
 namespace TestStartEndMethod{
@@ -9,9 +11,9 @@ namespace TestStartEndMethod{
 	};
 
 	std::string setuptestteardownString(){ 
-		return Utilities::setupString()+".end."+
-			Utilities::testString()+".end."+
-			Utilities::teardownString()+".end."; 
+		return std::string(gppUnit::setupMethodName())+".end."+
+			gppUnit::testMethodName()+".end."+
+			gppUnit::teardownMethodName()+".end."; 
 	}
 	class Test: public Utilities::TestCaseCaller, gppUnit::Notification{
 		std::stringstream collect;

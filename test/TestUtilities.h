@@ -6,9 +6,14 @@
 #include "src\TestCase.h"
 #include "src\Notification.h"
 
+namespace gppUnit{
+	class TestCaseMethodCaller;
+}
+
 namespace Utilities{
 	class TestCaseCaller: public Auto::TestCase{
 		gppUnit::TestCaseList cases;
+		void callMethod(gppUnit::TestCaseMethodCaller& method);
 		void call(gppUnit::PrototypeTestCase* testcase);
 		gppUnit::ReportResult* reporter;
 		gppUnit::Notification* notify;
@@ -19,17 +24,13 @@ namespace Utilities{
 		void givenReporter(gppUnit::ReportResult* report){ reporter=report; }
 		void givenNotification(gppUnit::Notification* notified){ notify=notified; }
 		void whenCalled();
-		TestCaseCaller():reporter(0),notify(0){}
+		TestCaseCaller():cases(),reporter(0),notify(0){}
 	};
 	class MockTestCase: public gppUnit::PrototypeTestCase{
 		void setReport(gppUnit::ReportResult*report){ reporter=report; }
 	protected:
 		gppUnit::ReportResult* reporter;
 	};
-
-	std::string setupString();
-	std::string testString();
-	std::string teardownString();
 }
 
 #endif // TESTUTILITIES_H_B22D7F0E_4A0D_4EFB_9092_AE3C8B950C52

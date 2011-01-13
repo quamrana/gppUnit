@@ -1,27 +1,28 @@
 #include "TestUtilities.h"
 
+#include "src\MethodNames.h"
+#include "src\TestCaseMethodCaller.h"
+
 #include <algorithm>
 #include <functional>
 
 namespace Utilities{
-	std::string setupString(){ return "setup"; }
-	std::string testString(){ return "test"; }
-	std::string teardownString(){ return "teardown"; }
+	void TestCaseCaller::callMethod(gppUnit::TestCaseMethodCaller& method){
+		if (notify) notify->StartMethod(method.methodName());
+		method.forward();
+		if (notify) notify->EndMethod();
+	}
 
 	void TestCaseCaller::call(gppUnit::PrototypeTestCase* testcase){
+		gppUnit::SetupCaller setup(*testcase);
+		gppUnit::TestCaller test(*testcase);
+		gppUnit::TeardownCaller teardown(*testcase);
+
 		testcase->setReport(reporter);
 
-		if (notify) notify->StartMethod(setupString());
-		testcase->setup();
-		if (notify) notify->EndMethod();
-
-		if (notify) notify->StartMethod(testString());
-		testcase->test();
-		if (notify) notify->EndMethod();
-
-		if (notify) notify->StartMethod(teardownString());
-		testcase->teardown();
-		if (notify) notify->EndMethod();
+		callMethod(setup);
+		callMethod(test);
+		callMethod(teardown);
 	}
 	void TestCaseCaller::whenCalled(){
 		std::for_each(cases.begin(),cases.end(),
