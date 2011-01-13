@@ -14,7 +14,7 @@ namespace Utilities{
 		size_t resultCount;
 		std::string name() const { return title; }
 		size_t results() const { return resultCount; }
-		virtual void Result(){ resultCount=1; }
+		virtual void Result(){ resultCount+=1; }
 	public:
 		explicit MethodDescriptionImpl(const std::string& name):title(name),resultCount(0){}
 	};

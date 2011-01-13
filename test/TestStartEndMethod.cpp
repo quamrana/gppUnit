@@ -7,8 +7,15 @@
 #include <sstream>
 
 namespace TestStartEndMethod{
-	class MockTestCaseNoResults: public Utilities::MockTestCase{
-		void test(){ } //reporter->Result(); }
+	class MockTestCaseVariableResults: public Utilities::MockTestCase{
+		int number;
+		void test(){ 
+			for(int i=0;i<number;++i){
+				reporter->Result(); 
+			}
+		}
+	public:
+		explicit MockTestCaseVariableResults(int n):number(n){}
 	};
 
 	std::string setuptestteardownString(int results){
@@ -19,8 +26,9 @@ namespace TestStartEndMethod{
 		return strm.str();
 	}
 
-	class TestNumResults: public Utilities::TestCaseCaller, gppUnit::Notification{
+	class TestNumResultsBase: public Utilities::TestCaseCaller, gppUnit::Notification{
 		std::stringstream collect;
+		MockTestCaseVariableResults* testcase;
 		const gppUnit::MethodDescription* description;
 
 		void StartMethod(const gppUnit::MethodDescription& desc){
@@ -30,36 +38,35 @@ namespace TestStartEndMethod{
 		void EndMethod(){
 			collect << '.' << description->results() << '.' << "end.";
 		}
+		void teardown(){
+			delete testcase;
+		}
 	protected:
-		void givenMockTestCase(Utilities::MockTestCase& testcase){
-			add(testcase);
+		void givenMockTestCase(int n){
+			testcase=new MockTestCaseVariableResults(n);
+			add(*testcase);
 			givenNotification(this);
 		}
 		void thenEachMethodStartedAndEndedWithNumResults(int results){
 			confirm.equals(setuptestteardownString(results),collect.str(),"Should have called three methods");
 		}
 	};
-
-	class TestNoResults: public TestNumResults{
-		MockTestCaseNoResults testcase;
-
+	template<int NUM>
+	class TestNumResults: TestNumResultsBase{
+	protected:
 		void test(){
-			givenMockTestCase(testcase);
+			givenMockTestCase(NUM);
 			whenCalled();
-			thenEachMethodStartedAndEndedWithNumResults(0);
+			thenEachMethodStartedAndEndedWithNumResults(NUM);
 		}
+	};
+
+	class TestNoResults: public TestNumResults<0>{
 	}GPPUNIT_INSTANCE;
 
-	class MockTestCaseOneResult: public Utilities::MockTestCase{
-		void test(){ reporter->Result(); }
-	};
-	class TestOneResult: public TestNumResults{
-		MockTestCaseOneResult testcase;
+	class TestOneResult: public TestNumResults<1>{
+	}GPPUNIT_INSTANCE;
 
-		void test(){
-			givenMockTestCase(testcase);
-			whenCalled();
-			thenEachMethodStartedAndEndedWithNumResults(1);
-		}
+	class TestTwoResults: public TestNumResults<2>{
 	}GPPUNIT_INSTANCE;
 }
