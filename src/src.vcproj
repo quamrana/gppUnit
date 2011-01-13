@@ -44,9 +44,9 @@
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
+				RuntimeLibrary="1"
 				UsePrecompiledHeader="0"
-				WarningLevel="3"
+				WarningLevel="4"
 				DebugInformationFormat="4"
 			/>
 			<Tool
@@ -148,6 +148,10 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<File
+				RelativePath=".\MethodNames.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -155,11 +159,23 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\MethodCaller.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MethodNames.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Notification.h"
 				>
 			</File>
 			<File
 				RelativePath=".\TestCase.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TestCaseMethodCaller.h"
 				>
 			</File>
 		</Filter>
