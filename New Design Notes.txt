@@ -16,14 +16,15 @@ New Design Notes
 	Every method can report any number of Test Results
 	Report the result through an interface. (Goes to notification)
 
-$005	Report starting and ending each method
+#$005	Report starting and ending each method
 	Report contains a method description:
-	Name, time, number of results
+	Name and number of results
 	
 $006	Time individual methods
 	Report the time through a separate interface. (Goes to description)
 	Introduce an interface so that tests can supply a nominal time value,
 	but real code can use a real timer.
+	Description now reports name, number of results and time.
 	
 $007	Catch exceptions from all methods
 	Return a bool to indicate No Exception(true), Exception Caught(false)
