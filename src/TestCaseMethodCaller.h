@@ -8,25 +8,26 @@ namespace gppUnit{
 	class TestCaseMethodCaller: public MethodCaller{
 		const char* name;
 	protected:
-		TestCase& testcase;
+		PrototypeTestCase& testcase;
 	public:
-		TestCaseMethodCaller(TestCase& testcase, const char* name):name(name),testcase(testcase){}
+		TestCaseMethodCaller(PrototypeTestCase& testcase, const char* name):name(name),testcase(testcase){}
 		const char* methodName(void) const { return name; }
+		void setReport(ReportResult* report){ testcase.setReport(report); }
 	};
 	class SetupCaller: public TestCaseMethodCaller{
 		void forward(){ testcase.setup(); }
 	public:
-		SetupCaller(TestCase& fwd):TestCaseMethodCaller(fwd,setupMethodName()){}
+		SetupCaller(PrototypeTestCase& fwd):TestCaseMethodCaller(fwd,setupMethodName()){}
 	};
 	class TestCaller: public TestCaseMethodCaller{
 		void forward(){ testcase.test(); }
 	public:
-		TestCaller(TestCase& fwd):TestCaseMethodCaller(fwd,testMethodName()){}
+		TestCaller(PrototypeTestCase& fwd):TestCaseMethodCaller(fwd,testMethodName()){}
 	};
 	class TeardownCaller: public TestCaseMethodCaller{
 		void forward(){ testcase.teardown(); }
 	public:
-		TeardownCaller(TestCase& fwd):TestCaseMethodCaller(fwd,teardownMethodName()){}
+		TeardownCaller(PrototypeTestCase& fwd):TestCaseMethodCaller(fwd,teardownMethodName()){}
 	};
 }
 

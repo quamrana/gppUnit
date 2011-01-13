@@ -9,15 +9,19 @@
 
 namespace Utilities{
 
-	class MethodDescriptionImpl: public gppUnit::MethodDescription{
+	class MethodDescriptionImpl: public gppUnit::MethodDescription, public gppUnit::ReportResult{
 		std::string title;
+		size_t resultCount;
 		std::string name() const { return title; }
+		size_t results() const { return resultCount; }
+		virtual void Result(){ resultCount=1; }
 	public:
-		explicit MethodDescriptionImpl(const std::string& name):title(name){}
+		explicit MethodDescriptionImpl(const std::string& name):title(name),resultCount(0){}
 	};
 
 	void TestCaseCaller::callMethod(gppUnit::TestCaseMethodCaller& method){
 		MethodDescriptionImpl desc(method.methodName());
+		method.setReport(&desc);
 		if (notify) notify->StartMethod(desc);
 		method.forward();
 		if (notify) notify->EndMethod();
@@ -28,7 +32,7 @@ namespace Utilities{
 		gppUnit::TestCaller test(*testcase);
 		gppUnit::TeardownCaller teardown(*testcase);
 
-		testcase->setReport(reporter);
+		//testcase->setReport(reporter);
 
 		callMethod(setup);
 		callMethod(test);

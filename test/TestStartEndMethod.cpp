@@ -7,36 +7,59 @@
 #include <sstream>
 
 namespace TestStartEndMethod{
-	class MockTestCase: public Utilities::MockTestCase{
-		void test(){ }
+	class MockTestCaseNoResults: public Utilities::MockTestCase{
+		void test(){ } //reporter->Result(); }
 	};
 
-	std::string setuptestteardownString(){ 
-		return std::string(gppUnit::setupMethodName())+".end."+
-			gppUnit::testMethodName()+".end."+
-			gppUnit::teardownMethodName()+".end."; 
+	std::string setuptestteardownString(int results){
+		std::stringstream strm;
+		strm << gppUnit::setupMethodName() << ".0.end." <<
+			gppUnit::testMethodName() << '.' << results << ".end." <<
+			gppUnit::teardownMethodName() << ".0.end."; 
+		return strm.str();
 	}
-	class Test: public Utilities::TestCaseCaller, gppUnit::Notification{
+
+	class TestNumResults: public Utilities::TestCaseCaller, gppUnit::Notification{
 		std::stringstream collect;
-		MockTestCase testcase;
+		const gppUnit::MethodDescription* description;
 
 		void StartMethod(const gppUnit::MethodDescription& desc){
-			collect << desc.name() << '.';
+			description=&desc;
+			collect << desc.name();
 		}
 		void EndMethod(){
-			collect << "end.";
+			collect << '.' << description->results() << '.' << "end.";
 		}
-		void givenMockTestCase(){
+	protected:
+		void givenMockTestCase(Utilities::MockTestCase& testcase){
 			add(testcase);
 			givenNotification(this);
 		}
-		void thenEachMethodStartedAndEnded(){
-			confirm.equals(setuptestteardownString(),collect.str(),"Should have called three methods");
+		void thenEachMethodStartedAndEndedWithNumResults(int results){
+			confirm.equals(setuptestteardownString(results),collect.str(),"Should have called three methods");
 		}
+	};
+
+	class TestNoResults: public TestNumResults{
+		MockTestCaseNoResults testcase;
+
 		void test(){
-			givenMockTestCase();
+			givenMockTestCase(testcase);
 			whenCalled();
-			thenEachMethodStartedAndEnded();
+			thenEachMethodStartedAndEndedWithNumResults(0);
+		}
+	}GPPUNIT_INSTANCE;
+
+	class MockTestCaseOneResult: public Utilities::MockTestCase{
+		void test(){ reporter->Result(); }
+	};
+	class TestOneResult: public TestNumResults{
+		MockTestCaseOneResult testcase;
+
+		void test(){
+			givenMockTestCase(testcase);
+			whenCalled();
+			thenEachMethodStartedAndEndedWithNumResults(1);
 		}
 	}GPPUNIT_INSTANCE;
 }

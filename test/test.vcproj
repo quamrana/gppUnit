@@ -197,10 +197,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\TestTestResults.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\TestUtilities.cpp"
 				>
 			</File>

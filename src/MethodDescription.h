@@ -7,7 +7,7 @@ namespace gppUnit{
 		virtual ~MethodDescription(){}
 	public:
 		virtual std::string name() const =0;
-		//virtual long results() const =0;
+		virtual size_t results() const =0;
 		//virtual double run_time() const =0;
 	};
 }
