@@ -10,7 +10,7 @@ def microsoft():
 		)
 
 def djgpp():
-	cppflags=['-Wall']
+	cppflags=['-Wall','-Wextra'] #,'-Weffc++']
 	return DefaultEnvironment(tools = ['c++','gnulink','ar'],
 		ENV={'PATH':path,'DJGPP':DJGPP},
 		CXX = 'gpp', AR = 'arrep', LINK = 'linkrep',
