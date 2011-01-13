@@ -10,6 +10,8 @@ namespace Prototype1{
 	protected:
 		Confirm confirm;
 		Expect expect;
+	public:
+		RealTestCase():confirm(),expect(){}
 	};
 }
 

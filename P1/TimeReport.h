@@ -4,6 +4,8 @@
 namespace Prototype1{
 
 	class TimeReport{
+	protected:
+		virtual ~TimeReport(){}
 	public:
 		virtual void reportTime(double run_time)=0;
 	};

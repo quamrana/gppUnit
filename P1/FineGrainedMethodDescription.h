@@ -3,6 +3,8 @@
 
 namespace Prototype1{
 	class FineGrainedMethodDescription{
+	protected:
+		virtual ~FineGrainedMethodDescription(){}
 	public:
 		virtual std::string name() const =0;
 		virtual long results() const =0;

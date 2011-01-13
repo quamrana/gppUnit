@@ -5,6 +5,8 @@
 
 namespace Prototype1{
 	class ProjectDescription{
+	protected:
+		virtual ~ProjectDescription(){}
 	public:
 		virtual std::string name() const =0;
 		virtual size_t numClasses() const =0;

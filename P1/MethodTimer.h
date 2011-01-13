@@ -9,6 +9,8 @@ namespace Prototype1{
 	class TimeReport;
 
 	class MethodTimer{
+	protected:
+		virtual ~MethodTimer(){}
 	public:
 		virtual void timeMethod(Internal::MethodCaller& caller, TimeReport& report)=0;
 	};

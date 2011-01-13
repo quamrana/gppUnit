@@ -6,6 +6,8 @@
 namespace Prototype1{
 	namespace Internal{
 		class MethodCaller{
+		protected:
+			virtual ~MethodCaller(){}
 		public:
 			virtual void forward()=0;
 		};

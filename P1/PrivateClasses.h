@@ -20,13 +20,24 @@ namespace Prototype1{
 			double run_time() const ;
 			long results() const ;
 		public:
-			ClassDescription(PrototypeTestCase* testcase):testcase(testcase){}
+			ClassDescription(PrototypeTestCase* testcase):testcase(testcase),descriptions(){}
 			PrototypeTestCase* getTestCase() const { return testcase; }
 			void add(FineGrainedMethodFixture& description){ descriptions.push_back(description); }
+
+			ClassDescription(const ClassDescription& other):testcase(other.testcase),descriptions(other.descriptions){}
+			ClassDescription& operator=(const ClassDescription& other){
+				if (this != &other){
+					testcase=other.testcase;
+					descriptions=other.descriptions;
+				}
+				return *this;
+			}
 		};
 		typedef std::vector<ClassDescription> ClassList;
 	}
 	class ClassRunner{
+	protected:
+		virtual ~ClassRunner(){}
 	public:
 		virtual void run(Internal::ClassDescription& singleClass)=0;
 	};

@@ -3,6 +3,8 @@
 
 namespace Prototype1{
 	class ClassDescription{
+	protected:
+		virtual ~ClassDescription(){}
 	public:
 		virtual std::string name() const =0;
 		virtual long results() const =0;

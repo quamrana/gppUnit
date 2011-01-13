@@ -14,6 +14,9 @@ namespace Prototype1{
 
 	protected:
 		virtual void Result(const Prototype1::TestResult& result);
+		virtual ~AssertBase(){}
+	public:
+		AssertBase():context(0){}
 	};
 
 	class Confirm: public AssertBase{

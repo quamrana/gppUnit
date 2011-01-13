@@ -14,6 +14,9 @@ namespace Prototype1{
 		public:
 			TestCaseForwarder():testcase(0){}
 			void set(TestCase* nextCase){ testcase=nextCase; }
+		private:
+			TestCaseForwarder(const TestCaseForwarder&);
+			TestCaseForwarder& operator=(const TestCaseForwarder&);
 		};
 	}
 }

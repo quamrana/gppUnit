@@ -6,6 +6,9 @@ namespace Prototype1{
 		class ClassContext;
 	}
 	class ContextSetter{
+	protected:
+		virtual ~ContextSetter(){}
+	private:
 		friend class Prototype1::Internal::ClassContext;
 		virtual void setContext(Prototype1::Internal::ClassContext*)=0;
 	};

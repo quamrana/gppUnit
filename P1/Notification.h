@@ -11,6 +11,8 @@ namespace Prototype1{
 	struct TestResult;
 
 	class Notification{
+	protected:
+		virtual ~Notification(){}
 	public:
 		virtual void StartProject(const ProjectDescription& ){}
 		virtual void StartClass(const ClassDescription& ){}

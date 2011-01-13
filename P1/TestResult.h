@@ -9,6 +9,7 @@ namespace Prototype1{
 		bool result;
 		std::string message;
 		std::vector<std::string> description;
+		TestResult(){}
 	};
 }
 

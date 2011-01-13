@@ -4,6 +4,8 @@
 namespace Prototype1{
 
 	class TestCase{
+	protected:
+		virtual ~TestCase(){}
 	public:
 		virtual void setup(){}
 		virtual void test()=0;

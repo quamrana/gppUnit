@@ -31,8 +31,10 @@ namespace Prototype1{
 
 			void setContextOn(ContextSetter& setter);
 			ClassContext(Notification& notify, MethodTimer& timer):fixture(0),
+				resultCount(0),
 				notify(notify),
-				timer(timer)
+				timer(timer),
+				testcase()
 			{}
 		};
 	}
