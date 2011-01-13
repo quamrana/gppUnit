@@ -163,6 +163,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MethodDescription.h"
+				>
+			</File>
+			<File
 				RelativePath=".\MethodNames.h"
 				>
 			</File>

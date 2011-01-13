@@ -2,6 +2,7 @@
 
 #include "src\Notification.h"
 #include "src\MethodNames.h"
+#include "src\MethodDescription.h"
 
 #include <sstream>
 
@@ -19,8 +20,8 @@ namespace TestStartEndMethod{
 		std::stringstream collect;
 		MockTestCase testcase;
 
-		void StartMethod(const std::string& name){
-			collect << name << '.';
+		void StartMethod(const gppUnit::MethodDescription& desc){
+			collect << desc.name() << '.';
 		}
 		void EndMethod(){
 			collect << "end.";

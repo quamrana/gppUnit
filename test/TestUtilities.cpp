@@ -2,13 +2,23 @@
 
 #include "src\MethodNames.h"
 #include "src\TestCaseMethodCaller.h"
+#include "src\MethodDescription.h"
 
 #include <algorithm>
 #include <functional>
 
 namespace Utilities{
+
+	class MethodDescriptionImpl: public gppUnit::MethodDescription{
+		std::string title;
+		std::string name() const { return title; }
+	public:
+		explicit MethodDescriptionImpl(const std::string& name):title(name){}
+	};
+
 	void TestCaseCaller::callMethod(gppUnit::TestCaseMethodCaller& method){
-		if (notify) notify->StartMethod(method.methodName());
+		MethodDescriptionImpl desc(method.methodName());
+		if (notify) notify->StartMethod(desc);
 		method.forward();
 		if (notify) notify->EndMethod();
 	}
