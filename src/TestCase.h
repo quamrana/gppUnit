@@ -3,6 +3,8 @@
 
 namespace gppUnit{
 	class TestCase{
+	protected:
+		virtual ~TestCase(){}
 	public:
 		virtual void setup(){}
 		virtual void test()=0;
@@ -10,15 +12,22 @@ namespace gppUnit{
 	};
 
 	class ReportResult{
+	protected:
+		virtual ~ReportResult(){}
 	public:
 		virtual void Result()=0;
 	};
 	class ResultSetter{
+	protected:
+		virtual ~ResultSetter(){}
 	public:
 		virtual void setReport(ReportResult*)=0;
 	};
 
-	class PrototypeTestCase: public TestCase, public ResultSetter{};
+	class PrototypeTestCase: public TestCase, public ResultSetter{
+	protected:
+		virtual ~PrototypeTestCase(){}
+	};
 
 	/**
 	TestCaseList is subject to changes in definition and location
