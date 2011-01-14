@@ -31,7 +31,7 @@ namespace Utilities{
 
 	void TestCaseCaller::timeMethod(gppUnit::TestCaseMethodCaller& method, gppUnit::TimeReport& report){
 		method.forward();
-		report.reportTime(1.1);
+		report.reportTime(0.1);
 	}
 
 	void TestCaseCaller::callMethod(gppUnit::TestCaseMethodCaller& method){

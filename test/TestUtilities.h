@@ -15,7 +15,7 @@ namespace Utilities{
 	class TestCaseCaller: public Auto::TestCase{
 		gppUnit::TestCaseList cases;
 
-		void timeMethod(gppUnit::TestCaseMethodCaller& method, gppUnit::TimeReport& report);
+		virtual void timeMethod(gppUnit::TestCaseMethodCaller& method, gppUnit::TimeReport& report);
 		void callMethod(gppUnit::TestCaseMethodCaller& method);
 		void call(gppUnit::PrototypeTestCase* testcase);
 		gppUnit::ReportResult* reporter;

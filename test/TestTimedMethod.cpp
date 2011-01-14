@@ -2,6 +2,7 @@
 
 #include "src\MethodNames.h"
 #include "src\MethodDescription.h"
+#include "src\TestCaseMethodCaller.h"
 
 #include <sstream>
 
@@ -30,18 +31,28 @@ namespace {
 		void EndMethod(){
 			collect << '.' << description->run_time() << '.' << "end.";
 		}
-	protected:
+		double timeToReport;
+		void timeMethod(gppUnit::TestCaseMethodCaller& method, gppUnit::TimeReport& report){
+			method.forward();
+			report.reportTime(timeToReport);
+		}
+
 		void givenMockTestCase(){
 			add(testcase);
 			givenNotification(this);
 		}
-		void thenEachMethodStartedAndEndedWithRunTime(double run_time){
-			confirm.equals(setuptestteardownString(run_time),collect.str(),"Should have called three methods");
+		void givenTimeToReport(double run_time){
+			timeToReport=run_time;
+			expect.isTrue(timeToReport!=0.1,"Sample time used by test is not 0.1");
+		}
+		void thenEachMethodStartedAndEndedWithRunTime(){
+			confirm.equals(setuptestteardownString(timeToReport),collect.str(),"Should have called three methods");
 		}
 		void test(){
 			givenMockTestCase();
+			givenTimeToReport(1.1);
 			whenCalled();
-			thenEachMethodStartedAndEndedWithRunTime(1.1);
+			thenEachMethodStartedAndEndedWithRunTime();
 		}
 	}GPPUNIT_INSTANCE;
 }
