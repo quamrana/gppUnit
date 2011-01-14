@@ -19,7 +19,7 @@ namespace {
 		return strm.str();
 	}
 
-	class TestNumResultsBase: public Utilities::TestCaseCaller, gppUnit::Notification{
+	class TestRunTime: public Utilities::TestCaseCaller, gppUnit::Notification{
 		std::stringstream collect;
 		MockTestCase testcase;
 		const gppUnit::MethodDescription* description;
@@ -32,7 +32,7 @@ namespace {
 			collect << '.' << description->run_time() << '.' << "end.";
 		}
 		double timeToReport;
-		void timeMethod(gppUnit::TestCaseMethodCaller& method, gppUnit::TimeReport& report){
+		void timeMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report){
 			method.forward();
 			report.reportTime(timeToReport);
 		}

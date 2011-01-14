@@ -29,7 +29,7 @@ namespace Utilities{
 			reportedTime(0){}
 	};
 
-	void TestCaseCaller::timeMethod(gppUnit::TestCaseMethodCaller& method, gppUnit::TimeReport& report){
+	void TestCaseCaller::timeMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report){
 		method.forward();
 		report.reportTime(0.1);
 	}
@@ -39,7 +39,7 @@ namespace Utilities{
 		method.setReport(&desc);
 		if (notify) notify->StartMethod(desc);
 
-		timeMethod(method,desc);
+		timer->timeMethod(method,desc);
 
 		if (notify) notify->EndMethod();
 	}
