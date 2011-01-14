@@ -49,7 +49,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="4"
 				DebugInformationFormat="4"
-				DisableSpecificWarnings="4512;4250"
+				DisableSpecificWarnings="4512;4250;4355"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -187,6 +187,18 @@
 			<File
 				RelativePath=".\main.cpp"
 				>
+			</File>
+			<File
+				RelativePath=".\Win32\TestMethodTimer.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="."
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\TestStartEndMethod.cpp"

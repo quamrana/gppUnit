@@ -25,35 +25,41 @@ $006	Time individual methods
 	Introduce an interface so that tests can supply a nominal time value,
 	but real code can use a real timer.
 	Description now reports name, number of results and time.
+
+$007	Test Result has full report
+	Test Result consists of:
+		boolean - summary
+		tag msg - optional message from programmer
+		description - automatically produced description of test.
 	
-$007	Catch exceptions from all methods
+$008	Catch exceptions from all methods
 	Return a bool to indicate No Exception(true), Exception Caught(false)
 	(Future, allow a client to add their own catch clause).
 	Report the exception text through a separate interface. (Goes to notification)
 	Exceptions do not stop the time being reported on each method.
 
-$008	Avoid running the test if setup catches an exception.
+$009	Avoid running the test if setup catches an exception.
 
-$009	Report each method to ClassDescription
+$010	Report each method to ClassDescription
 	After method is notified, it can be collected by ClassDescription
 
-$010	Report each class
+$011	Report each class
 	The description reported has class name, number of methods run (2 or 3)
 	Plus accumulated time, plus number of test results.
 	Class name should be sufficiently demangled.
 		I will want to separate the namespace from the test name.
 		This could allow 'collecting' tests within suites.
 
-$011	Report whole project
+$012	Report whole project
 	The description reported has project name, number of classes
 	Plus accumulated time, plus number of test results.
 	Plus elapsed time.
 
-$012	Auto-Collect tests
+$013	Auto-Collect tests
 	Tests can be collected to a global vector.
 	Global runner supplies them to a project and runs them
 
-$013	Auto Options
+$014	Auto Options
 	Create a default options free function which supplies a console notification.
 	(This function can be overridden at link time by the user)
 	It should be possible for the user to supply:
@@ -61,10 +67,10 @@ $013	Auto Options
 		A number of Notifications.
 		Exception catchers which describe themselves.
 
-$014	Hamcrest style matchers (I)
+$015	Hamcrest style matchers (I)
 	Add TestResult so that automated results can describe themselves
 	
-$015	Hamcrest style matchers (II)
+$016	Hamcrest style matchers (II)
 	Add TestResult so that automated results can describe themselves
 
 Infrastructure
@@ -80,3 +86,11 @@ Infrastructure
 
 
 
+#	ReportTime interface
+.	MethodTimer interface
+.		Test impl
+.		Win32 impl
+.		Win32 test
+		unix impl
+		unix test
+		

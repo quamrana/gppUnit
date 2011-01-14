@@ -152,6 +152,18 @@
 				RelativePath=".\MethodNames.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\Win32\MethodTimer.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="."
+					/>
+				</FileConfiguration>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -168,6 +180,10 @@
 			</File>
 			<File
 				RelativePath=".\MethodNames.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MethodTimer.h"
 				>
 			</File>
 			<File
