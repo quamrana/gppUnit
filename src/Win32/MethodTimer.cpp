@@ -1,12 +1,12 @@
 #include "MethodTimer.h"
 #include "TimeReport.h"
 #include "MethodCaller.h"
+#include "AutoMethodTimer.h"
 
 #include <windows.h>
 
 namespace{
 	typedef long long time_interval;
-
 
 	struct GetFrequency{
 		LARGE_INTEGER freq;
@@ -39,13 +39,10 @@ namespace{
 			report.reportTime(timeDifference(time,getTime()));
 		}
 	};
-	class DefaultMethodTimer: public gppUnit::MethodTimer{
-		void timeMethod(gppUnit::MethodCaller& caller, gppUnit::TimeReport& report){
-			AutoTimer timer(report);
-			caller.forward();
-		}
-	}timer;
+
+	gppUnit::AutoMethodTimer<AutoTimer> timer;
 }
+
 namespace gppUnit{
 	MethodTimer* MethodTimer::getTimer(){
 		return &timer;
