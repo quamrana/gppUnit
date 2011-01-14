@@ -197,6 +197,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TestTimedMethod.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\TestUtilities.cpp"
 				>
 			</File>

@@ -9,21 +9,38 @@
 
 namespace Utilities{
 
-	class MethodDescriptionImpl: public gppUnit::MethodDescription, public gppUnit::ReportResult{
+	class MethodDescriptionImpl: public gppUnit::MethodDescription, 
+				public gppUnit::ReportResult,
+				public gppUnit::TimeReport{
 		std::string title;
+
 		size_t resultCount;
+		virtual void Result(){ resultCount+=1; }
+
+		double reportedTime;
+		virtual void reportTime(double run_time){ reportedTime=run_time; }
+
 		std::string name() const { return title; }
 		size_t results() const { return resultCount; }
-		virtual void Result(){ resultCount+=1; }
+		virtual double run_time() const { return reportedTime; }
 	public:
-		explicit MethodDescriptionImpl(const std::string& name):title(name),resultCount(0){}
+		explicit MethodDescriptionImpl(const std::string& name):title(name),
+			resultCount(0),
+			reportedTime(0){}
 	};
+
+	void TestCaseCaller::timeMethod(gppUnit::TestCaseMethodCaller& method, gppUnit::TimeReport& report){
+		method.forward();
+		report.reportTime(1.1);
+	}
 
 	void TestCaseCaller::callMethod(gppUnit::TestCaseMethodCaller& method){
 		MethodDescriptionImpl desc(method.methodName());
 		method.setReport(&desc);
 		if (notify) notify->StartMethod(desc);
-		method.forward();
+
+		timeMethod(method,desc);
+
 		if (notify) notify->EndMethod();
 	}
 
@@ -31,8 +48,6 @@ namespace Utilities{
 		gppUnit::SetupCaller setup(*testcase);
 		gppUnit::TestCaller test(*testcase);
 		gppUnit::TeardownCaller teardown(*testcase);
-
-		//testcase->setReport(reporter);
 
 		callMethod(setup);
 		callMethod(test);

@@ -182,6 +182,10 @@
 				RelativePath=".\TestCaseMethodCaller.h"
 				>
 			</File>
+			<File
+				RelativePath=".\TimeReport.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
