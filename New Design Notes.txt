@@ -20,7 +20,7 @@ New Design Notes
 	Report contains a method description:
 	Name and number of results
 	
-$006	Time individual methods
+#$006	Time individual methods
 	Report the time through a separate interface. (Goes to description)
 	Introduce an interface so that tests can supply a nominal time value,
 	but real code can use a real timer.
