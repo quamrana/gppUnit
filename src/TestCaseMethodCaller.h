@@ -3,6 +3,7 @@
 
 #include "MethodCaller.h"
 #include "MethodNames.h"
+#include "TestCase.h"
 
 namespace gppUnit{
 	class TestCaseMethodCaller: public MethodCaller{

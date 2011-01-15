@@ -1,6 +1,8 @@
 #ifndef METHODDESCRIPTION_H_32660EAC_DB28_4549_BD53_E61D323298B0
 #define METHODDESCRIPTION_H_32660EAC_DB28_4549_BD53_E61D323298B0
 
+#include <string>
+
 namespace gppUnit{
 	class MethodDescription{
 	protected:
