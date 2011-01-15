@@ -30,6 +30,13 @@ namespace Prototype1{
 			fail(message);
 		}
 	}
+	void Confirm::isFalse(bool result, const char* message){
+		if(!result){
+			pass(message);
+		} else {
+			fail(message);
+		}
+	}
 	void Confirm::equals(const std::string& expected, const std::string& actual, const char* message){
 		TestResult result;
 		result.result=(expected==actual);

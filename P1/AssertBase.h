@@ -24,6 +24,7 @@ namespace Prototype1{
 		void fail(const char* message="fail");
 		void pass(const char* message="pass");
 		void isTrue(bool result, const char* message="Should be True");
+		void isFalse(bool result, const char* message="Should be False");
 		void equals(const std::string& expected, const std::string& actual, const char* message="Should be True");
 	};
 	class Expect: public Confirm{
