@@ -203,6 +203,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TestResult.h"
+				>
+			</File>
+			<File
 				RelativePath=".\TimeReport.h"
 				>
 			</File>

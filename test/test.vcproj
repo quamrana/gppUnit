@@ -213,6 +213,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TestTestResult.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\TestTimedMethod.cpp"
 				>
 			</File>
