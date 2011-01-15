@@ -1,8 +1,8 @@
-#include "AutoRun.h"
-
 #include "src\MethodTimer.h"
 #include "src\MethodCaller.h"
 #include "src\TimeReport.h"
+
+#include "AutoRun.h"
 
 #include <sstream>
 

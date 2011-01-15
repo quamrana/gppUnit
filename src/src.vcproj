@@ -195,6 +195,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ReportResult.h"
+				>
+			</File>
+			<File
 				RelativePath=".\TestCase.h"
 				>
 			</File>

@@ -1,6 +1,6 @@
-#include "TestUtilities.h"
-
 #include "src\MethodNames.h"
+
+#include "TestUtilities.h"
 
 #include <sstream>
 

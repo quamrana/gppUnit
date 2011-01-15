@@ -31,6 +31,7 @@ $007	Test Result has full report
 		boolean - summary
 		tag msg - optional message from programmer
 		description - automatically produced description of test.
+	Add Result to Notification and make all Result methods take a TestResult.
 	
 $008	Catch exceptions from all methods
 	Return a bool to indicate No Exception(true), Exception Caught(false)

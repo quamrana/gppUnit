@@ -1,8 +1,10 @@
-#include "TestUtilities.h"
-
 #include "src\Notification.h"
 #include "src\MethodNames.h"
 #include "src\MethodDescription.h"
+#include "src\ReportResult.h"
+#include "src\TestResult.h"
+
+#include "TestUtilities.h"
 
 #include <sstream>
 
@@ -10,8 +12,9 @@ namespace TestStartEndMethod{
 	class MockTestCaseVariableResults: public Utilities::MockTestCase{
 		int number;
 		void test(){ 
+			gppUnit::TestResult result;
 			for(int i=0;i<number;++i){
-				reporter->Result(); 
+				reporter->Result(result); 
 			}
 		}
 	public:

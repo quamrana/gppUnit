@@ -1,8 +1,8 @@
-#include "TestUtilities.h"
-
 #include "src\MethodNames.h"
 #include "src\MethodDescription.h"
 #include "src\TestCaseMethodCaller.h"
+
+#include "TestUtilities.h"
 
 #include <sstream>
 

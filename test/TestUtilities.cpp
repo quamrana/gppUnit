@@ -1,8 +1,9 @@
-#include "TestUtilities.h"
-
 #include "src\MethodNames.h"
 #include "src\TestCaseMethodCaller.h"
 #include "src\MethodDescription.h"
+#include "src\ReportResult.h"
+
+#include "TestUtilities.h"
 
 #include <algorithm>
 #include <functional>
@@ -15,10 +16,10 @@ namespace Utilities{
 		std::string title;
 
 		size_t resultCount;
-		virtual void Result(){ resultCount+=1; }
+		void Result(const gppUnit::TestResult&){ resultCount+=1; }
 
 		double reportedTime;
-		virtual void reportTime(double run_time){ reportedTime=run_time; }
+		void reportTime(double run_time){ reportedTime=run_time; }
 
 		std::string name() const { return title; }
 		size_t results() const { return resultCount; }

@@ -1,6 +1,8 @@
 #ifndef TESTCASE_H_9227601C_F5E5_47F6_A89A_F47B3BBB576B
 #define TESTCASE_H_9227601C_F5E5_47F6_A89A_F47B3BBB576B
 
+#include <vector>
+
 namespace gppUnit{
 	class TestCase{
 	protected:
@@ -11,12 +13,7 @@ namespace gppUnit{
 		virtual void teardown(){}
 	};
 
-	class ReportResult{
-	protected:
-		virtual ~ReportResult(){}
-	public:
-		virtual void Result()=0;
-	};
+	class ReportResult;
 	class ResultSetter{
 	protected:
 		virtual ~ResultSetter(){}
