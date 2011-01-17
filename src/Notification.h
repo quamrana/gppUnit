@@ -3,12 +3,14 @@
 
 namespace gppUnit{
 	class MethodDescription;
+	struct TestResult;
 
 	class Notification{
 	protected:
 		virtual ~Notification(){}
 	public:
 		virtual void StartMethod(const MethodDescription&){}
+		virtual void Result(const TestResult&){}
 		virtual void EndMethod(){}
 	};
 }

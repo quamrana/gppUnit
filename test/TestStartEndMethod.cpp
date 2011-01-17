@@ -29,8 +29,11 @@ namespace TestStartEndMethod{
 		return strm.str();
 	}
 
+	// TODO: add TestResult method which overrides Notification::TestResult
 	class TestNumResultsBase: public Utilities::TestCaseCaller, gppUnit::Notification{
+	protected:
 		std::stringstream collect;
+	private:
 		MockTestCaseVariableResults* testcase;
 		const gppUnit::MethodDescription* description;
 
@@ -53,6 +56,9 @@ namespace TestStartEndMethod{
 		void thenEachMethodStartedAndEndedWithNumResults(int results){
 			confirm.equals(setuptestteardownString(results),collect.str(),"Should have called three methods");
 		}
+		void thenResultRecordedInTest(){
+			confirm.isTrue(collect.str().find("test.0.1.end")!=std::string::npos,"Test result is 0.1");
+		}
 	};
 	template<int NUM>
 	class TestNumResults: TestNumResultsBase{
@@ -72,4 +78,16 @@ namespace TestStartEndMethod{
 
 	class TestTwoResults: public TestNumResults<2>{
 	}GPPUNIT_INSTANCE;
+
+	class TestResultContentTrue: public TestNumResultsBase{
+		virtual void Result(const gppUnit::TestResult& result){
+			collect << '.' << result.result;
+		}
+		void test(){
+			givenMockTestCase(1);
+			whenCalled();
+			thenResultRecordedInTest();
+		}
+	}GPPUNIT_INSTANCE;
 }
+

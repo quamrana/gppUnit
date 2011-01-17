@@ -14,9 +14,13 @@ namespace Utilities{
 				public gppUnit::ReportResult,
 				public gppUnit::TimeReport{
 		std::string title;
+		gppUnit::Notification& notify;
 
 		size_t resultCount;
-		void Result(const gppUnit::TestResult&){ resultCount+=1; }
+		void Result(const gppUnit::TestResult& result){ 
+			resultCount+=1; 
+			notify.Result(result);
+		}
 
 		double reportedTime;
 		void reportTime(double run_time){ reportedTime=run_time; }
@@ -25,7 +29,8 @@ namespace Utilities{
 		size_t results() const { return resultCount; }
 		virtual double run_time() const { return reportedTime; }
 	public:
-		explicit MethodDescriptionImpl(const std::string& name):title(name),
+		explicit MethodDescriptionImpl(const std::string& name, gppUnit::Notification& notify):title(name),
+			notify(notify),
 			resultCount(0),
 			reportedTime(0){}
 	};
@@ -36,7 +41,7 @@ namespace Utilities{
 	}
 
 	void TestCaseCaller::callMethod(gppUnit::TestCaseMethodCaller& method){
-		MethodDescriptionImpl desc(method.methodName());
+		MethodDescriptionImpl desc(method.methodName(),*notify);
 		method.setReport(&desc);
 		if (notify) notify->StartMethod(desc);
 

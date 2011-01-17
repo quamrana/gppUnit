@@ -3,6 +3,8 @@
 #include "PrivateClassContext.h"
 #include "AssertException.h"
 
+#include <sstream>
+
 namespace Prototype1{
 	void AssertBase::Result(const TestResult& result){
 		if(context){
@@ -49,6 +51,26 @@ namespace Prototype1{
 			result.description.push_back(expected);
 			result.description.push_back("But got :");
 			result.description.push_back(actual);
+		}
+		Result(result);
+	}
+	void Confirm::equals(const size_t& expected, const size_t& actual, const char* message){
+		TestResult result;
+		result.result=(expected==actual);
+		result.message=message;
+
+		std::stringstream stractual;
+		stractual << actual;
+		if(result.result){
+			result.description.push_back("Both expected and actual are equal to:");
+			result.description.push_back(stractual.str());
+		} else {
+			std::stringstream strexpected;
+			strexpected << expected;
+			result.description.push_back("Expected:");
+			result.description.push_back(strexpected.str());
+			result.description.push_back("But got :");
+			result.description.push_back(stractual.str());
 		}
 		Result(result);
 	}
