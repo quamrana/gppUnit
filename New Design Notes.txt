@@ -46,15 +46,18 @@ New Design Notes
 #$009	Avoid running the test if setup catches an exception.
 	Return a bool to indicate No Exception(true), Exception Caught(false)
 
-$010	Report each method to ClassDescription
-	After method is notified, it can be collected by ClassDescription
-
-$011	Report each class
-	The description reported has class name, number of methods run (2 or 3)
-	Plus accumulated time, plus number of test results.
+$010	Report each class
+	The description reported has class name
 	Class name should be sufficiently demangled.
 		I will want to separate the namespace from the test name.
 		This could allow 'collecting' tests within suites.
+
+$011	Enhance ClassDescriptionReport by reporting each called method.
+	After EndMethod is notified, it can be collected by ClassDescription
+	ClassDescription should now also have:
+		number of methods run (2 or 3)
+		accumulated time
+		number of test results.
 
 $012	Report whole project
 	The description reported has project name, number of classes
