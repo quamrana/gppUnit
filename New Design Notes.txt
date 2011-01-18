@@ -33,13 +33,18 @@ New Design Notes
 		description - automatically produced description of test.
 	Add Result to Notification and make all Result methods take a TestResult.
 	
-$008	Catch exceptions from all methods
-	Return a bool to indicate No Exception(true), Exception Caught(false)
+#$008	Catch exceptions from all methods
+	#Exceptions do not stop the time being reported on each method.
+	#Report the exception text through a separate interface. (Goes to notification)
+		std::exception
+		std::string
+		const char*
+		int
+		...
 	(Future, allow a client to add their own catch clause).
-	Report the exception text through a separate interface. (Goes to notification)
-	Exceptions do not stop the time being reported on each method.
 
 $009	Avoid running the test if setup catches an exception.
+	Return a bool to indicate No Exception(true), Exception Caught(false)
 
 $010	Report each method to ClassDescription
 	After method is notified, it can be collected by ClassDescription

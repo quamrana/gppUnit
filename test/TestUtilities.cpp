@@ -47,7 +47,15 @@ namespace Utilities{
 		try{
 			privateTimeMethod(method,report);
 		} catch(std::exception& e){
-			notify->Exception(e.what());
+			reportException(e.what());
+		} catch (std::string& e) {
+			reportException(e);
+		} catch (const char* e) {
+			reportException(e);
+		} catch (int e) {
+			reportException(e);
+		} catch (...) {
+			reportException("Unknown Exception");
 		}
 	}
 

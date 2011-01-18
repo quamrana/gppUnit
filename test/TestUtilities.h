@@ -9,6 +9,8 @@
 #include "src\MethodTimer.h"
 #include "src\AutoMethodTimer.h"
 
+#include <sstream>
+
 namespace gppUnit{
 	class TestCaseMethodCaller;
 }
@@ -32,6 +34,13 @@ namespace Utilities{
 		gppUnit::TestCaseList cases;
 
 		void privateTimeMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report);
+
+		template<typename T>
+		void reportException(T what){
+			std::stringstream strm;
+			strm << what;
+			notify->Exception(strm.str());
+		}
 		void privateProtectMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report);
 		void callMethod(gppUnit::TestCaseMethodCaller& method);
 		void call(gppUnit::PrototypeTestCase* testcase);
