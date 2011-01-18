@@ -32,7 +32,7 @@ namespace TestExceptionCatching{
 		}
 	};
 
-	class Test: public Utilities::TestCaseCaller, gppUnit::Notification{
+	class VariousExceptions: public Utilities::TestCaseCaller, gppUnit::Notification{
 		RTEThrowingTestCase testcase1;
 		StringThrowingTestCase testcase2;
 		CharStarThrowingTestCase testcase3;
@@ -87,6 +87,36 @@ namespace TestExceptionCatching{
 			whenCalled();
 			thenExceptionReported();
 			thenTimeReported();
+		}
+	}GPPUNIT_INSTANCE;
+
+
+	class SetupThrowingTestCase: public Utilities::MockTestCase{
+		void setup(){ 
+			throw std::runtime_error("rte");
+		}
+		void test(){}
+	};
+	class ExceptionInSetup: public Utilities::TestCaseCaller, gppUnit::Notification{
+		SetupThrowingTestCase testcase1;
+
+		std::stringstream collect;
+
+		void StartMethod(const gppUnit::MethodDescription& desc){
+			collect << desc.name() << '.';
+		}
+
+		void givenTestCase(){
+			add(testcase1);
+			givenNotification(this);
+		}
+		void thenOnlySetupAndTeardownRun(){
+			confirm.equals("setup.teardown.",collect.str(),"thenOnlySetupAndTeardownRun");
+		}
+		void test(){
+			givenTestCase();
+			whenCalled();
+			thenOnlySetupAndTeardownRun();
 		}
 	}GPPUNIT_INSTANCE;
 }

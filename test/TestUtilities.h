@@ -41,8 +41,8 @@ namespace Utilities{
 			strm << what;
 			notify->Exception(strm.str());
 		}
-		void privateProtectMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report);
-		void callMethod(gppUnit::TestCaseMethodCaller& method);
+		bool privateProtectMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report);
+		bool callMethod(gppUnit::TestCaseMethodCaller& method);
 		void call(gppUnit::PrototypeTestCase* testcase);
 
 		gppUnit::Notification* notify;

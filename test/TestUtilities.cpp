@@ -43,9 +43,11 @@ namespace Utilities{
 	void TestCaseCaller::privateTimeMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report){
 		timer->timeMethod(method,report);
 	}
-	void TestCaseCaller::privateProtectMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report){
+	bool TestCaseCaller::privateProtectMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report){
+		bool result=false;
 		try{
 			privateTimeMethod(method,report);
+			result=true;
 		} catch(std::exception& e){
 			reportException(e.what());
 		} catch (std::string& e) {
@@ -57,16 +59,19 @@ namespace Utilities{
 		} catch (...) {
 			reportException("Unknown Exception");
 		}
+		return result;
 	}
 
-	void TestCaseCaller::callMethod(gppUnit::TestCaseMethodCaller& method){
+	bool TestCaseCaller::callMethod(gppUnit::TestCaseMethodCaller& method){
 		MethodResultCounter desc(method.methodName(),*notify);
 		method.setReport(&desc);
 		if (notify) notify->StartMethod(desc);
 
-		privateProtectMethod(method,desc);
+		bool result=privateProtectMethod(method,desc);
 
 		if (notify) notify->EndMethod();
+
+		return result;
 	}
 
 	void TestCaseCaller::call(gppUnit::PrototypeTestCase* testcase){
@@ -74,8 +79,11 @@ namespace Utilities{
 		gppUnit::TestCaller test(*testcase);
 		gppUnit::TeardownCaller teardown(*testcase);
 
-		callMethod(setup);
-		callMethod(test);
+		if (callMethod(setup))
+		{
+			callMethod(test);
+		}
+
 		callMethod(teardown);
 	}
 	void TestCaseCaller::whenCalled(){

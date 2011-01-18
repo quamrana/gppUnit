@@ -43,7 +43,7 @@ New Design Notes
 		...
 	(Future, allow a client to add their own catch clause).
 
-$009	Avoid running the test if setup catches an exception.
+#$009	Avoid running the test if setup catches an exception.
 	Return a bool to indicate No Exception(true), Exception Caught(false)
 
 $010	Report each method to ClassDescription
