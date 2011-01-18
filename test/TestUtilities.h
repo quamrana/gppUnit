@@ -8,6 +8,7 @@
 #include "src\TimeReport.h"
 #include "src\MethodTimer.h"
 #include "src\AutoMethodTimer.h"
+#include "src\ReportResult.h"
 
 #include <sstream>
 
@@ -30,7 +31,7 @@ namespace Utilities{
 		int timeParameter(){ return TIME; }
 	};
 
-	class TestCaseCaller: public Auto::TestCase{
+	class TestCaseCaller: public Auto::TestCase, gppUnit::ReportResult{
 		gppUnit::TestCaseList cases;
 
 		void privateTimeMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report);
@@ -50,6 +51,10 @@ namespace Utilities{
 		gppUnit::MethodTimer* timer;
 
 		gppUnit::AutoMethodTimer<MockAuto<1> > autoTimer;
+
+		void Report(const gppUnit::TestResult&);
+		gppUnit::ReportResult* reporter;
+		bool goodReport;
 	protected:
 		void add(gppUnit::PrototypeTestCase& testcase){
 			cases.push_back(&testcase);

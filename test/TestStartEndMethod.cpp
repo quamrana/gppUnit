@@ -14,7 +14,7 @@ namespace TestStartEndMethod{
 		void test(){ 
 			gppUnit::TestResult result;
 			for(int i=0;i<number;++i){
-				reporter->Result(result); 
+				reporter->Report(result); 
 			}
 		}
 	public:

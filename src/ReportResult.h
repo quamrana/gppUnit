@@ -8,7 +8,7 @@ namespace gppUnit{
 	protected:
 		virtual ~ReportResult(){}
 	public:
-		virtual void Result(const TestResult&)=0;
+		virtual void Report(const TestResult&)=0;
 	};
 }
 

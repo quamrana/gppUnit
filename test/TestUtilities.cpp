@@ -2,6 +2,7 @@
 #include "src\TestCaseMethodCaller.h"
 #include "src\MethodDescription.h"
 #include "src\ReportResult.h"
+#include "src\TestResult.h"
 
 #include "TestUtilities.h"
 
@@ -26,7 +27,7 @@ namespace Utilities{
 		MethodData methodData;
 		gppUnit::Notification& notify;
 
-		void Result(const gppUnit::TestResult& result){ 
+		void Report(const gppUnit::TestResult& result){ 
 			methodData.incrementCount();
 			notify.Result(result);
 		}
@@ -40,14 +41,20 @@ namespace Utilities{
 			notify(notify){}
 	};
 
+	void TestCaseCaller::Report(const gppUnit::TestResult& result){
+		reporter->Report(result);
+		goodReport&=result.result;
+	}
 	void TestCaseCaller::privateTimeMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report){
 		timer->timeMethod(method,report);
 	}
+
 	bool TestCaseCaller::privateProtectMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report){
 		bool result=false;
+		goodReport=true;
 		try{
 			privateTimeMethod(method,report);
-			result=true;
+			result=goodReport;
 		} catch(std::exception& e){
 			reportException(e.what());
 		} catch (std::string& e) {
@@ -64,7 +71,8 @@ namespace Utilities{
 
 	bool TestCaseCaller::callMethod(gppUnit::TestCaseMethodCaller& method){
 		MethodResultCounter desc(method.methodName(),*notify);
-		method.setReport(&desc);
+		reporter=&desc;
+		method.setReport(this);
 		if (notify) notify->StartMethod(desc);
 
 		bool result=privateProtectMethod(method,desc);

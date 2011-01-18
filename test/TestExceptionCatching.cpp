@@ -1,4 +1,6 @@
 #include "src\MethodDescription.h"
+#include "src\ReportResult.h"
+#include "src\TestResult.h"
 
 #include "TestUtilities.h"
 
@@ -99,6 +101,37 @@ namespace TestExceptionCatching{
 	};
 	class ExceptionInSetup: public Utilities::TestCaseCaller, gppUnit::Notification{
 		SetupThrowingTestCase testcase1;
+
+		std::stringstream collect;
+
+		void StartMethod(const gppUnit::MethodDescription& desc){
+			collect << desc.name() << '.';
+		}
+
+		void givenTestCase(){
+			add(testcase1);
+			givenNotification(this);
+		}
+		void thenOnlySetupAndTeardownRun(){
+			confirm.equals("setup.teardown.",collect.str(),"thenOnlySetupAndTeardownRun");
+		}
+		void test(){
+			givenTestCase();
+			whenCalled();
+			thenOnlySetupAndTeardownRun();
+		}
+	}GPPUNIT_INSTANCE;
+
+	class SetupFailTestCase: public Utilities::MockTestCase{
+		void setup(){ 
+			gppUnit::TestResult result;
+			result.message="setup fails";
+			reporter->Report(result);
+		}
+		void test(){}
+	};
+	class FailInSetup: public Utilities::TestCaseCaller, gppUnit::Notification{
+		SetupFailTestCase testcase1;
 
 		std::stringstream collect;
 
