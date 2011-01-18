@@ -9,10 +9,8 @@ namespace gppUnit{
 	template<typename AUTO>
 	class AutoMethodTimer: public gppUnit::MethodTimer{
 		void timeMethod(gppUnit::MethodCaller& caller, gppUnit::TimeReport& report){
-			// TODO: This was premature - there are no tests that call for this exactly:
-			//AUTO timer(report);
-			caller.forward();
 			AUTO timer(report);
+			caller.forward();
 		}
 	};
 }

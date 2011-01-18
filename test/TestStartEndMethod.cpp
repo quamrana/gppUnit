@@ -29,7 +29,6 @@ namespace TestStartEndMethod{
 		return strm.str();
 	}
 
-	// TODO: add TestResult method which overrides Notification::TestResult
 	class TestNumResultsBase: public Utilities::TestCaseCaller, gppUnit::Notification{
 	protected:
 		std::stringstream collect;

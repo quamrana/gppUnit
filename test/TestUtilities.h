@@ -7,30 +7,50 @@
 #include "src\Notification.h"
 #include "src\TimeReport.h"
 #include "src\MethodTimer.h"
+#include "src\AutoMethodTimer.h"
 
 namespace gppUnit{
 	class TestCaseMethodCaller;
 }
 
 namespace Utilities{
-	class TestCaseCaller: public Auto::TestCase, gppUnit::MethodTimer{
+	class DestructableNotification: public gppUnit::Notification{};
+
+	template<int TIME>
+	class MockAuto{
+		gppUnit::TimeReport& report;
+	public:
+		explicit MockAuto(gppUnit::TimeReport& report):report(report){}
+		~MockAuto(){
+			double time=TIME;
+			report.reportTime(time/10);
+		}
+		int timeParameter(){ return TIME; }
+	};
+
+	class TestCaseCaller: public Auto::TestCase{
 		gppUnit::TestCaseList cases;
 
-		virtual void timeMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report);
+		void privateTimeMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report);
+		void privateProtectMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report);
 		void callMethod(gppUnit::TestCaseMethodCaller& method);
 		void call(gppUnit::PrototypeTestCase* testcase);
-		gppUnit::ReportResult* reporter;
+
 		gppUnit::Notification* notify;
+		DestructableNotification emptyNotification;
 		gppUnit::MethodTimer* timer;
+
+		gppUnit::AutoMethodTimer<MockAuto<1> > autoTimer;
 	protected:
 		void add(gppUnit::PrototypeTestCase& testcase){
 			cases.push_back(&testcase);
 		}
-		void givenReporter(gppUnit::ReportResult* report){ reporter=report; }
+
 		void givenNotification(gppUnit::Notification* notified){ notify=notified; }
 		void givenTimer(gppUnit::MethodTimer* timed){ timer=timed; }
 		void whenCalled();
-		TestCaseCaller():cases(),reporter(0),notify(0),timer(this){}
+
+		TestCaseCaller():cases(),notify(&emptyNotification),timer(&autoTimer){}
 	};
 	class MockTestCase: public gppUnit::PrototypeTestCase{
 		void setReport(gppUnit::ReportResult*report){ reporter=report; }

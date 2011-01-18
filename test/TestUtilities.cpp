@@ -9,43 +9,54 @@
 #include <functional>
 
 namespace Utilities{
-
-	class MethodDescriptionImpl: public gppUnit::MethodDescription, 
-				public gppUnit::ReportResult,
-				public gppUnit::TimeReport{
+	struct MethodData{
 		std::string title;
-		gppUnit::Notification& notify;
-
 		size_t resultCount;
-		void Result(const gppUnit::TestResult& result){ 
-			resultCount+=1; 
-			notify.Result(result);
-		}
-
 		double reportedTime;
-		void reportTime(double run_time){ reportedTime=run_time; }
 
-		std::string name() const { return title; }
-		size_t results() const { return resultCount; }
-		virtual double run_time() const { return reportedTime; }
-	public:
-		explicit MethodDescriptionImpl(const std::string& name, gppUnit::Notification& notify):title(name),
-			notify(notify),
+		void incrementCount(){ resultCount+=1; }
+		explicit MethodData(const std::string& name):title(name),
 			resultCount(0),
 			reportedTime(0){}
 	};
+	class MethodResultCounter: public gppUnit::MethodDescription, 
+				public gppUnit::ReportResult,
+				public gppUnit::TimeReport{
 
-	void TestCaseCaller::timeMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report){
-		method.forward();
-		report.reportTime(0.1);
+		MethodData methodData;
+		gppUnit::Notification& notify;
+
+		void Result(const gppUnit::TestResult& result){ 
+			methodData.incrementCount();
+			notify.Result(result);
+		}
+		void reportTime(double run_time){ methodData.reportedTime=run_time; }
+
+		std::string name() const { return methodData.title; }
+		size_t results() const { return methodData.resultCount; }
+		virtual double run_time() const { return methodData.reportedTime; }
+	public:
+		MethodResultCounter(const std::string& name, gppUnit::Notification& notify):methodData(name),
+			notify(notify){}
+	};
+
+	void TestCaseCaller::privateTimeMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report){
+		timer->timeMethod(method,report);
+	}
+	void TestCaseCaller::privateProtectMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report){
+		try{
+			privateTimeMethod(method,report);
+		} catch(std::exception& e){
+			notify->Exception(e.what());
+		}
 	}
 
 	void TestCaseCaller::callMethod(gppUnit::TestCaseMethodCaller& method){
-		MethodDescriptionImpl desc(method.methodName(),*notify);
+		MethodResultCounter desc(method.methodName(),*notify);
 		method.setReport(&desc);
 		if (notify) notify->StartMethod(desc);
 
-		timer->timeMethod(method,desc);
+		privateProtectMethod(method,desc);
 
 		if (notify) notify->EndMethod();
 	}

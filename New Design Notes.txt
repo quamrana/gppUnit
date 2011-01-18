@@ -26,7 +26,7 @@ New Design Notes
 	but real code can use a real timer.
 	Description now reports name, number of results and time.
 
-$007	Test Result has full report
+#$007	Test Result has full report
 	Test Result consists of:
 		boolean - summary
 		tag msg - optional message from programmer
@@ -73,6 +73,9 @@ $015	Hamcrest style matchers (I)
 	
 $016	Hamcrest style matchers (II)
 	Add TestResult so that automated results can describe themselves
+
+$	Catch exceptions from calls to notify
+
 
 Infrastructure
 #	Hudson

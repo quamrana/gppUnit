@@ -193,6 +193,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TestExceptionCatching.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Win32\TestMethodTimer.cpp"
 				>
 				<FileConfiguration

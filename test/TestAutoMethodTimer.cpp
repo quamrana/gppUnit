@@ -2,21 +2,13 @@
 #include "src\AutoMethodTimer.h"
 #include "src\TimeReport.h"
 
-#include "AutoRun.h"
+#include "TestUtilities.h"
 
 #include <sstream>
 
 namespace TestAutoMethodTimer{
-	class MockAuto{
-		gppUnit::TimeReport& report;
-	public:
-		explicit MockAuto(gppUnit::TimeReport& report):report(report){}
-		~MockAuto(){
-			report.reportTime(0);
-		}
-	};
 	class Test: public Auto::TestCase, gppUnit::MethodCaller, gppUnit::TimeReport{
-		gppUnit::AutoMethodTimer<MockAuto> mockauto;
+		gppUnit::AutoMethodTimer<Utilities::MockAuto<0> > mockauto;
 		gppUnit::MethodTimer* caller;
 		std::stringstream strm;
 

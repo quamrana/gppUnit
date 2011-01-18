@@ -22,6 +22,7 @@ namespace {
 	class TestRunTime: public Utilities::TestCaseCaller, gppUnit::Notification{
 		std::stringstream collect;
 		MockTestCase testcase;
+		gppUnit::AutoMethodTimer<Utilities::MockAuto<11> > autoTimer;
 		const gppUnit::MethodDescription* description;
 
 		void StartMethod(const gppUnit::MethodDescription& desc){
@@ -51,6 +52,7 @@ namespace {
 		void test(){
 			givenMockTestCase();
 			givenTimeToReport(1.1);
+			givenTimer(&autoTimer);
 			whenCalled();
 			thenEachMethodStartedAndEndedWithRunTime();
 		}
