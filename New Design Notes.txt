@@ -52,8 +52,8 @@ $010	Report each class
 		I will want to separate the namespace from the test name.
 		This could allow 'collecting' tests within suites.
 
-$011	Enhance ClassDescriptionReport by reporting each called method.
-	After EndMethod is notified, it can be collected by ClassDescription
+$011	Enhance ClassDescription by reporting each called method.
+	After EndMethod is notified, method data can be collected by ClassDescription
 	ClassDescription should now also have:
 		number of methods run (2 or 3)
 		accumulated time
@@ -63,6 +63,8 @@ $012	Report whole project
 	The description reported has project name, number of classes
 	Plus accumulated time, plus number of test results.
 	Plus elapsed time.
+	After EndClass is notified, data is collected by the ProjectDescription
+	Make sure that these descriptions and runners are part of the source code and not in test code!
 
 $013	Auto-Collect tests
 	Tests can be collected to a global vector.
@@ -84,6 +86,7 @@ $016	Hamcrest style matchers (II)
 
 $	Catch exceptions from calls to notify
 
+$	Make sure Method and Class Descriptions can be copied and saved in vectors.
 
 Infrastructure
 #	Hudson

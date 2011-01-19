@@ -54,7 +54,6 @@ namespace Utilities{
 
 		void Report(const gppUnit::TestResult&);
 		gppUnit::ReportResult* reporter;
-		bool goodReport;
 	protected:
 		void add(gppUnit::PrototypeTestCase& testcase){
 			cases.push_back(&testcase);

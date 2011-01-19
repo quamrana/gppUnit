@@ -13,11 +13,19 @@ namespace Utilities{
 	struct MethodData{
 		std::string title;
 		size_t resultCount;
+		bool goodReport;
 		double reportedTime;
 
-		void incrementCount(){ resultCount+=1; }
+		void accrueResult(const gppUnit::TestResult& result){
+			resultCount+=1;
+			goodReport&=result.result;
+		}
+		void checkForExceptions(bool noExceptions){
+			goodReport&=noExceptions;
+		}
 		explicit MethodData(const std::string& name):title(name),
 			resultCount(0),
+			goodReport(true),
 			reportedTime(0){}
 	};
 	class MethodResultCounter: public gppUnit::MethodDescription, 
@@ -28,7 +36,7 @@ namespace Utilities{
 		gppUnit::Notification& notify;
 
 		void Report(const gppUnit::TestResult& result){ 
-			methodData.incrementCount();
+			methodData.accrueResult(result);
 			notify.Result(result);
 		}
 		void reportTime(double run_time){ methodData.reportedTime=run_time; }
@@ -39,11 +47,14 @@ namespace Utilities{
 	public:
 		MethodResultCounter(const std::string& name, gppUnit::Notification& notify):methodData(name),
 			notify(notify){}
+		void checkForExceptions(bool noExceptions){
+			methodData.checkForExceptions(noExceptions);
+		}
+		bool methodSummary() const { return methodData.goodReport; }
 	};
 
 	void TestCaseCaller::Report(const gppUnit::TestResult& result){
 		reporter->Report(result);
-		goodReport&=result.result;
 	}
 	void TestCaseCaller::privateTimeMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report){
 		timer->timeMethod(method,report);
@@ -51,10 +62,9 @@ namespace Utilities{
 
 	bool TestCaseCaller::privateProtectMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report){
 		bool result=false;
-		goodReport=true;
 		try{
 			privateTimeMethod(method,report);
-			result=goodReport;
+			result=true;
 		} catch(std::exception& e){
 			reportException(e.what());
 		} catch (std::string& e) {
@@ -76,10 +86,11 @@ namespace Utilities{
 		if (notify) notify->StartMethod(desc);
 
 		bool result=privateProtectMethod(method,desc);
+		desc.checkForExceptions(result);
 
 		if (notify) notify->EndMethod();
 
-		return result;
+		return desc.methodSummary();
 	}
 
 	void TestCaseCaller::call(gppUnit::PrototypeTestCase* testcase){
