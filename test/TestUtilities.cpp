@@ -53,9 +53,6 @@ namespace Utilities{
 		bool methodSummary() const { return methodData.goodReport; }
 	};
 
-	void TestCaseCaller::Report(const gppUnit::TestResult& result){
-		reporter->Report(result);
-	}
 	void TestCaseCaller::privateTimeMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report){
 		timer->timeMethod(method,report);
 	}
@@ -81,8 +78,7 @@ namespace Utilities{
 
 	bool TestCaseCaller::callMethod(gppUnit::TestCaseMethodCaller& method){
 		MethodResultCounter desc(method.methodName(),*notify);
-		reporter=&desc;
-		method.setReport(this);
+		method.setReport(&desc);
 		if (notify) notify->StartMethod(desc);
 
 		bool result=privateProtectMethod(method,desc);

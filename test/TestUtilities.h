@@ -31,7 +31,7 @@ namespace Utilities{
 		int timeParameter(){ return TIME; }
 	};
 
-	class TestCaseCaller: public Auto::TestCase, gppUnit::ReportResult{
+	class TestCaseCaller: public Auto::TestCase{
 		gppUnit::TestCaseList cases;
 
 		void privateTimeMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report);
@@ -52,8 +52,6 @@ namespace Utilities{
 
 		gppUnit::AutoMethodTimer<MockAuto<1> > autoTimer;
 
-		void Report(const gppUnit::TestResult&);
-		gppUnit::ReportResult* reporter;
 	protected:
 		void add(gppUnit::PrototypeTestCase& testcase){
 			cases.push_back(&testcase);
