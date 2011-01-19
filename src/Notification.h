@@ -11,10 +11,12 @@ namespace gppUnit{
 	protected:
 		virtual ~Notification(){}
 	public:
+		virtual void StartClass(const std::string /* name */){}
 		virtual void StartMethod(const MethodDescription&){}
 		virtual void Result(const TestResult&){}
 		virtual void Exception(const std::string& /* what */){}
 		virtual void EndMethod(){}
+		virtual void EndClass(){}
 	};
 }
 

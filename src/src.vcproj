@@ -164,6 +164,18 @@
 					/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath=".\Win32\TypeInformation.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="."
+					/>
+				</FileConfiguration>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -212,6 +224,10 @@
 			</File>
 			<File
 				RelativePath=".\TimeReport.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TypeInformation.h"
 				>
 			</File>
 		</Filter>

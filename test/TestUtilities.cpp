@@ -3,11 +3,13 @@
 #include "src\MethodDescription.h"
 #include "src\ReportResult.h"
 #include "src\TestResult.h"
+#include "src\TypeInformation.h"
 
 #include "TestUtilities.h"
 
 #include <algorithm>
 #include <functional>
+#include <typeinfo>
 
 namespace Utilities{
 	struct MethodData{
@@ -76,20 +78,23 @@ namespace Utilities{
 		return result;
 	}
 
+	// TODO: most of this could be refactored into MethodResultCounter?
+	// just needs timer?
 	bool TestCaseCaller::callMethod(gppUnit::TestCaseMethodCaller& method){
 		MethodResultCounter desc(method.methodName(),*notify);
 		method.setReport(&desc);
-		if (notify) notify->StartMethod(desc);
+		notify->StartMethod(desc);
 
 		bool result=privateProtectMethod(method,desc);
 		desc.checkForExceptions(result);
 
-		if (notify) notify->EndMethod();
+		notify->EndMethod();
 
 		return desc.methodSummary();
 	}
 
 	void TestCaseCaller::call(gppUnit::PrototypeTestCase* testcase){
+		notify->StartClass(gppUnit::demangleTypeName(typeid(*testcase).name()));
 		gppUnit::SetupCaller setup(*testcase);
 		gppUnit::TestCaller test(*testcase);
 		gppUnit::TeardownCaller teardown(*testcase);
@@ -100,6 +105,7 @@ namespace Utilities{
 		}
 
 		callMethod(teardown);
+		notify->EndClass();
 	}
 	void TestCaseCaller::whenCalled(){
 		std::for_each(cases.begin(),cases.end(),

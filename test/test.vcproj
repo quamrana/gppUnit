@@ -209,6 +209,22 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\Win32\TestQuotesToParentheses.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="."
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\TestStartEndClass.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\TestStartEndMethod.cpp"
 				>
 			</File>
@@ -222,6 +238,10 @@
 			</File>
 			<File
 				RelativePath=".\TestTimedMethod.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\TestTypeInformation.cpp"
 				>
 			</File>
 			<File
