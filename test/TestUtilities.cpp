@@ -36,8 +36,10 @@ namespace Utilities{
 				public gppUnit::ReportResult,
 				public gppUnit::TimeReport{
 
-		MethodData methodData;
+		gppUnit::TestCaseMethodCaller& method;
 		gppUnit::Notification& notify;
+		gppUnit::MethodTimer& timer;
+		MethodData methodData;
 
 		void Report(const gppUnit::TestResult& result){ 
 			methodData.accrueResult(result);
@@ -48,11 +50,43 @@ namespace Utilities{
 		std::string name() const { return methodData.title; }
 		size_t results() const { return methodData.resultCount; }
 		virtual double run_time() const { return methodData.reportedTime; }
+
+		template<typename T>
+		void reportException(T what){
+			std::stringstream strm;
+			strm << what;
+			notify.Exception(strm.str());
+		}
 	public:
-		MethodResultCounter(const std::string& name, gppUnit::Notification& notify):methodData(name),
-			notify(notify){}
-		void checkForExceptions(bool noExceptions){
-			methodData.checkForExceptions(noExceptions);
+		MethodResultCounter(gppUnit::TestCaseMethodCaller& method,
+			gppUnit::Notification& notify, 
+			gppUnit::MethodTimer& timer):method(method),
+			notify(notify),
+			timer(timer),
+			methodData(method.methodName())
+		{
+			method.setReport(this);
+			notify.StartMethod(*this);
+		}
+		~MethodResultCounter(){ notify.EndMethod(); }
+		bool protectMethod(){
+			bool result=false;
+			try{
+				timer.timeMethod(method,*this);
+				result=true;
+			} catch(std::exception& e){
+				reportException(e.what());
+			} catch (std::string& e) {
+				reportException(e);
+			} catch (const char* e) {
+				reportException(e);
+			} catch (int e) {
+				reportException(e);
+			} catch (...) {
+				reportException("Unknown Exception");
+			}
+			methodData.checkForExceptions(result);
+			return result;
 		}
 		MethodData methodSummary() const { return methodData; }
 	};
@@ -96,40 +130,10 @@ namespace Utilities{
 		bool add(const MethodData& data){ methodData.push_back(data); return data.goodReport; }
 	};
 
-	void TestCaseCaller::privateTimeMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report){
-		timer->timeMethod(method,report);
-	}
-
-	bool TestCaseCaller::privateProtectMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report){
-		bool result=false;
-		try{
-			privateTimeMethod(method,report);
-			result=true;
-		} catch(std::exception& e){
-			reportException(e.what());
-		} catch (std::string& e) {
-			reportException(e);
-		} catch (const char* e) {
-			reportException(e);
-		} catch (int e) {
-			reportException(e);
-		} catch (...) {
-			reportException("Unknown Exception");
-		}
-		return result;
-	}
-
-	// TODO: most of this could be refactored into MethodResultCounter?
-	// just needs timer?
 	MethodData TestCaseCaller::callMethod(gppUnit::TestCaseMethodCaller& method){
-		MethodResultCounter desc(method.methodName(),*notify);
-		method.setReport(&desc);
-		notify->StartMethod(desc);
+		MethodResultCounter desc(method,*notify,*timer);
 
-		bool result=privateProtectMethod(method,desc);
-		desc.checkForExceptions(result);
-
-		notify->EndMethod();
+		desc.protectMethod();
 
 		return desc.methodSummary();
 	}

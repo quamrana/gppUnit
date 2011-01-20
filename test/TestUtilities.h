@@ -37,13 +37,6 @@ namespace Utilities{
 
 		void privateTimeMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report);
 
-		template<typename T>
-		void reportException(T what){
-			std::stringstream strm;
-			strm << what;
-			notify->Exception(strm.str());
-		}
-		bool privateProtectMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report);
 		MethodData callMethod(gppUnit::TestCaseMethodCaller& method);
 		void call(gppUnit::PrototypeTestCase* testcase);
 
