@@ -52,7 +52,7 @@ New Design Notes
 		I will want to separate the namespace from the test name.
 		This could allow 'collecting' tests within suites.
 
-$011	Enhance ClassDescription by reporting each called method.
+#$011	Enhance ClassDescription by reporting each called method.
 	After EndMethod is notified, method data can be collected by ClassDescription
 	ClassDescription should now also have:
 		number of methods run (2 or 3)

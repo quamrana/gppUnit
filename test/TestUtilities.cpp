@@ -63,6 +63,12 @@ namespace Utilities{
 			return init+description.resultCount;
 		}
 	};
+	template<typename T>
+	struct RunTime{
+		double operator()(double init, const T& description){
+			return init+description.reportedTime;
+		}
+	};
 
 	class ClassRunner: public gppUnit::ClassDescription{
 		gppUnit::Notification& notify;
@@ -70,15 +76,14 @@ namespace Utilities{
 		std::string title;
 		std::vector<MethodData> methodData;
 
-		// TODO: This will be vector::size()
-		//size_t methodCount;
 		std::string name() const { return title; }
 		size_t methods() const { return methodData.size(); }
 		size_t results() const { 
 			return std::accumulate(methodData.begin(),methodData.end(),long(),Results<MethodData>());
-			//return 0; 
 		}
-		double run_time() const { return 0; }
+		double run_time() const { 
+			return std::accumulate(methodData.begin(),methodData.end(),double(),RunTime<MethodData>());
+		}
 	public:
 		ClassRunner(gppUnit::Notification& notify, 
 			gppUnit::PrototypeTestCase& testcase):notify(notify),
@@ -88,7 +93,6 @@ namespace Utilities{
 			notify.StartClass(*this);
 		}
 		~ClassRunner(){ notify.EndClass(); }
-		//void count(){ methodCount+=1; }
 		bool add(const MethodData& data){ methodData.push_back(data); return data.goodReport; }
 	};
 
@@ -130,21 +134,20 @@ namespace Utilities{
 		return desc.methodSummary();
 	}
 
+	// TODO: most of this could be refactored into ClassRunner?
 	void TestCaseCaller::call(gppUnit::PrototypeTestCase* testcase){
 		ClassRunner runner(*notify,*testcase);
-		//notify->StartClass(gppUnit::demangleTypeName(typeid(*testcase).name()));
+
 		gppUnit::SetupCaller setup(*testcase);
 		gppUnit::TestCaller test(*testcase);
 		gppUnit::TeardownCaller teardown(*testcase);
 
-		//runner.count();
 		if (runner.add(callMethod(setup)))
 		{
 			runner.add(callMethod(test));
 		}
 
 		runner.add(callMethod(teardown));
-		//notify->EndClass();
 	}
 	void TestCaseCaller::whenCalled(){
 		std::for_each(cases.begin(),cases.end(),

@@ -17,6 +17,7 @@ namespace TestStartEndClass{
 		const gppUnit::ClassDescription* classDesc;
 		size_t methods;
 		size_t results;
+		double run_time;
 	protected:
 		std::stringstream collect;
 		virtual void StartClass(const gppUnit::ClassDescription& desc){
@@ -27,6 +28,7 @@ namespace TestStartEndClass{
 			collect << "end.";
 			methods=classDesc->methods();
 			results=classDesc->results();
+			run_time=classDesc->run_time();
 			classDesc=0;
 		}
 	private:
@@ -35,6 +37,7 @@ namespace TestStartEndClass{
 			givenNotification(this);
 			methods=0;
 			results=0;
+			run_time=-1;
 		}
 		void thenEachClassStartedAndEnded(){
 			confirm.equals("TestStartEndClass::MockTestCase.end.",collect.str(),"Should have recorded test");
@@ -45,12 +48,20 @@ namespace TestStartEndClass{
 		void thenOneTestResult(){
 			confirm.equals(1,results,"thenOneTestResult");
 		}
+		void thenRunTimeIsThreeTimesStandard(){
+			double expected=0.3;
+			bool result=
+				(expected-0.001<run_time) &&
+				(run_time<expected+0.001);
+			confirm.isTrue(result,"thenRunTimeIsThreeTimesStandard");
+		}
 		void test(){
 			givenTestCase();
 			whenCalled();
 			thenEachClassStartedAndEnded();
 			thenThreeMethodsCalled();
 			thenOneTestResult();
+			thenRunTimeIsThreeTimesStandard();
 		}
 	}GPPUNIT_INSTANCE;
 }
