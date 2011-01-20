@@ -4,6 +4,7 @@
 #include "src\ReportResult.h"
 #include "src\TestResult.h"
 #include "src\TypeInformation.h"
+#include "src\ClassDescription.h"
 
 #include "TestUtilities.h"
 
@@ -55,6 +56,26 @@ namespace Utilities{
 		bool methodSummary() const { return methodData.goodReport; }
 	};
 
+	class ClassRunner: public gppUnit::ClassDescription{
+		gppUnit::Notification& notify;
+		gppUnit::PrototypeTestCase& testcase;
+		std::string title;
+
+		std::string name() const { return title; }
+		size_t methods() const { return 0; }
+		size_t results() const { return 0; }
+		double run_time() const { return 0; }
+	public:
+		ClassRunner(gppUnit::Notification& notify, 
+			gppUnit::PrototypeTestCase& testcase):notify(notify),
+			testcase(testcase),
+			title(gppUnit::demangleTypeName(typeid(testcase).name()))
+		{
+			notify.StartClass(*this);
+		}
+		~ClassRunner(){ notify.EndClass(); }
+	};
+
 	void TestCaseCaller::privateTimeMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report){
 		timer->timeMethod(method,report);
 	}
@@ -94,7 +115,8 @@ namespace Utilities{
 	}
 
 	void TestCaseCaller::call(gppUnit::PrototypeTestCase* testcase){
-		notify->StartClass(gppUnit::demangleTypeName(typeid(*testcase).name()));
+		ClassRunner runner(*notify,*testcase);
+		//notify->StartClass(gppUnit::demangleTypeName(typeid(*testcase).name()));
 		gppUnit::SetupCaller setup(*testcase);
 		gppUnit::TestCaller test(*testcase);
 		gppUnit::TeardownCaller teardown(*testcase);
@@ -105,7 +127,7 @@ namespace Utilities{
 		}
 
 		callMethod(teardown);
-		notify->EndClass();
+		//notify->EndClass();
 	}
 	void TestCaseCaller::whenCalled(){
 		std::for_each(cases.begin(),cases.end(),

@@ -1,4 +1,5 @@
 #include "src\TestCase.h"
+#include "src\ClassDescription.h"
 
 #include "TestUtilities.h"
 
@@ -10,8 +11,8 @@ namespace TestStartEndClass{
 		MockTestCase testcase;
 	protected:
 		std::stringstream collect;
-		virtual void StartClass(const std::string name){
-			collect << name << '.';
+		virtual void StartClass(const gppUnit::ClassDescription& desc){
+			collect << desc.name() << '.';
 		}
 		virtual void EndClass(){
 			collect << "end.";

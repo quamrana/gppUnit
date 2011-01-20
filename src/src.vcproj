@@ -187,6 +187,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ClassDescription.h"
+				>
+			</File>
+			<File
 				RelativePath=".\MethodCaller.h"
 				>
 			</File>

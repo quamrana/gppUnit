@@ -4,6 +4,7 @@
 #include <string>
 
 namespace gppUnit{
+	class ClassDescription;
 	class MethodDescription;
 	struct TestResult;
 
@@ -11,7 +12,7 @@ namespace gppUnit{
 	protected:
 		virtual ~Notification(){}
 	public:
-		virtual void StartClass(const std::string /* name */){}
+		virtual void StartClass(const ClassDescription&){}
 		virtual void StartMethod(const MethodDescription&){}
 		virtual void Result(const TestResult&){}
 		virtual void Exception(const std::string& /* what */){}
