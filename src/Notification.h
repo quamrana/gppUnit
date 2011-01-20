@@ -4,6 +4,7 @@
 #include <string>
 
 namespace gppUnit{
+	class ProjectDescription;
 	class ClassDescription;
 	class MethodDescription;
 	struct TestResult;
@@ -12,12 +13,14 @@ namespace gppUnit{
 	protected:
 		virtual ~Notification(){}
 	public:
+		virtual void StartProject(const ProjectDescription&){}
 		virtual void StartClass(const ClassDescription&){}
 		virtual void StartMethod(const MethodDescription&){}
 		virtual void Result(const TestResult&){}
 		virtual void Exception(const std::string& /* what */){}
 		virtual void EndMethod(){}
 		virtual void EndClass(){}
+		virtual void EndProject(){}
 	};
 }
 
