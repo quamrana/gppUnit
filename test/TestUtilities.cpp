@@ -104,7 +104,7 @@ namespace Utilities{
 		}
 	};
 
-	class ClassRunner: public gppUnit::ClassDescription{
+	class ClassRunner: public gppUnit::ClassDescription, public gppUnit::Runner{
 		gppUnit::Notification& notify;
 		gppUnit::PrototypeTestCase& testcase;
 		gppUnit::MethodTimer& timer;
@@ -139,8 +139,8 @@ namespace Utilities{
 			notify.StartClass(*this);
 		}
 		~ClassRunner(){ notify.EndClass(); }
-		bool run(gppUnit::TestCaseMethodCaller& method){
-			return add(callMethod(method));
+		bool run(gppUnit::TestCaseMethodCaller* method){
+			return add(callMethod(*method));
 		}
 	};
 
@@ -149,16 +149,15 @@ namespace Utilities{
 	void TestCaseCaller::call(gppUnit::PrototypeTestCase* testcase){
 		ClassRunner runner(*notify,*testcase,*timer);
 
-		gppUnit::SetupCaller setup(*testcase);
-		gppUnit::TestCaller test(*testcase);
-		gppUnit::TeardownCaller teardown(*testcase);
+		gppUnit::SetupCaller setup(*testcase,runner);
+		gppUnit::TestCaller test(*testcase,runner);
+		gppUnit::TeardownCaller teardown(*testcase,runner);
 
-		if (runner.run(setup))
+		if (setup())
 		{
-			runner.run(test);
+			test();
 		}
-
-		runner.run(teardown);
+		teardown();
 	}
 	void TestCaseCaller::whenCalled(){
 		std::for_each(cases.begin(),cases.end(),
