@@ -1,3 +1,6 @@
+#ifndef CLASSDESCRIPTION_H_BDC873D7_B4F5_4B0B_AB40_7C3647B5CC28
+#define CLASSDESCRIPTION_H_BDC873D7_B4F5_4B0B_AB40_7C3647B5CC28
+
 #include <string>
 
 namespace gppUnit{
@@ -11,3 +14,5 @@ namespace gppUnit{
 		virtual double run_time() const =0;
 	};
 }
+
+#endif // CLASSDESCRIPTION_H_BDC873D7_B4F5_4B0B_AB40_7C3647B5CC28
