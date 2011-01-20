@@ -31,6 +31,7 @@ namespace Utilities{
 		int timeParameter(){ return TIME; }
 	};
 
+	struct MethodData;
 	class TestCaseCaller: public Auto::TestCase{
 		gppUnit::TestCaseList cases;
 
@@ -43,7 +44,7 @@ namespace Utilities{
 			notify->Exception(strm.str());
 		}
 		bool privateProtectMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report);
-		bool callMethod(gppUnit::TestCaseMethodCaller& method);
+		MethodData callMethod(gppUnit::TestCaseMethodCaller& method);
 		void call(gppUnit::PrototypeTestCase* testcase);
 
 		gppUnit::Notification* notify;

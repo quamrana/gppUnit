@@ -10,6 +10,7 @@
 
 #include <algorithm>
 #include <functional>
+#include <numeric>
 #include <typeinfo>
 
 namespace Utilities{
@@ -53,17 +54,30 @@ namespace Utilities{
 		void checkForExceptions(bool noExceptions){
 			methodData.checkForExceptions(noExceptions);
 		}
-		bool methodSummary() const { return methodData.goodReport; }
+		MethodData methodSummary() const { return methodData; }
+	};
+
+	template<typename T>
+	struct Results{
+		size_t operator()(size_t init, const T& description){
+			return init+description.resultCount;
+		}
 	};
 
 	class ClassRunner: public gppUnit::ClassDescription{
 		gppUnit::Notification& notify;
 		gppUnit::PrototypeTestCase& testcase;
 		std::string title;
+		std::vector<MethodData> methodData;
 
+		// TODO: This will be vector::size()
+		//size_t methodCount;
 		std::string name() const { return title; }
-		size_t methods() const { return 0; }
-		size_t results() const { return 0; }
+		size_t methods() const { return methodData.size(); }
+		size_t results() const { 
+			return std::accumulate(methodData.begin(),methodData.end(),long(),Results<MethodData>());
+			//return 0; 
+		}
 		double run_time() const { return 0; }
 	public:
 		ClassRunner(gppUnit::Notification& notify, 
@@ -74,6 +88,8 @@ namespace Utilities{
 			notify.StartClass(*this);
 		}
 		~ClassRunner(){ notify.EndClass(); }
+		//void count(){ methodCount+=1; }
+		bool add(const MethodData& data){ methodData.push_back(data); return data.goodReport; }
 	};
 
 	void TestCaseCaller::privateTimeMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report){
@@ -101,7 +117,7 @@ namespace Utilities{
 
 	// TODO: most of this could be refactored into MethodResultCounter?
 	// just needs timer?
-	bool TestCaseCaller::callMethod(gppUnit::TestCaseMethodCaller& method){
+	MethodData TestCaseCaller::callMethod(gppUnit::TestCaseMethodCaller& method){
 		MethodResultCounter desc(method.methodName(),*notify);
 		method.setReport(&desc);
 		notify->StartMethod(desc);
@@ -121,12 +137,13 @@ namespace Utilities{
 		gppUnit::TestCaller test(*testcase);
 		gppUnit::TeardownCaller teardown(*testcase);
 
-		if (callMethod(setup))
+		//runner.count();
+		if (runner.add(callMethod(setup)))
 		{
-			callMethod(test);
+			runner.add(callMethod(test));
 		}
 
-		callMethod(teardown);
+		runner.add(callMethod(teardown));
 		//notify->EndClass();
 	}
 	void TestCaseCaller::whenCalled(){
