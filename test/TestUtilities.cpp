@@ -5,6 +5,7 @@
 #include "src\TestResult.h"
 #include "src\TypeInformation.h"
 #include "src\ClassDescription.h"
+#include "src\MethodResult.h"
 
 #include "TestUtilities.h"
 
@@ -14,82 +15,6 @@
 #include <typeinfo>
 
 namespace Utilities{
-	struct MethodData{
-		std::string title;
-		size_t resultCount;
-		bool goodReport;
-		double reportedTime;
-
-		void accrueResult(const gppUnit::TestResult& result){
-			resultCount+=1;
-			goodReport&=result.result;
-		}
-		void checkForExceptions(bool noExceptions){
-			goodReport&=noExceptions;
-		}
-		explicit MethodData(const std::string& name):title(name),
-			resultCount(0),
-			goodReport(true),
-			reportedTime(0){}
-	};
-	class MethodResultCounter: public gppUnit::MethodDescription, 
-				public gppUnit::ReportResult,
-				public gppUnit::TimeReport{
-
-		gppUnit::TestCaseMethodCaller& method;
-		gppUnit::Notification& notify;
-		gppUnit::MethodTimer& timer;
-		MethodData methodData;
-
-		void Report(const gppUnit::TestResult& result){ 
-			methodData.accrueResult(result);
-			notify.Result(result);
-		}
-		void reportTime(double run_time){ methodData.reportedTime=run_time; }
-
-		std::string name() const { return methodData.title; }
-		size_t results() const { return methodData.resultCount; }
-		virtual double run_time() const { return methodData.reportedTime; }
-
-		template<typename T>
-		void reportException(T what){
-			std::stringstream strm;
-			strm << what;
-			notify.Exception(strm.str());
-		}
-	public:
-		MethodResultCounter(gppUnit::TestCaseMethodCaller& method,
-			gppUnit::Notification& notify, 
-			gppUnit::MethodTimer& timer):method(method),
-			notify(notify),
-			timer(timer),
-			methodData(method.methodName())
-		{
-			method.setReport(this);
-			notify.StartMethod(*this);
-		}
-		~MethodResultCounter(){ notify.EndMethod(); }
-		bool protectMethod(){
-			bool result=false;
-			try{
-				timer.timeMethod(method,*this);
-				result=true;
-			} catch(std::exception& e){
-				reportException(e.what());
-			} catch (std::string& e) {
-				reportException(e);
-			} catch (const char* e) {
-				reportException(e);
-			} catch (int e) {
-				reportException(e);
-			} catch (...) {
-				reportException("Unknown Exception");
-			}
-			methodData.checkForExceptions(result);
-			return result;
-		}
-		MethodData methodSummary() const { return methodData; }
-	};
 
 	template<typename T>
 	struct Results{
@@ -109,25 +34,25 @@ namespace Utilities{
 		gppUnit::PrototypeTestCase& testcase;
 		gppUnit::MethodTimer& timer;
 		std::string title;
-		std::vector<MethodData> methodData;
+		std::vector<gppUnit::MethodData> methodData;
 
 		std::string name() const { return title; }
 		size_t methods() const { return methodData.size(); }
 		size_t results() const { 
-			return std::accumulate(methodData.begin(),methodData.end(),long(),Results<MethodData>());
+			return std::accumulate(methodData.begin(),methodData.end(),long(),Results<gppUnit::MethodData>());
 		}
 		double run_time() const { 
-			return std::accumulate(methodData.begin(),methodData.end(),double(),RunTime<MethodData>());
+			return std::accumulate(methodData.begin(),methodData.end(),double(),RunTime<gppUnit::MethodData>());
 		}
 
-		MethodData callMethod(gppUnit::TestCaseMethodCaller& method){
-			MethodResultCounter desc(method,notify,timer);
+		gppUnit::MethodData callMethod(gppUnit::TestCaseMethodCaller& method){
+			gppUnit::MethodResult desc(method,notify,timer);
 
 			desc.protectMethod();
 
 			return desc.methodSummary();
 		}
-		bool add(const MethodData& data){ methodData.push_back(data); return data.goodReport; }
+		bool add(const gppUnit::MethodData& data){ methodData.push_back(data); return data.goodReport; }
 	public:
 		ClassRunner(gppUnit::Notification& notify, 
 			gppUnit::PrototypeTestCase& testcase,

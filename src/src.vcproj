@@ -48,6 +48,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="4"
 				DebugInformationFormat="4"
+				DisableSpecificWarnings="4512"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -153,6 +154,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MethodResult.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Win32\MethodTimer.cpp"
 				>
 				<FileConfiguration
@@ -200,6 +205,10 @@
 			</File>
 			<File
 				RelativePath=".\MethodNames.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MethodResult.h"
 				>
 			</File>
 			<File
