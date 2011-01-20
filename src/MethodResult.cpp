@@ -7,7 +7,7 @@
 
 namespace gppUnit{
 	void MethodData::accrueResult(const TestResult& result){
-		resultCount+=1;
+		results+=1;
 		goodReport&=result.result;
 	}
 

@@ -229,6 +229,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TestStartEndProject.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\TestTestCase.cpp"
 				>
 			</File>

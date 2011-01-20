@@ -14,7 +14,7 @@ namespace gppUnit{
 
 	struct MethodData{
 		std::string title;
-		size_t resultCount;
+		size_t results;
 		bool goodReport;
 		double reportedTime;
 
@@ -23,7 +23,7 @@ namespace gppUnit{
 			goodReport&=noExceptions;
 		}
 		explicit MethodData(const std::string& name):title(name),
-			resultCount(0),
+			results(0),
 			goodReport(true),
 			reportedTime(0){}
 	};
@@ -41,7 +41,7 @@ namespace gppUnit{
 		void reportTime(double run_time){ methodData.reportedTime=run_time; }
 
 		std::string name() const { return methodData.title; }
-		size_t results() const { return methodData.resultCount; }
+		size_t results() const { return methodData.results; }
 		virtual double run_time() const { return methodData.reportedTime; }
 
 		void Exception(const std::string& /* what */);

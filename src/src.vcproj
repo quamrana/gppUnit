@@ -220,6 +220,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ProjectDescription.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ReportResult.h"
 				>
 			</File>

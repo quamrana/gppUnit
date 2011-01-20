@@ -36,8 +36,6 @@ namespace Utilities{
 
 		void privateTimeMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report);
 
-		void call(gppUnit::PrototypeTestCase* testcase);
-
 		gppUnit::Notification* notify;
 		DestructableNotification emptyNotification;
 		gppUnit::MethodTimer* timer;
