@@ -107,6 +107,7 @@ namespace Utilities{
 	class ClassRunner: public gppUnit::ClassDescription{
 		gppUnit::Notification& notify;
 		gppUnit::PrototypeTestCase& testcase;
+		gppUnit::MethodTimer& timer;
 		std::string title;
 		std::vector<MethodData> methodData;
 
@@ -118,40 +119,46 @@ namespace Utilities{
 		double run_time() const { 
 			return std::accumulate(methodData.begin(),methodData.end(),double(),RunTime<MethodData>());
 		}
+
+		MethodData callMethod(gppUnit::TestCaseMethodCaller& method){
+			MethodResultCounter desc(method,notify,timer);
+
+			desc.protectMethod();
+
+			return desc.methodSummary();
+		}
+		bool add(const MethodData& data){ methodData.push_back(data); return data.goodReport; }
 	public:
 		ClassRunner(gppUnit::Notification& notify, 
-			gppUnit::PrototypeTestCase& testcase):notify(notify),
+			gppUnit::PrototypeTestCase& testcase,
+			gppUnit::MethodTimer& timer):notify(notify),
 			testcase(testcase),
+			timer(timer),
 			title(gppUnit::demangleTypeName(typeid(testcase).name()))
 		{
 			notify.StartClass(*this);
 		}
 		~ClassRunner(){ notify.EndClass(); }
-		bool add(const MethodData& data){ methodData.push_back(data); return data.goodReport; }
+		bool run(gppUnit::TestCaseMethodCaller& method){
+			return add(callMethod(method));
+		}
 	};
 
-	MethodData TestCaseCaller::callMethod(gppUnit::TestCaseMethodCaller& method){
-		MethodResultCounter desc(method,*notify,*timer);
-
-		desc.protectMethod();
-
-		return desc.methodSummary();
-	}
 
 	// TODO: most of this could be refactored into ClassRunner?
 	void TestCaseCaller::call(gppUnit::PrototypeTestCase* testcase){
-		ClassRunner runner(*notify,*testcase);
+		ClassRunner runner(*notify,*testcase,*timer);
 
 		gppUnit::SetupCaller setup(*testcase);
 		gppUnit::TestCaller test(*testcase);
 		gppUnit::TeardownCaller teardown(*testcase);
 
-		if (runner.add(callMethod(setup)))
+		if (runner.run(setup))
 		{
-			runner.add(callMethod(test));
+			runner.run(test);
 		}
 
-		runner.add(callMethod(teardown));
+		runner.run(teardown);
 	}
 	void TestCaseCaller::whenCalled(){
 		std::for_each(cases.begin(),cases.end(),

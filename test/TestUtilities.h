@@ -31,13 +31,11 @@ namespace Utilities{
 		int timeParameter(){ return TIME; }
 	};
 
-	struct MethodData;
 	class TestCaseCaller: public Auto::TestCase{
 		gppUnit::TestCaseList cases;
 
 		void privateTimeMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report);
 
-		MethodData callMethod(gppUnit::TestCaseMethodCaller& method);
 		void call(gppUnit::PrototypeTestCase* testcase);
 
 		gppUnit::Notification* notify;
