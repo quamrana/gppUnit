@@ -33,6 +33,10 @@ namespace Utilities{
 		gppUnit::Notification& notify;
 		gppUnit::PrototypeTestCase& testcase;
 		gppUnit::MethodTimer& timer;
+		gppUnit::SetupCaller setup;
+		gppUnit::TestCaller test;
+		gppUnit::TeardownCaller teardown;
+
 		std::string title;
 		std::vector<gppUnit::MethodData> methodData;
 
@@ -59,6 +63,9 @@ namespace Utilities{
 			gppUnit::MethodTimer& timer):notify(notify),
 			testcase(testcase),
 			timer(timer),
+			setup(testcase,*this),
+			test(testcase,*this),
+			teardown(testcase,*this),
 			title(gppUnit::demangleTypeName(typeid(testcase).name()))
 		{
 			notify.StartClass(*this);
@@ -67,23 +74,22 @@ namespace Utilities{
 		bool run(gppUnit::TestCaseMethodCaller* method){
 			return add(callMethod(*method));
 		}
+		void run(){
+			if (setup())
+			{
+				test();
+			}
+			teardown();
+		}
 	};
 
-
-	// TODO: most of this could be refactored into ClassRunner?
 	void TestCaseCaller::call(gppUnit::PrototypeTestCase* testcase){
 		ClassRunner runner(*notify,*testcase,*timer);
 
-		gppUnit::SetupCaller setup(*testcase,runner);
-		gppUnit::TestCaller test(*testcase,runner);
-		gppUnit::TeardownCaller teardown(*testcase,runner);
-
-		if (setup())
-		{
-			test();
-		}
-		teardown();
+		runner.run();
 	}
+	// TODO: Turn whenCalled inside out.
+	// Make a ClassRunner first, then hand it a testcase in each iteration.
 	void TestCaseCaller::whenCalled(){
 		std::for_each(cases.begin(),cases.end(),
 			std::bind1st(
