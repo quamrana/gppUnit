@@ -40,6 +40,7 @@ namespace Utilities{
 		gppUnit::Notification& notify;
 		gppUnit::PrototypeTestCase& testcase;
 		gppUnit::MethodTimer& timer;
+
 		gppUnit::SetupCaller setup;
 		gppUnit::TestCaller test;
 		gppUnit::TeardownCaller teardown;
@@ -49,12 +50,8 @@ namespace Utilities{
 
 		std::string name() const { return classData.title; }
 		size_t methods() const { return methodData.size(); }
-		size_t results() const { 
-			return classData.results;
-		}
-		double run_time() const { 
-			return classData.reportedTime;
-		}
+		size_t results() const { return classData.results; }
+		double run_time() const { return classData.reportedTime; }
 
 		gppUnit::MethodData callMethod(gppUnit::TestCaseMethodCaller& method){
 			gppUnit::MethodResult desc(method,notify,timer);
@@ -64,6 +61,16 @@ namespace Utilities{
 			return desc.methodSummary();
 		}
 		bool add(const gppUnit::MethodData& data){ methodData.push_back(data); return data.goodReport; }
+		bool run(gppUnit::TestCaseMethodCaller* method){
+			return add(callMethod(*method));
+		}
+		void runMethods(){
+			if (setup())
+			{
+				test();
+			}
+			teardown();
+		}
 		void calculateClassData(){
 			classData.results=std::accumulate(methodData.begin(),methodData.end(),long(),Results<gppUnit::MethodData>());
 			classData.reportedTime=std::accumulate(methodData.begin(),methodData.end(),double(),RunTime<gppUnit::MethodData>());
@@ -82,16 +89,8 @@ namespace Utilities{
 			notify.StartClass(*this);
 		}
 		~ClassRunner(){ notify.EndClass(); }
-		bool run(gppUnit::TestCaseMethodCaller* method){
-			return add(callMethod(*method));
-		}
 		void run(){
-			if (setup())
-			{
-				test();
-			}
-			teardown();
-
+			runMethods();
 			calculateClassData();
 		}
 		const ClassData& classSummary() const { return classData; }
@@ -109,6 +108,18 @@ namespace Utilities{
 		size_t classes() const { return cases.size(); }
 		size_t results() const { return projectData.results; }
 		double run_time() const { return projectData.reportedTime; }
+
+		void call(gppUnit::PrototypeTestCase* testcase){
+			ClassRunner runner(notify,*testcase,timer);
+
+			runner.run();
+
+			classData.push_back(runner.classSummary());
+		}
+		void calculateProjectData(){
+			projectData.results=std::accumulate(classData.begin(),classData.end(),long(),Results<ClassData>());
+			projectData.reportedTime=std::accumulate(classData.begin(),classData.end(),double(),RunTime<ClassData>());
+		}
 	public:
 		ProjectRunner(const std::string& title,
 			gppUnit::Notification& notify, 
@@ -122,15 +133,8 @@ namespace Utilities{
 		}
 		~ProjectRunner(){ notify.EndProject(); }
 
-		void call(gppUnit::PrototypeTestCase* testcase){
-			ClassRunner runner(notify,*testcase,timer);
-
-			runner.run();
-
-			classData.push_back(runner.classSummary());
-		}
 	// TODO: Turn run() inside out.
-	// Make a ClassRunner first, then hand it a testcase in each iteration.
+	// Make a ClassRunner a member, then hand it a testcase in each iteration.
 		void run(){
 			std::for_each(cases.begin(),cases.end(),
 				std::bind1st(
@@ -138,8 +142,7 @@ namespace Utilities{
 					this
 				)
 			);
-			projectData.results=std::accumulate(classData.begin(),classData.end(),long(),Results<ClassData>());
-			projectData.reportedTime=std::accumulate(classData.begin(),classData.end(),double(),RunTime<ClassData>());
+			calculateProjectData();
 		}
 	};
 
