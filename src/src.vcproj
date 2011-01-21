@@ -154,6 +154,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\CompositeNotification.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MethodNames.cpp"
 				>
 			</File>
@@ -205,6 +209,10 @@
 			</File>
 			<File
 				RelativePath=".\ClassRunner.h"
+				>
+			</File>
+			<File
+				RelativePath=".\CompositeNotification.h"
 				>
 			</File>
 			<File
