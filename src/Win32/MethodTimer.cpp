@@ -5,46 +5,46 @@
 
 #include <windows.h>
 
-namespace{
+namespace {
 	typedef long long time_interval;
 
-	struct GetFrequency{
+	struct GetFrequency {
 		LARGE_INTEGER freq;
-		GetFrequency(){
+		GetFrequency() {
 			QueryPerformanceFrequency(&freq);
 		}
-	}gf;
+	} gf;
 
 	// Returns implementation dependent time index
-	time_interval getTime(){
+	time_interval getTime() {
 		LARGE_INTEGER time;
 		QueryPerformanceCounter(&time);
 		return time.QuadPart;
 	}
 	// Returns difference between intervals in seconds
-	double timeDifference(time_interval first, time_interval second){
-		second-=first;
-		return double(second)/gf.freq.QuadPart;
+	double timeDifference(time_interval first, time_interval second) {
+		second -= first;
+		return double(second) / gf.freq.QuadPart;
 	}
 
-	class AutoTimer{
+	class AutoTimer {
 		gppUnit::TimeReport& report;
 		time_interval time;
 		AutoTimer& operator=(const AutoTimer&);
 	public:
-		explicit AutoTimer(gppUnit::TimeReport& report):report(report),
+		explicit AutoTimer(gppUnit::TimeReport& report): report(report),
 			time(getTime())
 		{}
-		~AutoTimer(){
-			report.reportTime(timeDifference(time,getTime()));
+		~AutoTimer() {
+			report.reportTime(timeDifference(time, getTime()));
 		}
 	};
 
 	gppUnit::AutoMethodTimer<AutoTimer> timer;
 }
 
-namespace gppUnit{
-	MethodTimer* MethodTimer::getTimer(){
+namespace gppUnit {
+	MethodTimer* MethodTimer::getTimer() {
 		return &timer;
 	}
 }

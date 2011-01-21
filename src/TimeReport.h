@@ -1,13 +1,13 @@
 #ifndef TIMEREPORT_H_EE79312F_5D82_4216_B11D_C0117EA21C11
 #define TIMEREPORT_H_EE79312F_5D82_4216_B11D_C0117EA21C11
 
-namespace gppUnit{
+namespace gppUnit {
 
-	class TimeReport{
+	class TimeReport {
 	protected:
-		virtual ~TimeReport(){}
+		virtual ~TimeReport() {}
 	public:
-		virtual void reportTime(double run_time)=0;
+		virtual void reportTime(double run_time) = 0;
 	};
 
 }

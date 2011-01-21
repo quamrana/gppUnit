@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace gppUnit{
+namespace gppUnit {
 	std::string demangleTypeName(const std::string&);
 }
 

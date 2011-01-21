@@ -6,11 +6,11 @@
 #include "DataStructures.h"
 
 
-namespace gppUnit{
+namespace gppUnit {
 	class Notification;
 	class MethodTimer;
 
-	class ProjectRunner: public ProjectDescription{
+	class ProjectRunner: public ProjectDescription {
 		Notification& notify;
 		MethodTimer& timer;
 		TestCaseList cases;
@@ -28,9 +28,9 @@ namespace gppUnit{
 		void calculateProjectData();
 	public:
 		ProjectRunner(const std::string& title,
-			gppUnit::Notification& notify, 
-			gppUnit::MethodTimer& timer,
-			const gppUnit::TestCaseList& cases);
+		              gppUnit::Notification& notify,
+		              gppUnit::MethodTimer& timer,
+		              const gppUnit::TestCaseList& cases);
 		~ProjectRunner();
 
 		bool run();

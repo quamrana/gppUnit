@@ -3,27 +3,27 @@
 
 #include <vector>
 
-namespace gppUnit{
-	class TestCase{
+namespace gppUnit {
+	class TestCase {
 	protected:
-		virtual ~TestCase(){}
+		virtual ~TestCase() {}
 	public:
-		virtual void setup(){}
-		virtual void test()=0;
-		virtual void teardown(){}
+		virtual void setup() {}
+		virtual void test() = 0;
+		virtual void teardown() {}
 	};
 
 	class ReportResult;
-	class ResultSetter{
+	class ResultSetter {
 	protected:
-		virtual ~ResultSetter(){}
+		virtual ~ResultSetter() {}
 	public:
-		virtual void setReport(ReportResult*)=0;
+		virtual void setReport(ReportResult*) = 0;
 	};
 
-	class PrototypeTestCase: public TestCase, public ResultSetter{
+	class PrototypeTestCase: public TestCase, public ResultSetter {
 	protected:
-		virtual ~PrototypeTestCase(){}
+		virtual ~PrototypeTestCase() {}
 	};
 
 	/**

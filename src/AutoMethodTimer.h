@@ -3,12 +3,12 @@
 
 #include "MethodCaller.h"
 
-namespace gppUnit{
+namespace gppUnit {
 	class TimeReport;
 
 	template<typename AUTO>
-	class AutoMethodTimer: public gppUnit::MethodTimer{
-		void timeMethod(gppUnit::MethodCaller& caller, gppUnit::TimeReport& report){
+	class AutoMethodTimer: public gppUnit::MethodTimer {
+		void timeMethod(gppUnit::MethodCaller& caller, gppUnit::TimeReport& report) {
 			AUTO timer(report);
 			caller.forward();
 		}

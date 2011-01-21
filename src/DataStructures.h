@@ -3,34 +3,34 @@
 
 #include <string>
 
-namespace gppUnit{
+namespace gppUnit {
 
-	struct MethodData{
+	struct MethodData {
 		std::string title;
 		size_t results;
 		bool goodReport;
 		double reportedTime;
 
-		void accrueResult(bool result){
-			results+=1;
-			goodReport&=result;
+		void accrueResult(bool result) {
+			results += 1;
+			goodReport &= result;
 		}
-		void checkForExceptions(bool noExceptions){
-			goodReport&=noExceptions;
+		void checkForExceptions(bool noExceptions) {
+			goodReport &= noExceptions;
 		}
-		explicit MethodData(const std::string& name):title(name),
+		explicit MethodData(const std::string& name): title(name),
 			results(0),
 			goodReport(true),
 			reportedTime(0)
 		{}
 	};
 
-	struct ClassData{
+	struct ClassData {
 		std::string title;
 		size_t results;
 		bool goodReport;
 		double reportedTime;
-		explicit ClassData(const std::string& title):title(title),
+		explicit ClassData(const std::string& title): title(title),
 			results(0),
 			goodReport(true),
 			reportedTime(-1)

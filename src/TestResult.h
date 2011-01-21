@@ -4,12 +4,12 @@
 #include <string>
 #include <vector>
 
-namespace gppUnit{
-	struct TestResult{
+namespace gppUnit {
+	struct TestResult {
 		bool result;
 		std::string message;
 		std::vector<std::string> description;
-		TestResult():result(false),message(),description(){}
+		TestResult(): result(false), message(), description() {}
 	};
 }
 

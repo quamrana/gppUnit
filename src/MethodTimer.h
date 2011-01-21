@@ -1,16 +1,16 @@
 #ifndef METHODTIMER_H_49D8BBA3_EEBD_4789_9ABE_6FE8687E9BD7
 #define METHODTIMER_H_49D8BBA3_EEBD_4789_9ABE_6FE8687E9BD7
 
-namespace gppUnit{
+namespace gppUnit {
 
 	class MethodCaller;
 	class TimeReport;
 
-	class MethodTimer{
+	class MethodTimer {
 	protected:
-		virtual ~MethodTimer(){}
+		virtual ~MethodTimer() {}
 	public:
-		virtual void timeMethod(MethodCaller& caller, TimeReport& report)=0;
+		virtual void timeMethod(MethodCaller& caller, TimeReport& report) = 0;
 
 		// Platform specific timer implementation
 		static MethodTimer* getTimer();

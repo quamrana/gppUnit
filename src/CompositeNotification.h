@@ -5,9 +5,9 @@
 
 #include <vector>
 
-namespace gppUnit{
+namespace gppUnit {
 
-	class CompositeNotification: public Notification{
+	class CompositeNotification: public Notification {
 		typedef std::vector<Notification*> NotificationCollection;
 		NotificationCollection collection;
 
@@ -20,7 +20,7 @@ namespace gppUnit{
 		void EndClass();
 		void EndProject();
 	public:
-		void add(Notification* notify){ collection.push_back(notify); }
+		void add(Notification* notify) { collection.push_back(notify); }
 	};
 }
 
