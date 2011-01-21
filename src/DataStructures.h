@@ -28,9 +28,11 @@ namespace gppUnit{
 	struct ClassData{
 		std::string title;
 		size_t results;
+		bool goodReport;
 		double reportedTime;
 		explicit ClassData(const std::string& title):title(title),
 			results(0),
+			goodReport(true),
 			reportedTime(-1)
 		{}
 	};

@@ -20,6 +20,7 @@ namespace gppUnit{
 
 		std::string name() const { return projectData.title; }
 		size_t classes() const { return cases.size(); }
+		bool hasPassed() const { return projectData.goodReport; }
 		size_t results() const { return projectData.results; }
 		double run_time() const { return projectData.reportedTime; }
 
@@ -32,7 +33,7 @@ namespace gppUnit{
 			const gppUnit::TestCaseList& cases);
 		~ProjectRunner();
 
-		void run();
+		bool run();
 	};
 }
 #endif // PROJECTRUNNER_H_E1CE6833_9AF2_4103_91F0_A9A5AB7F8885

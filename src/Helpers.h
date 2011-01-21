@@ -3,6 +3,12 @@
 
 namespace gppUnit{
 	template<typename T>
+	struct Report{
+		bool operator()(bool init, const T& description){
+			return init & description.goodReport;
+		}
+	};
+	template<typename T>
 	struct Results{
 		size_t operator()(size_t init, const T& description){
 			return init+description.results;

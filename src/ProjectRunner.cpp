@@ -18,6 +18,7 @@ namespace gppUnit{
 	}
 
 	void ProjectRunner::calculateProjectData(){
+		projectData.goodReport=std::accumulate(classData.begin(),classData.end(),true,Report<ClassData>());
 		projectData.results=std::accumulate(classData.begin(),classData.end(),long(),Results<ClassData>());
 		projectData.reportedTime=std::accumulate(classData.begin(),classData.end(),double(),RunTime<ClassData>());
 	}
@@ -35,7 +36,7 @@ namespace gppUnit{
 
 	// TODO: Turn run() inside out.
 	// Make a ClassRunner a member, then hand it a testcase in each iteration.
-	void ProjectRunner::run(){
+	bool ProjectRunner::run(){
 		std::for_each(cases.begin(),cases.end(),
 			std::bind1st(
 				std::mem_fun(&ProjectRunner::call),
@@ -43,6 +44,7 @@ namespace gppUnit{
 			)
 		);
 		calculateProjectData();
+		return projectData.goodReport;
 	}
 }
 

@@ -42,6 +42,7 @@ namespace Utilities{
 
 		gppUnit::AutoMethodTimer<MockAuto<1> > autoTimer;
 
+		bool projectReturn;
 	protected:
 		void add(gppUnit::PrototypeTestCase& testcase){
 			cases.push_back(&testcase);
@@ -50,6 +51,7 @@ namespace Utilities{
 		void givenNotification(gppUnit::Notification* notified){ notify=notified; }
 		void givenTimer(gppUnit::MethodTimer* timed){ timer=timed; }
 		void whenCalled();
+		bool projectSummary(){ return projectReturn; }
 
 		TestCaseCaller():cases(),notify(&emptyNotification),timer(&autoTimer){}
 	};

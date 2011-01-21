@@ -28,22 +28,23 @@ namespace gppUnit{
 		}
 		teardown();
 	}
-		void ClassRunner::calculateClassData(){
-			classData.results=std::accumulate(methodData.begin(),methodData.end(),long(),Results<MethodData>());
-			classData.reportedTime=std::accumulate(methodData.begin(),methodData.end(),double(),RunTime<MethodData>());
-		}
-		ClassRunner::ClassRunner(Notification& notify, 
-			PrototypeTestCase& testcase,
-			MethodTimer& timer):notify(notify),
-			testcase(testcase),
-			timer(timer),
-			setup(testcase,*this),
-			test(testcase,*this),
-			teardown(testcase,*this),
-			classData(demangleTypeName(typeid(testcase).name()))
-		{
-			notify.StartClass(*this);
-		}
-		ClassRunner::~ClassRunner(){ notify.EndClass(); }
+	void ClassRunner::calculateClassData(){
+		classData.goodReport=std::accumulate(methodData.begin(),methodData.end(),true,Report<MethodData>());
+		classData.results=std::accumulate(methodData.begin(),methodData.end(),long(),Results<MethodData>());
+		classData.reportedTime=std::accumulate(methodData.begin(),methodData.end(),double(),RunTime<MethodData>());
+	}
 
+	ClassRunner::ClassRunner(Notification& notify, 
+		PrototypeTestCase& testcase,
+		MethodTimer& timer):notify(notify),
+		testcase(testcase),
+		timer(timer),
+		setup(testcase,*this),
+		test(testcase,*this),
+		teardown(testcase,*this),
+		classData(demangleTypeName(typeid(testcase).name()))
+	{
+		notify.StartClass(*this);
+	}
+	ClassRunner::~ClassRunner(){ notify.EndClass(); }
 }

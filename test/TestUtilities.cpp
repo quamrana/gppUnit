@@ -5,6 +5,6 @@
 namespace Utilities{
 	void TestCaseCaller::whenCalled(){
 		gppUnit::ProjectRunner runner("TestCaseCaller",*notify,*timer,cases);
-		runner.run();
+		projectReturn=runner.run();
 	}
 }
