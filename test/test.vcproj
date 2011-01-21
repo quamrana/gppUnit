@@ -193,6 +193,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TestCompositeNotification.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\TestExceptionCatching.cpp"
 				>
 			</File>

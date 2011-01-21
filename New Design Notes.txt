@@ -65,13 +65,16 @@ New Design Notes
 	After EndClass is notified, data is collected by the ProjectDescription
 	Make sure that these descriptions and runners are part of the source code and not in test code!
 	Project must return bool as summary
-	
-$013	Auto-Collect tests
+
+$013	Project can accept extra notification objects
+	Implement this by creating a composite notification
+
+$014	Auto-Collect tests
 	Tests can be collected to a global vector.
 	Global runner supplies them to a project and runs them
 		Default main calls a method which supplies the vector to a runner.
 
-$014	Auto Options
+$015	Auto Options
 	Create a default options free function which supplies a console notification.
 	(This function can be overridden at link time by the user)
 	It should be possible for the user to supply:
@@ -79,13 +82,13 @@ $014	Auto Options
 		A number of Notifications.
 		Exception catchers which describe themselves.
 
-$015	Hamcrest style matchers (I)
+$016	Hamcrest style matchers (I)
 	Add TestResult so that automated results can describe themselves
 	
-$016	Hamcrest style matchers (II)
+$017	Hamcrest style matchers (II)
 	Add TestResult so that automated results can describe themselves
 
-$017	Self host
+$018	Self host
 	Replace P1 with the project itself.
 	Upload to google code
 
