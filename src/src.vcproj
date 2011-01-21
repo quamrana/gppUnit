@@ -48,7 +48,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="4"
 				DebugInformationFormat="4"
-				DisableSpecificWarnings="4512"
+				DisableSpecificWarnings="4512;4355"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -150,6 +150,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\ClassRunner.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MethodNames.cpp"
 				>
 			</File>
@@ -193,6 +197,14 @@
 			</File>
 			<File
 				RelativePath=".\ClassDescription.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ClassRunner.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Helpers.h"
 				>
 			</File>
 			<File

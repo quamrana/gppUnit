@@ -62,7 +62,6 @@ New Design Notes
 $012	Report whole project
 	The description reported has project name, number of classes
 	Plus accumulated time, plus number of test results.
-	Plus elapsed time.
 	After EndClass is notified, data is collected by the ProjectDescription
 	Make sure that these descriptions and runners are part of the source code and not in test code!
 
@@ -84,9 +83,15 @@ $015	Hamcrest style matchers (I)
 $016	Hamcrest style matchers (II)
 	Add TestResult so that automated results can describe themselves
 
+$017	Self host
+	Replace P1 with the project itself.
+	Upload to google code
+
 $	Catch exceptions from calls to notify
 
 $	Make sure Method and Class Descriptions can be copied and saved in vectors.
+
+$	Add whole project elapsed time
 
 Infrastructure
 #	Hudson
