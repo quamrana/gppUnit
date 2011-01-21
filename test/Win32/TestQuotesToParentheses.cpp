@@ -1,7 +1,7 @@
 #include "src\TypeInformation.h"
 
 namespace gppUnit{
-	void quotesToParentheses(std::string& name);
+	void replaceQuotesWithParentheses(std::string& name);
 }
 
 #include "AutoRun.h"
@@ -13,7 +13,7 @@ namespace TestTypeInformation{
 		std::string demangleTypeName(){}
 		void test(){
 			std::string typicalName="`anonymous namespace'::";
-			gppUnit::quotesToParentheses(typicalName);
+			gppUnit::replaceQuotesWithParentheses(typicalName);
 			confirm.equals("(anonymous namespace)::",typicalName);
 		}
 	}GPPUNIT_INSTANCE;

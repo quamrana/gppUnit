@@ -59,7 +59,7 @@ New Design Notes
 		accumulated time
 		number of test results.
 
-$012	Report whole project
+#$012	Report whole project
 	The description reported has project name, number of classes
 	Plus accumulated time, plus number of test results.
 	After EndClass is notified, data is collected by the ProjectDescription
