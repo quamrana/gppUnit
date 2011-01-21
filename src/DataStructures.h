@@ -4,7 +4,6 @@
 #include <string>
 
 namespace gppUnit{
-	struct TestResult;
 
 	struct MethodData{
 		std::string title;
@@ -12,7 +11,10 @@ namespace gppUnit{
 		bool goodReport;
 		double reportedTime;
 
-		void accrueResult(const TestResult& result);
+		void accrueResult(bool result){
+			results+=1;
+			goodReport&=result;
+		}
 		void checkForExceptions(bool noExceptions){
 			goodReport&=noExceptions;
 		}

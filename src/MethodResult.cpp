@@ -6,11 +6,6 @@
 #include "MethodTimer.h"
 
 namespace gppUnit{
-	void MethodData::accrueResult(const TestResult& result){
-		results+=1;
-		goodReport&=result.result;
-	}
-
 
 	MethodResult::MethodResult(TestCaseMethodCaller& method, Notification& notify, MethodTimer& timer):method(method),
 		notify(notify),
@@ -43,7 +38,7 @@ namespace gppUnit{
 	}
 
 	void MethodResult::Report(const TestResult& result){ 
-		methodData.accrueResult(result);
+		methodData.accrueResult(result.result);
 		notify.Result(result);
 	}
 
