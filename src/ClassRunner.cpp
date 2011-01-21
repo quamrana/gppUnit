@@ -1,4 +1,5 @@
 #include "ClassRunner.h"
+#include "MethodResult.h"
 #include "Notification.h"
 #include "TypeInformation.h"
 

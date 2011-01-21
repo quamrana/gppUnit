@@ -4,6 +4,7 @@
 #include "TimeReport.h"
 #include "MethodDescription.h"
 #include "ReportResult.h"
+#include "DataStructures.h"
 
 #include <sstream>
 
@@ -12,21 +13,6 @@ namespace gppUnit{
 	class Notification;
 	class MethodTimer;
 
-	struct MethodData{
-		std::string title;
-		size_t results;
-		bool goodReport;
-		double reportedTime;
-
-		void accrueResult(const TestResult& result);
-		void checkForExceptions(bool noExceptions){
-			goodReport&=noExceptions;
-		}
-		explicit MethodData(const std::string& name):title(name),
-			results(0),
-			goodReport(true),
-			reportedTime(0){}
-	};
 
 	class MethodResult: public MethodDescription, 
 				public ReportResult,

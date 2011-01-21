@@ -3,19 +3,12 @@
 
 #include "ClassDescription.h"
 #include "TestCaseMethodCaller.h"
-#include "MethodResult.h"
+#include "DataStructures.h"
 
 namespace gppUnit{
 	class Notification;
 	class MethodTimer;
-	struct MethodData;
 
-	struct ClassData{
-		std::string title;
-		size_t results;
-		double reportedTime;
-		explicit ClassData(const std::string title):title(title),results(0),reportedTime(-1){}
-	};
 	class ClassRunner: public ClassDescription, public Runner{
 		Notification& notify;
 		PrototypeTestCase& testcase;
@@ -25,7 +18,7 @@ namespace gppUnit{
 		TestCaller test;
 		TeardownCaller teardown;
 
-		std::vector<gppUnit::MethodData> methodData;
+		std::vector<MethodData> methodData;
 		ClassData classData;
 
 		std::string name() const { return classData.title; }
