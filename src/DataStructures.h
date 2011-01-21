@@ -27,7 +27,7 @@ namespace gppUnit{
 		std::string title;
 		size_t results;
 		double reportedTime;
-		explicit ClassData(const std::string title):title(title),
+		explicit ClassData(const std::string& title):title(title),
 			results(0),
 			reportedTime(-1)
 		{}
