@@ -26,7 +26,7 @@ namespace TestWin32MethodTimer{
 			strm << "time.";
 		}
 		void givenTimer(){
-			win32Timer=gppUnit::MethodTimer::getTimer();
+			win32Timer=&gppUnit::MethodTimer::getTimer();
 			methodCalled=false;
 			timeReported=false;
 			runtimeReport=-1;

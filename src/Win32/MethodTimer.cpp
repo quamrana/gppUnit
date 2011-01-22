@@ -44,7 +44,7 @@ namespace {
 }
 
 namespace gppUnit {
-	MethodTimer* MethodTimer::getTimer() {
-		return &timer;
+	MethodTimer& MethodTimer::getTimer() {
+		return timer;
 	}
 }

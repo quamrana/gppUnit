@@ -13,7 +13,7 @@ namespace gppUnit {
 		virtual void timeMethod(MethodCaller& caller, TimeReport& report) = 0;
 
 		// Platform specific timer implementation
-		static MethodTimer* getTimer();
+		static MethodTimer& getTimer();
 	};
 }
 
