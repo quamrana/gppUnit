@@ -193,6 +193,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TestAutoTest.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\TestCompositeNotification.cpp"
 				>
 			</File>
