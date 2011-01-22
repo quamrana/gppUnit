@@ -3,21 +3,22 @@
 
 #include "AutoRun.h"
 
-#include "src\TestCase.h"
 #include "src\Notification.h"
-#include "src\TimeReport.h"
-#include "src\MethodTimer.h"
 #include "src\AutoMethodTimer.h"
-#include "src\ReportResult.h"
+#include "src\TestCase.h"
 
 #include <sstream>
 
 namespace gppUnit{
 	class TestCaseMethodCaller;
+	class TimeReport;
+	class MethodTimer;
 }
 
 namespace Utilities{
 	class DestructableNotification: public gppUnit::Notification{};
+
+	void reportTimeDividedByTen(gppUnit::TimeReport& report, int Time);
 
 	template<int TIME>
 	class MockAuto{
@@ -25,10 +26,9 @@ namespace Utilities{
 	public:
 		explicit MockAuto(gppUnit::TimeReport& report):report(report){}
 		~MockAuto(){
-			double time=TIME;
-			report.reportTime(time/10);
+			reportTimeDividedByTen(report, TIME);
 		}
-		int timeParameter(){ return TIME; }
+		//int timeParameter(){ return TIME; }
 	};
 
 	class TestCaseCaller: public Auto::TestCase{
@@ -55,11 +55,16 @@ namespace Utilities{
 
 		TestCaseCaller():cases(),notify(&emptyNotification),timer(&autoTimer){}
 	};
-	class MockTestCase: public gppUnit::PrototypeTestCase{
+	class MockTestCase: public virtual gppUnit::PrototypeTestCase{
 		void setReport(gppUnit::ReportResult*report){ reporter=report; }
 	protected:
 		gppUnit::ReportResult* reporter;
 	};
+	class ReportingMockTestCase: public MockTestCase{
+		void test();
+	};
+
+	extern gppUnit::TestCaseList dummyTestCaseList;
 }
 
 #endif // TESTUTILITIES_H_B22D7F0E_4A0D_4EFB_9092_AE3C8B950C52

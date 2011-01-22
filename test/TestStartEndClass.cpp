@@ -1,18 +1,12 @@
 #include "src\TestCase.h"
 #include "src\ClassDescription.h"
-#include "src\TestResult.h"
 
 #include "TestUtilities.h"
 
 namespace TestStartEndClass{
-	class MockTestCase: public Utilities::MockTestCase{
-		void test(){
-			gppUnit::TestResult result;
-			reporter->Report(result);
-		}
-	};
+
 	class TestOneClass: public Utilities::TestCaseCaller, gppUnit::Notification{
-		MockTestCase testcase;
+		Utilities::ReportingMockTestCase testcase;
 
 		const gppUnit::ClassDescription* classDesc;
 		size_t methods;
@@ -40,7 +34,7 @@ namespace TestStartEndClass{
 			run_time=-1;
 		}
 		void thenEachClassStartedAndEnded(){
-			confirm.equals("TestStartEndClass::MockTestCase.end.",collect.str(),"Should have recorded test");
+			confirm.equals("Utilities::ReportingMockTestCase.end.",collect.str(),"Should have recorded test");
 		}
 		void thenThreeMethodsCalled(){
 			confirm.equals(3,methods,"thenThreeMethodsCalled");

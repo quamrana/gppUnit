@@ -1,6 +1,7 @@
 #include "src\MethodNames.h"
 #include "src\MethodDescription.h"
 #include "src\TestCaseMethodCaller.h"
+#include "src\TimeReport.h"
 
 #include "TestUtilities.h"
 

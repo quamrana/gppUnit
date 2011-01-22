@@ -1,18 +1,12 @@
 #include "src\TestCase.h"
 #include "src\ProjectDescription.h"
-#include "src\TestResult.h"
 
 #include "TestUtilities.h"
 
 namespace TestStartEndProject{
-	class MockTestCase: public Utilities::MockTestCase{
-		void test(){
-			gppUnit::TestResult result;
-			reporter->Report(result);
-		}
-	};
+
 	class TestOneClass: public Utilities::TestCaseCaller, gppUnit::Notification{
-		MockTestCase testcase;
+		Utilities::ReportingMockTestCase testcase;
 
 		const gppUnit::ProjectDescription* projectDesc;
 		size_t classes;

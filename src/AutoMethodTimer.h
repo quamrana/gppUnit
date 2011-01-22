@@ -1,6 +1,7 @@
 #ifndef AUTOMETHODTIMER_H_19665F04_D3A9_47EC_B3D7_AE5853DE44D9
 #define AUTOMETHODTIMER_H_19665F04_D3A9_47EC_B3D7_AE5853DE44D9
 
+#include "MethodTimer.h"
 #include "MethodCaller.h"
 
 namespace gppUnit {
