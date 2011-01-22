@@ -69,12 +69,13 @@ New Design Notes
 #$013	Project can accept extra notification objects
 	Implement this by creating a composite notification
 
-$014	Auto-Collect tests
+#$014	Auto-Collect tests
 	Tests can be collected to a global vector.
-	Global runner supplies them to a project and runs them
-		Default main calls a method which supplies the vector to a runner.
+	The global vector is initially a static instance, but after main can be changed
 
 $015	Auto Options
+	A free function creates a runner and supplies it with the auto-collected tests.
+	This runner has a composite notification.
 	Create a default options free function which supplies a console notification.
 	(This function can be overridden at link time by the user)
 	It should be possible for the user to supply:
@@ -84,6 +85,7 @@ $015	Auto Options
 
 $016	Hamcrest style matchers (I)
 	Add TestResult so that automated results can describe themselves
+	Add 'confirm' and 'expect' and AssertException
 	
 $017	Hamcrest style matchers (II)
 	Implement a small set of matchers
@@ -91,7 +93,10 @@ $017	Hamcrest style matchers (II)
 
 $018	Self host
 	Replace P1 with the project itself.
+	Add a main which calls the auto runner.
 	Upload to google code
+
+$	compile under cygwin and possibly MinGW
 
 $	Implement a more complete set of matchers
 
