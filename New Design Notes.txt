@@ -66,7 +66,7 @@ New Design Notes
 	Make sure that these descriptions and runners are part of the source code and not in test code!
 	Project must return bool as summary
 
-$013	Project can accept extra notification objects
+#$013	Project can accept extra notification objects
 	Implement this by creating a composite notification
 
 $014	Auto-Collect tests
@@ -86,11 +86,14 @@ $016	Hamcrest style matchers (I)
 	Add TestResult so that automated results can describe themselves
 	
 $017	Hamcrest style matchers (II)
-	Add TestResult so that automated results can describe themselves
+	Implement a small set of matchers
+	
 
 $018	Self host
 	Replace P1 with the project itself.
 	Upload to google code
+
+$	Implement a more complete set of matchers
 
 $	Catch exceptions from calls to notify
 
@@ -103,9 +106,9 @@ Infrastructure
 		Create a new job (copy previous one)
 #	Scons
 		Working from command line
-	cppCheck
+#	cppCheck
 		Just use batch command from Hudson
-	AStyle
+#	AStyle
 		Needs to be command line only, but checked-in
 		Copy astyle.options to src
 
