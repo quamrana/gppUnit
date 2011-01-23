@@ -81,7 +81,6 @@ $015	Auto Options
 	It should be possible for the user to supply:
 		Project Name.
 		A number of Notifications.
-		Exception catchers which describe themselves.
 
 $016	Hamcrest style matchers (I)
 	Add TestResult so that automated results can describe themselves
@@ -101,6 +100,9 @@ $	compile under cygwin and possibly MinGW
 $	Implement a more complete set of matchers
 
 $	Catch exceptions from calls to notify
+
+$	Allow Exception catchers which describe themselves.
+	The user must be able to catch their own exceptions and then be allowed to describe them.
 
 $	Make sure Method and Class Descriptions can be copied and saved in vectors.
 
