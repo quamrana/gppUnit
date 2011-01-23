@@ -20,7 +20,7 @@ namespace gppUnit {
 		void EndClass();
 		void EndProject();
 	public:
-		void add(Notification* notify) { collection.push_back(notify); }
+		void add(Notification& notify) { collection.push_back(&notify); }
 	};
 }
 

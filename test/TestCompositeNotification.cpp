@@ -11,8 +11,9 @@ namespace TestCompositeNotification{
 	class TestCompositeUtility: public Auto::TestCase, public gppUnit::Notification{
 		virtual void StartProject(const gppUnit::ProjectDescription&){ wasCalled+=1; }
 		virtual void EndProject(){ wasCalled+=1; }
-	protected:
 		gppUnit::CompositeNotification composite;
+	protected:
+		void add(){ composite.add(*this); }
 		size_t wasCalled;
 
 		void call(Notification& notify){
@@ -59,7 +60,7 @@ namespace TestCompositeNotification{
 
 		void givenComposite(){
 			wasCalled=0;
-			composite.add(this);
+			add();
 		}
 		void thenOneCallReceived(){
 			confirm.equals(1,wasCalled,"thenOneCallReceived");
@@ -75,8 +76,8 @@ namespace TestCompositeNotification{
 
 		void givenComposite(){
 			wasCalled=0;
-			composite.add(this);
-			composite.add(this);
+			add();
+			add();
 		}
 		void thenTwoCallsReceived(){
 			confirm.equals(2,wasCalled,"thenTwoCallsReceived");
@@ -92,9 +93,9 @@ namespace TestCompositeNotification{
 
 		void givenComposite(){
 			wasCalled=0;
-			composite.add(this);
-			composite.add(this);
-			composite.add(this);
+			add();
+			add();
+			add();
 		}
 		void thenThreeCallsReceived(){
 			confirm.equals(3,wasCalled,"thenThreeCallsReceived");
@@ -120,7 +121,7 @@ namespace TestCompositeNotification{
 
 		void givenComposite(){
 			collect.str("");
-			composite.add(this);
+			add();
 		}
 		void thenAllMethodsCalled(){
 			confirm.equals("SP.SC.SM.TR.EX.EM.EC.EP.",collect.str(),"thenAllMethodsCalled");
