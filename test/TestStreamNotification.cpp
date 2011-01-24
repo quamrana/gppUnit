@@ -122,6 +122,11 @@ namespace TestStreamNotification{
 		virtual size_t results() const { return 0; }
 		virtual double run_time() const { return 0; }
 	}mm1;
+	class MockMethod2: public gppUnit::MethodDescription{
+		virtual std::string name() const { return "MockMethod2"; }
+		virtual size_t results() const { return 0; }
+		virtual double run_time() const { return 0; }
+	}mm2;
 	class StreamNotificationHelper: public Auto::TestCase{
 		std::stringstream out;
 		gppUnit::StreamNotification* stream;
@@ -130,8 +135,17 @@ namespace TestStreamNotification{
 		void givenStreamNotification(){
 			notify=stream=new gppUnit::StreamNotification(out);
 		}
+		void givenStartMethod(){
+			notify->StartProject(mp1);
+			notify->StartClass(mc1);
+			notify->StartMethod(mm1);
+			out.str("");
+		}
 		void whenStartProjectCalled(){
 			notify->StartProject(mp1);
+		}
+		void whenEndProjectCalled(){
+			notify->EndProject();
 		}
 		void whenStartClassCalled(){
 			whenStartProjectCalled();
@@ -142,6 +156,9 @@ namespace TestStreamNotification{
 			out.str("");
 			notify->StartClass(mc1);
 		}
+		void whenNextMethodCalled(){
+			notify->StartMethod(mm2);
+		}
 		void whenResultPass(){
 			notify->StartProject(mp1);
 			notify->StartClass(mc1);
@@ -151,8 +168,9 @@ namespace TestStreamNotification{
 			result.result=true;
 			notify->Result(result);
 		}
-		void whenResultFailed(){
+		void whenResultFailed(const char* message=""){
 			gppUnit::TestResult result;
+			result.message=message;
 			notify->Result(result);
 		}
 
@@ -162,6 +180,14 @@ namespace TestStreamNotification{
 				"5 classes to run.\n";
 			confirm.equals(expected,out.str());
 		}
+		void thenOneHundredPercent(){
+			const char* expected=
+				"\n"
+				"100% tests passed!\n"
+				"**************************************************\n";
+			confirm.equals(expected,out.str());
+		}
+
 		void thenAsteriskPrinted(){
 			const char* expected="**********";
 			confirm.equals(expected,out.str());
@@ -169,12 +195,39 @@ namespace TestStreamNotification{
 		void thenNothingPrinted(){
 			confirm.equals("",out.str());
 		}
-		void thenFullResultPrinted(){
+		void thenFailurePrinted(){
 			const char* expected=
 				"\n"
 				" In Class: MockClass1\n"
 				"  In Method: MockMethod1\n"
 				"   Failure\n";
+			confirm.equals(expected,out.str());
+		}
+		void thenFullResultPrinted(){
+			const char* expected=
+				"\n"
+				" In Class: MockClass1\n"
+				"  In Method: MockMethod1\n"
+				"   Message: message\n";
+			confirm.equals(expected,out.str());
+		}
+		void thenTwoMessagesPrinted(){
+			const char* expected=
+				"\n"
+				" In Class: MockClass1\n"
+				"  In Method: MockMethod1\n"
+				"   Message: message1\n"
+				"   Message: message2\n";
+			confirm.equals(expected,out.str());
+		}
+		void thenTwoMethodsAndMessagesPrinted(){
+			const char* expected=
+				"\n"
+				" In Class: MockClass1\n"
+				"  In Method: MockMethod1\n"
+				"   Message: message1\n"
+				"  In Method: MockMethod2\n"
+				"   Message: message2\n";
 			confirm.equals(expected,out.str());
 		}
 		void teardown(){ delete stream; }
@@ -201,8 +254,43 @@ namespace TestStreamNotification{
 			givenStreamNotification();
 			whenResultPass();
 			thenNothingPrinted();
+			whenEndProjectCalled();
+			thenOneHundredPercent();
+		}
+	}GPPUNIT_INSTANCE;
+	class ResultIsFailure: StreamNotificationHelper{
+		void test(){
+			givenStreamNotification();
+			givenStartMethod();
 			whenResultFailed();
+			thenFailurePrinted();
+		}
+	}GPPUNIT_INSTANCE;
+	class ResultIsFullMessage: StreamNotificationHelper{
+		void test(){
+			givenStreamNotification();
+			givenStartMethod();
+			whenResultFailed("message");
 			thenFullResultPrinted();
+		}
+	}GPPUNIT_INSTANCE;
+	class TwoFailures: StreamNotificationHelper{
+		void test(){
+			givenStreamNotification();
+			givenStartMethod();
+			whenResultFailed("message1");
+			whenResultFailed("message2");
+			thenTwoMessagesPrinted();
+		}
+	}GPPUNIT_INSTANCE;
+	class TwoFailuresInDifferentMethods: StreamNotificationHelper{
+		void test(){
+			givenStreamNotification();
+			givenStartMethod();
+			whenResultFailed("message1");
+			whenNextMethodCalled();
+			whenResultFailed("message2");
+			thenTwoMethodsAndMessagesPrinted();
 		}
 	}GPPUNIT_INSTANCE;
 }

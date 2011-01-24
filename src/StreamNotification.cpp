@@ -14,7 +14,7 @@ namespace gppUnit{
 		asterisk.replace(0,1,n,'*');
 		return asterisk;
 	}
-	std::string PrintFormatter::centreInAsterisks(const std::string& title){
+	std::string PrintFormatter::centreInAsterisks(const std::string& title) const {
 		std::string t;
 		if (title.size()>size-4){
 			t=title.substr(0,size-4);
@@ -33,19 +33,19 @@ namespace gppUnit{
 	std::string PrintFormatter::updateRunningAsterisks(size_t max, size_t current){
 		size_t target=(size*current)/max;
 		if (target<=size){
-			if (target>asteriskCount){
-				size_t count=target-asteriskCount;
-				asteriskCount=target;
+			if (target>asteriskCounter){
+				size_t count=target-asteriskCounter;
+				asteriskCounter=target;
 				return asterisks(count);
 			}
 		}
 		return "";
 	}
-	std::string PrintFormatter::fullWidthAsterisks(){
+	std::string PrintFormatter::fullWidthAsterisks() const {
 		return asterisks(size);
 	}
 
-	PrintFormatter::PrintFormatter(size_t size):size(size),asteriskCount(0){}
+	PrintFormatter::PrintFormatter(size_t size):size(size),asteriskCounter(0){}
 
 	StreamNotification::StreamNotification(std::ostream& out):out(out),
 		formatter(50),

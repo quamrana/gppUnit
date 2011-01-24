@@ -7,11 +7,11 @@ namespace gppUnit {
 
 	class PrintFormatter{
 		size_t size;
-		size_t asteriskCount;
+		size_t asteriskCounter;
 	public:
-		std::string centreInAsterisks(const std::string& title);
+		std::string centreInAsterisks(const std::string& title) const ;
 		std::string updateRunningAsterisks(size_t max, size_t current);
-		std::string fullWidthAsterisks();
+		std::string fullWidthAsterisks() const ;
 		explicit PrintFormatter(size_t size);
 	};
 
