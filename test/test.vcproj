@@ -241,6 +241,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TestStreamNotification.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\TestTestCase.cpp"
 				>
 			</File>

@@ -73,7 +73,7 @@ New Design Notes
 	Tests can be collected to a global vector.
 	The global vector is initially a static instance, but after main can be changed
 
-$015	Auto Options
+#$015	Auto Options
 	A free function creates a runner and supplies it with the auto-collected tests.
 	This runner has a composite notification.
 	Create a default options free function which supplies a console notification.

@@ -202,6 +202,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\StreamNotification.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Win32\TypeInformation.cpp"
 				>
 				<FileConfiguration
@@ -293,6 +297,10 @@
 			</File>
 			<File
 				RelativePath=".\ReportResult.h"
+				>
+			</File>
+			<File
+				RelativePath=".\StreamNotification.h"
 				>
 			</File>
 			<File
