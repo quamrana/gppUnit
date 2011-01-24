@@ -20,6 +20,7 @@ namespace TestAutoTest{
 		void test(){
 			expect.isTrue(mock!=0,"Setup produced a test instance");
 			expect.equals(1,mockList.size(),"A test is registered with mockList");
+			confirm.equals(1,gppUnit::autoTests().size(),"A test is registered with mockList");
 			confirm.isTrue(mock==mockList.front(),"mock is at front");
 		}
 		void teardown(){
