@@ -113,7 +113,7 @@ namespace gppUnit {
 			methodShown = true;
 		}
 	}
-	void StreamNotification::ShowDescription(const std::string output) const {
+	void StreamNotification::ShowDescription(std::string output) const {
 		out << DescriptionPrefix << output << std::endl;
 	}
 	void StreamNotification::ShowFailure(const TestResult& result) {

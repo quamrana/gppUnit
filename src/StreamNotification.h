@@ -32,7 +32,7 @@ namespace gppUnit {
 
 		void ShowClass();
 		void ShowMethod();
-		void ShowDescription(const std::string) const ;
+		void ShowDescription(std::string) const ;
 
 		void StartProject(const ProjectDescription&);
 		void StartClass(const ClassDescription&);
