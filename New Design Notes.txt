@@ -83,8 +83,8 @@ New Design Notes
 		A number of Notifications.
 
 $016	Hamcrest style matchers (I)
-	Add TestResult so that automated results can describe themselves
 	Add 'confirm' and 'expect' and AssertException
+	Add TableFormatter
 	
 $017	Hamcrest style matchers (II)
 	Implement a small set of matchers
@@ -95,6 +95,9 @@ $018	Self host
 	Add a main which calls the auto runner.
 	Upload to google code
 
+$	Refit tests
+	Rewrite the tests to use matchers where needed.
+
 $	compile under cygwin and possibly MinGW
 
 $	Implement a more complete set of matchers
@@ -103,6 +106,7 @@ $	Catch exceptions from calls to notify
 
 $	Allow Exception catchers which describe themselves.
 	The user must be able to catch their own exceptions and then be allowed to describe them.
+		Even when a test is written incorrectly it would be nice to have an unexpected exception describe itself.
 
 $	Make sure Method and Class Descriptions can be copied and saved in vectors.
 

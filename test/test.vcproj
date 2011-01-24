@@ -245,6 +245,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TestTableFormatter.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\TestTestCase.cpp"
 				>
 			</File>

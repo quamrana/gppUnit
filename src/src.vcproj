@@ -206,6 +206,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TableFormatting.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Win32\TypeInformation.cpp"
 				>
 				<FileConfiguration
@@ -301,6 +305,10 @@
 			</File>
 			<File
 				RelativePath=".\StreamNotification.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TableFormatting.h"
 				>
 			</File>
 			<File
