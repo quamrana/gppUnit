@@ -14,9 +14,9 @@ namespace TestTableFormatter{
 		void thenTableIsBlank(){
 			confirm.equals("",tf.toString(),"Formatter is blank");
 		}
-		//void thenTableEquals(const std::string& value, const std::string message){
-		//	assert.equals(value.c_str(),tf.toString(),message.c_str());
-		//}
+		void thenTableEquals(const std::string& value, const std::string message){
+			confirm.equals(value.c_str(),tf.toString(),message.c_str());
+		}
 		//void thenTableEquals(const strvec& value, const std::string message){
 		//	assert.equals(value,tf.toVector(),message.c_str());
 		//}
@@ -26,6 +26,13 @@ namespace SingleLines{
 		void test(){
 			givenTable();
 			thenTableIsBlank();
+		}
+	}GPPUNIT_INSTANCE;
+	class TestNonBlank: public TestBase{
+		void test(void){
+			givenTable();
+			f() << "add";
+			thenTableEquals("add\n","Added single string");
 		}
 	}GPPUNIT_INSTANCE;
 }

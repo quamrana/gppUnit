@@ -14,9 +14,21 @@ namespace gppUnit {
 	}
 
 	Line::Line(const Line& other): columns(other.columns),
+		stream(),
 		streamIsEmpty(other.streamIsEmpty) {
 		stream << other.stream.str();
 	}
+	Line& Line::operator=(Line const& other)
+	{
+		if (this == &other) return *this;
+
+		columns=other.columns;
+		stream.str(other.stream.str());
+		streamIsEmpty=other.streamIsEmpty;
+
+		return *this;
+	}
+
 	void Line::clearStream() {
 		stream.str("");
 		streamIsEmpty = true;
@@ -31,7 +43,7 @@ namespace gppUnit {
 		clearStream();
 	}
 
-	namespace Functors {
+	namespace LineFunctors {
 		struct Accumulator {
 			std::string operator()(const std::string& value, const Column& column) {
 				return value + column.toString();
@@ -52,7 +64,7 @@ namespace gppUnit {
 		};
 	}
 	std::string Line::toString() const {
-		return std::accumulate(columns.begin(), columns.end(), std::string(), Functors::Accumulator()) + stream.str();
+		return std::accumulate(columns.begin(), columns.end(), std::string(), LineFunctors::Accumulator()) + stream.str();
 	}
 	void Line::pad(std::vector<size_t>& sizes) const {
 		size_t target_size = columns.size() + (streamIsEmpty ? 0 : 1);
@@ -66,12 +78,42 @@ namespace gppUnit {
 		return std::accumulate(columns.begin(),
 		                       columns.end(),
 		                       std::string(),
-		                       Functors::PaddingAccumulator(modifiedSizes.begin())
+		                       LineFunctors::PaddingAccumulator(modifiedSizes.begin())
 		                      ) + stream.str();
 	}
 	void Line::update(std::vector<size_t>& sizes) const {
 		pad(sizes);
 
-		std::transform(columns.begin(), columns.end(), sizes.begin(), sizes.begin(), Functors::Update());
+		std::transform(columns.begin(), columns.end(), sizes.begin(), sizes.begin(), LineFunctors::Update());
+	}
+
+	namespace TableFunctors{
+		struct NewLines {
+			std::string operator()(const std::string& init,const std::string& item){
+				return init+item+"\n";
+			}
+		};
+		struct Update {
+			std::vector<size_t> sizes;
+			void operator()(const Line& line){ line.update(sizes); }
+		};
+		struct Accumulator {
+			explicit Accumulator(const std::vector<size_t>& sizes):sizes(sizes){}
+			std::vector<std::string> result;
+			std::vector<size_t> sizes;
+			void operator()(const Line& line) { result.push_back(line.toString(sizes)); }
+		};
+	}
+	std::vector<std::string> TableFormatter::toVector() const { 
+		TableFunctors::Update update=std::for_each(page.begin(),page.end(),TableFunctors::Update());
+		if(!lineIsEmpty) { line.update(update.sizes); }
+
+		TableFunctors::Accumulator result=std::for_each(page.begin(),page.end(),TableFunctors::Accumulator(update.sizes));
+		if(!lineIsEmpty) { result(line); }
+		return result.result;
+	}
+	std::string TableFormatter::toString() const { 
+		std::vector<std::string> asVector=toVector(); 
+		return std::accumulate(asVector.begin(),asVector.end(),std::string(),TableFunctors::NewLines()); 
 	}
 }
