@@ -5,7 +5,7 @@
 
 namespace gppUnit {
 
-	class PrintFormatter{
+	class PrintFormatter {
 		size_t size;
 		size_t asteriskCounter;
 	public:
@@ -15,7 +15,7 @@ namespace gppUnit {
 		explicit PrintFormatter(size_t size);
 	};
 
-	class StreamNotification: public Notification{
+	class StreamNotification: public Notification {
 		std::ostream& out;
 		PrintFormatter formatter;
 		const ProjectDescription* proj;
@@ -32,7 +32,7 @@ namespace gppUnit {
 
 		void ShowClass();
 		void ShowMethod();
-		void ShowDescription(const std::string);
+		void ShowDescription(const std::string) const ;
 
 		void StartProject(const ProjectDescription&);
 		void StartClass(const ClassDescription&);
