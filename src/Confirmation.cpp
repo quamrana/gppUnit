@@ -3,16 +3,22 @@
 #include "ReportResult.h"
 
 namespace gppUnit {
+	void ConfirmationBase::Result(const TestResult& result) {
+		if(report) {
+			report->Report(result);
+		}
+	}
+
 	void Confirm::fail(const char* message) {
 		TestResult result;
 		result.message = message;
-		report->Report(result);
+		Result(result);
 	}
 	void Confirm::pass(const char* message) {
 		TestResult result;
 		result.result = true;
 		result.message = message;
-		report->Report(result);
+		Result(result);
 	}
 	void Confirm::isTrue(bool result, const char* message) {
 		if(result) {

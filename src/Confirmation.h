@@ -5,9 +5,15 @@
 #include "TestResult.h"
 
 namespace gppUnit {
-	class Confirm: public gppUnit::ResultSetter {
+	class ConfirmationBase: public ResultSetter {
 		ReportResult* report;
 		void setReport(ReportResult* reporter) { report = reporter; }
+	protected:
+		virtual void Result(const TestResult&);
+	public:
+		ConfirmationBase(): report(0) {}
+	};
+	class Confirm: public ConfirmationBase {
 	public:
 		virtual void fail(const char* message = "fail");
 		void pass(const char* message = "pass");
