@@ -284,6 +284,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Matchers.h"
+				>
+			</File>
+			<File
 				RelativePath=".\MethodCaller.h"
 				>
 			</File>

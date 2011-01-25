@@ -1,19 +1,6 @@
+#include "src\Matchers.h"
+
 #include "AutoRun.h"
-
-namespace gppUnit{
-	struct MatcherResult{
-		bool result;
-
-		MatcherResult(): result(false) {}
-	};
-	struct is_null{
-		MatcherResult match(const void* actual) const {
-			MatcherResult result;
-			result.result= (actual==0);
-			return result;
-		}
-	};
-}
 
 namespace TestIsNull{
 	class FalseResult: public Auto::TestCase{
@@ -37,6 +24,7 @@ namespace TestIsNull{
 
 			whenMatchedWith(0);
 			thenResultIsTrue();
+			//TODO: add tests for description
 		}
 	}GPPUNIT_INSTANCE;
 }
