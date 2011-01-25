@@ -35,6 +35,42 @@ namespace SingleLines{
 			thenTableEquals("add\n","Added single string");
 		}
 	}GPPUNIT_INSTANCE;
+	class TestStreamingStrings: public TestBase{
+		void test(void){
+			givenTable();
+			f() << "add";
+			std::string foo="foo";
+			f() << foo;
+			thenTableEquals("addfoo\n","Streamed another string");
+		}
+	}GPPUNIT_INSTANCE;
+	class TestStreamingOtherTypes: public TestBase{
+		void test(void){
+			givenTable();
+			std::string foo="foo";
+			double pi=3.14;
+			f() << "add" << 1 << foo << pi << 'c';
+
+			thenTableEquals("add1foo3.14c\n","Streamed strings, numbers and char");
+		}
+	}GPPUNIT_INSTANCE;
+	class TestTabsDoNothing: public TestBase{
+		void test(void){
+			givenTable();
+			f() << "add" << gppUnit::tab << "foo" << gppUnit::tab << "bar";
+
+			thenTableEquals("add foo bar\n","Tab Does Nothing");
+		}
+	}GPPUNIT_INSTANCE;
+	class Test2ndPage: public TestBase{
+		void test(void){
+			givenTable();
+			f() << "add";
+			givenTable();
+			f() << "add";
+			thenTableEquals("add\n","2nd page is single string");
+		}
+	}GPPUNIT_INSTANCE;
 }
 namespace ColumnElements{
 	class PublicInterface: public Auto::TestCase{

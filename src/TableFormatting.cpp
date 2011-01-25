@@ -18,13 +18,12 @@ namespace gppUnit {
 		streamIsEmpty(other.streamIsEmpty) {
 		stream << other.stream.str();
 	}
-	Line& Line::operator=(Line const& other)
-	{
-		if (this == &other) return *this;
+	Line& Line::operator=(Line const& other) {
+		if(this == &other) { return *this; }
 
-		columns=other.columns;
+		columns = other.columns;
 		stream.str(other.stream.str());
-		streamIsEmpty=other.streamIsEmpty;
+		streamIsEmpty = other.streamIsEmpty;
 
 		return *this;
 	}
@@ -87,33 +86,38 @@ namespace gppUnit {
 		std::transform(columns.begin(), columns.end(), sizes.begin(), sizes.begin(), LineFunctors::Update());
 	}
 
-	namespace TableFunctors{
+	void TableFormatter::tab() {
+		*this << ' ';
+		line.tab();
+	}
+
+	namespace TableFunctors {
 		struct NewLines {
-			std::string operator()(const std::string& init,const std::string& item){
-				return init+item+"\n";
+			std::string operator()(const std::string& init, const std::string& item)const {
+				return init + item + "\n";
 			}
 		};
 		struct Update {
 			std::vector<size_t> sizes;
-			void operator()(const Line& line){ line.update(sizes); }
+			void operator()(const Line& line) { line.update(sizes); }
 		};
 		struct Accumulator {
-			explicit Accumulator(const std::vector<size_t>& sizes):sizes(sizes){}
+			explicit Accumulator(const std::vector<size_t>& sizes): sizes(sizes) {}
 			std::vector<std::string> result;
 			std::vector<size_t> sizes;
 			void operator()(const Line& line) { result.push_back(line.toString(sizes)); }
 		};
 	}
-	std::vector<std::string> TableFormatter::toVector() const { 
-		TableFunctors::Update update=std::for_each(page.begin(),page.end(),TableFunctors::Update());
+	std::vector<std::string> TableFormatter::toVector() const {
+		TableFunctors::Update update = std::for_each(page.begin(), page.end(), TableFunctors::Update());
 		if(!lineIsEmpty) { line.update(update.sizes); }
 
-		TableFunctors::Accumulator result=std::for_each(page.begin(),page.end(),TableFunctors::Accumulator(update.sizes));
+		TableFunctors::Accumulator result = std::for_each(page.begin(), page.end(), TableFunctors::Accumulator(update.sizes));
 		if(!lineIsEmpty) { result(line); }
 		return result.result;
 	}
-	std::string TableFormatter::toString() const { 
-		std::vector<std::string> asVector=toVector(); 
-		return std::accumulate(asVector.begin(),asVector.end(),std::string(),TableFunctors::NewLines()); 
+	std::string TableFormatter::toString() const {
+		std::vector<std::string> asVector = toVector();
+		return std::accumulate(asVector.begin(), asVector.end(), std::string(), TableFunctors::NewLines());
 	}
 }

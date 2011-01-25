@@ -24,7 +24,7 @@ namespace gppUnit {
 		void clearStream();
 
 	public:
-		Line(): columns(),stream(), streamIsEmpty(true) {}
+		Line(): columns(), stream(), streamIsEmpty(true) {}
 		Line(const Line&);
 		Line& operator=(Line const&);
 		void clear();
@@ -45,19 +45,27 @@ namespace gppUnit {
 		Line line;
 		bool lineIsEmpty;
 
+		friend TableFormatter& tab(TableFormatter& table);
+		void tab();
 		//void clearLine();
 	public:
-		void clear(){ line.clear(); page.clear(); lineIsEmpty=true; }
+		void clear() { line.clear(); page.clear(); lineIsEmpty = true; }
 		template<typename ValueArgument>
-		TableFormatter& operator<<(const ValueArgument& str){
-			line.append(str); 
-			lineIsEmpty=false;
-			return *this; 
+		TableFormatter& operator<<(const ValueArgument& str) {
+			line.append(str);
+			lineIsEmpty = false;
+			return *this;
+		}
+		TableFormatter& operator<<(TableFormatter & (*FunctionPointer)(TableFormatter&)) {
+			return ((*FunctionPointer)(*this));
 		}
 
 		std::vector<std::string> toVector() const;
 		std::string toString() const ;
 	};
+	// Manipulators for TableFormatter
+	//inline TableFormatter& endl(TableFormatter& table){ table.endLine(); return table; }
+	inline TableFormatter& tab(TableFormatter& table) { table.tab(); return table; }
 }
 
 #endif // TABLEFORMATTING_H_108BF9D9_0404_4F82_8E5F_0C16A9C9B355
