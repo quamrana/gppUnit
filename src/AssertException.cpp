@@ -1,5 +1,5 @@
 #include "AssertException.h"
 
-namespace gppUnit{
+namespace gppUnit {
 	AssertException assertException;
 }

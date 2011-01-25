@@ -3,10 +3,10 @@
 
 #include <stdexcept>
 
-namespace gppUnit{
-	class AssertException: public std::runtime_error{
+namespace gppUnit {
+	class AssertException: public std::runtime_error {
 	public:
-		AssertException():runtime_error("Stack unwind due to Assert Exception"){}
+		AssertException(): runtime_error("Stack unwind due to Assert Exception") {}
 	};
 
 	extern AssertException assertException;
