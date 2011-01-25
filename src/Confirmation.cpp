@@ -27,6 +27,8 @@ namespace gppUnit {
 			fail(message);
 		}
 	}
+	//TODO: I was expecting to override ConfirmationBase::Result
+	// but this will do for now.
 	void Expect::fail(const char* message) {
 		Confirm::fail(message);
 		throw gppUnit::assertException;

@@ -82,7 +82,7 @@ New Design Notes
 		Project Name.
 		A number of Notifications.
 
-$016	Hamcrest style matchers (I)
+#$016	Hamcrest style matchers (I)
 	Add TableFormatter
 	Add 'confirm' and 'expect' and AssertException
 	
