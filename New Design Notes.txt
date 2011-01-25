@@ -88,6 +88,7 @@ $016	Hamcrest style matchers (I)
 	
 $017	Hamcrest style matchers (II)
 	Implement a small set of matchers
+	Consider moving TableFormatter and Matchers into their own libraries.
 	
 
 $018	Self host

@@ -51,6 +51,7 @@ namespace gppUnit {
 		void endLine();
 		void clearLine();
 	public:
+		TableFormatter(): page(), line(), lineIsEmpty(true) {}
 		void clear() { clearLine(); page.clear(); }
 		size_t lineSize() { return line.size(); }
 		template<typename ValueArgument>
