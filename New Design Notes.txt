@@ -88,6 +88,11 @@ New Design Notes
 	
 $017	Hamcrest style matchers (II)
 	Implement a small set of matchers
+		is_null
+		equal_to
+		greater_than
+		is_not
+	Integrate into Confirm
 	Consider moving TableFormatter and Matchers into their own libraries.
 	
 
@@ -102,6 +107,13 @@ $	Refit tests
 $	compile under cygwin and possibly MinGW
 
 $	Implement a more complete set of matchers
+		less_than
+		one_of
+		all_of
+		begins_with
+		ends_with
+		contains
+		All the 'not's
 
 $	Catch exceptions from calls to notify
 
