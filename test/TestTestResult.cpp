@@ -3,7 +3,7 @@
 #include "AutoRun.h"
 
 namespace TestTestResult{
-	class Test: public Auto::TestCase{
+	class Defaults: public Auto::TestCase{
 		gppUnit::TestResult result;
 		void givenTestResult(){
 			result=gppUnit::TestResult();
