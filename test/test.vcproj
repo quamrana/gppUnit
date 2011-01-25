@@ -209,6 +209,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TestIsNull.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Win32\TestMethodTimer.cpp"
 				>
 				<FileConfiguration

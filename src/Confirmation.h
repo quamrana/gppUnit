@@ -13,12 +13,14 @@ namespace gppUnit {
 	public:
 		ConfirmationBase(): report(0) {}
 	};
+
 	class Confirm: public ConfirmationBase {
 	public:
 		virtual void fail(const char* message = "fail");
 		void pass(const char* message = "pass");
 		void isTrue(bool result, const char* message = "Should be True");
 	};
+
 	class Expect: public Confirm {
 	public:
 		void fail(const char* message = "fail");
