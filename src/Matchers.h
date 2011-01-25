@@ -10,8 +10,8 @@ namespace gppUnit {
 		bool result;
 		TableFormatter strm;
 
-		MatcherResult(): result(false), strm() {}
-		std::string description(){ return strm.toString();}
+		MatcherResult();
+		std::string description() const { return strm.toString();}
 	};
 
 	template<typename T, typename U=T>

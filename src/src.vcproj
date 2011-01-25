@@ -186,6 +186,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Matchers.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MethodNames.cpp"
 				>
 			</File>
