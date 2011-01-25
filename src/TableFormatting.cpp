@@ -90,6 +90,14 @@ namespace gppUnit {
 		*this << ' ';
 		line.tab();
 	}
+	void TableFormatter::endLine() {
+		page.push_back(line);
+		clearLine();
+	}
+	void TableFormatter::clearLine() {
+		line.clear();
+		lineIsEmpty = true;
+	}
 
 	namespace TableFunctors {
 		struct NewLines {
@@ -107,7 +115,32 @@ namespace gppUnit {
 			std::vector<size_t> sizes;
 			void operator()(const Line& line) { result.push_back(line.toString(sizes)); }
 		};
+		struct UpdateTable {
+			explicit UpdateTable(TableFormatter* table): table(table), size(table->lineSize()), firstLine(true) {}
+			TableFormatter* table;
+			size_t size;
+			bool firstLine;
+			void operator()(const std::string& line) {
+				using gppUnit::tab;
+				if(firstLine) {
+					firstLine = false;
+				} else {
+					for(size_t i = 0; i < size; ++i) {
+						(*table) << tab;
+					}
+				}
+				(*table) << line << endl;
+			}
+		};
 	}
+	TableFormatter& TableFormatter::operator<<(const TableFormatter& table) {
+		std::vector<std::string> result = table.toVector();
+
+		std::for_each(result.begin(), result.end(), TableFunctors::UpdateTable(this));
+
+		return *this;
+	}
+
 	std::vector<std::string> TableFormatter::toVector() const {
 		TableFunctors::Update update = std::for_each(page.begin(), page.end(), TableFunctors::Update());
 		if(!lineIsEmpty) { line.update(update.sizes); }

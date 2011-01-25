@@ -83,8 +83,8 @@ New Design Notes
 		A number of Notifications.
 
 $016	Hamcrest style matchers (I)
-	Add 'confirm' and 'expect' and AssertException
 	Add TableFormatter
+	Add 'confirm' and 'expect' and AssertException
 	
 $017	Hamcrest style matchers (II)
 	Implement a small set of matchers
