@@ -178,6 +178,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Confirmation.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\main.cpp"
 				>
 			</File>
@@ -265,6 +269,10 @@
 			</File>
 			<File
 				RelativePath=".\CompositeNotification.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Confirmation.h"
 				>
 			</File>
 			<File

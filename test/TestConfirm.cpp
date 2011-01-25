@@ -1,35 +1,9 @@
+#include "src\Confirmation.h"
+
 #include "src\ReportResult.h"
-#include "src\TestResult.h"
-#include "src\TestCase.h"
 #include "src\AssertException.h"
 
 #include "AutoRun.h"
-
-namespace gppUnit{
-	class Confirm: public gppUnit::ResultSetter{
-		ReportResult* report;
-		void setReport(ReportResult* reporter){ report=reporter; }
-	public:
-		virtual void fail(const char* message="fail"){
-			TestResult result;
-			result.message=message;
-			report->Report(result);
-		}
-		void pass(const char* message="pass"){
-			TestResult result;
-			result.result=true;
-			result.message=message;
-			report->Report(result);
-		}
-	};
-	class Expect: public Confirm{
-	public:
-		virtual void fail(const char* message="fail"){
-			Confirm::fail(message);
-			throw gppUnit::assertException;
-		}
-	};
-}
 
 namespace TestAsserts{
 	class Base: public Auto::TestCase, gppUnit::ReportResult{ 
@@ -48,6 +22,14 @@ namespace TestAsserts{
 		void thenResultIsPass(){
 			confirm.isTrue(testResult.result,"thenResultIsPass");
 			confirm.equals("pass",testResult.message,"message is pass");
+		}
+		void thenResultIsFalse(const char* message){
+			confirm.isFalse(testResult.result,"thenResultIsFalse");
+			confirm.equals(message,testResult.message,message);
+		}
+		void thenResultIsTrue(const char* message){
+			confirm.isTrue(testResult.result,"thenResultIsTrue");
+			confirm.equals(message,testResult.message,message);
 		}
 	};
 	class ConfirmPassAndFail: public Base{
@@ -69,6 +51,23 @@ namespace TestAsserts{
 			thenResultIsPass();
 		}
 	}GPPUNIT_INSTANCE;
+	class ConfirmIsTrue: public Base{
+		gppUnit::Confirm conf;
+		void givenConfirm(){
+			setReport(conf);
+		}
+		void whenIsTrueCalled(bool value){
+			conf.isTrue(value);
+		}
+		void test(){
+			givenConfirm();
+			whenIsTrueCalled(false);
+			thenResultIsFalse("Should be True");
+			whenIsTrueCalled(true);
+			thenResultIsTrue("Should be True");
+		}
+	}GPPUNIT_INSTANCE;
+
 	class CatchExceptionsFromExpect: public Base{
 		gppUnit::Expect exp;
 		bool caughtException;
