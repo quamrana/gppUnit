@@ -146,3 +146,24 @@ Infrastructure
 		unix impl
 		unix test
 		
+
+
+
+=========================================================================================================
+	template <typename T>
+	struct greater_than_trait_base: value_trait_base<T> {
+		greater_than_trait_base(const T& actual, const T& expected): value_trait_base<T>(actual,expected) {}
+
+		bool comparison() { return (actualValue > expectedValue); }
+
+	};
+	template <typename T>
+	struct greater_than_trait: greater_than_trait_base<T> {
+		greater_than_trait(const T& actual, const T& expected): greater_than_trait_base<T>(actual, expected) {}
+
+		MatcherResult match() {
+			MatcherResult result(comparison());
+			result.strm << "a value greater than '" << expectedValue << "'";
+			return result;
+		}
+	};

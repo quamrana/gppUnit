@@ -11,6 +11,7 @@ namespace gppUnit {
 		TableFormatter strm;
 
 		MatcherResult();
+		explicit MatcherResult(bool value);
 		std::string description() const { return strm.toString();}
 	};
 
@@ -32,10 +33,10 @@ namespace gppUnit {
 	template<typename T>
 	struct ProxyType: ProxyTypeBase<T> {};
 
-	template<>
-	struct ProxyType<int>: ProxyTypeBase<int, long> {};
-	template<>
-	struct ProxyType<const char*>: ProxyTypeBase<const char*, std::string> {};
+	template<> struct ProxyType<int>: ProxyTypeBase<int, long> {};
+	template<> struct ProxyType<const char*>: ProxyTypeBase<const char*, std::string> {};
+	template<> struct ProxyType<size_t>: ProxyTypeBase<size_t, long> {};
+	template<> struct ProxyType<signed char>: ProxyTypeBase<signed char, long> {};
 
 	template<typename _OP, typename T, typename U>
 	MatcherResult binary_op(const _OP& op, const T& expected, const U& actual) {
@@ -59,8 +60,7 @@ namespace gppUnit {
 
 	struct is_null {
 		MatcherResult match(const void* actual) const {
-			MatcherResult result;
-			result.result = (actual == 0);
+			MatcherResult result(actual == 0);
 			return result;
 		}
 	};
@@ -82,23 +82,27 @@ namespace gppUnit {
 	};
 
 	template <typename T>
-	struct equal_to_trait_base {
-		equal_to_trait_base(const T& actual, const T& expected): actualValue(actual), expectedValue(expected) {}
-
-		bool equals() { return (actualValue == expectedValue); }
+	struct value_trait_base {
+		value_trait_base(const T& actual, const T& expected): actualValue(actual), expectedValue(expected) {}
 
 		const T& actualValue;
 		const T& expectedValue;
+	};
+	template <typename T>
+	struct equal_to_trait_base: value_trait_base<T> {
+		equal_to_trait_base(const T& actual, const T& expected): value_trait_base<T>(actual, expected) {}
+
+		bool equals() { return (equal_to_trait_base<T>::actualValue == equal_to_trait_base<T>::expectedValue); }
+
 	};
 	template <typename T>
 	struct equal_to_trait: equal_to_trait_base<T> {
 		equal_to_trait(const T& actual, const T& expected): equal_to_trait_base<T>(actual, expected) {}
 
 		MatcherResult match() {
-			MatcherResult r;
-			r.result = equal_to_trait_base<T>::equals();
-			r.strm << "'" << equal_to_trait_base<T>::expectedValue << "'";
-			return r;
+			MatcherResult result(equal_to_trait<T>::equals());
+			result.strm << "'" << equal_to_trait<T>::expectedValue << "'";
+			return result;
 		}
 	};
 	template <>
@@ -160,11 +164,10 @@ namespace gppUnit {
 			return params;
 		}
 		MatcherResult match() {
-			MatcherResult r;
-			r.result = equals();
+			MatcherResult result(equals());
 
-			formatDescription(r.strm, getParams(r.result));
-			return r;
+			formatDescription(result.strm, getParams(result.result));
+			return result;
 		}
 		void formatDescription(TableFormatter& strm, formatParameters params) {
 			switch(params.mmType) {
@@ -216,6 +219,21 @@ namespace gppUnit {
 	};
 	template <typename T>
 	equal_to_t<T> equal_to(const T& expected) { return equal_to_t<T>(expected); }
+
+	template <typename T>
+	struct greater_than_t: value_matcher<T, greater_than_t<T> > {
+		explicit greater_than_t(const T& expected): value_matcher<T, greater_than_t<T> >(expected) {}
+
+		template<typename V>
+		MatcherResult operator()(const V& actual, const V& expected) const {
+			MatcherResult result(actual > expected);
+			result.strm  << "a value greater than '" << expected << "'";
+			return result;
+		}
+		//is_not_t<is_null> operator!() const { return is_not(*this); }
+	};
+	template <typename T>
+	greater_than_t<T> greater_than(const T& expected) { return greater_than_t<T>(expected); }
 }
 
 #endif // MATCHERS_H_A1A948B8_4BB3_4E59_8A68_E4E99CC5EEC2

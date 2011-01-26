@@ -1,29 +1,12 @@
-#include "src\Matchers.h"
-
-#include "AutoRun.h"
+#include "TestMatchersHelpers.h"
 
 #include <string.h>
 
 namespace TestEqualTo{
 	using gppUnit::equal_to;
-	using gppUnit::MatcherResult;
+	using Utilities::MatcherHelper;
 
-	class EqualToHelper: public Auto::TestCase{
-	protected:
-		template<typename MATCHER, typename ACTUAL>
-		void That(const ACTUAL& actual, MATCHER m, const char* desc){
-			MatcherResult result=m.match(actual);
-			confirm.equals(true,result.result,"result is true");
-			confirm.equals(desc,result.description(),"description is '1'");
-		}
-		template<typename MATCHER, typename ACTUAL>
-		void MisMatch(const ACTUAL& actual, MATCHER m, const char* desc){
-			MatcherResult result=m.match(actual);
-			confirm.equals(false,result.result,"result is false");
-			confirm.equals(desc,result.description(),"description is '1'");
-		}
-	};
-	class IntAndLong: public EqualToHelper{
+	class IntAndLong: public MatcherHelper{
 		void test(){
 			int actual=1;
 			long expected=1;
@@ -33,7 +16,7 @@ namespace TestEqualTo{
 			MisMatch(actual,equal_to(expected),"'1'\n");
 		}
 	}GPPUNIT_INSTANCE;
-	class StringTest: public EqualToHelper{
+	class StringTest: public MatcherHelper{
 		void test(void){
 			const char* actual="1";
 			char expected[100];
@@ -41,7 +24,7 @@ namespace TestEqualTo{
 			That(actual,equal_to(expected),"string '1'\n");
 		}
 	}GPPUNIT_INSTANCE;
-	class StringTestFails: public EqualToHelper{
+	class StringTestFails: public MatcherHelper{
 		void test(void){
 			const char* actual="2";
 			char expected[100];
@@ -54,9 +37,9 @@ namespace TestEqualTo{
 
 namespace StringMismatchTests {
 	using gppUnit::equal_to;
-	using TestEqualTo::EqualToHelper;
+	using Utilities::MatcherHelper;
 
-	class TestStringDescriptionTypeSHORT2: public EqualToHelper{
+	class TestStringDescriptionTypeSHORT2: public MatcherHelper{
 		void test(void){
 			const char* actual="1";
 			const char* sample="1234567890";
@@ -67,7 +50,7 @@ namespace StringMismatchTests {
 			MisMatch(actual,equal_to(expected),"string '1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567...'\n");
 		}
 	}GPPUNIT_INSTANCE;
-	class TestStringDescriptionTypeMEDIUM1: public EqualToHelper{
+	class TestStringDescriptionTypeMEDIUM1: public MatcherHelper{
 		void test(void){
 			const char* actual="abcdefghijkl";
 			char expected[100];
@@ -81,7 +64,7 @@ namespace StringMismatchTests {
 				);
 		}
 	}GPPUNIT_INSTANCE;
-	class TestStringDescriptionTypeMEDIUM2: public EqualToHelper{
+	class TestStringDescriptionTypeMEDIUM2: public MatcherHelper{
 		void test(void){
 			const char* actual="abcdefghijkl";
 			char expected[130];
@@ -98,7 +81,7 @@ namespace StringMismatchTests {
 				);
 		}
 	}GPPUNIT_INSTANCE;
-	class TestStringDescriptionTypeLONG: public EqualToHelper{
+	class TestStringDescriptionTypeLONG: public MatcherHelper{
 		void test(void){
 			const char* sample="abcdefghijkl";
 			char actual[250];

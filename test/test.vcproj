@@ -213,6 +213,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TestGreaterThan.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\TestIsNull.cpp"
 				>
 			</File>
@@ -288,6 +292,10 @@
 			>
 			<File
 				RelativePath=".\AutoRun.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TestMatchersHelpers.h"
 				>
 			</File>
 			<File
