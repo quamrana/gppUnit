@@ -3,6 +3,7 @@
 
 #include "TestCase.h"
 #include "TestResult.h"
+#include "Matchers.h"
 
 namespace gppUnit {
 	class ConfirmationBase: public ResultSetter {
@@ -19,6 +20,15 @@ namespace gppUnit {
 		virtual void fail(const char* message = "fail");
 		void pass(const char* message = "pass");
 		void isTrue(bool result, const char* message = "Should be True");
+		template<typename ACTUAL, typename MATCHER>
+		void that(const ACTUAL& actual, MATCHER m, const char* message = "Should match") {
+			MatcherResult match = m.match(actual);
+			TestResult result(match.result);
+			result.message = message;
+			result.description = match.strm.toVector();
+
+			Result(result);
+		}
 	};
 
 	class Expect: public Confirm {

@@ -10,6 +10,7 @@ namespace gppUnit {
 		std::string message;
 		std::vector<std::string> description;
 		TestResult(): result(false), message(), description() {}
+		explicit TestResult(bool value): result(value), message(), description() {}
 	};
 }
 
