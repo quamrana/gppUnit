@@ -14,6 +14,18 @@ namespace TestEqualTo{
 
 			actual=2;
 			MisMatch(actual,equal_to(expected),"'1'\n");
+
+			That(actual,is_not(equal_to(expected)),"not '1'\n");
+			That(actual,!equal_to(expected),"not '1'\n");
+		}
+	}GPPUNIT_INSTANCE;
+	class DoubleNegative: public MatcherHelper{
+		void test(){
+			int actual=1;
+			long expected=1;
+			That(actual,equal_to(expected),"'1'\n");
+
+			That(actual,is_not(is_not(equal_to(expected))),"'1'\n");
 		}
 	}GPPUNIT_INSTANCE;
 	class StringTest: public MatcherHelper{
@@ -31,6 +43,7 @@ namespace TestEqualTo{
 			strcpy(expected,actual);
 			expected[0]='1';
 			MisMatch(actual,equal_to(expected),"string '1'\n");
+			That(actual,!equal_to(expected),"not string '1'\n");
 		}
 	}GPPUNIT_INSTANCE;
 }
@@ -98,6 +111,14 @@ namespace StringMismatchTests {
 				"first mismatch                                                    ^\n"
 				"index 150      ---------------------------------------------------|\n"
 				"actual         '...hijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcde...'\n"
+				);
+			That(actual,!equal_to(expected),
+							//            1         2         3         4         5         6         7         8         9        10
+							//   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
+				"not string         '...hijklabcdefghijklabcdefghijklabcdefghijklabcdefxhijklabcdefghijklabcdefghijklabcdefghijklabcde...'\n"
+				"    first mismatch                                                    ^\n"
+				"    index 150      ---------------------------------------------------|\n"
+				"    actual         '...hijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcde...'\n"
 				);
 		}
 	}GPPUNIT_INSTANCE;

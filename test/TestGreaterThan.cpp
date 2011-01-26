@@ -15,6 +15,11 @@ namespace TestGreaterThan{
 			That(integer,greater_than(vec.size()),"a value greater than '0'\n");
 			That(longint,greater_than(schar),"a value greater than '-4'\n");
 			That(vec.size(),greater_than(schar),"a value greater than '-4'\n");
+
+			That(integer,!greater_than(longint),"not a value greater than '2'\n");
+			That(vec.size(),!greater_than(integer),"not a value greater than '1'\n");
+			That(schar,!greater_than(longint),"not a value greater than '2'\n");
+			That(schar,!greater_than(vec.size()),"not a value greater than '0'\n");
 		}
 	}GPPUNIT_INSTANCE;
 }

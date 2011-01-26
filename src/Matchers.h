@@ -58,11 +58,35 @@ namespace gppUnit {
 		return op(ProxyType<const T*>::create(expected).value, ProxyType<const U*>::create(actual).value);
 	}
 
-	struct is_null {
-		MatcherResult match(const void* actual) const {
-			MatcherResult result(actual == 0);
+	template <typename T>
+	struct is_not_t {
+		explicit is_not_t(const T& matcher): fwdMatcher(matcher) {}
+
+		template <typename ACTUAL>
+		MatcherResult match(const ACTUAL& actual) const {
+			MatcherResult fwdresult = fwdMatcher.match(actual);
+			MatcherResult result(!fwdresult.result);
+			result.strm << "not" << tab << fwdresult.strm;
 			return result;
 		}
+
+		const T fwdMatcher;
+	};
+	template <typename T>
+	is_not_t<T> is_not(const T& matcher) { return is_not_t<T>(matcher); }
+
+	template <typename T>
+	T is_not(const is_not_t<T>& matcher) { return matcher.fwdMatcher; }
+
+	struct is_null {
+		template <typename ACTUAL>
+		MatcherResult match(const ACTUAL& actual) const {
+			MatcherResult result(actual == 0);
+			result.strm << "is null";
+			return result;
+		}
+
+		is_not_t<is_null> operator!() const { return is_not(*this); }
 	};
 
 	template <typename T, typename DERIVED>
@@ -71,12 +95,12 @@ namespace gppUnit {
 
 		const DERIVED& derivedMatcher() const { return static_cast<const DERIVED&>(*this); }
 
-		template <typename _Act>
-		MatcherResult match(const _Act& actual) const {
+		template <typename ACTUAL>
+		MatcherResult match(const ACTUAL& actual) const {
 			return binary_op(derivedMatcher(), actual, expectedValue);
 		}
 
-		//is_not_t<_Derived> operator!() const { return is_not(derivedMatcher()); }
+		is_not_t<DERIVED> operator!() const { return is_not(derivedMatcher()); }
 
 		const T& expectedValue;
 	};
