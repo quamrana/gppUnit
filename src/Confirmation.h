@@ -26,7 +26,7 @@ namespace gppUnit {
 			TestResult result(match.result);
 			result.message = message;
 
-			const char* aux=(result.result)? "and got" : "but got";
+			const char* aux = (result.result) ? "and got" : "but got";
 			TableFormatter f;
 			f << "Expected" << tab << match.strm;
 			f << aux << tab << "'" << ProxyValue(actual) << "'" << endl;
