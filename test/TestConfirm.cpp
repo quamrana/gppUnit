@@ -5,6 +5,8 @@
 
 #include "AutoRun.h"
 
+typedef std::vector<std::string> strvec;
+
 namespace TestAsserts{
 	class Base: public Auto::TestCase, gppUnit::ReportResult{ 
 		gppUnit::TestResult testResult;
@@ -22,6 +24,14 @@ namespace TestAsserts{
 			expect.equals(1,testResult.description.size(),"Description has one line");
 			confirm.equals(desc,testResult.description.front(),desc.c_str());
 		}
+		void thenDescriptionIs(const strvec& desc){
+			expect.equals(desc.size(),testResult.description.size(),"Description has same number of lines");
+			confirm.isTrue(desc==testResult.description,"Whole Description does not match");
+			strvec::const_iterator test=testResult.description.begin();
+			for(strvec::const_iterator it=desc.begin(), end=desc.end(); it!=end; ++it){
+				confirm.equals(*it,*test++,(*it).c_str());
+			}
+		}
 		void thenResultIsFail(){
 			confirm.isFalse(testResult.result,"thenResultIsFail");
 			confirm.equals("fail",testResult.message,"message is fail");
@@ -35,7 +45,7 @@ namespace TestAsserts{
 		void thenResultIsFalse(const char* message){
 			confirm.isFalse(testResult.result,"thenResultIsFalse");
 			confirm.equals(message,testResult.message,message);
-			thenDescriptionIsEmpty();
+			//thenDescriptionIsEmpty();
 		}
 		void thenResultIsTrue(const char* message){
 			confirm.isTrue(testResult.result,"thenResultIsTrue");
@@ -108,8 +118,14 @@ namespace TestAsserts{
 			thenResultIsPass();
 		}
 	}GPPUNIT_INSTANCE;
+}
+namespace ConfirmThat{
+	using TestAsserts::Base;
+	using gppUnit::TableFormatter;
+	using gppUnit::tab;
+	using gppUnit::endl;
 
-	class ConfirmThat: public Base{
+	class ConfirmThatResult: public Base{
 		gppUnit::Confirm conf;
 		void givenConfirm(){
 			setReport(conf);
@@ -118,7 +134,56 @@ namespace TestAsserts{
 			givenConfirm();
 			conf.that(0,gppUnit::equal_to(0));
 			thenResultIsTrue("Should match");
-			thenDescriptionIs("'0'");
+		}
+	}GPPUNIT_INSTANCE;
+	class ConfirmThatPassDescription: public Base{
+		gppUnit::Confirm conf;
+		void givenConfirm(){
+			setReport(conf);
+		}
+		void test(){
+			givenConfirm();
+			conf.that(0,gppUnit::equal_to(0));
+
+			gppUnit::TableFormatter f;
+			f << "Expected" << tab << "'0'" << endl;
+			f << "and got" << tab << "'0'" << endl;
+			thenDescriptionIs(f.toVector());
+		}
+	}GPPUNIT_INSTANCE;
+	class ConfirmThatFailDescription: public Base{
+		gppUnit::Confirm conf;
+		void givenConfirm(){
+			setReport(conf);
+		}
+		void test(){
+			givenConfirm();
+			conf.that(1,gppUnit::equal_to(0));
+			thenResultIsFalse("Should match");
+
+			gppUnit::TableFormatter f;
+			f << "Expected" << tab << "'0'" << endl;
+			f << "but got" << tab << "'1'" << endl;
+			thenDescriptionIs(f.toVector());
+		}
+	}GPPUNIT_INSTANCE;
+	class ConfirmThatFailDescriptionIntChar: public Base{
+		gppUnit::Confirm conf;
+		void givenConfirm(){
+			setReport(conf);
+		}
+		void test(){
+			givenConfirm();
+			long longint=2;
+			signed char schar=-4;
+
+			conf.that(schar,gppUnit::equal_to(longint));
+			thenResultIsFalse("Should match");
+
+			gppUnit::TableFormatter f;
+			f << "Expected" << tab << "'2'" << endl;
+			f << "but got" << tab << "'-4'" << endl;
+			thenDescriptionIs(f.toVector());
 		}
 	}GPPUNIT_INSTANCE;
 }

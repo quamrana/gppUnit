@@ -33,6 +33,12 @@ namespace gppUnit {
 	template<typename T>
 	struct ProxyType: ProxyTypeBase<T> {};
 
+	template<typename T>
+	typename ProxyType<T>::conversion_type ProxyValue(const T& value){ return ProxyType<T>::create(value).value; }
+
+	//template<typename T, size_t sizeT>
+	//typename ProxyType<T>::conversion_type ProxyValue(const T(&value)[sizeT]){ return ProxyType<T>::create(value).value; }
+
 	template<> struct ProxyType<int>: ProxyTypeBase<int, long> {};
 	template<> struct ProxyType<const char*>: ProxyTypeBase<const char*, std::string> {};
 	template<> struct ProxyType<size_t>: ProxyTypeBase<size_t, long> {};
@@ -40,7 +46,7 @@ namespace gppUnit {
 
 	template<typename _OP, typename T, typename U>
 	MatcherResult binary_op(const _OP& op, const T& expected, const U& actual) {
-		return op(ProxyType<T>::create(expected).value, ProxyType<U>::create(actual).value);
+		return op(ProxyValue(expected), ProxyValue(actual));
 	}
 
 	template<typename _OP, typename T, typename U, size_t size>

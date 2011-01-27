@@ -25,7 +25,12 @@ namespace gppUnit {
 			MatcherResult match = m.match(actual);
 			TestResult result(match.result);
 			result.message = message;
-			result.description = match.strm.toVector();
+
+			const char* aux=(result.result)? "and got" : "but got";
+			TableFormatter f;
+			f << "Expected" << tab << match.strm;
+			f << aux << tab << "'" << ProxyValue(actual) << "'" << endl;
+			result.description = f.toVector();
 
 			Result(result);
 		}
