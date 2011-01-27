@@ -36,33 +36,14 @@ namespace gppUnit {
 	template<typename T>
 	typename ProxyType<T>::conversion_type ProxyValue(const T& value){ return ProxyType<T>::create(value).value; }
 
-	//template<typename T, size_t sizeT>
-	//typename ProxyType<T>::conversion_type ProxyValue(const T(&value)[sizeT]){ return ProxyType<T>::create(value).value; }
+	template<typename T, size_t size>
+	typename ProxyType<const T*>::conversion_type ProxyValue(const T(&value)[size]){ return ProxyType<const T*>::create(value).value; }
 
+	// Sample Proxies
 	template<> struct ProxyType<int>: ProxyTypeBase<int, long> {};
 	template<> struct ProxyType<const char*>: ProxyTypeBase<const char*, std::string> {};
 	template<> struct ProxyType<size_t>: ProxyTypeBase<size_t, long> {};
 	template<> struct ProxyType<signed char>: ProxyTypeBase<signed char, long> {};
-
-	template<typename _OP, typename T, typename U>
-	MatcherResult binary_op(const _OP& op, const T& expected, const U& actual) {
-		return op(ProxyValue(expected), ProxyValue(actual));
-	}
-
-	template<typename _OP, typename T, typename U, size_t size>
-	MatcherResult binary_op(const _OP& op, const T(&expected)[size], const U& actual) {
-		return op(ProxyType<const T*>::create(expected).value, ProxyType<U>::create(actual).value);
-	}
-
-	template<typename _OP, typename T, typename U, size_t size>
-	MatcherResult binary_op(const _OP& op, const T& expected, const U(&actual)[size]) {
-		return op(ProxyType<T>::create(expected).value, ProxyType<const U*>::create(actual).value);
-	}
-
-	template<typename _OP, typename T, typename U, size_t sizeT, size_t sizeU>
-	MatcherResult binary_op(const _OP& op, const T(&expected)[sizeT], const U(&actual)[sizeU]) {
-		return op(ProxyType<const T*>::create(expected).value, ProxyType<const U*>::create(actual).value);
-	}
 
 	template <typename T>
 	struct is_not_t {
@@ -103,7 +84,7 @@ namespace gppUnit {
 
 		template <typename ACTUAL>
 		MatcherResult match(const ACTUAL& actual) const {
-			return binary_op(derivedMatcher(), actual, expectedValue);
+			return derivedMatcher()(ProxyValue(actual), ProxyValue(expectedValue));
 		}
 
 		is_not_t<DERIVED> operator!() const { return is_not(derivedMatcher()); }

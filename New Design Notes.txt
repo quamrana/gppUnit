@@ -86,19 +86,21 @@ New Design Notes
 	Add TableFormatter
 	Add 'confirm' and 'expect' and AssertException
 	
-$017	Hamcrest style matchers (II)
+#$017	Hamcrest style matchers (II)
 	Implement a small set of matchers
 		is_null
 		equal_to
 		greater_than
 		is_not
 	Integrate into Confirm
-	Consider moving TableFormatter and Matchers into their own libraries.
 	
 
 $018	Self host
 	Replace P1 with the project itself.
 	Add a main which calls the auto runner.
+
+$019	Transfer to google code
+	Consider moving TableFormatter and Matchers into their own libraries.
 	Upload to google code
 
 $	Refit tests

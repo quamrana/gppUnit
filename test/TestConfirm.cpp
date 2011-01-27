@@ -186,4 +186,42 @@ namespace ConfirmThat{
 			thenDescriptionIs(f.toVector());
 		}
 	}GPPUNIT_INSTANCE;
+	class ConfirmThatFailDescriptionCharsChars: public Base{
+		gppUnit::Confirm conf;
+		void givenConfirm(){
+			setReport(conf);
+		}
+		void test(){
+			givenConfirm();
+			const char* actual="1";
+			const char* expected="2";
+
+			conf.that(actual,gppUnit::equal_to(expected));
+			thenResultIsFalse("Should match");
+
+			gppUnit::TableFormatter f;
+			f << "Expected" << tab << "string '2'" << endl;
+			f << "but got" << tab << "'1'" << endl;
+			thenDescriptionIs(f.toVector());
+		}
+	}GPPUNIT_INSTANCE;
+	class ConfirmThatFailDescriptionCharsCharArray: public Base{
+		gppUnit::Confirm conf;
+		void givenConfirm(){
+			setReport(conf);
+		}
+		void test(){
+			givenConfirm();
+			const char* actual="1";
+			const char expected[]="2";
+
+			conf.that(actual,gppUnit::equal_to(expected));
+			thenResultIsFalse("Should match");
+
+			gppUnit::TableFormatter f;
+			f << "Expected" << tab << "string '2'" << endl;
+			f << "but got" << tab << "'1'" << endl;
+			thenDescriptionIs(f.toVector());
+		}
+	}GPPUNIT_INSTANCE;
 }
