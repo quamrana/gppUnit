@@ -39,6 +39,9 @@ namespace gppUnit {
 		void StartMethod(const MethodDescription&);
 		void Result(const TestResult&);
 		void Exception(const std::string& /* what */);
+
+		void EndMethod();
+
 		void EndProject();
 	public:
 		explicit StreamNotification(std::ostream& out);

@@ -27,6 +27,9 @@ namespace gppUnit {
 			fail(message);
 		}
 	}
+	void Confirm::isFalse(bool result, const char* message) {
+		isTrue(!result,message);
+	}
 	//TODO: I was expecting to override ConfirmationBase::Result
 	// but this will do for now.
 	void Expect::fail(const char* message) {

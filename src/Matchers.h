@@ -15,19 +15,25 @@ namespace gppUnit {
 		std::string description() const { return strm.toString();}
 	};
 
+	template<typename T, typename U>
+	struct ProxyTypeConverter {
+		U value;
+		explicit ProxyTypeConverter(const T& from): value(from) {}
+	};
+
 	template<typename T, typename U = T>
-	struct ProxyTypeBase {
+	struct ProxyTypeBase: ProxyTypeConverter<T,U> {
 		typedef T original_type;
 		typedef U conversion_type;
 
-		conversion_type value;
-		explicit ProxyTypeBase(const original_type& from): value(from) {}
+		explicit ProxyTypeBase(const original_type& from): ProxyTypeConverter<T,U>(from) {}
 
 		static ProxyTypeBase<original_type, conversion_type> create(const original_type& from) { return ProxyTypeBase(from); }
 
 	private:
 		ProxyTypeBase() {}
 	};
+
 
 	// Define a degenerate derived class
 	template<typename T>
@@ -230,6 +236,9 @@ namespace gppUnit {
 	};
 	template <typename T>
 	equal_to_t<T> equal_to(const T& expected) { return equal_to_t<T>(expected); }
+	template <typename T>
+	equal_to_t<T> equals(const T& expected) { return equal_to_t<T>(expected); }
+
 
 	template <typename T>
 	struct greater_than_t: value_matcher<T, greater_than_t<T> > {

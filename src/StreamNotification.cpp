@@ -142,9 +142,15 @@ namespace gppUnit {
 		if(!hasFailed) {
 			out << std::endl;
 			out << "100% tests passed!" << std::endl;
+			if (proj->run_time()){
+			out << "run time: " << proj->run_time() << std::endl;
+			}
 			out << formatter.fullWidthAsterisks() << std::endl;
 		}
 	}
 
+		void StreamNotification::EndMethod(){
+			//out << method->run_time() << std::endl;
+		}
 
 }

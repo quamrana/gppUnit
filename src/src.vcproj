@@ -222,6 +222,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TestCaseBase.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Win32\TypeInformation.cpp"
 				>
 				<FileConfiguration
@@ -337,6 +341,10 @@
 			</File>
 			<File
 				RelativePath=".\TestCase.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TestCaseBase.h"
 				>
 			</File>
 			<File
