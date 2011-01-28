@@ -4,6 +4,7 @@
 #include "TestCaseMethodCaller.h"
 #include "TestResult.h"
 #include "MethodTimer.h"
+#include "AssertException.h"
 
 namespace gppUnit {
 
@@ -21,6 +22,10 @@ namespace gppUnit {
 		try {
 			timer.timeMethod(method, *this);
 			result = true;
+		} catch(AssertException&) {
+			//
+			// Deliberately catch, then ignore exception
+			//
 		} catch(std::exception& e) {
 			reportException(e.what());
 		} catch(std::string& e) {

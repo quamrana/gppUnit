@@ -15,8 +15,7 @@ namespace gppUnit {
 		Result(result);
 	}
 	void Confirm::pass(const char* message) {
-		TestResult result;
-		result.result = true;
+		TestResult result(true);
 		result.message = message;
 		Result(result);
 	}
