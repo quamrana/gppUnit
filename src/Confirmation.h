@@ -42,8 +42,7 @@ namespace gppUnit {
 	};
 
 	class Expect: public Confirm {
-	public:
-		void fail(const char* message = "fail");
+		virtual void Result(const TestResult&);
 	};
 }
 

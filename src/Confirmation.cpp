@@ -30,11 +30,12 @@ namespace gppUnit {
 	void Confirm::isFalse(bool result, const char* message) {
 		isTrue(!result,message);
 	}
-	//TODO: I was expecting to override ConfirmationBase::Result
-	// but this will do for now.
-	void Expect::fail(const char* message) {
-		Confirm::fail(message);
-		throw gppUnit::assertException;
+
+	void Expect::Result(const TestResult& result) {
+		ConfirmationBase::Result(result);
+		if (!result.result){
+			throw gppUnit::assertException;
+		}
 	}
 }
 

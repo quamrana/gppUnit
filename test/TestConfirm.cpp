@@ -35,7 +35,7 @@ namespace TestAsserts{
 		void thenResultIsFail(){
 			confirm.isFalse(testResult.result,"thenResultIsFail");
 			confirm.equals("fail",testResult.message,"message is fail");
-			thenDescriptionIsEmpty();
+			//thenDescriptionIsEmpty();
 		}
 		void thenResultIsPass(){
 			confirm.isTrue(testResult.result,"thenResultIsPass");
@@ -92,6 +92,7 @@ namespace TestAsserts{
 	class CatchExceptionsFromExpect: public Base{
 		gppUnit::Expect exp;
 		bool caughtException;
+	protected:
 		void givenExpect(){
 			setReport(exp);
 			caughtException=false;
@@ -103,12 +104,21 @@ namespace TestAsserts{
 				caughtException=true;
 			}
 		}
+		void whenThatCalled(){
+			try{
+				exp.that(this,gppUnit::is_null(),"fail");
+			} catch (gppUnit::AssertException e){
+				caughtException=true;
+			}
+		}
 		void thenExceptionCaught(){
 			confirm.isTrue(caughtException,"thenExceptionCaught");
 		}
 		void whenPassCalled(){
 			exp.pass("pass");
 		}
+	};
+	class CatchExceptionsFromExpectFail: public CatchExceptionsFromExpect{
 		void test(){
 			givenExpect();
 			whenFailCalled();
@@ -116,6 +126,14 @@ namespace TestAsserts{
 			thenExceptionCaught();
 			whenPassCalled();
 			thenResultIsPass();
+		}
+	}GPPUNIT_INSTANCE;
+	class CatchExceptionsFromExpectThat: public CatchExceptionsFromExpect{
+		void test(){
+			givenExpect();
+			whenThatCalled();
+			thenResultIsFail();
+			thenExceptionCaught();
 		}
 	}GPPUNIT_INSTANCE;
 }
