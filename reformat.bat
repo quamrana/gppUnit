@@ -1,2 +1,2 @@
 @echo off
-astyle --options=astyle.options --exclude=P1 --exclude=test *.cpp *.h
+astyle --options=astyle.options --exclude=test *.cpp *.h
