@@ -1,4 +1,4 @@
 env=DefaultEnvironment()
 
 cppIncludes=[Dir('#\src')]
-env.StaticLibrary('gppUnit1.5', Glob('*.cpp')+Glob('unix\*.cpp'),CPPPATH=cppIncludes)
+env.StaticLibrary('gppUnit1.5', Glob('*.cpp')+Glob('djgpp\*.cpp'),CPPPATH=cppIncludes)

@@ -250,7 +250,6 @@ namespace gppUnit {
 			result.strm  << "a value greater than '" << expected << "'";
 			return result;
 		}
-		//is_not_t<is_null> operator!() const { return is_not(*this); }
 	};
 	template <typename T>
 	greater_than_t<T> greater_than(const T& expected) { return greater_than_t<T>(expected); }

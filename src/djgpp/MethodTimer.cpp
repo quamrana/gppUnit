@@ -5,29 +5,25 @@
 // #include <iostream>
 #include <time.h>
 
-
 namespace {
 	typedef long long time_interval;
 
 	namespace Internal {
-		static long scale_long = 1000000;
-		static double scale_double = scale_long; //1000000.0;
+		static long scale_long = UCLOCKS_PER_SEC;
+		static double scale_double = scale_long;
 	}
 	time_interval getTime() {
-		time_interval result;
-		struct timeval ts;
-		gettimeofday(&ts, 0);
-		result = ts.tv_sec;
-		result*= Internal::scale_long;
-		result+= ts.tv_usec;
-		// std::cout << result << "u " << ts.tv_sec << "s " << ts.tv_usec << 'u' << std::endl;
-		return result;
+		return uclock();
 	}
 	double timeDifference(time_interval first, time_interval second) {
-		// double result=double(second - first) / Internal::scale_double;
+		time_interval diff=second-first;
+		if (diff<0){
+			diff+=65536L;
+			// std::cout << "----------------" << std::endl;
+		}
+		double result=double(diff) / Internal::scale_double;
 		// std::cout << result << "s" << std::endl;
-		// return result;
-		return double(second - first) / Internal::scale_double;
+		return result;
 	}
 
 	class AutoTimer {
