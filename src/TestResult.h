@@ -11,6 +11,8 @@ namespace gppUnit {
 		std::vector<std::string> description;
 		TestResult(): result(false), message(), description() {}
 		explicit TestResult(bool value): result(value), message(), description() {}
+		explicit TestResult(const char* message): result(false), message(message), description() {}
+		TestResult(bool value, const char* message): result(value), message(message), description() {}
 	};
 }
 
