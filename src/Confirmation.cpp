@@ -28,12 +28,12 @@ namespace gppUnit {
 		}
 	}
 	void Confirm::isFalse(bool result, const char* message) {
-		isTrue(!result,message);
+		isTrue(!result, message);
 	}
 
 	void Expect::Result(const TestResult& result) {
 		ConfirmationBase::Result(result);
-		if (!result.result){
+		if(!result.result) {
 			throw gppUnit::assertException;
 		}
 	}

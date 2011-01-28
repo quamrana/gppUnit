@@ -22,11 +22,11 @@ namespace gppUnit {
 	};
 
 	template<typename T, typename U = T>
-	struct ProxyTypeBase: ProxyTypeConverter<T,U> {
+	struct ProxyTypeBase: ProxyTypeConverter<T, U> {
 		typedef T original_type;
 		typedef U conversion_type;
 
-		explicit ProxyTypeBase(const original_type& from): ProxyTypeConverter<T,U>(from) {}
+		explicit ProxyTypeBase(const original_type& from): ProxyTypeConverter<T, U>(from) {}
 
 		static ProxyTypeBase<original_type, conversion_type> create(const original_type& from) { return ProxyTypeBase(from); }
 

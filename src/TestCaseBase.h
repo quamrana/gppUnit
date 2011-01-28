@@ -10,7 +10,7 @@ namespace gppUnit {
 		Confirm confirm;
 		Expect expect;
 	public:
-		TestCaseBase():confirm(),expect(){}
+		TestCaseBase(): confirm(), expect() {}
 	};
 }
 

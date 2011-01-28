@@ -20,7 +20,7 @@ namespace gppUnit {
 	public:
 		virtual void setReport(ReportResult*) = 0;
 	};
-	inline void setReport(ResultSetter& setter, ReportResult* reporter){
+	inline void setReport(ResultSetter& setter, ReportResult* reporter) {
 		setter.setReport(reporter);
 	}
 

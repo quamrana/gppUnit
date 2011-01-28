@@ -23,7 +23,7 @@ namespace gppUnit {
 		void isFalse(bool result, const char* message = "Should be True");
 		template<typename ACTUAL, typename EXPECTED>
 		void equals(const ACTUAL& actual, const EXPECTED& expected, const char* message = "Should match") {
-			that(actual,gppUnit::equal_to(expected),message);
+			that(actual, gppUnit::equal_to(expected), message);
 		}
 		template<typename ACTUAL, typename MATCHER>
 		void that(const ACTUAL& actual, MATCHER m, const char* message = "Should match") {
