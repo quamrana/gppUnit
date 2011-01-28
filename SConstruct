@@ -40,5 +40,6 @@ print "LIB is:", env['AR']
 #print "BUILDERS: ", env['BUILDERS']
 #print env.Dump()
 
+#env.SConscript(['src\SConscript','test\SConscript','P1\SConscript'])
 
-env.SConscript(['src\SConscript','test\SConscript','P1\SConscript'])
+env.SConscript(['src\SConscript','test\SConscript'])

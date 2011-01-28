@@ -1,106 +1,51 @@
-#include "MethodTimer.h"
-#include "TimeReport.h"
-#include "TestCaseMethodCallers.h"
-#include "PrivateClassContext.h"
-#include "Notification.h"
-#include "ProjectDescription.h"
-#include "ProjectFixture.h"
-#include "FineGrainedMethodDescription.h"
-#include "ClassDescription.h"
-#include "AutoTest.h"
-#include "AutoTimer.h"
+#include "src\AutoOptions.h"
+#include "src\AutoRunner.h"
+#include "src\StreamNotification.h"
+#include "src\ProjectDescription.h"
+#include "src\ClassDescription.h"
+#include "src\MethodDescription.h"
+#include "src\TestResult.h"
 
-#include "TestResult.h"
-
-#include <sstream>
 #include <iostream>
-#include <algorithm>
-#include <functional>
+#include <sstream>
 
-using namespace Prototype1;
-using Prototype1::Internal::MethodCaller;
-using Prototype1::Internal::ClassContext;
+namespace {
+	gppUnit::StreamNotification Notifier(std::cout);
+
+	class TimeLogging: public gppUnit::Notification{
+		std::stringstream out;
+		//const gppUnit::ProjectDescription* proj;
+		const gppUnit::ClassDescription* desc;
+		const gppUnit::MethodDescription* method;
 
 
-class MainNotifier: public Notification{
-	const ProjectDescription* project;
-	const ClassDescription* classDesc;
-	bool classShown;
-	const FineGrainedMethodDescription* method;
-	bool finalResult;
-	std::stringstream out;
-	virtual void StartProject(const ProjectDescription& description){
-		out << "Start Project: " << description.name() << std::endl;
-		out << "Number of Classes: " << description.numClasses() << std::endl;
-		project=&description;
-		finalResult=true;
-	}
-	virtual void StartClass(const ClassDescription& description){
-		//out << " Start Class: " << description.name() << std::endl;
-		classDesc=&description;
-		classShown=false;
-	}
-	virtual void StartFineGrainedMethod(const FineGrainedMethodDescription& description){
-		//out << "  Start Method: " << description.name() << std::endl;
-		method=&description;
-	}
-	void ShowClass(){
-		if(!classShown){
-			out << " In Class: " << classDesc->name() << std::endl;
-			classShown=true;
+		//void StartProject(const gppUnit::ProjectDescription&desc){
+		//			proj = &desc;
+		//}
+		void StartClass(const gppUnit::ClassDescription&desc){
+					this->desc = &desc;
+					out << desc.name() << std::endl;
 		}
-	}
-	void Show(const std::string output){ out << "     " << output << std::endl; }
-	virtual void Result(const TestResult& result){
-		if (!result.result){
-			ShowClass();
-			out << "   Test Failed!" << std::endl;
-			out << "    Message: " << result.message << std::endl;
-			std::for_each(result.description.begin(),result.description.end(),
-				std::bind1st(
-					std::mem_fun(&MainNotifier::Show),
-					this
-				)
-			);
-
-			finalResult=false;
+		void StartMethod(const gppUnit::MethodDescription&desc){
+					method = &desc;
+					out << " " << desc.name();
 		}
-	}
-	virtual void Exception(const std::string& what){
-		ShowClass();
-		out << "   Exception: " << what << std::endl;
-	}
+		//void Result(const gppUnit::TestResult&);
+		//void Exception(const std::string& /* what */);
 
-	virtual void EndFineGrainedMethod(){ 
-		//out << "  End Method, time:" << method->run_time() << " results:" << method->results() << std::endl; 
-	}
-	virtual void EndClass(){ 
-		//out << " End Class, time:" << classDesc->run_time() << " results:" << classDesc->results() << std::endl; 
-	}
-	virtual void EndProject(){ 
-		out << "End Project" <<  std::endl; 
-		out << " results:" << project->results() << std::endl; 
-		out << " runtime:" << project->run_time() << std::endl; 
-		out << " elapsed time:" << project->elapsed_time() << std::endl; 
-	}
-public:
-	void printOutput(std::ostream& output){ output << out.str(); }
-	bool Result(){ return finalResult; }
-}notifier;
+		void EndMethod(){
+			out << " " << method->run_time() << std::endl;
+		}
 
-class DefaultMethodTimer: public MethodTimer{
-	void timeMethod(MethodCaller& caller, TimeReport& report){
-		AutoTimer timer(report);
-		caller.forward();
+		void EndProject(){
+			std::cout << out.str();
+		}
+	}tlog;
+}
+
+namespace gppUnit {
+	void AutoOptions(AutoRunner& runner) {
+		runner << "gppUnit 1.5" << Notifier;
+
 	}
-}timer;
-
-ClassContext context(notifier,timer);
-
-bool DoAutoRun(const char* title)
-{
-	ProjectFixture fixture;
-	fixture.run(title,Auto::autoTests(),context);
-	notifier.printOutput(std::cout);
-	return notifier.Result();
 }

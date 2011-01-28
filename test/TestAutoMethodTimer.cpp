@@ -7,6 +7,8 @@
 #include <sstream>
 
 namespace TestAutoMethodTimer{
+	using gppUnit::equals;
+
 	class Test: public Auto::TestCase, gppUnit::MethodCaller, gppUnit::TimeReport{
 		gppUnit::AutoMethodTimer<Utilities::MockAuto<0> > mockauto;
 		gppUnit::MethodTimer* caller;
@@ -26,7 +28,7 @@ namespace TestAutoMethodTimer{
 			caller->timeMethod(*this,*this);
 		}
 		void thenMethodCalledBeforeTimeReported(){
-			confirm.equals("fwd.time.",strm.str(),"forward before time");
+			confirm.that("fwd.time.",equals(strm),"forward before time");
 		}
 		void test(){
 			givenAutoMethodTimer();

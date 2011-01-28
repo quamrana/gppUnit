@@ -1,11 +1,12 @@
 #ifndef AUTORUN_H_B72BA09A_909E_4283_855E_75BDE1121091
 #define AUTORUN_H_B72BA09A_909E_4283_855E_75BDE1121091
 
-#include "RealTestCase.h"
-#include "AutoTest.h"
+#include "src\TestCaseBase.h"
+#include "src\AutoTest.h"
+#include "src\Matchers.h"
 
 namespace Auto {
-	class TestCase: public Prototype1::RealTestCase, Prototype1::Auto::AutoTest{};
+	class TestCase: public gppUnit::TestCaseBase, gppUnit::AutoTest{};
 }
 
 #define  _CONCAT(a, b) _XCAT(a, b)

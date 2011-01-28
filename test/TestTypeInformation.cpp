@@ -4,6 +4,7 @@
 
 #include <typeinfo>
 
+
 class ClassInGlobalNamespace{};
 
 namespace{
@@ -11,13 +12,15 @@ namespace{
 }
 
 namespace TestTypeInformation{
+	using gppUnit::equals;
+
 	class ClassInNamespace{};
 	class Test: public Auto::TestCase{
 		void test(){
-			confirm.equals("TestTypeInformation::ClassInNamespace",gppUnit::demangleTypeName(typeid(ClassInNamespace).name()));
-			confirm.equals("(anonymous namespace)::ClassInEmptyNamespace",gppUnit::demangleTypeName(typeid(ClassInEmptyNamespace).name()));
-			confirm.equals("ClassInGlobalNamespace",gppUnit::demangleTypeName(typeid(ClassInGlobalNamespace).name()));
-			confirm.equals("int",gppUnit::demangleTypeName(typeid(int).name()));
+			confirm.that("TestTypeInformation::ClassInNamespace",equals(gppUnit::demangleTypeName(typeid(ClassInNamespace).name())));
+			confirm.that("(anonymous namespace)::ClassInEmptyNamespace",equals(gppUnit::demangleTypeName(typeid(ClassInEmptyNamespace).name())));
+			confirm.that("ClassInGlobalNamespace",equals(gppUnit::demangleTypeName(typeid(ClassInGlobalNamespace).name())));
+			confirm.that("int",equals(gppUnit::demangleTypeName(typeid(int).name())));
 		}
 	}GPPUNIT_INSTANCE;
 }

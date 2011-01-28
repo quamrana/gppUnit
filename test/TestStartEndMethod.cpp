@@ -67,15 +67,23 @@ namespace TestStartEndMethod{
 			whenCalled();
 			thenEachMethodStartedAndEndedWithNumResults(NUM);
 		}
+	public:
+		~TestNumResults(){}
 	};
 
 	class TestNoResults: public TestNumResults<0>{
+	public:
+		~TestNoResults(){}
 	}GPPUNIT_INSTANCE;
 
 	class TestOneResult: public TestNumResults<1>{
+	public:
+		~TestOneResult(){}
 	}GPPUNIT_INSTANCE;
 
 	class TestTwoResults: public TestNumResults<2>{
+	public:
+		~TestTwoResults(){}
 	}GPPUNIT_INSTANCE;
 
 	class TestResultContentTrue: public TestNumResultsBase{
