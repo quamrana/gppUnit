@@ -1,6 +1,7 @@
 #include "src\MethodDescription.h"
 #include "src\ReportResult.h"
 #include "src\TestResult.h"
+#include "src\AssertException.h"
 
 #include "TestUtilities.h"
 
@@ -33,6 +34,11 @@ namespace TestExceptionCatching{
 			throw this;
 		}
 	};
+	class AssertExceptionThrowingTestCase: public Utilities::MockTestCase{
+		void test(){ 
+			throw gppUnit::assertException;
+		}
+	};
 
 	class VariousExceptions: public Utilities::TestCaseCaller, gppUnit::Notification{
 		RTEThrowingTestCase testcase1;
@@ -41,7 +47,10 @@ namespace TestExceptionCatching{
 		IntStarThrowingTestCase testcase4;
 		SelfThrowingTestCase testcase5;
 
+	protected:
 		std::stringstream collect;
+		bool exceptionReported;
+	private:
 
 		const gppUnit::MethodDescription* description;
 
@@ -51,8 +60,8 @@ namespace TestExceptionCatching{
 		void StartMethod(const gppUnit::MethodDescription& desc){
 			description=&desc;
 		}
-		bool exceptionReported;
-		virtual void Exception(const std::string& what){
+
+		void Exception(const std::string& what){
 			exceptionReported=true;
 			collect << what << '.';
 		}
@@ -66,18 +75,21 @@ namespace TestExceptionCatching{
 			description=0;
 		}
 
-		void givenTestCase(){
+		virtual void givenTestCases(){
 			add(testcase1);
 			add(testcase2);
 			add(testcase3);
 			add(testcase4);
 			add(testcase5);
+		}
+		void givenTestCase(){
+			givenTestCases();
 			givenNotification(this);
 			exceptionReported=false;
 			run_time=-1;
 			runtimeCaptured=false;
 		}
-		void thenExceptionReported(){
+		virtual void thenExceptionReported(){
 			confirm.isTrue(exceptionReported,"thenExceptionReported");
 			confirm.equals("rte.string.charstar.1.Unknown Exception.",collect.str(),"Various exceptions");
 		}
@@ -92,6 +104,16 @@ namespace TestExceptionCatching{
 		}
 	}GPPUNIT_INSTANCE;
 
+	class AssertExceptionTest: public VariousExceptions{
+		AssertExceptionThrowingTestCase testcase6;
+		virtual void givenTestCases(){
+			add(testcase6);
+		}
+		virtual void thenExceptionReported(){
+			confirm.isTrue(!exceptionReported,"then_NO_ExceptionReported");
+			confirm.equals("",collect.str(),"AssertException not collected");
+		}
+	}GPPUNIT_INSTANCE;
 
 	class SetupThrowingTestCase: public Utilities::MockTestCase{
 		void setup(){ 
