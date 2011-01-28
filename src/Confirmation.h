@@ -27,9 +27,8 @@ namespace gppUnit {
 		}
 		template<typename ACTUAL, typename MATCHER>
 		void that(const ACTUAL& actual, MATCHER m, const char* message = "Should match") {
-			MatcherResult match = m.match(actual);
-			TestResult result(match.result);
-			result.message = message;
+			const MatcherResult& match = m.match(actual);
+			TestResult result(match.result,message);
 
 			const char* aux = (result.result) ? "and got" : "but got";
 			TableFormatter f;

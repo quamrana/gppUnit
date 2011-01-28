@@ -10,13 +10,11 @@ namespace gppUnit {
 	}
 
 	void Confirm::fail(const char* message) {
-		TestResult result;
-		result.message = message;
+		TestResult result(message);
 		Result(result);
 	}
 	void Confirm::pass(const char* message) {
-		TestResult result(true);
-		result.message = message;
+		TestResult result(true, message);
 		Result(result);
 	}
 	void Confirm::isTrue(bool result, const char* message) {
