@@ -9,6 +9,8 @@
 #include <sstream>
 
 namespace TestPrintFormatter{
+	using gppUnit::equals;
+
 	class PrintFormatterHelper: public Auto::TestCase{
 		gppUnit::PrintFormatter* format;
 		std::string result;
@@ -24,10 +26,10 @@ namespace TestPrintFormatter{
 			update=format->updateRunningAsterisks(max,current);
 		}
 		void thenResultIs(const std::string& result){
-			confirm.equals(result,this->result,"Result is centred");
+			confirm.that(this->result,equals(result),"Result is centred");
 		}
 		void thenUpdateIs(const std::string& update){
-			confirm.equals(update,this->update,"Update is correct");
+			confirm.that(this->update,equals(update),"Update is correct");
 		}
 		void teardown(){ delete format; }
 	};
@@ -104,6 +106,8 @@ namespace TestPrintFormatter{
 	}GPPUNIT_INSTANCE;
 }
 namespace TestStreamNotification{
+	using gppUnit::equals;
+
 	class MockProject1: public gppUnit::ProjectDescription{
 		virtual std::string name() const { return "MockProject1"; }
 		virtual size_t classes() const { return 5; }
@@ -178,22 +182,23 @@ namespace TestStreamNotification{
 			const char* expected=
 				"****************** MockProject1 ******************\n"
 				"5 classes to run.\n";
-			confirm.equals(expected,out.str());
+			confirm.that(out.str(),equals(expected));
 		}
 		void thenOneHundredPercent(){
 			const char* expected=
 				"\n"
 				"100% tests passed!\n"
 				"**************************************************\n";
-			confirm.equals(expected,out.str());
+			confirm.that(out.str(),equals(expected));
 		}
 
 		void thenAsteriskPrinted(){
 			const char* expected="**********";
-			confirm.equals(expected,out.str());
+			confirm.that(out.str(),equals(expected));
 		}
 		void thenNothingPrinted(){
-			confirm.equals("",out.str());
+			//confirm.equals("",out.str());
+			confirm.that(out.str(),equals(""));
 		}
 		void thenFailurePrinted(){
 			const char* expected=
@@ -201,7 +206,7 @@ namespace TestStreamNotification{
 				" In Class: MockClass1\n"
 				"  In Method: MockMethod1\n"
 				"   Failure\n";
-			confirm.equals(expected,out.str());
+			confirm.that(out.str(),equals(expected));
 		}
 		void thenFullResultPrinted(){
 			const char* expected=
@@ -209,7 +214,7 @@ namespace TestStreamNotification{
 				" In Class: MockClass1\n"
 				"  In Method: MockMethod1\n"
 				"   Message: message\n";
-			confirm.equals(expected,out.str());
+			confirm.that(out.str(),equals(expected));
 		}
 		void thenTwoMessagesPrinted(){
 			const char* expected=
@@ -218,7 +223,7 @@ namespace TestStreamNotification{
 				"  In Method: MockMethod1\n"
 				"   Message: message1\n"
 				"   Message: message2\n";
-			confirm.equals(expected,out.str());
+			confirm.that(out.str(),equals(expected));
 		}
 		void thenTwoMethodsAndMessagesPrinted(){
 			const char* expected=
@@ -228,7 +233,7 @@ namespace TestStreamNotification{
 				"   Message: message1\n"
 				"  In Method: MockMethod2\n"
 				"   Message: message2\n";
-			confirm.equals(expected,out.str());
+			confirm.that(out.str(),equals(expected));
 		}
 		void teardown(){ delete stream; }
 	};

@@ -4,6 +4,7 @@
 
 
 namespace TestTableFormatter{
+	using gppUnit::equals;
 
 	typedef std::vector<std::string> strvec;
 
@@ -14,15 +15,16 @@ namespace TestTableFormatter{
 		void givenTable(){ tf.clear(); }
 
 		void thenTableIsBlank(){
-			confirm.equals("",tf.toString(),"Formatter is blank");
+			confirm.that(tf.toString(),equals(""),"Formatter is blank");
 		}
 		void thenTableEquals(const std::string& value, const std::string& message){
-			confirm.equals(value.c_str(),tf.toString(),message.c_str());
+			confirm.that(tf.toString(),equals(value),message.c_str());
 		}
 		void thenTableEquals(const strvec& value, const std::string& message){
 			if (value!=tf.toVector()){
 				confirm.fail(message.c_str());
 			}
+			// TODO: compare vectors
 			//confirm.equals(value,tf.toVector(),message.c_str());
 		}
 	};
@@ -204,13 +206,15 @@ namespace AppendTable{
 	}GPPUNIT_INSTANCE;
 }
 namespace ColumnElements{
+	using gppUnit::equals;
+
 	class PublicInterface: public Auto::TestCase{
 		void test(void){
 			gppUnit::Column c("foo");
 
-			confirm.equals("foo",c.toString());
-			confirm.equals(size_t(3),c.size());
-			confirm.equals("foo   ",c.toString(6));
+			confirm.that(c.toString(),equals("foo"));
+			confirm.that(c.size(),equals(3));
+			confirm.that(c.toString(6),equals("foo   "));
 		}
 	}GPPUNIT_INSTANCE;
 	class Copying: public Auto::TestCase{
@@ -222,8 +226,8 @@ namespace ColumnElements{
 			gppUnit::Column d("foo");
 			gppUnit::Column f("bar");
 
-			confirm.equals(c.toString(),d.toString());
-			confirm.isFalse(c.toString()==f.toString(),"Columns c(foo) and f(bar) are not equal");
+			confirm.that(c.toString(),equals(d.toString()));
+			confirm.that(c.toString(),!equals(f.toString()),"Columns c(foo) and f(bar) are not equal");
 
 			TestEquals(c,d);
 		}
@@ -245,21 +249,21 @@ namespace LineElements {
 		void thenLineEquals(const std::string& str){ 
 			std::string msg="Line should equal: ";
 			msg+=str;
-			confirm.equals(str,line.toString(),msg.c_str());
+			confirm.that(line.toString(),equals(str),msg.c_str());
 		}
 		void sizedLineEquals(const std::string& str){ 
 			std::string msg="Line should equal: ";
 			msg+=str;
-			confirm.equals(str,line.toString(sizes),msg.c_str());
+			confirm.that(line.toString(sizes),equals(str),msg.c_str());
 		}
 
 		void thenSizesHas(size_t elements){
-			expect.equals(elements,sizes.size());
+			expect.that(sizes.size(),equals(elements),"thenSizesHas");
 		}
 		void thenSizesHasAt(size_t index,size_t value){
 			std::stringstream strm;
 			strm << "Index: " << index << " should contain value: " << value;
-			confirm.equals(value,sizes[index],strm.str().c_str());
+			confirm.that(sizes[index],equals(value),strm.str().c_str());
 		}
 	};
 	class PublicInterface: public LineHelper{
@@ -321,7 +325,7 @@ namespace LineElements {
 		void test(void){
 			gppUnit::Line line;
 			line.append("line");
-			confirm.equals("line",copy(line),"Copy retains contents");
+			confirm.that(copy(line),equals("line"),"Copy retains contents");
 		}
 	}GPPUNIT_INSTANCE;
 }

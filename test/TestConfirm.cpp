@@ -8,48 +8,52 @@
 typedef std::vector<std::string> strvec;
 
 namespace TestAsserts{
+	using gppUnit::equals;
+
 	class Base: public Auto::TestCase, gppUnit::ReportResult{ 
 		gppUnit::TestResult testResult;
 		virtual void Report(const gppUnit::TestResult& result){
 			testResult=result;
 		}
+		const strvec& description(){ return testResult.description; }
+		size_t descriptionSize(){ return testResult.description.size(); }
 	protected:
 		void setReport(gppUnit::ResultSetter& setter){
 			setter.setReport(this);
 		}
 		void thenDescriptionIsEmpty(){
-			confirm.equals(0,testResult.description.size(),"Description is empty");
+			confirm.that(descriptionSize(),equals(0),"Description is empty");
 		}
 		void thenDescriptionIs(const std::string& desc){
-			expect.equals(1,testResult.description.size(),"Description has one line");
-			confirm.equals(desc,testResult.description.front(),desc.c_str());
+			expect.equals(1,descriptionSize(),"Description has one line");
+			confirm.equals(desc,description().front(),desc.c_str());
 		}
 		void thenDescriptionIs(const strvec& desc){
-			expect.equals(desc.size(),testResult.description.size(),"Description has same number of lines");
-			confirm.isTrue(desc==testResult.description,"Whole Description does not match");
-			strvec::const_iterator test=testResult.description.begin();
+			expect.equals(desc.size(),description().size(),"Description has same number of lines");
+			confirm.isTrue(desc==description(),"Whole Description should match");
+			strvec::const_iterator test=description().begin();
 			for(strvec::const_iterator it=desc.begin(), end=desc.end(); it!=end; ++it){
 				confirm.equals(*it,*test++,(*it).c_str());
 			}
 		}
 		void thenResultIsFail(){
 			confirm.isFalse(testResult.result,"thenResultIsFail");
-			confirm.equals("fail",testResult.message,"message is fail");
+			confirm.that(testResult.message,equals("fail"),"message is fail");
 			//thenDescriptionIsEmpty();
 		}
 		void thenResultIsPass(){
 			confirm.isTrue(testResult.result,"thenResultIsPass");
-			confirm.equals("pass",testResult.message,"message is pass");
+			confirm.that(testResult.message,equals("pass"),"message is pass");
 			thenDescriptionIsEmpty();
 		}
 		void thenResultIsFalse(const char* message){
 			confirm.isFalse(testResult.result,"thenResultIsFalse");
-			confirm.equals(message,testResult.message,message);
+			confirm.that(testResult.message,equals(message),message);
 			//thenDescriptionIsEmpty();
 		}
 		void thenResultIsTrue(const char* message){
 			confirm.isTrue(testResult.result,"thenResultIsTrue");
-			confirm.equals(message,testResult.message,message);
+			confirm.that(testResult.message,equals(message),message);
 			//thenDescriptionIsEmpty();
 		}
 	};

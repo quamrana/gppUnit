@@ -4,6 +4,7 @@
 #include "TestUtilities.h"
 
 namespace TestStartEndClass{
+	using gppUnit::equals;
 
 	class TestOneClass: public Utilities::TestCaseCaller, gppUnit::Notification{
 		Utilities::ReportingMockTestCase testcase;
@@ -34,13 +35,13 @@ namespace TestStartEndClass{
 			run_time=-1;
 		}
 		void thenEachClassStartedAndEnded(){
-			confirm.equals("Utilities::ReportingMockTestCase.end.",collect.str(),"Should have recorded test");
+			confirm.that(collect.str(),equals("Utilities::ReportingMockTestCase.end."),"Should have recorded test");
 		}
 		void thenThreeMethodsCalled(){
-			confirm.equals(3,methods,"thenThreeMethodsCalled");
+			confirm.that(methods,equals(3),"thenThreeMethodsCalled");
 		}
 		void thenOneTestResult(){
-			confirm.equals(1,results,"thenOneTestResult");
+			confirm.that(results,equals(1),"thenOneTestResult");
 		}
 		void thenRunTimeIsThreeTimesStandard(){
 			double expected=0.3;

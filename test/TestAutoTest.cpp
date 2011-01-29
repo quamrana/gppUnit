@@ -3,7 +3,9 @@
 #include "TestUtilities.h"
 
 namespace TestAutoTest{
-	// Warning: NEVER make an instance of MockTest on the stack or globally - always make an instance on the stack!!!
+	using gppUnit::equals;
+
+	// Warning: NEVER make an instance of MockTest on the stack or globally - always make an instance on the HEAP!!!
 	class MockTest: public Utilities::MockTestCase, public gppUnit::AutoTest{
 		void test(){}	
 	};
@@ -18,10 +20,10 @@ namespace TestAutoTest{
 			mock=actualMock=new MockTest();
 		}
 		void test(){
-			expect.isTrue(mock!=0,"Setup produced a test instance");
-			expect.equals(1,mockList.size(),"A test is registered with mockList");
-			confirm.equals(1,gppUnit::autoTests().size(),"A test is registered with mockList");
-			confirm.isTrue(mock==mockList.front(),"mock is at front");
+			expect.that(mock,!gppUnit::is_null(),"Setup produced a test instance");
+			expect.that(mockList.size(),equals(1),"A test is registered with mockList");
+			confirm.that(gppUnit::autoTests().size(),equals(1),"A test is registered with mockList");
+			confirm.that(mockList.front(),equals((gppUnit::PrototypeTestCase*)mock),"mock is at front");
 		}
 		void teardown(){
 			gppUnit::globalAutoList().autoTests(Utilities::dummyTestCaseList);
