@@ -9,6 +9,8 @@
 #include <sstream>
 
 namespace TestStartEndMethod{
+	using gppUnit::equals;
+
 	class MockTestCaseVariableResults: public Utilities::MockTestCase{
 		int number;
 		void test(){ 
@@ -53,7 +55,7 @@ namespace TestStartEndMethod{
 			givenNotification(this);
 		}
 		void thenEachMethodStartedAndEndedWithNumResults(int results){
-			confirm.equals(setuptestteardownString(results),collect.str(),"Should have called three methods");
+			confirm.that(collect.str(),equals(setuptestteardownString(results)),"Should have called three methods");
 		}
 		void thenResultRecordedInTest(){
 			confirm.isTrue(collect.str().find("test.0.1.end")!=std::string::npos,"Test result is 0.1");

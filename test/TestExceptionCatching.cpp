@@ -9,6 +9,8 @@
 #include <sstream>
 
 namespace TestExceptionCatching{
+	using gppUnit::equals;
+
 	class RTEThrowingTestCase: public Utilities::MockTestCase{
 		void test(){ 
 			throw std::runtime_error("rte");
@@ -91,10 +93,10 @@ namespace TestExceptionCatching{
 		}
 		virtual void thenExceptionReported(){
 			confirm.isTrue(exceptionReported,"thenExceptionReported");
-			confirm.equals("rte.string.charstar.1.Unknown Exception.",collect.str(),"Various exceptions");
+			confirm.that(collect.str(),equals("rte.string.charstar.1.Unknown Exception."),"Various exceptions");
 		}
 		void thenTimeReported(){
-			confirm.isTrue(0.1==run_time,"TestUtilities should supply a standard run_time");
+			confirm.that(run_time,equals(0.1),"TestUtilities should supply a standard run_time");
 		}
 		void test(){
 			givenTestCase();
@@ -110,8 +112,8 @@ namespace TestExceptionCatching{
 			add(testcase6);
 		}
 		virtual void thenExceptionReported(){
-			confirm.isTrue(!exceptionReported,"then_NO_ExceptionReported");
-			confirm.equals("",collect.str(),"AssertException not collected");
+			confirm.isFalse(exceptionReported,"then_NO_ExceptionReported");
+			confirm.that(collect.str(),equals(""),"AssertException not collected");
 		}
 	}GPPUNIT_INSTANCE;
 
@@ -135,7 +137,7 @@ namespace TestExceptionCatching{
 			givenNotification(this);
 		}
 		void thenOnlySetupAndTeardownRun(){
-			confirm.equals("setup.teardown.",collect.str(),"thenOnlySetupAndTeardownRun");
+			confirm.that(collect.str(),equals("setup.teardown."),"thenOnlySetupAndTeardownRun");
 		}
 		void test(){
 			givenTestCase();
@@ -166,7 +168,7 @@ namespace TestExceptionCatching{
 			givenNotification(this);
 		}
 		void thenOnlySetupAndTeardownRun(){
-			confirm.equals("setup.teardown.",collect.str(),"thenOnlySetupAndTeardownRun");
+			confirm.that(collect.str(),equals("setup.teardown."),"thenOnlySetupAndTeardownRun");
 		}
 		void test(){
 			givenTestCase();

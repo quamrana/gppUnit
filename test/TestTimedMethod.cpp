@@ -7,7 +7,9 @@
 
 #include <sstream>
 
-namespace {
+namespace TestTimedMethod{
+	using gppUnit::equals;
+
 	class MockTestCase: public Utilities::MockTestCase{
 		void test(){ }
 	};
@@ -48,7 +50,7 @@ namespace {
 			expect.isTrue(timeToReport!=0.1,"Sample time used by test is not 0.1");
 		}
 		void thenEachMethodStartedAndEndedWithRunTime(){
-			confirm.equals(setuptestteardownString(timeToReport),collect.str(),"Should have called three methods");
+			confirm.that(collect.str(),equals(setuptestteardownString(timeToReport)),"Should have called three methods");
 		}
 		void test(){
 			givenMockTestCase();

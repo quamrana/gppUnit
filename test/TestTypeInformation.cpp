@@ -17,10 +17,10 @@ namespace TestTypeInformation{
 	class ClassInNamespace{};
 	class Test: public Auto::TestCase{
 		void test(){
-			confirm.that("TestTypeInformation::ClassInNamespace",equals(gppUnit::demangleTypeName(typeid(ClassInNamespace).name())));
-			confirm.that("(anonymous namespace)::ClassInEmptyNamespace",equals(gppUnit::demangleTypeName(typeid(ClassInEmptyNamespace).name())));
-			confirm.that("ClassInGlobalNamespace",equals(gppUnit::demangleTypeName(typeid(ClassInGlobalNamespace).name())));
-			confirm.that("int",equals(gppUnit::demangleTypeName(typeid(int).name())));
+			confirm.that(gppUnit::demangleTypeName(typeid(ClassInNamespace).name()),equals("TestTypeInformation::ClassInNamespace"));
+			confirm.that(gppUnit::demangleTypeName(typeid(ClassInEmptyNamespace).name()),equals("(anonymous namespace)::ClassInEmptyNamespace"));
+			confirm.that(gppUnit::demangleTypeName(typeid(ClassInGlobalNamespace).name()),equals("ClassInGlobalNamespace"));
+			confirm.that(gppUnit::demangleTypeName(typeid(int).name()),equals("int"));
 		}
 	}GPPUNIT_INSTANCE;
 }

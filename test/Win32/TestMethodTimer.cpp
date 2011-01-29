@@ -7,6 +7,9 @@
 #include <sstream>
 
 namespace TestWin32MethodTimer{
+	using gppUnit::greater_than;
+	using gppUnit::equal_to;
+
 	class Test: public Auto::TestCase, gppUnit::MethodCaller, gppUnit::TimeReport{
 
 		gppUnit::MethodTimer* win32Timer;
@@ -42,13 +45,11 @@ namespace TestWin32MethodTimer{
 			confirm.isTrue(timeReported,"Time should be reported");
 		}
 		void thenRuntimeIsReasonable(){
-			bool notTooLarge=(runtimeReport<(50.0/1e6));
-			bool notTooSmall=(runtimeReport>(0.5/1e6));
-			confirm.isTrue(notTooLarge,"Time should be not too large");
-			confirm.isTrue(notTooSmall,"Time should be not too small");
+			confirm.that(runtimeReport,greater_than(0.5e-6),"Time should be not too small");
+			confirm.that(runtimeReport,!greater_than(50e-6),"Time should be not too large");
 		}
 		void thenMethodCalledBeforeTimeReported(){
-			confirm.equals("fwd.time.",strm.str(),"forward before time");
+			confirm.that(strm.str(),equal_to("fwd.time."),"forward before time");
 		}
 		void test(){
 			givenTimer();

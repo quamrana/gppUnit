@@ -5,9 +5,9 @@
 
 #include <sstream>
 
-
-
 namespace TestCompositeNotification{
+	using gppUnit::equals;
+
 	class TestCompositeUtility: public Auto::TestCase, public gppUnit::Notification{
 		virtual void StartProject(const gppUnit::ProjectDescription&){ wasCalled+=1; }
 		virtual void EndProject(){ wasCalled+=1; }
@@ -47,7 +47,7 @@ namespace TestCompositeNotification{
 			wasCalled=0;
 		}
 		void thenNoCallsReceived(){
-			confirm.equals(0,wasCalled,"thenNoCallsReceived");
+			confirm.that(wasCalled,equals(0),"thenNoCallsReceived");
 		}
 		void test(){
 			givenComposite();
@@ -63,7 +63,7 @@ namespace TestCompositeNotification{
 			add();
 		}
 		void thenOneCallReceived(){
-			confirm.equals(1,wasCalled,"thenOneCallReceived");
+			confirm.that(wasCalled,equals(1),"thenOneCallReceived");
 		}
 		void test(){
 			givenComposite();
@@ -80,7 +80,7 @@ namespace TestCompositeNotification{
 			add();
 		}
 		void thenTwoCallsReceived(){
-			confirm.equals(2,wasCalled,"thenTwoCallsReceived");
+			confirm.that(wasCalled,equals(2),"thenTwoCallsReceived");
 		}
 		void test(){
 			givenComposite();
@@ -98,7 +98,7 @@ namespace TestCompositeNotification{
 			add();
 		}
 		void thenThreeCallsReceived(){
-			confirm.equals(3,wasCalled,"thenThreeCallsReceived");
+			confirm.that(wasCalled,equals(3),"thenThreeCallsReceived");
 		}
 		void test(){
 			givenComposite();
@@ -124,7 +124,7 @@ namespace TestCompositeNotification{
 			add();
 		}
 		void thenAllMethodsCalled(){
-			confirm.equals("SP.SC.SM.TR.EX.EM.EC.EP.",collect.str(),"thenAllMethodsCalled");
+			confirm.that(collect.str(),equals("SP.SC.SM.TR.EX.EM.EC.EP."),"thenAllMethodsCalled");
 		}
 		void test(){
 			givenComposite();

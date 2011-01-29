@@ -5,6 +5,8 @@
 #include <sstream>
 
 namespace TestTestCase {
+	using gppUnit::equals;
+
 	class MockTestCase: public Utilities::MockTestCase{
 		std::stringstream collect;
 		void setup(){ collect << gppUnit::setupMethodName() << '.'; }
@@ -22,20 +24,12 @@ namespace TestTestCase {
 
 	class TestMethodNames: public Auto::TestCase{
 		void test(){
-			std::string expected;
-			std::string actual;
 
-			expected="setup";
-			actual=gppUnit::setupMethodName();
-			confirm.equals(expected,actual,"Should be setup");
+			confirm.that(gppUnit::setupMethodName(),equals("setup"),"Should be setup");
 
-			expected="test";
-			actual=gppUnit::testMethodName();
-			confirm.equals(expected,actual,"Should be test");
+			confirm.that(gppUnit::testMethodName(),equals("test"),"Should be test");
 
-			expected="teardown";
-			actual=gppUnit::teardownMethodName();
-			confirm.equals(expected,actual,"Should be teardown");
+			confirm.that(gppUnit::teardownMethodName(),equals("teardown"),"Should be teardown");
 		}
 	}GPPUNIT_INSTANCE;
 
@@ -46,7 +40,7 @@ namespace TestTestCase {
 			add(testcase);
 		}
 		void thenAllThreeMethodsCalled(){
-			confirm.isTrue(testcase.result()==setuptestteardownString(),"Should have called three methods");
+			confirm.that(testcase.result(),equals(setuptestteardownString()),"Should have called three methods");
 		}
 		void test(){ 
 			givenMockTestCase();
@@ -65,7 +59,7 @@ namespace TestTestCase {
 		void thenSixMethodsCalled(){
 			std::string expected=setuptestteardownString()+setuptestteardownString();
 			std::string actual=testcase1.result()+testcase2.result();
-			confirm.equals(expected,actual,"Should have called six methods");
+			confirm.that(actual,equals(expected),"Should have called six methods");
 		}
 		void test(){
 			givenTwoTestCases();

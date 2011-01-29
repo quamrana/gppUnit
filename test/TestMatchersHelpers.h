@@ -11,14 +11,14 @@ namespace Utilities{
 		template<typename MATCHER, typename ACTUAL>
 		void That(const ACTUAL& actual, MATCHER m, const char* desc){
 			gppUnit::MatcherResult result=m.match(actual);
-			confirm.that(true,gppUnit::equals(result.result),"result is true");
-			confirm.that(desc,gppUnit::equals(result.description()),"description is '1'");
+			confirm.isTrue(result.result,"result is true");
+			confirm.that(result.description(),gppUnit::equals(desc),"description is '1'");
 		}
 		template<typename MATCHER, typename ACTUAL>
 		void MisMatch(const ACTUAL& actual, MATCHER m, const char* desc){
 			gppUnit::MatcherResult result=m.match(actual);
-			confirm.that(false,gppUnit::equals(result.result),"result is false");
-			confirm.that(desc,gppUnit::equals(result.description()),"description is '1'");
+			confirm.isFalse(result.result,"result is false");
+			confirm.that(result.description(),gppUnit::equals(desc),"description is '1'");
 		}
 	};
 }

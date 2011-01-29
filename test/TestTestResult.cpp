@@ -14,7 +14,7 @@ namespace TestTestResult{
 			confirm.isFalse(result.result,"Result is false by default");
 		}
 		void thenMessageIsEmpty(){
-			confirm.that("",equals(result.message),"Message is empty");
+			confirm.that(result.message,equals(""),"Message is empty");
 			confirm.isTrue(result.message.empty(),"Message is empty");
 		}
 		void thenDescriptionIsEmpty(){
