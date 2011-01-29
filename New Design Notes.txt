@@ -100,12 +100,30 @@ New Design Notes
 		Need a TestCaseBase
 	Add a main which calls the auto runner.
 
-$019	Transfer to google code
+$019	Refit tests
+	Rewrite the tests to use matchers where needed.
+		TestAutoMethodTimer
+		TestAutoTest
+		TestCompositeNotification
+		TestConfirm
+		TestExceptionCatching
+		TestGreaterThan
+		TestIsNull
+		TestWin32MethodTimer
+		TestQuotesToParentheses
+		TestStartEndClass
+		TestStartEndMethod
+		TestStartEndProject
+		TestStreamNotification
+		TestTableFormatter
+		TestTestCase
+		TestTestResult
+		TestTimedMethod
+		TestTypeInformation
+
+$020	Transfer to google code
 	Consider moving TableFormatter and Matchers into their own libraries.
 	Upload to google code
-
-$	Refit tests
-	Rewrite the tests to use matchers where needed.
 
 $	compile under cygwin and possibly MinGW
 
@@ -117,6 +135,7 @@ $	Implement a more complete set of matchers
 		ends_with
 		contains
 		All the 'not's
+		equals with collections
 
 $	Catch exceptions from calls to notify
 
