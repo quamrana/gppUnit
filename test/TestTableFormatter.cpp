@@ -219,7 +219,7 @@ namespace ColumnElements{
 	}GPPUNIT_INSTANCE;
 	class Copying: public Auto::TestCase{
 		void TestEquals(gppUnit::Column copied, const gppUnit::Column& refd) {
-			confirm.equals(copied.toString(),refd.toString());
+			confirm.that(copied.toString(),equals(refd.toString()));
 		}
 		void test(void){
 			gppUnit::Column c("foo");

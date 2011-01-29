@@ -25,15 +25,15 @@ namespace TestAsserts{
 			confirm.that(descriptionSize(),equals(0),"Description is empty");
 		}
 		void thenDescriptionIs(const std::string& desc){
-			expect.equals(1,descriptionSize(),"Description has one line");
-			confirm.equals(desc,description().front(),desc.c_str());
+			expect.that(descriptionSize(),equals(1),"Description has one line");
+			confirm.that(description().front(),equals(desc),desc.c_str());
 		}
 		void thenDescriptionIs(const strvec& desc){
-			expect.equals(desc.size(),description().size(),"Description has same number of lines");
+			expect.that(description().size(),equals(desc.size()),"Description has same number of lines");
 			confirm.isTrue(desc==description(),"Whole Description should match");
 			strvec::const_iterator test=description().begin();
 			for(strvec::const_iterator it=desc.begin(), end=desc.end(); it!=end; ++it){
-				confirm.equals(*it,*test++,(*it).c_str());
+				confirm.that(*test++,equals(*it),(*it).c_str());
 			}
 		}
 		void thenResultIsFail(){
