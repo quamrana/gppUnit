@@ -35,7 +35,7 @@ namespace TestStartEndClass{
 			run_time=-1;
 		}
 		void thenEachClassStartedAndEnded(){
-			confirm.that(collect.str(),equals("Utilities::ReportingMockTestCase.end."),"Should have recorded test");
+			confirm.that(collect,equals("Utilities::ReportingMockTestCase.end."),"Should have recorded test");
 		}
 		void thenThreeMethodsCalled(){
 			confirm.that(methods,equals(3),"thenThreeMethodsCalled");

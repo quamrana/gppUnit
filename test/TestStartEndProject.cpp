@@ -36,7 +36,7 @@ namespace TestStartEndProject{
 			run_time=-1;
 		}
 		void thenProjectStartedAndEnded(){
-			confirm.that(collect.str(),equals("TestCaseCaller.end."),"Should have recorded test");
+			confirm.that(collect,equals("TestCaseCaller.end."),"Should have recorded test");
 		}
 		void thenOneClassCalled(){
 			confirm.that(classes,equals(1),"thenOneClassCalled");

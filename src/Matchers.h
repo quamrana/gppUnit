@@ -4,6 +4,7 @@
 #include "TableFormatting.h"
 
 #include <string>
+#include <sstream>
 
 namespace gppUnit {
 	struct MatcherResult {
@@ -17,18 +18,24 @@ namespace gppUnit {
 
 	template<typename T, typename U>
 	struct ProxyTypeConverter {
+		typedef U conversion_type;
 		U value;
 		explicit ProxyTypeConverter(const T& from): value(from) {}
+	};
+	template<>
+	struct ProxyTypeConverter<std::stringstream,std::stringstream> {
+		typedef std::string conversion_type;
+		std::string value;
+		explicit ProxyTypeConverter(const std::stringstream& from): value(from.str()) {}
 	};
 
 	template<typename T, typename U = T>
 	struct ProxyTypeBase: ProxyTypeConverter<T, U> {
 		typedef T original_type;
-		typedef U conversion_type;
 
 		explicit ProxyTypeBase(const original_type& from): ProxyTypeConverter<T, U>(from) {}
 
-		static ProxyTypeBase<original_type, conversion_type> create(const original_type& from) { return ProxyTypeBase(from); }
+		static ProxyTypeBase<T, U> create(const original_type& from) { return ProxyTypeBase(from); }
 
 	private:
 		ProxyTypeBase() {}
@@ -50,6 +57,7 @@ namespace gppUnit {
 	template<> struct ProxyType<const char*>: ProxyTypeBase<const char*, std::string> {};
 	template<> struct ProxyType<size_t>: ProxyTypeBase<size_t, long> {};
 	template<> struct ProxyType<signed char>: ProxyTypeBase<signed char, long> {};
+	template<typename T> struct ProxyType<T*>: ProxyTypeBase<void*> {};
 
 	template <typename T>
 	struct is_not_t {

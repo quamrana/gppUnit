@@ -55,10 +55,10 @@ namespace TestStartEndMethod{
 			givenNotification(this);
 		}
 		void thenEachMethodStartedAndEndedWithNumResults(int results){
-			confirm.that(collect.str(),equals(setuptestteardownString(results)),"Should have called three methods");
+			confirm.that(collect,equals(setuptestteardownString(results)),"Should have called three methods");
 		}
 		void thenResultRecordedInTest(){
-			confirm.isTrue(collect.str().find("test.0.1.end")!=std::string::npos,"Test result is 0.1");
+			confirm.that(collect.str().find("test.0.1.end"),!equals(std::string::npos),"Test result is 0.1");
 		}
 	};
 	template<int NUM>

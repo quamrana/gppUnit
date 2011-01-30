@@ -23,7 +23,7 @@ namespace TestAutoTest{
 			expect.that(mock,!gppUnit::is_null(),"Setup produced a test instance");
 			expect.that(mockList.size(),equals(1),"A test is registered with mockList");
 			confirm.that(gppUnit::autoTests().size(),equals(1),"A test is registered with mockList");
-			confirm.that(mockList.front(),equals((gppUnit::PrototypeTestCase*)mock),"mock is at front");
+			confirm.that(mockList.front(),equals(mock),"mock is at front");
 		}
 		void teardown(){
 			gppUnit::globalAutoList().autoTests(Utilities::dummyTestCaseList);

@@ -93,7 +93,7 @@ namespace TestExceptionCatching{
 		}
 		virtual void thenExceptionReported(){
 			confirm.isTrue(exceptionReported,"thenExceptionReported");
-			confirm.that(collect.str(),equals("rte.string.charstar.1.Unknown Exception."),"Various exceptions");
+			confirm.that(collect,equals("rte.string.charstar.1.Unknown Exception."),"Various exceptions");
 		}
 		void thenTimeReported(){
 			confirm.that(run_time,equals(0.1),"TestUtilities should supply a standard run_time");
@@ -113,7 +113,7 @@ namespace TestExceptionCatching{
 		}
 		virtual void thenExceptionReported(){
 			confirm.isFalse(exceptionReported,"then_NO_ExceptionReported");
-			confirm.that(collect.str(),equals(""),"AssertException not collected");
+			confirm.that(collect,equals(""),"AssertException not collected");
 		}
 	}GPPUNIT_INSTANCE;
 
@@ -137,7 +137,7 @@ namespace TestExceptionCatching{
 			givenNotification(this);
 		}
 		void thenOnlySetupAndTeardownRun(){
-			confirm.that(collect.str(),equals("setup.teardown."),"thenOnlySetupAndTeardownRun");
+			confirm.that(collect,equals("setup.teardown."),"thenOnlySetupAndTeardownRun");
 		}
 		void test(){
 			givenTestCase();
@@ -168,7 +168,7 @@ namespace TestExceptionCatching{
 			givenNotification(this);
 		}
 		void thenOnlySetupAndTeardownRun(){
-			confirm.that(collect.str(),equals("setup.teardown."),"thenOnlySetupAndTeardownRun");
+			confirm.that(collect,equals("setup.teardown."),"thenOnlySetupAndTeardownRun");
 		}
 		void test(){
 			givenTestCase();

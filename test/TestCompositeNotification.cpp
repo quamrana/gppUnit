@@ -124,7 +124,7 @@ namespace TestCompositeNotification{
 			add();
 		}
 		void thenAllMethodsCalled(){
-			confirm.that(collect.str(),equals("SP.SC.SM.TR.EX.EM.EC.EP."),"thenAllMethodsCalled");
+			confirm.that(collect,equals("SP.SC.SM.TR.EX.EM.EC.EP."),"thenAllMethodsCalled");
 		}
 		void test(){
 			givenComposite();
