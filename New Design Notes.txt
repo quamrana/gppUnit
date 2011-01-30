@@ -100,7 +100,7 @@ New Design Notes
 		Need a TestCaseBase
 	Add a main which calls the auto runner.
 
-$019	Refit tests
+#$019	Refit tests
 	Rewrite the tests to use matchers where needed.
 		TestAutoMethodTimer
 		TestAutoTest
