@@ -182,23 +182,22 @@ namespace TestStreamNotification{
 			const char* expected=
 				"****************** MockProject1 ******************\n"
 				"5 classes to run.\n";
-			confirm.that(out.str(),equals(expected));
+			confirm.that(out,equals(expected));
 		}
 		void thenOneHundredPercent(){
 			const char* expected=
 				"\n"
 				"100% tests passed!\n"
 				"**************************************************\n";
-			confirm.that(out.str(),equals(expected));
+			confirm.that(out,equals(expected));
 		}
 
 		void thenAsteriskPrinted(){
 			const char* expected="**********";
-			confirm.that(out.str(),equals(expected));
+			confirm.that(out,equals(expected));
 		}
 		void thenNothingPrinted(){
-			//confirm.equals("",out.str());
-			confirm.that(out.str(),equals(""));
+			confirm.that(out,equals(""));
 		}
 		void thenFailurePrinted(){
 			const char* expected=
@@ -206,7 +205,7 @@ namespace TestStreamNotification{
 				" In Class: MockClass1\n"
 				"  In Method: MockMethod1\n"
 				"   Failure\n";
-			confirm.that(out.str(),equals(expected));
+			confirm.that(out,equals(expected));
 		}
 		void thenFullResultPrinted(){
 			const char* expected=
@@ -214,7 +213,7 @@ namespace TestStreamNotification{
 				" In Class: MockClass1\n"
 				"  In Method: MockMethod1\n"
 				"   Message: message\n";
-			confirm.that(out.str(),equals(expected));
+			confirm.that(out,equals(expected));
 		}
 		void thenTwoMessagesPrinted(){
 			const char* expected=
@@ -233,7 +232,7 @@ namespace TestStreamNotification{
 				"   Message: message1\n"
 				"  In Method: MockMethod2\n"
 				"   Message: message2\n";
-			confirm.that(out.str(),equals(expected));
+			confirm.that(out,equals(expected));
 		}
 		void teardown(){ delete stream; }
 	};

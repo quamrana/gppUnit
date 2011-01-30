@@ -9,21 +9,6 @@
 
 #include <sstream>
 
-namespace gppUnit{
-	class TestCaseMethodCaller;
-	class TimeReport;
-	class MethodTimer;
-
-	template<>
-	struct ProxyTypeConverter<std::stringstream,std::string> {
-		std::string value;
-		explicit ProxyTypeConverter(const std::stringstream& from): value(from.str()) {}
-	};
-
-	template<> struct ProxyType<std::stringstream>: ProxyTypeBase<std::stringstream, std::string> {};
-
-}
-
 namespace Utilities{
 	class DestructableNotification: public gppUnit::Notification{};
 

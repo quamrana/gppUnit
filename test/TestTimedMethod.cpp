@@ -50,7 +50,7 @@ namespace TestTimedMethod{
 			expect.isTrue(timeToReport!=0.1,"Sample time used by test is not 0.1");
 		}
 		void thenEachMethodStartedAndEndedWithRunTime(){
-			confirm.that(collect.str(),equals(setuptestteardownString(timeToReport)),"Should have called three methods");
+			confirm.that(collect,equals(setuptestteardownString(timeToReport)),"Should have called three methods");
 		}
 		void test(){
 			givenMockTestCase();
