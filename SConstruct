@@ -17,6 +17,13 @@ def djgpp():
 		CPPFLAGS=cppflags
 		)
 
+def gcc():
+	cppflags=['-Wall','-Wextra'] #,'-Weffc++']
+	return DefaultEnvironment(
+		CPPFLAGS=cppflags,
+		EXTRA='unix'
+		)
+
 def Env(key):
 	try:
 		return env[key]
@@ -25,6 +32,8 @@ def Env(key):
 
 if compiler=='msvc':
 	env=microsoft()
+elif compiler=='gcc':
+	env=gcc()
 else:
 	env=djgpp()
 
@@ -40,4 +49,4 @@ print "LIB is:", env['AR']
 #print "BUILDERS: ", env['BUILDERS']
 #print env.Dump()
 
-env.SConscript(['src\SConscript','test\SConscript','Matchers\SConscript','TableFormatting\SConscript'])
+env.SConscript(['src/SConscript','test/SConscript','Matchers/SConscript','TableFormatting/SConscript'])
