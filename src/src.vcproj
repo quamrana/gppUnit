@@ -41,6 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories=".."
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
@@ -105,6 +106,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
+				AdditionalIncludeDirectories=".."
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -143,6 +145,10 @@
 		</Configuration>
 	</Configurations>
 	<References>
+		<ProjectReference
+			ReferencedProjectIdentifier="{B48BAC4E-DD31-4CBB-9804-8F56A4AF076A}"
+			RelativePathToProject=".\TableFormatting\TableFormatting.vcproj"
+		/>
 	</References>
 	<Files>
 		<Filter
@@ -224,10 +230,6 @@
 			</File>
 			<File
 				RelativePath=".\StreamNotification.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\TableFormatting.cpp"
 				>
 			</File>
 			<File
@@ -350,10 +352,6 @@
 			</File>
 			<File
 				RelativePath=".\StreamNotification.h"
-				>
-			</File>
-			<File
-				RelativePath=".\TableFormatting.h"
 				>
 			</File>
 			<File
