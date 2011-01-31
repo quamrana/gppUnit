@@ -125,6 +125,26 @@ $020	Transfer to google code
 	Consider moving TableFormatter and Matchers into their own libraries.
 .		Make a branch for TableFormatter.
 		Make a branch for Matchers.
+			Make equals+to_trait::rayString a non-inline member
+				aperture
+				ray
+				elipsis
+				fixedColumn
+				segment
+	Use vsprops files to make the projects more consistent
+		4548	Expected expression with side-effect
+		4623	Base class default constructor in inaccessible
+		4640	Local static object not thread-safe
+		4668	Undefined macro replaced with '0'
+		4710	Function not inlined
+		4820	Padding
+		4996	strcpy unsafe
+		
+		4512;4250;4355;4996
+	Disable additional warnings in test program
+		4365	conversion from 'const size_t' to 'long', signed/unsigned mismatch
+		4625	copy constructor could not be generated because a base class copy constructor is inaccessible
+		4626	assignment operator could not be generated because a base class assignment operator is inaccessible
 	Upload to google code
 
 $	compile under cygwin and possibly MinGW

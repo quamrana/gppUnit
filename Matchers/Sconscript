@@ -1,0 +1,4 @@
+env=DefaultEnvironment()
+
+cppIncludes=[Dir('#')]
+env.StaticLibrary('Matchers', Glob('*.cpp'),CPPPATH=cppIncludes)

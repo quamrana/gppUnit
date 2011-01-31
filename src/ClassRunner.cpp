@@ -29,7 +29,7 @@ namespace gppUnit {
 	}
 	void ClassRunner::calculateClassData() {
 		classData.goodReport = std::accumulate(methodData.begin(), methodData.end(), true, Report<MethodData>());
-		classData.results = std::accumulate(methodData.begin(), methodData.end(), long(), Results<MethodData>());
+		classData.results = std::accumulate(methodData.begin(), methodData.end(), size_t(), Results<MethodData>());
 		classData.reportedTime = std::accumulate(methodData.begin(), methodData.end(), double(), RunTime<MethodData>());
 	}
 
