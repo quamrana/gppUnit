@@ -18,8 +18,8 @@ namespace {
 		struct timeval ts;
 		gettimeofday(&ts, 0);
 		result = ts.tv_sec;
-		result*= Internal::scale_long;
-		result+= ts.tv_usec;
+		result *= Internal::scale_long;
+		result += ts.tv_usec;
 		// std::cout << result << "u " << ts.tv_sec << "s " << ts.tv_usec << 'u' << std::endl;
 		return result;
 	}

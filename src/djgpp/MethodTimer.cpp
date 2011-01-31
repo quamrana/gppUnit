@@ -16,12 +16,12 @@ namespace {
 		return uclock();
 	}
 	double timeDifference(time_interval first, time_interval second) {
-		time_interval diff=second-first;
-		if (diff<0){
-			diff+=65536L;
+		time_interval diff = second - first;
+		if(diff < 0) {
+			diff += 65536L;
 			// std::cout << "----------------" << std::endl;
 		}
-		double result=double(diff) / Internal::scale_double;
+		double result = double(diff) / Internal::scale_double;
 		// std::cout << result << "s" << std::endl;
 		return result;
 	}
