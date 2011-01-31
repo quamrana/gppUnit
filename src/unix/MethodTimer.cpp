@@ -24,7 +24,6 @@ THE SOFTWARE.
 #include "AutoMethodTimer.h"
 
 // #include <iostream>
-#include <time.h>
 #include <sys/time.h>
 
 
@@ -51,6 +50,7 @@ namespace {
 		// return result;
 		return double(second - first) / Internal::scale_double;
 	}
+
 
 	class AutoTimer {
 		gppUnit::TimeReport& report;
