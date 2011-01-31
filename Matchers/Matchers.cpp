@@ -9,7 +9,7 @@ namespace gppUnit {
 		fixedColumnPlus(fixedColumn + 1)
 	{}
 
-	std::string StringFormatting::rayString(const std::string& str) {
+	std::string StringFormatting::rayString(const std::string& str) const {
 		std::stringstream strm;
 		strm << "'";
 		if(str.size() <= aperture) {
@@ -20,7 +20,7 @@ namespace gppUnit {
 		strm << "'";
 		return strm.str();
 	}
-	std::string StringFormatting::segmentString(const std::string& str, size_t mismatch) {
+	std::string StringFormatting::segmentString(const std::string& str, size_t mismatch) const {
 		std::stringstream strm;
 		size_t startColumn = mismatch - fixedColumn + elipsis.size();
 		strm << "'" << elipsis  << str.substr(startColumn, segment) << elipsis << "'";
