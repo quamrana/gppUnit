@@ -5,44 +5,12 @@
 #include <vector>
 #include <sstream>
 
+#include "TableLine.h"
+
 namespace gppUnit {
-	class Column {
-		std::string contents;
-	public:
-		explicit Column(const std::string& str): contents(str) {}
-		size_t size() const { return contents.size(); }
-		std::string toString() const { return contents; }
-		std::string toString(size_t requestedWidth) const;
-	};
-
-	class Line {
-		std::vector<Column> columns;
-		std::stringstream stream;
-		bool streamIsEmpty;
-
-		void pad(std::vector<size_t>& sizes) const ;
-		void clearStream();
-
-	public:
-		Line(): columns(), stream(), streamIsEmpty(true) {}
-		Line(const Line&);
-		Line& operator=(Line const&);
-		void clear();
-		size_t size() const { return columns.size(); }
-
-		template<typename ValueArgument>
-		void append(const ValueArgument& str) { stream << str; streamIsEmpty = false; }
-		void tab();
-
-		std::string toString() const;
-		std::string toString(const std::vector<size_t>& sizes) const;
-
-		void update(std::vector<size_t>& sizes) const;
-	};
-
 	class TableFormatter {
-		std::vector<Line> page;
-		Line line;
+		std::vector<TableLine> page;
+		TableLine line;
 		bool lineIsEmpty;
 
 		friend TableFormatter& tab(TableFormatter& table);

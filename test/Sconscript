@@ -1,10 +1,10 @@
 env=DefaultEnvironment()
 
 cppIncludes=[Dir('#')]
-libIncludes=[Dir('#\src')]
+libIncludes=[Dir('#\src'),Dir('#\TableFormatting')]
 
 env.Program('test', Glob('*.cpp'),
-	LIBS=['gppUnit1.5'], 
+	LIBS=['gppUnit1.5','TableFormatting'], 
 	LIBPATH=libIncludes,
 	CPPPATH=cppIncludes
 	)

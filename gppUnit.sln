@@ -5,6 +5,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "test\test.vcproj", 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gppUnit1.5", "src\src.vcproj", "{9D5B0AA8-247E-4C50-B086-E47DC18B05A6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TableFormatting", "TableFormatting\TableFormatting.vcproj", "{B48BAC4E-DD31-4CBB-9804-8F56A4AF076A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -19,6 +21,10 @@ Global
 		{9D5B0AA8-247E-4C50-B086-E47DC18B05A6}.Debug|Win32.Build.0 = Debug|Win32
 		{9D5B0AA8-247E-4C50-B086-E47DC18B05A6}.Release|Win32.ActiveCfg = Release|Win32
 		{9D5B0AA8-247E-4C50-B086-E47DC18B05A6}.Release|Win32.Build.0 = Release|Win32
+		{B48BAC4E-DD31-4CBB-9804-8F56A4AF076A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B48BAC4E-DD31-4CBB-9804-8F56A4AF076A}.Debug|Win32.Build.0 = Debug|Win32
+		{B48BAC4E-DD31-4CBB-9804-8F56A4AF076A}.Release|Win32.ActiveCfg = Release|Win32
+		{B48BAC4E-DD31-4CBB-9804-8F56A4AF076A}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
