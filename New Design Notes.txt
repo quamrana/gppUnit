@@ -123,6 +123,8 @@ New Design Notes
 
 $020	Transfer to google code
 	Consider moving TableFormatter and Matchers into their own libraries.
+.		Make a branch for TableFormatter.
+		Make a branch for Matchers.
 	Upload to google code
 
 $	compile under cygwin and possibly MinGW
