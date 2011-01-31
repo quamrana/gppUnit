@@ -100,7 +100,7 @@ namespace gppUnit {
 	template <>
 	struct equal_to_trait<std::string>: equal_to_trait_base<std::string>, StringFormatting {
 		equal_to_trait(const std::string& actual, const std::string& expected): equal_to_trait_base<std::string>(actual, expected)
-			{}
+		{}
 		MatcherResult match();
 
 		enum StringMismatchFormat { SHORT, MEDIUM, LONG };

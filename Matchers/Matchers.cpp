@@ -2,12 +2,12 @@
 
 namespace gppUnit {
 	StringFormatting::StringFormatting(): aperture(100),
-			elipsis("..."),
-			ray(aperture - elipsis.size()),
-			segment(ray - elipsis.size()),
-			fixedColumn(aperture / 2),
-			fixedColumnPlus(fixedColumn + 1)
-		{}
+		elipsis("..."),
+		ray(aperture - elipsis.size()),
+		segment(ray - elipsis.size()),
+		fixedColumn(aperture / 2),
+		fixedColumnPlus(fixedColumn + 1)
+	{}
 
 	std::string StringFormatting::rayString(const std::string& str) {
 		std::stringstream strm;
