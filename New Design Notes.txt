@@ -124,7 +124,7 @@ New Design Notes
 $020	Transfer to google code
 	Consider moving TableFormatter and Matchers into their own libraries.
 .		Make a branch for TableFormatter.
-		Make a branch for Matchers.
+.		Make a branch for Matchers.
 			Make equals+to_trait::rayString a non-inline member
 				aperture
 				ray
@@ -145,7 +145,11 @@ $020	Transfer to google code
 		4365	conversion from 'const size_t' to 'long', signed/unsigned mismatch
 		4625	copy constructor could not be generated because a base class copy constructor is inaccessible
 		4626	assignment operator could not be generated because a base class assignment operator is inaccessible
+.	Create google code project
+.	Licence files
 	Upload to google code
+
+
 
 $	compile under cygwin and possibly MinGW
 
