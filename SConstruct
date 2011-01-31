@@ -14,7 +14,8 @@ def djgpp():
 	return DefaultEnvironment(tools = ['c++','gnulink','ar'],
 		ENV={'PATH':path,'DJGPP':DJGPP},
 		CXX = 'gpp', AR = 'arrep', LINK = 'linkrep',
-		CPPFLAGS=cppflags
+		CPPFLAGS=cppflags,
+		EXTRA='djgpp'
 		)
 
 def gcc():
