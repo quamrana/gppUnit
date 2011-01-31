@@ -21,6 +21,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
+			InheritedPropertySheets="..\StaticLibrary.vsprops;..\ProjectDefaults.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
@@ -45,9 +46,6 @@
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="1"
-				UsePrecompiledHeader="0"
-				WarningLevel="4"
 				DebugInformationFormat="4"
 				DisableSpecificWarnings="4512;4355"
 			/>
@@ -84,6 +82,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
+			InheritedPropertySheets="..\StaticLibrary.vsprops;..\ProjectDefaults.vsprops"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -108,7 +107,6 @@
 				EnableIntrinsicFunctions="true"
 				AdditionalIncludeDirectories=".."
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
-				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -190,10 +188,6 @@
 			</File>
 			<File
 				RelativePath=".\main.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Matchers.cpp"
 				>
 			</File>
 			<File
@@ -308,10 +302,6 @@
 			</File>
 			<File
 				RelativePath=".\Helpers.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Matchers.h"
 				>
 			</File>
 			<File

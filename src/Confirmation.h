@@ -3,7 +3,7 @@
 
 #include "TestCase.h"
 #include "TestResult.h"
-#include "Matchers.h"
+#include "Matchers\Matchers.h"
 
 namespace gppUnit {
 	class ConfirmationBase: public ResultSetter {

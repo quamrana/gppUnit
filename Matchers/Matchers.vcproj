@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="TableFormatting"
-	ProjectGUID="{B48BAC4E-DD31-4CBB-9804-8F56A4AF076A}"
-	RootNamespace="TableFormatting"
+	Name="Matchers"
+	ProjectGUID="{00DE743A-E807-4293-A71A-25EC53DE6F66}"
+	RootNamespace="Matchers"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -42,10 +42,12 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories=".."
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				DebugInformationFormat="4"
+				DisableSpecificWarnings="4512"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -140,6 +142,10 @@
 		</Configuration>
 	</Configurations>
 	<References>
+		<ProjectReference
+			ReferencedProjectIdentifier="{B48BAC4E-DD31-4CBB-9804-8F56A4AF076A}"
+			RelativePathToProject=".\TableFormatting\TableFormatting.vcproj"
+		/>
 	</References>
 	<Files>
 		<Filter
@@ -148,15 +154,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\Column.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\TableFormatting.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\TableLine.cpp"
+				RelativePath=".\Matchers.cpp"
 				>
 			</File>
 		</Filter>
@@ -166,15 +164,19 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\Column.h"
+				RelativePath=".\MatcherResult.h"
 				>
 			</File>
 			<File
-				RelativePath=".\TableFormatting.h"
+				RelativePath=".\Matchers.h"
 				>
 			</File>
 			<File
-				RelativePath=".\TableLine.h"
+				RelativePath=".\ProxyType.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ProxyTypeSpecializations.h"
 				>
 			</File>
 		</Filter>

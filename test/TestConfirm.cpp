@@ -18,7 +18,7 @@ namespace TestAsserts{
 		const strvec& description(){ return testResult.description; }
 		size_t descriptionSize(){ return testResult.description.size(); }
 	protected:
-		void setReport(gppUnit::ResultSetter& setter){
+		void setReportOnSetter(gppUnit::ResultSetter& setter){
 			setter.setReport(this);
 		}
 		void thenDescriptionIsEmpty(){
@@ -57,11 +57,14 @@ namespace TestAsserts{
 			//thenDescriptionIsEmpty();
 		}
 	};
-	class ConfirmPassAndFail: public Base{
+	class ConfirmBase: public Base{
+	protected:
 		gppUnit::Confirm conf;
 		void givenConfirm(){
-			setReport(conf);
+			setReportOnSetter(conf);
 		}
+	};
+	class ConfirmPassAndFail: public ConfirmBase{
 		void whenFailCalled(){
 			conf.fail("fail");
 		}
@@ -76,11 +79,7 @@ namespace TestAsserts{
 			thenResultIsPass();
 		}
 	}GPPUNIT_INSTANCE;
-	class ConfirmIsTrue: public Base{
-		gppUnit::Confirm conf;
-		void givenConfirm(){
-			setReport(conf);
-		}
+	class ConfirmIsTrue: public ConfirmBase{
 		void whenIsTrueCalled(bool value){
 			conf.isTrue(value);
 		}
@@ -98,7 +97,7 @@ namespace TestAsserts{
 		bool caughtException;
 	protected:
 		void givenExpect(){
-			setReport(exp);
+			setReportOnSetter(exp);
 			caughtException=false;
 		}
 		void whenFailCalled(){
@@ -147,22 +146,14 @@ namespace ConfirmThat{
 	using gppUnit::tab;
 	using gppUnit::endl;
 
-	class ConfirmThatResult: public Base{
-		gppUnit::Confirm conf;
-		void givenConfirm(){
-			setReport(conf);
-		}
+	class ConfirmThatResult: public TestAsserts::ConfirmBase{
 		void test(){
 			givenConfirm();
 			conf.that(0,gppUnit::equal_to(0));
 			thenResultIsTrue("Should match");
 		}
 	}GPPUNIT_INSTANCE;
-	class ConfirmThatPassDescription: public Base{
-		gppUnit::Confirm conf;
-		void givenConfirm(){
-			setReport(conf);
-		}
+	class ConfirmThatPassDescription: public TestAsserts::ConfirmBase{
 		void test(){
 			givenConfirm();
 			conf.that(0,gppUnit::equal_to(0));
@@ -173,11 +164,7 @@ namespace ConfirmThat{
 			thenDescriptionIs(f.toVector());
 		}
 	}GPPUNIT_INSTANCE;
-	class ConfirmThatFailDescription: public Base{
-		gppUnit::Confirm conf;
-		void givenConfirm(){
-			setReport(conf);
-		}
+	class ConfirmThatFailDescription: public TestAsserts::ConfirmBase{
 		void test(){
 			givenConfirm();
 			conf.that(1,gppUnit::equal_to(0));
@@ -189,11 +176,7 @@ namespace ConfirmThat{
 			thenDescriptionIs(f.toVector());
 		}
 	}GPPUNIT_INSTANCE;
-	class ConfirmThatFailDescriptionIntChar: public Base{
-		gppUnit::Confirm conf;
-		void givenConfirm(){
-			setReport(conf);
-		}
+	class ConfirmThatFailDescriptionIntChar: public TestAsserts::ConfirmBase{
 		void test(){
 			givenConfirm();
 			long longint=2;
@@ -208,11 +191,7 @@ namespace ConfirmThat{
 			thenDescriptionIs(f.toVector());
 		}
 	}GPPUNIT_INSTANCE;
-	class ConfirmThatFailDescriptionCharsChars: public Base{
-		gppUnit::Confirm conf;
-		void givenConfirm(){
-			setReport(conf);
-		}
+	class ConfirmThatFailDescriptionCharsChars: public TestAsserts::ConfirmBase{
 		void test(){
 			givenConfirm();
 			const char* actual="1";
@@ -227,11 +206,7 @@ namespace ConfirmThat{
 			thenDescriptionIs(f.toVector());
 		}
 	}GPPUNIT_INSTANCE;
-	class ConfirmThatFailDescriptionCharsCharArray: public Base{
-		gppUnit::Confirm conf;
-		void givenConfirm(){
-			setReport(conf);
-		}
+	class ConfirmThatFailDescriptionCharsCharArray: public TestAsserts::ConfirmBase{
 		void test(){
 			givenConfirm();
 			const char* actual="1";

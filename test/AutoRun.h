@@ -3,7 +3,8 @@
 
 #include "src\TestCaseBase.h"
 #include "src\AutoTest.h"
-#include "src\Matchers.h"
+#include "Matchers\Matchers.h"
+#include "Matchers\ProxyTypeSpecializations.h"
 
 namespace Auto {
 	class TestCase: public gppUnit::TestCaseBase, gppUnit::AutoTest{};

@@ -19,7 +19,7 @@ namespace gppUnit {
 
 	void ProjectRunner::calculateProjectData() {
 		projectData.goodReport = std::accumulate(classData.begin(), classData.end(), true, Report<ClassData>());
-		projectData.results = std::accumulate(classData.begin(), classData.end(), long(), Results<ClassData>());
+		projectData.results = std::accumulate(classData.begin(), classData.end(), size_t(), Results<ClassData>());
 		projectData.reportedTime = std::accumulate(classData.begin(), classData.end(), double(), RunTime<ClassData>());
 	}
 	ProjectRunner::ProjectRunner(const std::string& title,
