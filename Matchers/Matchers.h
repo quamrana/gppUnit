@@ -90,11 +90,11 @@ namespace gppUnit {
 	public:
 		StringFormatting();
 
-		size_t raySize() { return ray; }
-		size_t adjustedFixedColumn() { return fixedColumnPlus; }
+		size_t raySize() const { return ray; }
+		size_t adjustedFixedColumn() const { return fixedColumnPlus; }
 
-		std::string rayString(const std::string& str);
-		std::string segmentString(const std::string& str, size_t mismatch);
+		std::string rayString(const std::string& str) const;
+		std::string segmentString(const std::string& str, size_t mismatch) const;
 	};
 
 	template <>
