@@ -121,7 +121,7 @@ New Design Notes
 		TestTimedMethod
 		TestTypeInformation
 
-$020	Transfer to google code
+#$020	Transfer to google code
 	Consider moving TableFormatter and Matchers into their own libraries.
 .		Make a branch for TableFormatter.
 .		Make a branch for Matchers.
@@ -147,7 +147,7 @@ $020	Transfer to google code
 		4626	assignment operator could not be generated because a base class assignment operator is inaccessible
 .	Create google code project
 .	Licence files
-	Upload to google code
+.	Upload to google code
 
 
 
