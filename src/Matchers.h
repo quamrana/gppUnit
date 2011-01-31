@@ -23,7 +23,7 @@ namespace gppUnit {
 		explicit ProxyTypeConverter(const T& from): value(from) {}
 	};
 	template<>
-	struct ProxyTypeConverter<std::stringstream,std::stringstream> {
+	struct ProxyTypeConverter<std::stringstream, std::stringstream> {
 		typedef std::string conversion_type;
 		std::string value;
 		explicit ProxyTypeConverter(const std::stringstream& from): value(from.str()) {}
