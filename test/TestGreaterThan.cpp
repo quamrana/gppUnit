@@ -24,8 +24,9 @@ THE SOFTWARE.
 namespace TestGreaterThan{
 	using Utilities::MatcherHelper;
 	using gppUnit::greater_than;
+	using gppUnit::equal_to;
 
-	class Test: public MatcherHelper{
+	class TestIntegers: public MatcherHelper{
 		void test(){
 			int integer=1;
 			long longint=2;
@@ -41,6 +42,18 @@ namespace TestGreaterThan{
 			That(vec.size(),!greater_than(integer),"not a value greater than '1'\n");
 			That(schar,!greater_than(longint),"not a value greater than '2'\n");
 			That(schar,!greater_than(vec.size()),"not a value greater than '0'\n");
+		}
+	}GPPUNIT_INSTANCE;
+
+	class TestReal: public MatcherHelper{
+		void test(){
+			float floater=2;
+			double dubble=3;
+
+			That(dubble,!greater_than(dubble),"not a value greater than '3'\n");
+			That(dubble,greater_than(floater),"a value greater than '2'\n");
+			That(floater,!greater_than(floater),"not a value greater than '2'\n");
+			That(floater,!greater_than(dubble),"not a value greater than '3'\n");
 		}
 	}GPPUNIT_INSTANCE;
 }

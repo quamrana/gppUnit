@@ -39,6 +39,7 @@ namespace gppUnit {
 	template<> struct ProxyType<const char*>: ProxyTypeBase<const char*, std::string> {};
 	template<> struct ProxyType<size_t>: ProxyTypeBase<size_t, long> {};
 	template<> struct ProxyType<signed char>: ProxyTypeBase<signed char, long> {};
+	template<> struct ProxyType<float>: ProxyTypeBase<float, double> {};
 	template<typename T> struct ProxyType<T*>: ProxyTypeBase<void*> {};
 
 }
