@@ -157,6 +157,10 @@
 				RelativePath=".\Matchers.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\MatcherSpecializations.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -169,6 +173,10 @@
 			</File>
 			<File
 				RelativePath=".\Matchers.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MatcherSpecializations.h"
 				>
 			</File>
 			<File
