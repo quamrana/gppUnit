@@ -56,4 +56,21 @@ namespace TestGreaterThan{
 			That(floater,!greater_than(dubble),"not a value greater than '3'\n");
 		}
 	}GPPUNIT_INSTANCE;
+
+	class TestFloatEqualsWithin: public MatcherHelper{
+		void test(){
+			float floatsmall=2.05;
+			float floatlarge=2.06;
+
+			That(floatsmall,equal_to(floatlarge).within(0.1),"'2.06' within '0.1'\n");
+		}
+	}GPPUNIT_INSTANCE;
+	class TestDoubleEqualsWithin: public MatcherHelper{
+		void test(){
+			double doublesmall=2.05;
+			double doublelarge=2.06;
+
+			That(doublelarge,equal_to(doublesmall).within(0.1),"'2.05' within '0.1'\n");
+		}
+	}GPPUNIT_INSTANCE;
 }

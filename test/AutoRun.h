@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "src\AutoTest.h"
 #include "Matchers\Matchers.h"
 #include "Matchers\ProxyTypeSpecializations.h"
+#include "Matchers\MatcherSpecializations.h"
 
 namespace Auto {
 	class TestCase: public gppUnit::TestCaseBase, gppUnit::AutoTest{};
