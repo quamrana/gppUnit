@@ -47,6 +47,7 @@ namespace gppUnit {
 		void append(const ValueArgument& str) { stream << str; streamIsEmpty = false; }
 		void tab();
 
+		void patch(const TableLine& line);
 		std::string toString() const;
 		std::string toString(const std::vector<size_t>& sizes) const;
 

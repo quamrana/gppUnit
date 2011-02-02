@@ -49,6 +49,24 @@ namespace TestEqualTo{
 			That(actual,is_not(is_not(equal_to(expected))),"'1'\n");
 		}
 	}GPPUNIT_INSTANCE;
+
+	class TestFloatEqualsWithin: public MatcherHelper{
+		void test(){
+			float floatsmall=2.05f;
+			float floatlarge=2.06f;
+
+			That(floatsmall,equal_to(floatlarge).within(0.1),"'2.06' within '0.1'\n");
+		}
+	}GPPUNIT_INSTANCE;
+	class TestDoubleEqualsWithin: public MatcherHelper{
+		void test(){
+			double doublesmall=2.05;
+			double doublelarge=2.06;
+
+			That(doublelarge,equal_to(doublesmall).within(0.1),"'2.05' within '0.1'\n");
+		}
+	}GPPUNIT_INSTANCE;
+
 	class StringTest: public MatcherHelper{
 		void test(void){
 			const char* actual="1";

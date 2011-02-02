@@ -91,21 +91,21 @@ namespace gppUnit {
 	}
 
 	equal_to_t<double>::equal_to_t(const double& expected): value_matcher<double, equal_to_t<double> >(expected),
-		withinValue(0) 
+		withinValue(0)
 	{}
 
-		MatcherResult equal_to_t<double>::operator()(const double& actual, const double& expected) const {
-			MatcherResult result(
-					((expected-withinValue)<=actual) &&
-					(actual<=(expected+withinValue))
-				);
-			result.strm << "'" << expected << "'" << " within '"  << withinValue << "'" ;
-			return result;
-		}
+	MatcherResult equal_to_t<double>::operator()(const double& actual, const double& expected) const {
+		MatcherResult result(
+		    ((expected - withinValue) <= actual) &&
+		    (actual <= (expected + withinValue))
+		);
+		result.strm << "'" << expected << "'" << " within '"  << withinValue << "'" ;
+		return result;
+	}
 
-		equal_to_t<float>::equal_to_t(const float& expected): equal_to_t<double>(floatExpected), 
-			floatExpected(expected) 
-		{}
+	equal_to_t<float>::equal_to_t(const float& expected): equal_to_t<double>(floatExpected),
+		floatExpected(expected)
+	{}
 
 }
 

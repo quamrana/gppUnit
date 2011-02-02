@@ -159,14 +159,23 @@ New Design Notes
 	Improve build (MethodTimer could be better)
 
 $	Implement a more complete set of matchers
-		less_than
+.		less_than
+.		equals within (double/float)
 		one_of
 		all_of
 		begins_with
 		ends_with
-		contains
+		contains (strings)
 		All the 'not's
-		equals with collections
+		collections
+			equals
+			contains
+
+$	Add whole project elapsed time
+
+$	Doxys documentation
+
+$	Google code wiki documentation
 
 $	Catch exceptions from calls to notify
 
@@ -175,8 +184,6 @@ $	Allow Exception catchers which describe themselves.
 		Even when a test is written incorrectly it would be nice to have an unexpected exception describe itself.
 
 $	Make sure Method and Class Descriptions can be copied and saved in vectors.
-
-$	Add whole project elapsed time
 
 Infrastructure
 #	Hudson
@@ -201,22 +208,3 @@ Infrastructure
 		
 
 cppcheck --enable=all --quiet -I src --xml src 2>cppcheck-result.xml
-
-=========================================================================================================
-	template <typename T>
-	struct greater_than_trait_base: value_trait_base<T> {
-		greater_than_trait_base(const T& actual, const T& expected): value_trait_base<T>(actual,expected) {}
-
-		bool comparison() { return (actualValue > expectedValue); }
-
-	};
-	template <typename T>
-	struct greater_than_trait: greater_than_trait_base<T> {
-		greater_than_trait(const T& actual, const T& expected): greater_than_trait_base<T>(actual, expected) {}
-
-		MatcherResult match() {
-			MatcherResult result(comparison());
-			result.strm << "a value greater than '" << expectedValue << "'";
-			return result;
-		}
-	};

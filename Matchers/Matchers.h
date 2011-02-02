@@ -130,6 +130,20 @@ namespace gppUnit {
 	};
 	template <typename T>
 	greater_than_t<T> greater_than(const T& expected) { return greater_than_t<T>(expected); }
+
+	template <typename T>
+	struct less_than_t: value_matcher<T, less_than_t<T> > {
+		explicit less_than_t(const T& expected): value_matcher<T, less_than_t<T> >(expected) {}
+
+		template<typename V>
+		MatcherResult operator()(const V& actual, const V& expected) const {
+			MatcherResult result(actual < expected);
+			result.strm  << "a value less than '" << expected << "'";
+			return result;
+		}
+	};
+	template <typename T>
+	less_than_t<T> less_than(const T& expected) { return less_than_t<T>(expected); }
 }
 
 #endif // MATCHERS_H_A1A948B8_4BB3_4E59_8A68_E4E99CC5EEC2
