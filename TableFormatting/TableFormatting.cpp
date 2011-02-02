@@ -26,10 +26,12 @@ THE SOFTWARE.
 
 namespace gppUnit {
 	void TableFormatter::tab() {
-		*this << ' ';
+		//*this << ' ';
 		line.tab();
 	}
 	void TableFormatter::endLine() {
+		if (!lineIsEmpty)
+			line.tab();
 		page.push_back(line);
 		clearLine();
 	}
@@ -72,6 +74,13 @@ namespace gppUnit {
 			}
 		};
 	}
+	TableFunctors::Accumulator partialVector(const std::vector<TableLine>& page, const TableLine& line, bool lineIsEmpty){
+		TableFunctors::Update update = std::for_each(page.begin(), page.end(), TableFunctors::Update());
+		if(!lineIsEmpty) { line.update(update.sizes); }
+
+		return std::for_each(page.begin(), page.end(), TableFunctors::Accumulator(update.sizes));
+	}
+
 	TableFormatter& TableFormatter::operator<<(const TableFormatter& table) {
 		std::vector<std::string> result = table.toVector();
 
@@ -91,10 +100,7 @@ namespace gppUnit {
 	}
 
 	std::vector<std::string> TableFormatter::toVector() const {
-		TableFunctors::Update update = std::for_each(page.begin(), page.end(), TableFunctors::Update());
-		if(!lineIsEmpty) { line.update(update.sizes); }
-
-		TableFunctors::Accumulator result = std::for_each(page.begin(), page.end(), TableFunctors::Accumulator(update.sizes));
+		TableFunctors::Accumulator result = partialVector(page,line,lineIsEmpty);
 		if(!lineIsEmpty) { result(line); }
 		return result.result;
 	}

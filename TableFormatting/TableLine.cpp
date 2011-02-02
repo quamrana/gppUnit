@@ -49,9 +49,11 @@ namespace gppUnit {
 		clearStream();
 	}
 	void TableLine::tab() {
+		//if (!streamIsEmpty) {
 		Column column(stream.str());
 		columns.push_back(column);
 		clearStream();
+		//}
 	}
 
 	namespace LineFunctors {
@@ -69,7 +71,7 @@ namespace gppUnit {
 		};
 		struct Update {
 			size_t operator()(const Column& column, size_t size) {
-				size_t other = column.size();
+				size_t other = column.size() +1;
 				return (size >= other) ? size : other;
 			}
 		};
@@ -98,11 +100,19 @@ namespace gppUnit {
 		std::vector<size_t> modifiedSizes = sizes;
 		pad(modifiedSizes);
 
+		std::string termination=stream.str();
+
+		// Avoid padding last column with extra spaces
+		if (termination.empty() && !columns.empty()){
+			size_t index=columns.size();
+			modifiedSizes[index-1]=0;
+		}
+
 		return std::accumulate(columns.begin(),
 		                       columns.end(),
 		                       std::string(),
 		                       LineFunctors::PaddingAccumulator(modifiedSizes.begin())
-		                      ) + stream.str();
+		                      ) + termination;
 	}
 	void TableLine::update(std::vector<size_t>& sizes) const {
 		pad(sizes);
