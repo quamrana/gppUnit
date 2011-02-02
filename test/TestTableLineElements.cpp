@@ -105,7 +105,7 @@ namespace TestTableLineElements {
 			whenUpdateSizes();
 			thenSizesHas(2);
 
-			thenSizesHasAt(0,3);
+			thenSizesHasAt(0,4);
 			thenSizesHasAt(1,0);
 		}
 	}GPPUNIT_INSTANCE;

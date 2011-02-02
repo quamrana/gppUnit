@@ -55,6 +55,9 @@ namespace gppUnit {
 		clearStream();
 		//}
 	}
+	void TableLine::append(const TableLine& line){
+		std::copy(line.columns.begin(),line.columns.end(),back_inserter(columns));
+	}
 
 	namespace LineFunctors {
 		struct Accumulator {
@@ -71,17 +74,17 @@ namespace gppUnit {
 		};
 		struct Update {
 			size_t operator()(const Column& column, size_t size) {
-				size_t other = column.size() +1;
+				size_t other = column.size() + 1;
 				return (size >= other) ? size : other;
 			}
 		};
 	}
 
-	void TableLine::patch(const TableLine& line){
+	void TableLine::patch(const TableLine& line) {
 		//if (!streamIsEmpty)
 		//	tab();
-		std::copy (line.columns.begin(),line.columns.end(),back_inserter(columns));
-		if (!line.streamIsEmpty){
+		std::copy(line.columns.begin(), line.columns.end(), back_inserter(columns));
+		if(!line.streamIsEmpty) {
 			//Column column(line.stream.str());
 			//columns.push_back(column);
 			stream.str(line.stream.str());
@@ -100,12 +103,12 @@ namespace gppUnit {
 		std::vector<size_t> modifiedSizes = sizes;
 		pad(modifiedSizes);
 
-		std::string termination=stream.str();
+		std::string termination = stream.str();
 
 		// Avoid padding last column with extra spaces
-		if (termination.empty() && !columns.empty()){
-			size_t index=columns.size();
-			modifiedSizes[index-1]=0;
+		if(termination.empty() && !columns.empty()) {
+			size_t index = columns.size();
+			modifiedSizes[index - 1] = 0;
 		}
 
 		return std::accumulate(columns.begin(),

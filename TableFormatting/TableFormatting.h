@@ -30,7 +30,9 @@ THE SOFTWARE.
 
 namespace gppUnit {
 	class TableFormatter {
+		std::vector<std::string> pages;
 		std::vector<TableLine> page;
+		std::vector<size_t> sizes;
 		TableLine line;
 		bool lineIsEmpty;
 
@@ -50,6 +52,7 @@ namespace gppUnit {
 			return *this;
 		}
 		TableFormatter& operator<<(const TableFormatter& table);
+		TableFormatter& operator<<(const TableLine& line);
 		TableFormatter& operator<<(TableFormatter & (*FunctionPointer)(TableFormatter&)) {
 			return ((*FunctionPointer)(*this));
 		}

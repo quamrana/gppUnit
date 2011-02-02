@@ -45,6 +45,7 @@ namespace gppUnit {
 
 		template<typename ValueArgument>
 		void append(const ValueArgument& str) { stream << str; streamIsEmpty = false; }
+		void append(const TableLine& line);
 		void tab();
 
 		void patch(const TableLine& line);
