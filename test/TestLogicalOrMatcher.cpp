@@ -159,6 +159,6 @@ namespace TestLogicalOrMatcher{
 			That(longint,any_of(less_than(integer),equals(longint),less_than(schar)),tf.toVector());
 
 		}
-	}GPPUNIT_INSTANCE;
+	}; //GPPUNIT_INSTANCE;
 
 }
