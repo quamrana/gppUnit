@@ -79,6 +79,16 @@ namespace gppUnit {
 
 		return *this;
 	}
+	TableFormatter& TableFormatter::patch(TableFormatter& table){
+		std::vector<TableLine>::iterator it=table.page.begin(), end= table.page.end();
+
+		line.patch(*it++);
+		endLine();
+
+		std::copy (it,end,back_inserter(page));
+
+		return *this;
+	}
 
 	std::vector<std::string> TableFormatter::toVector() const {
 		TableFunctors::Update update = std::for_each(page.begin(), page.end(), TableFunctors::Update());

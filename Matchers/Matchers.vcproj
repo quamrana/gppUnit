@@ -154,10 +154,6 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\Matchers.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\MatcherSpecializations.cpp"
 				>
 			</File>

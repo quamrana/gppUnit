@@ -42,8 +42,15 @@ namespace TestTableFormatter{
 			confirm.that(tf.toString(),equals(value),message.c_str());
 		}
 		void thenTableEquals(const strvec& value, const std::string& message){
-			if (value!=tf.toVector()){
-				confirm.fail(message.c_str());
+			const strvec& table=tf.toVector();
+			expect.that(table.size(),equals(value.size()),"Table has same number of lines");
+			confirm.isTrue(value==table,message.c_str());
+			//if (value!=tf.toVector()){
+			//	confirm.fail(message.c_str());
+			//}
+			strvec::const_iterator test=table.begin();
+			for(strvec::const_iterator it=value.begin(), end=value.end(); it!=end; ++it){
+				confirm.that(*test++,equals(*it),(*it).c_str());
 			}
 			// TODO: compare vectors
 			//confirm.equals(value,tf.toVector(),message.c_str());
@@ -149,7 +156,20 @@ namespace MultipleLines{
 
 			thenTableEquals(expected,"Vector of two lines");
 		}
-	}_GPPUNIT_INSTANCE;
+	}GPPUNIT_INSTANCE;
+	class LongAndShortLines: public TestBase{
+		void test(void){
+			std::string element="column";
+			f() << "wide" << tab << element << tab << "headings" << endl;
+			f() << 1 << tab << 23 << tab << 456 << tab << 7890 << endl;
+
+			strvec expected;
+			expected.push_back("wide column headings");
+			expected.push_back("1    23     456      7890");
+
+			thenTableEquals(expected,"Vector of two lines");
+		}
+	}; //GPPUNIT_INSTANCE;
 
 }
 namespace AppendTable{
@@ -203,7 +223,7 @@ namespace AppendTable{
 			expected.push_back("Wide first column Second column");
 			expected.push_back("first             second");
 			expected.push_back("                  third");
-			thenTableEquals(expected,"Vector of two lines");
+			thenTableEquals(expected,"Vector of three lines");
 		}
 	}GPPUNIT_INSTANCE;
 	class AppendWideColumnsToLastLineOfTableWithNarrowColumns: public SecondTableBase{
@@ -222,7 +242,28 @@ namespace AppendTable{
 			expected.push_back("1       2      3       4");
 			expected.push_back("new     sub-table with extremely wide columns don't affect previous section");
 			expected.push_back("        just affect                           this table");
-			thenTableEquals(expected,"Vector of two lines - this already works because the stream operator renders the sub-table (SecondTable) to a vector of strings, which are considered to be ends of lines and don't contribute to column widths.");
+			thenTableEquals(expected,"Vector of three lines - this already works because the stream operator renders the sub-table (SecondTable) to a vector of strings, which are considered to be ends of lines and don't contribute to column widths.");
+		}
+	}GPPUNIT_INSTANCE;
+	class AppendWideColumnsToLastLineOfTableWithNarrowColumnsAndTableContinues: public SecondTableBase{
+		void test(void){
+			givenTable();
+			givenSecondTable();
+			f() << "Several" << tab << "narrow" << tab << "columns" << tab << "previous" << tab << "table" << endl;
+			f() << 1 << tab << 2 << tab << 3 << tab << 4 << endl;
+			f() << "new" << tab;
+			f2() << "sub-table with extremely wide columns" << tab << "affects previous section" << endl;
+			f2() << "also affects" << tab << "this table" << endl;
+			//whenAppendSecondToFirst();
+
+			f().patch(f2());
+
+			strvec expected;
+			expected.push_back("Several      narrow                                columns previous table");
+			expected.push_back("1            2                                     3       4");
+			expected.push_back("new          sub-table with extremely wide columns affects previous section");
+			expected.push_back("also affects this table");
+			thenTableEquals(expected,"Vector of three lines - all with new column widths.");
 		}
 	}GPPUNIT_INSTANCE;
 }

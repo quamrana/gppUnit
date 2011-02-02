@@ -227,6 +227,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TestLessThan.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\TestLogicalOrMatcher.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Win32\TestMethodTimer.cpp"
 				>
 				<FileConfiguration

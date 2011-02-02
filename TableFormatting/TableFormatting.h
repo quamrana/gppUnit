@@ -54,6 +54,8 @@ namespace gppUnit {
 			return ((*FunctionPointer)(*this));
 		}
 
+		TableFormatter& patch(TableFormatter& table);
+
 		std::vector<std::string> toVector() const;
 		std::string toString() const ;
 	};

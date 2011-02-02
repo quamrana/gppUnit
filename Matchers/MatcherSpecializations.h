@@ -2,7 +2,7 @@
 #define MATCHERSPECIALIZATIONS_H_A2C47514_540D_4DD4_8484_ACE6142B81F7
 #include "Matchers.h"
 
-namespace gppUnit{
+namespace gppUnit {
 	class StringFormatting {
 		const size_t aperture;
 		const std::string elipsis;
@@ -46,7 +46,7 @@ namespace gppUnit{
 		explicit equal_to_t(const double& expected);
 
 		MatcherResult operator()(const double& actual, const double& expected) const ;
-		equal_to_t<double>& within(const double& within){ withinValue=within; return *this; }
+		equal_to_t<double>& within(const double& within) { withinValue = within; return *this; }
 		double withinValue;
 	};
 	template <>

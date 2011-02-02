@@ -74,6 +74,18 @@ namespace gppUnit {
 			}
 		};
 	}
+
+	void TableLine::patch(const TableLine& line){
+		//if (!streamIsEmpty)
+		//	tab();
+		std::copy (line.columns.begin(),line.columns.end(),back_inserter(columns));
+		if (!line.streamIsEmpty){
+			//Column column(line.stream.str());
+			//columns.push_back(column);
+			stream.str(line.stream.str());
+		}
+	}
+
 	std::string TableLine::toString() const {
 		return std::accumulate(columns.begin(), columns.end(), std::string(), LineFunctors::Accumulator()) + stream.str();
 	}
