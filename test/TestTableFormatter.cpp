@@ -169,7 +169,7 @@ namespace MultipleLines{
 
 			thenTableEquals(expected,"Vector of two lines");
 		}
-	}GPPUNIT_INSTANCE;
+	}; //GPPUNIT_INSTANCE;
 
 }
 namespace AppendTable{
@@ -244,7 +244,7 @@ namespace AppendTable{
 			expected.push_back("        just affect                           this table");
 			thenTableEquals(expected,"Vector of three lines - this already works because the stream operator renders the sub-table (SecondTable) to a vector of strings, which are considered to be ends of lines and don't contribute to column widths.");
 		}
-	}; //GPPUNIT_INSTANCE;
+	}GPPUNIT_INSTANCE;
 	class AppendWideColumnsToLastLineOfTableWithNarrowColumnsAndTableContinues: public SecondTableBase{
 		void test(void){
 			givenTable();
@@ -264,7 +264,7 @@ namespace AppendTable{
 			expected.push_back("also affects this table");
 			thenTableEquals(expected,"Vector of three lines - all with new column widths.");
 		}
-	}GPPUNIT_INSTANCE;
+	}; //GPPUNIT_INSTANCE;
 }
 
 }

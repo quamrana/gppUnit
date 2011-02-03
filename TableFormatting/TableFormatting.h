@@ -30,9 +30,9 @@ THE SOFTWARE.
 
 namespace gppUnit {
 	class TableFormatter {
-		std::vector<std::string> pages;
+		std::vector<std::string> prevPages;
 		std::vector<TableLine> page;
-		std::vector<size_t> sizes;
+		std::vector<size_t> summarySizes;
 		TableLine line;
 		bool lineIsEmpty;
 
@@ -41,6 +41,7 @@ namespace gppUnit {
 		void tab();
 		void endLine();
 		void clearLine();
+		std::vector<std::string> partialVector(std::vector<size_t>& sizes) const;
 	public:
 		TableFormatter(): page(), line(), lineIsEmpty(true) {}
 		void clear() { clearLine(); page.clear(); }

@@ -25,15 +25,17 @@ THE SOFTWARE.
 
 namespace TestTableLineElements {
 	using gppUnit::equals;
+	using gppUnit::TableLine;
 
 	class LineHelper: public Auto::TestCase{
-		gppUnit::TableLine line;
+		TableLine line;
 		std::vector<size_t> sizes;
 	protected:
 		void givenLine(){ line.clear(); }
 		void givenSizes(){ sizes.clear(); }
 
 		void whenAppend(const std::string& str){ line.append(str); }
+		void whenAppend(const TableLine& otherLine){ line.append(otherLine); }
 		void whenTab(){ line.tab(); }
 		void addSize(size_t size){ sizes.push_back(size); }
 		void whenUpdateSizes(){ line.update(sizes); }
@@ -109,7 +111,7 @@ namespace TestTableLineElements {
 			thenSizesHasAt(1,0);
 		}
 	}GPPUNIT_INSTANCE;
-	class TestLineCopying: public Auto::TestCase{
+	class LineCopying: public Auto::TestCase{
 		std::string copy(const gppUnit::TableLine& line){
 			gppUnit::TableLine line2(line);
 			return line2.toString();
@@ -118,6 +120,23 @@ namespace TestTableLineElements {
 			gppUnit::TableLine line;
 			line.append("line");
 			confirm.that(copy(line),equals("line"),"Copy retains contents");
+		}
+	}GPPUNIT_INSTANCE;
+	class AppendLine: public LineHelper{
+		void test(void){
+			givenLine();
+
+			whenAppend("foo");
+			whenTab();
+			whenAppend("doof");
+
+			TableLine newLine;
+			newLine.append("bar");
+			newLine.tab();
+			newLine.append("zoo");
+
+			whenAppend(newLine);
+			thenLineEquals("foodoofbarzoo");
 		}
 	}GPPUNIT_INSTANCE;
 }
