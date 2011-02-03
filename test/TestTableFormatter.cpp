@@ -183,6 +183,17 @@ namespace AppendTable{
 		void givenSecondTable(){ tf2.clear(); }
 
 		void whenAppendSecondToFirst(){ f() << f2(); }
+		void whenPatchSecondToFirst(){ f().patch(f2()); }
+
+	};
+	class ThirdTableBase: public SecondTableBase{
+	protected:
+		gppUnit::TableFormatter tf3;
+		gppUnit::TableFormatter& f3(){ return tf3; }
+		void givenThirdTable(){ tf2.clear(); }
+
+		void whenAppendThirdToSecond(){ f2() << f3(); }
+		void whenPatchThirdToSecond(){ f2().patch(f3()); }
 
 	};
 	class AppendToBlankTable: public SecondTableBase{
@@ -226,6 +237,27 @@ namespace AppendTable{
 			thenTableEquals(expected,"Vector of three lines");
 		}
 	}GPPUNIT_INSTANCE;
+
+	class AppendMultipleLinesToLastLineOfLongTable: public SecondTableBase{
+		void test(void){
+			givenTable();
+			givenSecondTable();
+			f() << "Wide first column" << tab << "Second column" << tab << "Third Column" << endl;
+			f() << "Wide first column" << tab << "Second column" << tab << "Third Column" << endl;
+			f() << "first" << tab;
+			f2() << "second" << tab << 2 << endl;
+			f2() << "third" << tab << 3  << endl;
+			whenAppendSecondToFirst();
+
+			strvec expected;
+			expected.push_back("Wide first column Second column Third Column");
+			expected.push_back("Wide first column Second column Third Column");
+			expected.push_back("first             second 2");
+			expected.push_back("                  third  3");
+			thenTableEquals(expected,"Vector of four lines");
+		}
+	}GPPUNIT_INSTANCE;
+
 	class AppendWideColumnsToLastLineOfTableWithNarrowColumns: public SecondTableBase{
 		void test(void){
 			givenTable();
@@ -255,16 +287,68 @@ namespace AppendTable{
 			f2() << "sub-table with extremely wide columns" << tab << "affects previous section" << endl;
 			f2() << "also affects" << tab << "this table" << endl;
 
-			f().patch(f2());
+			//f().patch(f2());
+			whenPatchSecondToFirst();
 
 			strvec expected;
-			expected.push_back("Several      narrow                                columns                  previous table");
-			expected.push_back("1            2                                     3                        4");
-			expected.push_back("new          sub-table with extremely wide columns affects previous section ");
+			expected.push_back("Several      narrow                                columns previous table");
+			expected.push_back("1            2                                     3       4");
+			expected.push_back("new          sub-table with extremely wide columns affects previous section");
 			expected.push_back("also affects this table");
 			thenTableEquals(expected,"Vector of three lines - all with new column widths.");
 		}
+	}GPPUNIT_INSTANCE;
+	class NestedAppendedTables: public ThirdTableBase{
+		void test(void){
+			givenTable();
+			givenSecondTable();
+			givenThirdTable();
+			f() << "One of:" << tab << "left1" << endl;
+			f() << "or1" << tab;
+
+			f2() << "left2" << endl;
+			f2() << "or2" << tab;
+
+			f3() << "left3" << endl;
+			f3() << "or3" << tab << "right3" << endl;
+
+			whenAppendThirdToSecond();
+			whenAppendSecondToFirst();
+
+			strvec expected;
+			expected.push_back("One of: left1");
+			expected.push_back("or1     left2");
+			expected.push_back("or2     left3");
+			////expected.push_back("or3     right3");
+			thenTableEquals(expected,"Vector of four lines - Three nested tables.");
+		}
 	}; //GPPUNIT_INSTANCE;
+	class NestedPatchedTables: public ThirdTableBase{
+		void test(void){
+			givenTable();
+			givenSecondTable();
+			givenThirdTable();
+			f() << "One of:" << tab << "left1" << endl;
+			f() << "or1" << tab;
+
+			f2() << "left2" << endl;
+			f2() << "or2" << tab;
+
+			f3() << "left3" << endl;
+			f3() << "or3" << tab << "right3" << endl;
+
+			whenPatchThirdToSecond();
+			whenPatchSecondToFirst();
+
+			strvec expected;
+			expected.push_back("One of: left1");
+			expected.push_back("or1     left2");
+			expected.push_back("or2     left3");
+			expected.push_back("or3     right3");
+			thenTableEquals(expected,"Vector of four lines - Three nested tables.");
+		}
+	}GPPUNIT_INSTANCE;
+
 }
 
 }
