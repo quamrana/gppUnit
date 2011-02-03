@@ -303,26 +303,26 @@ namespace AppendTable{
 			givenTable();
 			givenSecondTable();
 			givenThirdTable();
-			f() << "One of:" << tab << "left1" << endl;
+			f() << "One of:" << tab << "left1" << tab << 1 << endl;
 			f() << "or1" << tab;
 
-			f2() << "left2" << endl;
+			f2() << "left2" << tab << 2  << endl;
 			f2() << "or2" << tab;
 
-			f3() << "left3" << endl;
+			f3() << "left3" << tab << 3 << endl;
 			f3() << "or3" << tab << "right3" << endl;
 
 			whenAppendThirdToSecond();
 			whenAppendSecondToFirst();
 
 			strvec expected;
-			expected.push_back("One of: left1");
-			expected.push_back("or1     left2");
-			expected.push_back("or2     left3");
-			////expected.push_back("or3     right3");
+			expected.push_back("One of: left1 1");
+			expected.push_back("or1     left2 2");
+			expected.push_back("or2     left3 3");
+			expected.push_back("        or3   right3");
 			thenTableEquals(expected,"Vector of four lines - Three nested tables.");
 		}
-	}; //GPPUNIT_INSTANCE;
+	}GPPUNIT_INSTANCE;
 	class NestedPatchedTables: public ThirdTableBase{
 		void test(void){
 			givenTable();

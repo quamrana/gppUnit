@@ -53,8 +53,7 @@ namespace gppUnit {
 			MatcherResult resultRight= self::m2.match(actual);
 			MatcherResult result(resultLeft.result || resultRight.result);
 			result.strm << resultLeft.strm;
-			result.strm << "or" << tab;
-			result.strm.patch(resultRight.strm);
+			result.strm << "or" << tab << resultRight.strm;
 			return result;
 		}
 	};
@@ -70,8 +69,7 @@ namespace gppUnit {
 			MatcherResult resultRight= self::m2.nestedMatch(actual);
 			MatcherResult result(resultLeft.result || resultRight.result);
 			result.strm << "a match with one of:" << tab << resultLeft.strm;
-			result.strm << "or" << tab;
-			result.strm.patch(resultRight.strm);
+			result.strm << "or" << tab << resultRight.strm;
 			return result;
 		}
 		template <typename ACTUAL>
@@ -80,8 +78,7 @@ namespace gppUnit {
 			MatcherResult resultRight= self::m2.nestedMatch(actual);
 			MatcherResult result(resultLeft.result || resultRight.result);
 			result.strm << resultLeft.strm;
-			result.strm << "or" << tab;
-			result.strm.patch(resultRight.strm);
+			result.strm << "or" << tab << resultRight.strm;
 			return result;
 		}
 	};
@@ -156,12 +153,10 @@ namespace TestLogicalOrMatcher{
 			gppUnit::TableFormatter tf;
 			tf << "a match with one of:" << tab << "a value less than '1'" << endl;
 			tf << "or" << tab << "'2'" << endl;
-			//TODO: I want a solution which does not introduce this tab:
-			//    vvv
-			tf << tab << "or" << tab << "a value less than '-4'" << endl;
+			tf << "or" << tab << "a value less than '-4'" << endl;
 			That(longint,any_of(less_than(integer),equals(longint),less_than(schar)),tf.toVector());
 
 		}
-	}; // GPPUNIT_INSTANCE;
+	}GPPUNIT_INSTANCE;
 
 }

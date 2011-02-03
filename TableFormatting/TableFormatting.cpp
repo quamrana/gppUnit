@@ -100,9 +100,10 @@ namespace gppUnit {
 		size_t lsize = line.size();
 		size_t ssize = summarySizes.size();
 		if(ssize > lsize) {
-			summarySizes.erase(summarySizes.begin() + lsize, summarySizes.end());
+			summarySizes.erase(summarySizes.begin() + std::vector<size_t>::iterator::difference_type(lsize), summarySizes.end());
 		}
 
+		std::for_each(table.prevPages.begin(), table.prevPages.end(), TableFunctors::UpdateTable(this));
 		std::for_each(table.page.begin(), table.page.end(), TableFunctors::UpdateTable(this));
 		if(!table.line.isEmpty()) {
 			(*this) << table.line;
