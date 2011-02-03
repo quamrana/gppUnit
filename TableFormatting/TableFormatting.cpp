@@ -96,13 +96,15 @@ namespace gppUnit {
 		std::vector<std::string> result = partialVector(summarySizes);
 		std::copy(result.begin(), result.end(), back_inserter(prevPages));
 		page.clear();
-		// TODO: Limit sizes
-		//size_t lsize=line.size();
-		//size_t ssize=summarySizes.size();
-		//summarySizes.erase(
+
+		size_t lsize = line.size();
+		size_t ssize = summarySizes.size();
+		if(ssize > lsize) {
+			summarySizes.erase(summarySizes.begin() + lsize, summarySizes.end());
+		}
 
 		std::for_each(table.page.begin(), table.page.end(), TableFunctors::UpdateTable(this));
-		if (!table.line.isEmpty()) {
+		if(!table.line.isEmpty()) {
 			(*this) << table.line;
 			endLine();
 		}
@@ -112,8 +114,10 @@ namespace gppUnit {
 	TableFormatter& TableFormatter::patch(TableFormatter& table) {
 		std::vector<TableLine>::iterator it = table.page.begin(), end = table.page.end();
 
-		line.patch(*it++);
-		endLine();
+		if(table.page.size()) {
+			line.patch(*it++);
+			endLine();
+		}
 
 		std::copy(it, end, back_inserter(page));
 
@@ -121,7 +125,7 @@ namespace gppUnit {
 	}
 
 	std::vector<std::string> TableFormatter::toVector() const {
-		std::vector<size_t> sizes=summarySizes;
+		std::vector<size_t> sizes = summarySizes;
 		std::vector<std::string> result = partialVector(sizes);
 
 		// TODO: this is the same as Accumulator.  Refactor?

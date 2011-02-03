@@ -55,14 +55,14 @@ namespace gppUnit {
 		clearStream();
 		//}
 	}
-	void TableLine::append(const TableLine& line){
-		std::vector<Column>::const_iterator it=line.columns.begin(), end=line.columns.end();
-		if (!streamIsEmpty){
+	void TableLine::append(const TableLine& line) {
+		std::vector<Column>::const_iterator it = line.columns.begin(), end = line.columns.end();
+		if(!streamIsEmpty) {
 			stream << (*it++).toString();
 			tab();
 		}
-		std::copy(it,end,back_inserter(columns));
-		if (!line.streamIsEmpty){
+		std::copy(it, end, back_inserter(columns));
+		if(!line.streamIsEmpty) {
 			append(line.stream.str());
 		}
 	}

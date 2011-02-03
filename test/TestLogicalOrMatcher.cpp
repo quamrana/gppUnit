@@ -53,7 +53,8 @@ namespace gppUnit {
 			MatcherResult resultRight= self::m2.match(actual);
 			MatcherResult result(resultLeft.result || resultRight.result);
 			result.strm << resultLeft.strm;
-			result.strm << "or" << tab << resultRight.strm;
+			result.strm << "or" << tab;
+			result.strm.patch(resultRight.strm);
 			return result;
 		}
 	};
@@ -69,7 +70,8 @@ namespace gppUnit {
 			MatcherResult resultRight= self::m2.nestedMatch(actual);
 			MatcherResult result(resultLeft.result || resultRight.result);
 			result.strm << "a match with one of:" << tab << resultLeft.strm;
-			result.strm << "or" << tab << resultRight.strm;
+			result.strm << "or" << tab;
+			result.strm.patch(resultRight.strm);
 			return result;
 		}
 		template <typename ACTUAL>
@@ -78,7 +80,8 @@ namespace gppUnit {
 			MatcherResult resultRight= self::m2.nestedMatch(actual);
 			MatcherResult result(resultLeft.result || resultRight.result);
 			result.strm << resultLeft.strm;
-			result.strm << "or" << tab << resultRight.strm;
+			result.strm << "or" << tab;
+			result.strm.patch(resultRight.strm);
 			return result;
 		}
 	};
@@ -159,6 +162,6 @@ namespace TestLogicalOrMatcher{
 			That(longint,any_of(less_than(integer),equals(longint),less_than(schar)),tf.toVector());
 
 		}
-	}; //GPPUNIT_INSTANCE;
+	}; // GPPUNIT_INSTANCE;
 
 }
