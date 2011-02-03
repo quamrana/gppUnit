@@ -42,6 +42,7 @@ namespace gppUnit {
 		TableLine& operator=(TableLine const&);
 		void clear();
 		size_t size() const { return columns.size(); }
+		bool isEmpty() const { return streamIsEmpty && size()==0; }
 
 		template<typename ValueArgument>
 		void append(const ValueArgument& str) { stream << str; streamIsEmpty = false; }
