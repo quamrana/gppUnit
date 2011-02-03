@@ -53,7 +53,6 @@ namespace gppUnit {
 			return *this;
 		}
 		TableFormatter& operator<<(const TableFormatter& table);
-		TableFormatter& operator<<(const TableLine& line);
 		TableFormatter& operator<<(TableFormatter & (*FunctionPointer)(TableFormatter&)) {
 			return ((*FunctionPointer)(*this));
 		}

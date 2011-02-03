@@ -36,10 +36,6 @@ namespace gppUnit {
 		line.clear();
 		lineIsEmpty = true;
 	}
-	TableFormatter& TableFormatter::operator<<(const TableLine& line){
-		this->line.append(line);
-		return *this;
-	}
 
 	namespace TableFunctors {
 		struct NewLines {
@@ -97,19 +93,22 @@ namespace gppUnit {
 	}
 
 	TableFormatter& TableFormatter::operator<<(const TableFormatter& table) {
-		// update pages from partialVector
-		//TableFunctors::Accumulator result = partialVector(page, line, lineIsEmpty);
-		//sizes=result.sizes;
-		//std::copy(result.result.begin(), result.result.end(), back_inserter(pages));
-		//page.clear();
+		std::vector<std::string> result = partialVector(summarySizes);
+		std::copy(result.begin(), result.end(), back_inserter(prevPages));
+		page.clear();
+		// TODO: Limit sizes
+		//size_t lsize=line.size();
+		//size_t ssize=summarySizes.size();
+		//summarySizes.erase(
 
-		std::vector<std::string> result = table.toVector();
-
-		std::for_each(result.begin(), result.end(), TableFunctors::UpdateTable(this));
-
-		//std::for_each(table.page.begin(), table.page.end(), TableFunctors::UpdateTable(this));
+		std::for_each(table.page.begin(), table.page.end(), TableFunctors::UpdateTable(this));
+		if (!table.line.isEmpty()) {
+			(*this) << table.line;
+			endLine();
+		}
 		return *this;
 	}
+
 	TableFormatter& TableFormatter::patch(TableFormatter& table) {
 		std::vector<TableLine>::iterator it = table.page.begin(), end = table.page.end();
 
@@ -122,22 +121,17 @@ namespace gppUnit {
 	}
 
 	std::vector<std::string> TableFormatter::toVector() const {
-		std::vector<size_t> sizes;
-		std::vector<std::string> result = partialVector(sizes); //page, line, lineIsEmpty);
+		std::vector<size_t> sizes=summarySizes;
+		std::vector<std::string> result = partialVector(sizes);
+
+		// TODO: this is the same as Accumulator.  Refactor?
 		if(!lineIsEmpty) { result.push_back(line.toString(sizes)); }
-		return result;
 
+		std::vector<std::string> allLines;
+		std::copy(prevPages.begin(), prevPages.end(), back_inserter(allLines));
+		std::copy(result.begin(), result.end(), back_inserter(allLines));
 
-
-		//TableFunctors::Accumulator result = partialVector(sizes); //page, line, lineIsEmpty);
-		//if(!lineIsEmpty) { result(line); }
-		//return result.result;
-
-		//std::vector<std::string> allLines;
-		//std::copy(prevPages.begin(), prevPages.end(), back_inserter(allLines));
-		//std::copy(result.result.begin(), result.result.end(), back_inserter(allLines));
-
-		//return allLines;
+		return allLines;
 	}
 	std::string TableFormatter::toString() const {
 		std::vector<std::string> asVector = toVector();
