@@ -56,7 +56,15 @@ namespace gppUnit {
 		//}
 	}
 	void TableLine::append(const TableLine& line){
-		std::copy(line.columns.begin(),line.columns.end(),back_inserter(columns));
+		std::vector<Column>::const_iterator it=line.columns.begin(), end=line.columns.end();
+		if (!streamIsEmpty){
+			stream << (*it++).toString();
+			tab();
+		}
+		std::copy(it,end,back_inserter(columns));
+		if (!line.streamIsEmpty){
+			append(line.stream.str());
+		}
 	}
 
 	namespace LineFunctors {
