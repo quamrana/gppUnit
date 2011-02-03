@@ -48,7 +48,7 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
 				DebugInformationFormat="4"
-				DisableSpecificWarnings="4250;4365;4512;4625;4626"
+				DisableSpecificWarnings="4250;4365;4625;4626"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"

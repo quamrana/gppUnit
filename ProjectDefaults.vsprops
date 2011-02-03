@@ -9,6 +9,6 @@
 		AdditionalOptions="/Wall"
 		ExceptionHandling="2"
 		WarningLevel="4"
-		DisableSpecificWarnings="4548;4623;4640;4668;4710;4820;4996"
+		DisableSpecificWarnings="4512;4548;4623;4640;4668;4710;4820;4996"
 	/>
 </VisualStudioPropertySheet>
