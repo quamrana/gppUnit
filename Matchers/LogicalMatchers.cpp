@@ -19,12 +19,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-#include "Matchers.h"
+#include "LogicalMatchers.h"
 
 namespace gppUnit {
-	MatcherResult is_not_helper::match(const MatcherResult& fwdresult) const {
-		MatcherResult result(!fwdresult.result);
-		result.strm << "not" << tab << fwdresult.strm;
+	MatcherResult any_of_helper::match(const MatcherResult& left, const MatcherResult& right) const {
+		MatcherResult result(left.result || right.result);
+		result.strm << "a match with one of:" << tab << left.strm;
+		result.strm << "or" << tab << patch(right.strm);
+		return result;
+	}
+	MatcherResult any_of_helper::nestedMatch(const MatcherResult& left, const MatcherResult& right) const {
+		MatcherResult result(left.result || right.result);
+		result.strm << left.strm;
+		result.strm << "or" << tab << patch(right.strm);
 		return result;
 	}
 }
