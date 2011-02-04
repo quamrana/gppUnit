@@ -69,7 +69,8 @@ namespace gppUnit {
 			MatcherResult resultRight= self::m2.nestedMatch(actual);
 			MatcherResult result(resultLeft.result || resultRight.result);
 			result.strm << "a match with one of:" << tab << resultLeft.strm;
-			result.strm << "or" << tab << resultRight.strm;
+			result.strm << "or" << tab;
+			result.strm.patch(resultRight.strm);
 			return result;
 		}
 		template <typename ACTUAL>
@@ -78,7 +79,8 @@ namespace gppUnit {
 			MatcherResult resultRight= self::m2.nestedMatch(actual);
 			MatcherResult result(resultLeft.result || resultRight.result);
 			result.strm << resultLeft.strm;
-			result.strm << "or" << tab << resultRight.strm;
+			result.strm << "or" << tab;
+			result.strm.patch(resultRight.strm);
 			return result;
 		}
 	};
@@ -92,6 +94,12 @@ namespace gppUnit {
 	any_of_t<Matcher1, any_of_t<Matcher2,Matcher3> > 
 		any_of(const Matcher1& m1, const Matcher2& m2, const Matcher3& m3){
 			return any_of(m1, any_of(m2,m3));
+	}
+
+	template<typename Matcher1, typename Matcher2, typename Matcher3, typename Matcher4>
+	any_of_t<Matcher1, any_of_t<Matcher2, any_of_t<Matcher3,Matcher4> > > 
+		any_of(const Matcher1& m1, const Matcher2& m2, const Matcher3& m3, const Matcher4& m4){
+			return any_of(m1, any_of(m2, any_of(m3,m4)));
 	}
 
 }
@@ -156,6 +164,24 @@ namespace TestLogicalOrMatcher{
 			tf << "or" << tab << "a value less than '-4'" << endl;
 			That(longint,any_of(less_than(integer),equals(longint),less_than(schar)),tf.toVector());
 
+		}
+	}GPPUNIT_INSTANCE;
+
+	class TestFourTerms: public TestLogicalMatchersHelper{
+		void test(){
+			int integer=1;
+			long longint=2;
+			signed char schar=-4;
+			std::vector<MatcherHelper*> vec;
+
+			gppUnit::TableFormatter tf;
+			tf << "a match with one of:" << tab << "a value less than '1'" << endl;
+			tf << "or" << tab << "'2'" << endl;
+			tf << "or" << tab << "a value less than '-4'" << endl;
+			tf << "or" << tab << "a value less than '0'" << endl;
+			That(longint,any_of(less_than(integer),equals(longint),less_than(schar),less_than(vec.size())),tf.toVector());
+
+			//confirm.that(15,any_of(less_than(integer),equals(longint),less_than(schar),less_than(vec.size())));
 		}
 	}GPPUNIT_INSTANCE;
 

@@ -158,10 +158,14 @@ New Design Notes
 	Install scons
 	Improve build (MethodTimer could be better)
 
-$	Implement a more complete set of matchers
+#$022	Implement a more complete set of matchers
+	Part one: Improve table streaming
 .		less_than
 .		equals within (double/float)
-		one_of
+.		one_of
+
+$023	Implement a more complete set of matchers
+	Part Two: Re-check table streaming for more edge cases, or make it simpler
 		all_of
 		begins_with
 		ends_with
