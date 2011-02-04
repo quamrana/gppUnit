@@ -56,11 +56,15 @@ namespace gppUnit {
 			void operator()(const TableLine& line) { result.push_back(line.toString(sizes)); }
 		};
 		struct UpdateTable {
-			explicit UpdateTable(TableFormatter* table): table(table), size(table->lineSize()), firstLine(true) {}
+			explicit UpdateTable(TableFormatter* table): table(table), 
+				size(table->indentSize()), 
+				firstLine((table->lineSize()>0)) 
+			{}
 			TableFormatter* table;
 			size_t size;
 			bool firstLine;
-			void operator()(const std::string& line) {
+			template<typename ARG>
+			void operator()(const ARG& line) {
 				using gppUnit::tab;
 				if(firstLine) {
 					firstLine = false;
@@ -71,15 +75,12 @@ namespace gppUnit {
 				}
 				(*table) << line << endl;
 			}
-			void operator()(const TableLine& line) {
-				using gppUnit::tab;
-				if(firstLine) {
-					firstLine = false;
-				} else {
-					for(size_t i = 0; i < size; ++i) {
-						(*table) << tab;
-					}
-				}
+		};
+		struct PatchTable {
+			explicit PatchTable(TableFormatter* table): table(table){}
+			TableFormatter* table;
+			template<typename ARG>
+			void operator()(const ARG& line) {
 				(*table) << line << endl;
 			}
 		};
@@ -106,6 +107,15 @@ namespace gppUnit {
 		std::for_each(table.prevPages.begin(), table.prevPages.end(), TableFunctors::UpdateTable(this));
 		std::for_each(table.page.begin(), table.page.end(), TableFunctors::UpdateTable(this));
 		if(!table.line.isEmpty()) {
+			size_t i = indentSize();
+			if ( (i>0) && ( (table.prevPages.size()>0) || (table.page.size()>0) )) {
+				// TODO: Produce a test case which executes the next line
+				i=0;
+			}
+			//for(size_t i = 0; i < indentSize(); ++i) {
+			//	using gppUnit::tab;
+			//	(*this) << tab;
+			//}
 			(*this) << table.line;
 			endLine();
 		}
@@ -113,15 +123,12 @@ namespace gppUnit {
 	}
 
 	TableFormatter& TableFormatter::patch(TableFormatter& table) {
-		std::vector<TableLine>::iterator it = table.page.begin(), end = table.page.end();
-
-		if(table.page.size()) {
-			line.patch(*it++);
+		std::for_each(table.prevPages.begin(), table.prevPages.end(), TableFunctors::PatchTable(this));
+		std::for_each(table.page.begin(), table.page.end(), TableFunctors::PatchTable(this));
+		if(!table.line.isEmpty()) {
+			(*this) << table.line;
 			endLine();
 		}
-
-		std::copy(it, end, back_inserter(page));
-
 		return *this;
 	}
 
