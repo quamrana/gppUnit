@@ -122,7 +122,7 @@ namespace gppUnit {
 		return *this;
 	}
 
-	TableFormatter& TableFormatter::patch(TableFormatter& table) {
+	TableFormatter& TableFormatter::patch(const TableFormatter& table) {
 		std::for_each(table.prevPages.begin(), table.prevPages.end(), TableFunctors::PatchTable(this));
 		std::for_each(table.page.begin(), table.page.end(), TableFunctors::PatchTable(this));
 		if(!table.line.isEmpty()) {

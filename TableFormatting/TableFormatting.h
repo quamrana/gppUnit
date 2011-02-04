@@ -29,6 +29,8 @@ THE SOFTWARE.
 #include "TableLine.h"
 
 namespace gppUnit {
+	struct patch_t;
+
 	class TableFormatter {
 		std::vector<std::string> prevPages;
 		std::vector<TableLine> page;
@@ -54,11 +56,12 @@ namespace gppUnit {
 			return *this;
 		}
 		TableFormatter& operator<<(const TableFormatter& table);
-		TableFormatter& operator<<(TableFormatter & (*FunctionPointer)(TableFormatter&)) {
+		TableFormatter& operator<<(TableFormatter& (*FunctionPointer)(TableFormatter&)) {
 			return ((*FunctionPointer)(*this));
 		}
+		TableFormatter& operator<<(const patch_t& patch);
 
-		TableFormatter& patch(TableFormatter& table);
+		TableFormatter& patch(const TableFormatter& table);
 
 		std::vector<std::string> toVector() const;
 		std::string toString() const ;
@@ -66,6 +69,19 @@ namespace gppUnit {
 	// Manipulators for TableFormatter
 	inline TableFormatter& endl(TableFormatter& table) { table.endLine(); return table; }
 	inline TableFormatter& tab(TableFormatter& table) { table.tab(); return table; }
+
+	struct patch_t {
+		explicit patch_t(const TableFormatter& table): table(table) {}
+		const TableFormatter& table;
+	};
+
+	inline TableFormatter& TableFormatter::operator<<(const patch_t& patch){
+		this->patch(patch.table);
+		return *this;
+	}
+
+	inline patch_t patch(const TableFormatter& table){ return patch_t(table); }
+
 }
 
 #endif // TABLEFORMATTING_H_108BF9D9_0404_4F82_8E5F_0C16A9C9B355

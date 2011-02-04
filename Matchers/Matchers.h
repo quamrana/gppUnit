@@ -30,16 +30,16 @@ THE SOFTWARE.
 #include <sstream>
 
 namespace gppUnit {
+	struct is_not_helper {
+		MatcherResult match(const MatcherResult& fwdresult) const ;
+	};
 	template <typename T>
-	struct is_not_t {
+	struct is_not_t: is_not_helper {
 		explicit is_not_t(const T& matcher): fwdMatcher(matcher) {}
 
 		template <typename ACTUAL>
 		MatcherResult match(const ACTUAL& actual) const {
-			MatcherResult fwdresult = fwdMatcher.match(actual);
-			MatcherResult result(!fwdresult.result);
-			result.strm << "not" << tab << fwdresult.strm;
-			return result;
+			return is_not_helper::match(fwdMatcher.match(actual));
 		}
 
 		const T fwdMatcher;
