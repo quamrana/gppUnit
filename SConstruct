@@ -5,9 +5,9 @@ compiler=ARGUMENTS.get('compiler','djgpp')
 cov=ARGUMENTS.get('cov','-')
 
 def getGccflags():
-	cppflags=['-Wall','-Wextra'] #,'-Weffc++'] '-fno-elide-constructors',
+	cppflags=['-Wall','-Wextra'] #,'-Weffc++']
 	if cov!='-':
-		cppflags+=['-fprofile-arcs','-ftest-coverage']
+		cppflags+=['-fprofile-arcs','-ftest-coverage','-fno-elide-constructors']
 	return cppflags
 
 def microsoft():
