@@ -1,10 +1,21 @@
 env=DefaultEnvironment()
 
+def Env(key):
+	try:
+		return env[key]
+	except:
+		return '???'
+
+cov=Env('COV')
+
 cppIncludes=[Dir('#')]
 libIncludes=[Dir('#/src'),Dir('#/TableFormatting'),Dir('#/Matchers')]
+libs=['gppUnit1.5','TableFormatting','Matchers']
+if cov!='-':
+	libs+=['gcov']
 
 env.Program('test', Glob('*.cpp'),
-	LIBS=['gppUnit1.5','TableFormatting','Matchers'], 
+	LIBS=libs, 
 	LIBPATH=libIncludes,
 	CPPPATH=cppIncludes
 	)

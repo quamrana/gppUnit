@@ -2,6 +2,13 @@ path=['C:\DJGPP\BIN','C:\Python27\Scripts']
 DJGPP='C:\DJGPP\DJGPP.ENV'
 
 compiler=ARGUMENTS.get('compiler','djgpp')
+cov=ARGUMENTS.get('cov','-')
+
+def getGccflags():
+	cppflags=['-Wall','-Wextra'] #,'-Weffc++'] '-fno-elide-constructors',
+	if cov!='-':
+		cppflags+=['-fprofile-arcs','-ftest-coverage']
+	return cppflags
 
 def microsoft():
 	cppflags=['/EHsc','/wd4250']
@@ -10,19 +17,21 @@ def microsoft():
 		)
 
 def djgpp():
-	cppflags=['-Wall','-Wextra'] #,'-Weffc++']
+	cppflags=getGccflags()
 	return DefaultEnvironment(tools = ['c++','gnulink','ar'],
 		ENV={'PATH':path,'DJGPP':DJGPP},
-		CXX = 'gpp', AR = 'arrep', LINK = 'linkrep',
+		CXX = 'gpprep', AR = 'arrep', LINK = 'linkrep',
 		CPPFLAGS=cppflags,
-		EXTRA='djgpp'
+		EXTRA='djgpp',
+		COV=cov
 		)
 
 def gcc():
-	cppflags=['-Wall','-Wextra'] #,'-Weffc++']
+	cppflags=getGccflags()
 	return DefaultEnvironment(
 		CPPFLAGS=cppflags,
-		EXTRA='unix'
+		EXTRA='unix',
+		COV=cov
 		)
 
 def Env(key):
@@ -39,6 +48,7 @@ else:
 	env=djgpp()
 
 print "compiler is:", compiler
+print "cov is:", cov
 print "CXX is:", Env('CXX')
 print "CPP is:", Env('CPP')
 print "CC is:", Env('CC')
