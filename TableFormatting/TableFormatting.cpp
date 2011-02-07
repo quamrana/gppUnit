@@ -56,9 +56,9 @@ namespace gppUnit {
 			void operator()(const TableLine& line) { result.push_back(line.toString(sizes)); }
 		};
 		struct UpdateTable {
-			explicit UpdateTable(TableFormatter* table): table(table), 
-				size(table->indentSize()), 
-				firstLine((table->lineSize()>0)) 
+			explicit UpdateTable(TableFormatter* table): table(table),
+				size(table->indentSize()),
+				firstLine((table->lineSize() > 0))
 			{}
 			TableFormatter* table;
 			size_t size;
@@ -77,7 +77,7 @@ namespace gppUnit {
 			}
 		};
 		struct PatchTable {
-			explicit PatchTable(TableFormatter* table): table(table){}
+			explicit PatchTable(TableFormatter* table): table(table) {}
 			TableFormatter* table;
 			template<typename ARG>
 			void operator()(const ARG& line) {
@@ -108,9 +108,9 @@ namespace gppUnit {
 		std::for_each(table.page.begin(), table.page.end(), TableFunctors::UpdateTable(this));
 		if(!table.line.isEmpty()) {
 			size_t i = indentSize();
-			if ( (i>0) && ( (table.prevPages.size()>0) || (table.page.size()>0) )) {
+			if((i > 0) && ((table.prevPages.size() > 0) || (table.page.size() > 0))) {
 				// TODO: Produce a test case which executes the next line
-				i=0;
+				i = 0;
 			}
 			//for(size_t i = 0; i < indentSize(); ++i) {
 			//	using gppUnit::tab;
