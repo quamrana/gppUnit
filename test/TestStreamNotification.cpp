@@ -136,6 +136,10 @@ namespace TestStreamNotification{
 		virtual size_t results() const { return 0; }
 		virtual double run_time() const { return 0; }
 	}mp1;
+	class MockProject2: public MockProject1{
+		virtual std::string name() const { return "MockProject2"; }
+		virtual double run_time() const { return 1; }
+	}mp2;
 	class MockClass1: public gppUnit::ClassDescription{
 		virtual std::string name() const { return "MockClass1"; }
 		virtual size_t methods() const { return 0; }
@@ -193,10 +197,16 @@ namespace TestStreamNotification{
 			result.result=true;
 			notify->Result(result);
 		}
+		void whenSecondProjectRun(){
+			notify->StartProject(mp2);
+		}
 		void whenResultFailed(const char* message=""){
 			gppUnit::TestResult result;
 			result.message=message;
 			notify->Result(result);
+		}
+		void whenException(const std::string& what){
+			notify->Exception(what);
 		}
 
 		void thenProjectTitleAndClassesPrinted(){
@@ -212,6 +222,16 @@ namespace TestStreamNotification{
 				"**************************************************\n";
 			confirm.that(out,equals(expected));
 		}
+		void thenRunTimeIsOne(){
+			const char* expected=
+				"****************** MockProject2 ******************\n"
+				"5 classes to run.\n"
+				"\n"
+				"100% tests passed!\n"
+				"run time: 1\n"
+				"**************************************************\n";
+			confirm.that(out,equals(expected));
+		}
 
 		void thenAsteriskPrinted(){
 			const char* expected="**********";
@@ -219,6 +239,14 @@ namespace TestStreamNotification{
 		}
 		void thenNothingPrinted(){
 			confirm.that(out,equals(""));
+		}
+		void thenExceptionPrinted(){
+			const char* expected=
+				"\n"
+				" In Class: MockClass1\n"
+				"  In Method: MockMethod1\n"
+				"   what\n";
+			confirm.that(out,equals(expected));
 		}
 		void thenFailurePrinted(){
 			const char* expected=
@@ -283,6 +311,14 @@ namespace TestStreamNotification{
 			thenOneHundredPercent();
 		}
 	}GPPUNIT_INSTANCE;
+	class ResultPassedAndRunTime: StreamNotificationHelper{
+		void test(){
+			givenStreamNotification();
+			whenSecondProjectRun();
+			whenEndProjectCalled();
+			thenRunTimeIsOne();
+		}
+	}GPPUNIT_INSTANCE;
 	class ResultIsFailure: StreamNotificationHelper{
 		void test(){
 			givenStreamNotification();
@@ -316,6 +352,14 @@ namespace TestStreamNotification{
 			whenNextMethodCalled();
 			whenResultFailed("message2");
 			thenTwoMethodsAndMessagesPrinted();
+		}
+	}GPPUNIT_INSTANCE;
+	class OneException: StreamNotificationHelper{
+		void test(){
+			givenStreamNotification();
+			givenStartMethod();
+			whenException("what");
+			thenExceptionPrinted();
 		}
 	}GPPUNIT_INSTANCE;
 }
