@@ -5,6 +5,29 @@ from os.path import join,abspath
 
 summary = {}
 
+class SummaryElement:
+    def __init__(self,file,count,lineNumber,line):
+        self.file=file
+        self.count=count
+        self.lineNumber=lineNumber
+        self.line=line
+
+    def updateCount(self,count):
+        self.count+=count
+        return self
+    def updateSummary(self,count):
+        key=self.file+':'+str(self.lineNumber)
+        self.count=count
+        current=self
+        if key in summary:
+            current=summary[key]
+        summary[key]=current.updateCount(count)
+    
+    def getKey(self):
+        return self.count.strip()
+    def getCount(self):
+        return int(self.count)
+
 class FileProcessor:
     def __init__(self):
         self.mapCount={ 
@@ -18,32 +41,24 @@ class FileProcessor:
         self.file=''
         self.accrueLine=self.nullProcedure
 
-    def processCount(self,count,lineNumber):
+    def processCount(self,element):
         procedure=self.callAccrue
-        key=count.strip()
+        key=element.getKey()
         if key in self.mapCount:
             procedure=self.mapCount[key]
-        procedure(count,lineNumber)    
+        procedure(element)    
 
-    def callAccrue(self,count,lineNumber):
-        self.accrueLine(int(count),lineNumber)        
+    def callAccrue(self,element):
+        self.accrueLine(element)        
 
-    def nullProcedure(self,count,lineNumber):
+    def nullProcedure(self,element):
         pass
 
-    def zeroProcedure(self,count,lineNumber):
-        key=self.file+':'+str(lineNumber)
-        current=0
-        if key in summary:
-            current=summary[key]
-        summary[key]=current
+    def zeroProcedure(self,element):
+        element.updateSummary(0)
 
-    def process(self,count,lineNumber):
-        key=self.file+':'+str(lineNumber)
-        current=0
-        if key in summary:
-            current=summary[key]
-        summary[key]=current+count
+    def process(self,element):
+        element.updateSummary(element.getCount())
             
     def processLine(self,line):
         elements=line.split(':')
@@ -58,7 +73,7 @@ class FileProcessor:
                         self.file=abspath(line[index+8:])
                         self.accrueLine=self.process
             
-            self.processCount(count,lineNumber)        
+            self.processCount(SummaryElement(self.file,count,lineNumber,line))
             
     def processFile(self,file):
         self.reinit()
@@ -83,17 +98,18 @@ def main():
 def printSummary():
     relevant=abspath('.')
     relevantEntries=0
-    print len(summary),'entries'
+    print len(summary),'entries - all files'
     file=[]
     for key,value in summary.items():
         if key.startswith(relevant):
             relevantEntries+=1
-            if value==0:
-                file.append(key)
-    file.sort()
-    for f in file:
-        print f
+            if value.count==0:
+                file.append(value)
+
     unused=len(file)
+    print unused,'unused of',relevantEntries
+    for f in file:
+        print f.file,f.line
     perc=(100.0*(relevantEntries-unused))/relevantEntries
     print '%.1f%%' % perc, 'covered'
 
