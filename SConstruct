@@ -7,7 +7,7 @@ cov=ARGUMENTS.get('cov','-')
 def getGccflags():
 	cppflags=['-Wall','-Wextra'] #,'-Weffc++']
 	if cov!='-':
-		cppflags+=['-fprofile-arcs','-ftest-coverage','-fno-elide-constructors']
+		cppflags+=['-fprofile-arcs','-ftest-coverage','-fno-elide-constructors','-fno-default-inline']
 	return cppflags
 
 def microsoft():
