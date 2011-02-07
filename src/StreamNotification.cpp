@@ -79,9 +79,11 @@ namespace gppUnit {
 		methodShown(false)
 	{}
 
+	/*
 	const char* plural(size_t n) {
 		return (n == 1) ? "" : "s";
 	}
+	*/
 	const char* plurale(size_t n) {
 		return (n == 1) ? "" : "es";
 	}
