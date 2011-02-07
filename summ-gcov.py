@@ -4,6 +4,16 @@ import os
 from os.path import join,abspath
 
 summary = {}
+ignoredFiles = []
+
+def readIgnoredFiles():
+    file='gcov.ignore'
+    try:
+        with open(file) as f:
+            for line in f:
+                ignoredFiles.append(line.strip('\r\n'))
+    except:
+        pass
 
 class SummaryElement:
     def __init__(self,file,count,lineNumber,line):
@@ -27,11 +37,18 @@ class SummaryElement:
         return self.count.strip()
     def getCount(self):
         return int(self.count)
+    def __cmp__(self,other):
+        if self.file<other.file:
+            return -1
+        if self.file>other.file:
+            return 1
+        return cmp(self.lineNumber,other.lineNumber)
 
 class FileProcessor:
     def __init__(self):
         self.mapCount={ 
             '-':self.nullProcedure,
+            '$$$$$':self.nullProcedure,
             '#####':self.zeroProcedure,
             '0':self.callAccrue
             }
@@ -62,7 +79,7 @@ class FileProcessor:
             
     def processLine(self,line):
         elements=line.split(':')
-        if len(elements)>=2:
+        if len(elements)>2:
             count=elements[0]
             lineNumber=int(elements[1])
             if len(elements)>=4:
@@ -88,32 +105,50 @@ def processFiles(root,files):
     for f in cov:
         p.processFile(join(root,f))
 
-def main():
-    for root, dirs, files in os.walk('.', topdown=True):
+def walkDir(dir):
+    for root, dirs, files in os.walk(dir, topdown=True):
         print root
         [dirs.remove(d) for d in dirs if d.startswith('.') ]
         [dirs.remove(d) for d in dirs if d=='Debug' ]
         processFiles(root,files)
 
+def isAcceptable(file):
+    if file in ignoredFiles:
+        return False
+    for f in ignoredFiles:
+        if file.startswith(f):
+            return False
+    return True
+    
 def printSummary():
     relevant=abspath('.')
     relevantEntries=0
     print len(summary),'entries - all files'
     file=[]
     for key,value in summary.items():
-        if key.startswith(relevant):
+        if value.file.startswith(relevant):
             relevantEntries+=1
-            if value.count==0:
-                file.append(value)
+            if isAcceptable(value.file):
+                if value.count==0:
+                    file.append(value)
 
     unused=len(file)
     print unused,'unused of',relevantEntries
+    file.sort()
+    fname=''
     for f in file:
-        print f.file,f.line
+        if f.file!=fname:
+            print f.file
+            fname=f.file
+        print f.line
     perc=(100.0*(relevantEntries-unused))/relevantEntries
     print '%.1f%%' % perc, 'covered'
 
+def main():
+    readIgnoredFiles()
+    walkDir('.')
+    printSummary()
+
 if __name__ == "__main__":
     main()
-    printSummary()
     
