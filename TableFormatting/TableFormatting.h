@@ -56,7 +56,7 @@ namespace gppUnit {
 			return *this;
 		}
 		TableFormatter& operator<<(const TableFormatter& table);
-		TableFormatter& operator<<(TableFormatter& (*FunctionPointer)(TableFormatter&)) {
+		TableFormatter& operator<<(TableFormatter & (*FunctionPointer)(TableFormatter&)) {
 			return ((*FunctionPointer)(*this));
 		}
 		TableFormatter& operator<<(const patch_t& patch);
@@ -75,12 +75,12 @@ namespace gppUnit {
 		const TableFormatter& table;
 	};
 
-	inline TableFormatter& TableFormatter::operator<<(const patch_t& patch){
+	inline TableFormatter& TableFormatter::operator<<(const patch_t& patch) {
 		this->patch(patch.table);
 		return *this;
 	}
 
-	inline patch_t patch(const TableFormatter& table){ return patch_t(table); }
+	inline patch_t patch(const TableFormatter& table) { return patch_t(table); }
 
 }
 

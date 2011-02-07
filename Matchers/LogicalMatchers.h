@@ -32,7 +32,7 @@ namespace gppUnit {
 	};
 	template<typename Matcher1, typename Matcher2>
 	struct any_of_base: any_of_helper {
-		any_of_base(const Matcher1& m1, const Matcher2& m2):m1(m1),m2(m2){}
+		any_of_base(const Matcher1& m1, const Matcher2& m2): m1(m1), m2(m2) {}
 
 		const Matcher1 m1;
 		const Matcher2 m2;
@@ -40,49 +40,49 @@ namespace gppUnit {
 	};
 
 	template<typename Matcher1, typename Matcher2>
-	struct any_of_t: any_of_base<Matcher1,Matcher2> {
-		any_of_t(const Matcher1& m1, const Matcher2& m2):any_of_base<Matcher1,Matcher2>(m1,m2){}
+	struct any_of_t: any_of_base<Matcher1, Matcher2> {
+		any_of_t(const Matcher1& m1, const Matcher2& m2): any_of_base<Matcher1, Matcher2>(m1, m2) {}
 
-		typedef any_of_t<Matcher1,Matcher2> self;
+		typedef any_of_t<Matcher1, Matcher2> self;
 		template <typename ACTUAL>
 		MatcherResult match(const ACTUAL& actual) const {
-			return any_of_helper::match(self::m1.match(actual),self::m2.match(actual));
+			return any_of_helper::match(self::m1.match(actual), self::m2.match(actual));
 		}
 
 		template <typename ACTUAL>
 		MatcherResult nestedMatch(const ACTUAL& actual) const {
-			return any_of_helper::nestedMatch(self::m1.match(actual),self::m2.match(actual));
+			return any_of_helper::nestedMatch(self::m1.match(actual), self::m2.match(actual));
 		}
 	};
 
 	template<typename Matcher1, typename Matcher2, typename Matcher3>
-	struct any_of_t<Matcher1, any_of_t<Matcher2,Matcher3> >: any_of_base<Matcher1,any_of_t<Matcher2,Matcher3> > {
-		any_of_t(const Matcher1& m1, const any_of_t<Matcher2,Matcher3>& m2):any_of_base<Matcher1,any_of_t<Matcher2,Matcher3> >(m1,m2){}
+	struct any_of_t<Matcher1, any_of_t<Matcher2, Matcher3> >: any_of_base<Matcher1, any_of_t<Matcher2, Matcher3> > {
+		any_of_t(const Matcher1& m1, const any_of_t<Matcher2, Matcher3>& m2): any_of_base<Matcher1, any_of_t<Matcher2, Matcher3> >(m1, m2) {}
 
-		typedef any_of_t<Matcher1, any_of_t<Matcher2,Matcher3> > self;
+		typedef any_of_t<Matcher1, any_of_t<Matcher2, Matcher3> > self;
 		template <typename ACTUAL>
 		MatcherResult match(const ACTUAL& actual) const {
-			return any_of_helper::match(self::m1.match(actual),self::m2.nestedMatch(actual));
+			return any_of_helper::match(self::m1.match(actual), self::m2.nestedMatch(actual));
 		}
 		template <typename ACTUAL>
 		MatcherResult nestedMatch(const ACTUAL& actual) const {
-			return any_of_helper::nestedMatch(self::m1.match(actual),self::m2.nestedMatch(actual));
+			return any_of_helper::nestedMatch(self::m1.match(actual), self::m2.nestedMatch(actual));
 		}
 	};
 
 	template<typename Matcher1, typename Matcher2>
-	any_of_t<Matcher1, Matcher2> any_of(const Matcher1& m1, const Matcher2& m2){ return any_of_t<Matcher1, Matcher2>(m1,m2); }
+	any_of_t<Matcher1, Matcher2> any_of(const Matcher1& m1, const Matcher2& m2) { return any_of_t<Matcher1, Matcher2>(m1, m2); }
 
 	template<typename Matcher1, typename Matcher2, typename Matcher3>
-	any_of_t<Matcher1, any_of_t<Matcher2,Matcher3> > 
-		any_of(const Matcher1& m1, const Matcher2& m2, const Matcher3& m3){
-			return any_of(m1, any_of(m2,m3));
+	any_of_t<Matcher1, any_of_t<Matcher2, Matcher3> >
+	any_of(const Matcher1& m1, const Matcher2& m2, const Matcher3& m3) {
+		return any_of(m1, any_of(m2, m3));
 	}
 
 	template<typename Matcher1, typename Matcher2, typename Matcher3, typename Matcher4>
-	any_of_t<Matcher1, any_of_t<Matcher2, any_of_t<Matcher3,Matcher4> > > 
-		any_of(const Matcher1& m1, const Matcher2& m2, const Matcher3& m3, const Matcher4& m4){
-			return any_of(m1, any_of(m2, any_of(m3,m4)));
+	any_of_t<Matcher1, any_of_t<Matcher2, any_of_t<Matcher3, Matcher4> > >
+	any_of(const Matcher1& m1, const Matcher2& m2, const Matcher3& m3, const Matcher4& m4) {
+		return any_of(m1, any_of(m2, any_of(m3, m4)));
 	}
 
 }
