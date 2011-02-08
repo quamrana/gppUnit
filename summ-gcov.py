@@ -127,8 +127,8 @@ def printSummary():
     file=[]
     for key,value in summary.items():
         if value.file.startswith(relevant):
-            relevantEntries+=1
             if isAcceptable(value.file):
+                relevantEntries+=1
                 if value.count==0:
                     file.append(value)
 
