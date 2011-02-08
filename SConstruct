@@ -1,4 +1,4 @@
-path=['C:\DJGPP\BIN','C:\Python27\Scripts']
+path=['C:\DJGPP\BIN','C:\Python27\Scripts','.\Scripts']
 DJGPP='C:\DJGPP\DJGPP.ENV'
 
 compiler=ARGUMENTS.get('compiler','djgpp')
