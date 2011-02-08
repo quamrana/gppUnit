@@ -2,10 +2,14 @@
 import os
 from os.path import join
 
+totalFiles=0
+
 def removeFile(aFileName):
-    print "Removing:",aFileName
+    global totalFiles
+    #print "Removing:",aFileName
     try:
         os.remove(aFileName)
+        totalFiles=totalFiles+1
     except Exception:
         pass
 
@@ -20,7 +24,7 @@ def processFiles(root,files):
     
 def walkDir(dir):
     for root, dirs, files in os.walk(dir, topdown=True):
-        print root
+        #print root
         [dirs.remove(d) for d in dirs if d.startswith('.') ]
         [dirs.remove(d) for d in dirs if d=='Debug' ]
         processFiles(root,files)
@@ -28,6 +32,7 @@ def walkDir(dir):
 
 def main():
     walkDir('.')
+    print totalFiles,"removed"
 
 if __name__ == "__main__":
     main()
