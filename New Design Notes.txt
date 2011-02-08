@@ -172,9 +172,9 @@ New Design Notes
 $024	Implement a more complete set of matchers
 	Part Two: Re-check table streaming for more edge cases, or make it simpler
 		all_of
-		begins_with
-		ends_with
-		contains (strings)
+.		starts_with
+.		ends_with
+.		contains (string)
 		All the 'not's
 		collections
 			equals

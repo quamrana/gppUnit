@@ -165,6 +165,10 @@
 				RelativePath=".\MatcherSpecializations.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\SubStringMatchers.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -193,6 +197,10 @@
 			</File>
 			<File
 				RelativePath=".\ProxyTypeSpecializations.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SubStringMatchers.h"
 				>
 			</File>
 		</Filter>
