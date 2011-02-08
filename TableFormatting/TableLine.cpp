@@ -30,7 +30,7 @@ namespace gppUnit {
 		streamIsEmpty(other.streamIsEmpty) {
 		stream << other.stream.str();
 	}
-	TableLine& TableLine::operator=(TableLine const& other) {
+	TableLine& TableLine::operator=(TableLine const& ) {
 	/*
 		if(this == &other) { return *this; }
 
@@ -89,7 +89,7 @@ namespace gppUnit {
 			}
 		};
 	}
-
+/*
 	void TableLine::patch(const TableLine& line) {
 		//if (!streamIsEmpty)
 		//	tab();
@@ -100,7 +100,7 @@ namespace gppUnit {
 			stream.str(line.stream.str());
 		}
 	}
-
+*/
 	std::string TableLine::toString() const {
 		return std::accumulate(columns.begin(), columns.end(), std::string(), LineFunctors::Accumulator()) + stream.str();
 	}
