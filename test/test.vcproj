@@ -199,6 +199,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TestCollectionEquals.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\TestColumnElements.cpp"
 				>
 			</File>
