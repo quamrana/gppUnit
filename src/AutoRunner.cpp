@@ -39,11 +39,7 @@ namespace gppUnit {
 		return runner.run();
 	}
 
-	AutoRunner& AutoRunner::operator<<(std::string& name) {
-		title = name;
-		return *this;
-	}
-	AutoRunner& AutoRunner::operator<<(const char* name) {
+	AutoRunner& AutoRunner::operator<<(const std::string& name) {
 		title = name;
 		return *this;
 	}
