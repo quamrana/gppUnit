@@ -31,10 +31,12 @@ namespace TestAutoMethodTimer{
 	using gppUnit::equals;
 
 	class Test: public Auto::TestCase, gppUnit::MethodCaller, gppUnit::TimeReport{
-		gppUnit::AutoMethodTimer<Utilities::MockAuto<0> > mockauto;
+		gppUnit::AutoMethodTimer<Utilities::MockAuto<0> >* mockauto;
 		gppUnit::MethodTimer* caller;
 		std::stringstream strm;
 
+		void setup(){ mockauto=new gppUnit::AutoMethodTimer<Utilities::MockAuto<0> >; }
+		void teardown() { delete mockauto; }
 		virtual void forward(){ 
 			strm << "fwd.";
 		}
@@ -43,7 +45,7 @@ namespace TestAutoMethodTimer{
 		}
 
 		void givenAutoMethodTimer(){
-			caller=&mockauto;
+			caller=mockauto;
 		}
 		void whenCalled(){
 			caller->timeMethod(*this,*this);
