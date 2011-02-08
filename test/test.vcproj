@@ -291,6 +291,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TestSubStringMatching.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\TestTableFormatter.cpp"
 				>
 			</File>
