@@ -31,11 +31,13 @@ namespace gppUnit {
 		stream << other.stream.str();
 	}
 	TableLine& TableLine::operator=(TableLine const& other) {
+	/*
 		if(this == &other) { return *this; }
 
 		columns = other.columns;
 		stream.str(other.stream.str());
 		streamIsEmpty = other.streamIsEmpty;
+*/
 
 		return *this;
 	}
