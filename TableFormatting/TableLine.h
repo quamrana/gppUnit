@@ -49,7 +49,7 @@ namespace gppUnit {
 		void append(const TableLine& line);
 		void tab();
 
-		void patch(const TableLine& line);
+		//void patch(const TableLine& line);
 		std::string toString() const;
 		std::string toString(const std::vector<size_t>& sizes) const;
 
