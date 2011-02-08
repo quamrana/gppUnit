@@ -160,11 +160,16 @@ New Design Notes
 
 #$022	Implement a more complete set of matchers
 	Part one: Improve table streaming
-.		less_than
-.		equals within (double/float)
-.		one_of
+		less_than
+		equals within (double/float)
+		one_of
 
-$023	Implement a more complete set of matchers
+#$023	Get gcov to work
+	Change the build to support gcov
+	Run gcov to produce all output files.
+	Summarise gcov files, removing test modules
+	
+$024	Implement a more complete set of matchers
 	Part Two: Re-check table streaming for more edge cases, or make it simpler
 		all_of
 		begins_with
