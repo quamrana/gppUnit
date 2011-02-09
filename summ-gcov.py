@@ -112,6 +112,7 @@ def walkDir(dir):
         [dirs.remove(d) for d in dirs if d=='Debug' ]
         processFiles(root,files)
 
+#TODO: filter specific lines also
 def isAcceptable(file):
     if file in ignoredFiles:
         return False
