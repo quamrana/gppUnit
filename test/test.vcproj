@@ -235,7 +235,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\TestLogicalOrMatcher.cpp"
+				RelativePath=".\TestLogicalMatchers.cpp"
 				>
 			</File>
 			<File
