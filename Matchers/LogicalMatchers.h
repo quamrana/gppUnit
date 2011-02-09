@@ -26,22 +26,22 @@ THE SOFTWARE.
 
 namespace gppUnit {
 
-	struct any_of_helper {
-		MatcherResult match(const MatcherResult& left, const MatcherResult& right) const ;
-		MatcherResult nestedMatch(const MatcherResult& left, const MatcherResult& right) const ;
-	};
 	template<typename Matcher1, typename Matcher2>
-	struct any_of_base: any_of_helper {
-		any_of_base(const Matcher1& m1, const Matcher2& m2): m1(m1), m2(m2) {}
+	struct logical_base {
+		logical_base(const Matcher1& m1, const Matcher2& m2): m1(m1), m2(m2) {}
 
 		const Matcher1 m1;
 		const Matcher2 m2;
 
 	};
+	struct any_of_helper {
+		MatcherResult match(const MatcherResult& left, const MatcherResult& right) const ;
+		MatcherResult nestedMatch(const MatcherResult& left, const MatcherResult& right) const ;
+	};
 
 	template<typename Matcher1, typename Matcher2>
-	struct any_of_t: any_of_base<Matcher1, Matcher2> {
-		any_of_t(const Matcher1& m1, const Matcher2& m2): any_of_base<Matcher1, Matcher2>(m1, m2) {}
+	struct any_of_t: logical_base<Matcher1, Matcher2>,any_of_helper {
+		any_of_t(const Matcher1& m1, const Matcher2& m2): logical_base<Matcher1, Matcher2>(m1, m2) {}
 
 		typedef any_of_t<Matcher1, Matcher2> self;
 		template <typename ACTUAL>
@@ -56,8 +56,8 @@ namespace gppUnit {
 	};
 
 	template<typename Matcher1, typename Matcher2, typename Matcher3>
-	struct any_of_t<Matcher1, any_of_t<Matcher2, Matcher3> >: any_of_base<Matcher1, any_of_t<Matcher2, Matcher3> > {
-		any_of_t(const Matcher1& m1, const any_of_t<Matcher2, Matcher3>& m2): any_of_base<Matcher1, any_of_t<Matcher2, Matcher3> >(m1, m2) {}
+	struct any_of_t<Matcher1, any_of_t<Matcher2, Matcher3> >: logical_base<Matcher1, any_of_t<Matcher2, Matcher3> >,any_of_helper {
+		any_of_t(const Matcher1& m1, const any_of_t<Matcher2, Matcher3>& m2): logical_base<Matcher1, any_of_t<Matcher2, Matcher3> >(m1, m2) {}
 
 		typedef any_of_t<Matcher1, any_of_t<Matcher2, Matcher3> > self;
 		template <typename ACTUAL>
@@ -85,5 +85,57 @@ namespace gppUnit {
 		return any_of(m1, any_of(m2, any_of(m3, m4)));
 	}
 
+//==========================================================================================
+	struct all_of_helper {
+		MatcherResult match(const MatcherResult& left, const MatcherResult& right) const ;
+		MatcherResult nestedMatch(const MatcherResult& left, const MatcherResult& right) const ;
+	};
+
+	template<typename Matcher1, typename Matcher2>
+	struct all_of_t: logical_base<Matcher1, Matcher2>,all_of_helper {
+		all_of_t(const Matcher1& m1, const Matcher2& m2): logical_base<Matcher1, Matcher2>(m1, m2) {}
+
+		typedef all_of_t<Matcher1, Matcher2> self;
+		template <typename ACTUAL>
+		MatcherResult match(const ACTUAL& actual) const {
+			return all_of_helper::match(self::m1.match(actual), self::m2.match(actual));
+		}
+
+		template <typename ACTUAL>
+		MatcherResult nestedMatch(const ACTUAL& actual) const {
+			return all_of_helper::nestedMatch(self::m1.match(actual), self::m2.match(actual));
+		}
+	};
+
+	template<typename Matcher1, typename Matcher2, typename Matcher3>
+	struct all_of_t<Matcher1, all_of_t<Matcher2, Matcher3> >: logical_base<Matcher1, all_of_t<Matcher2, Matcher3> >,all_of_helper {
+		all_of_t(const Matcher1& m1, const all_of_t<Matcher2, Matcher3>& m2): logical_base<Matcher1, all_of_t<Matcher2, Matcher3> >(m1, m2) {}
+
+		typedef all_of_t<Matcher1, all_of_t<Matcher2, Matcher3> > self;
+		template <typename ACTUAL>
+		MatcherResult match(const ACTUAL& actual) const {
+			return all_of_helper::match(self::m1.match(actual), self::m2.nestedMatch(actual));
+		}
+		template <typename ACTUAL>
+		MatcherResult nestedMatch(const ACTUAL& actual) const {
+			return all_of_helper::nestedMatch(self::m1.match(actual), self::m2.nestedMatch(actual));
+		}
+	};
+
+	template<typename Matcher1, typename Matcher2>
+	all_of_t<Matcher1, Matcher2> all_of(const Matcher1& m1, const Matcher2& m2) { return all_of_t<Matcher1, Matcher2>(m1, m2); }
+
+	template<typename Matcher1, typename Matcher2, typename Matcher3>
+	all_of_t<Matcher1, all_of_t<Matcher2, Matcher3> >
+	all_of(const Matcher1& m1, const Matcher2& m2, const Matcher3& m3) {
+		return all_of(m1, all_of(m2, m3));
+	}
+
+	template<typename Matcher1, typename Matcher2, typename Matcher3, typename Matcher4>
+	all_of_t<Matcher1, all_of_t<Matcher2, all_of_t<Matcher3, Matcher4> > >
+	all_of(const Matcher1& m1, const Matcher2& m2, const Matcher3& m3, const Matcher4& m4) {
+		return all_of(m1, all_of(m2, all_of(m3, m4)));
+	}
+	//=====================================================================================
 }
 #endif // LOGICALMATCHERS_H_01F26AC1_1835_4173_B311_A9E6226CEE7D

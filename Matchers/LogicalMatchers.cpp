@@ -34,4 +34,17 @@ namespace gppUnit {
 		result.strm << "or" << tab << patch(right.strm);
 		return result;
 	}
+
+	MatcherResult all_of_helper::match(const MatcherResult& left, const MatcherResult& right) const {
+		MatcherResult result(left.result && right.result);
+		result.strm << "a match with all of:" << tab << left.strm;
+		result.strm << "and" << tab << patch(right.strm);
+		return result;
+	}
+	MatcherResult all_of_helper::nestedMatch(const MatcherResult& left, const MatcherResult& right) const {
+		MatcherResult result(left.result && right.result);
+		result.strm << left.strm;
+		result.strm << "and" << tab << patch(right.strm);
+		return result;
+	}
 }

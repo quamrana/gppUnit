@@ -24,20 +24,25 @@ THE SOFTWARE.
 
 typedef std::vector<std::string> strvec;
 
-namespace TestLogicalOrMatcher{
+namespace TestLogicalMatchers{
 	using Utilities::MatcherHelper;
 	using gppUnit::less_than;
+	using gppUnit::greater_than;
 	using gppUnit::equals;
 	using gppUnit::any_of;
+	using gppUnit::all_of;
 	using gppUnit::tab;
 	using gppUnit::endl;
 
 	class TestLogicalMatchersHelper: public Auto::TestCase{
-	protected:
 		template<typename MATCHER, typename ACTUAL>
-		void That(const ACTUAL& actual, MATCHER m, const strvec& desc){
+		void That(bool booleanResult, const ACTUAL& actual, MATCHER m, const strvec& desc){
 			gppUnit::MatcherResult result=m.match(actual);
-			confirm.isTrue(result.result,"result is true");
+			if (booleanResult){
+				confirm.isTrue(result.result,"result is true");
+			} else {
+				confirm.isFalse(result.result,"result is false");
+			}
 
 			const strvec& matcherDescription=result.strm.toVector();
 			expect.that(matcherDescription.size(),equals(desc.size()),"Description has same number of lines");
@@ -48,8 +53,18 @@ namespace TestLogicalOrMatcher{
 				confirm.that(*test++,equals(*it),(*it).c_str());
 			}
 		}
-	};
 
+	protected:
+		template<typename MATCHER, typename ACTUAL>
+		void That(const ACTUAL& actual, MATCHER m, const strvec& desc){
+			That(true,actual,m,desc);
+		}
+		template<typename MATCHER, typename ACTUAL>
+		void Mismatch(const ACTUAL& actual, MATCHER m, const strvec& desc){
+			That(false,actual,m,desc);
+		}
+	};
+namespace Any_Of{
 	class TestIntegers: public TestLogicalMatchersHelper{
 		void test(){
 			int integer=1;
@@ -66,6 +81,11 @@ namespace TestLogicalOrMatcher{
 			tf << "a match with one of:" << tab << "a value less than '0'" << endl;
 			tf << "or" << tab << "'1'" << endl;
 			That(schar,any_of(less_than(vec.size()),equals(integer)),tf.toVector());
+
+			tf.clear();
+			tf << "a match with one of:" << tab << "a value greater than '0'" << endl;
+			tf << "or" << tab << "'1'" << endl;
+			Mismatch(schar,any_of(greater_than(vec.size()),equals(integer)),tf.toVector());
 		}
 	}GPPUNIT_INSTANCE;
 
@@ -81,7 +101,6 @@ namespace TestLogicalOrMatcher{
 			tf << "or" << tab << "'2'" << endl;
 			tf << "or" << tab << "a value less than '-4'" << endl;
 			That(longint,any_of(less_than(integer),equals(longint),less_than(schar)),tf.toVector());
-
 		}
 	}GPPUNIT_INSTANCE;
 
@@ -98,9 +117,71 @@ namespace TestLogicalOrMatcher{
 			tf << "or" << tab << "a value less than '-4'" << endl;
 			tf << "or" << tab << "a value less than '0'" << endl;
 			That(longint,any_of(less_than(integer),equals(longint),less_than(schar),less_than(vec.size())),tf.toVector());
-
-			//confirm.that(15,any_of(less_than(integer),equals(longint),less_than(schar),less_than(vec.size())));
 		}
 	}GPPUNIT_INSTANCE;
 
+}
+namespace TestLogicalAndMatcher{
+	class TestIntegers: public TestLogicalMatchersHelper{
+		void test(){
+			int integer=1;
+			long longint=2;
+			signed char schar=-4;
+			std::vector<MatcherHelper*> vec;
+
+			gppUnit::TableFormatter tf;
+			tf << "a match with all of:" << tab << "a value less than '1'" << endl;
+			tf << "and" << tab << "a value less than '2'" << endl;
+			That(schar,all_of(less_than(integer),less_than(longint)),tf.toVector());
+
+			tf.clear();
+			tf << "a match with all of:" << tab << "'1'" << endl;
+			tf << "and" << tab << "a value less than '2'" << endl;
+			That(integer,all_of(equals(integer),less_than(longint)),tf.toVector());
+
+			tf.clear();
+			tf << "a match with all of:" << tab << "'1'" << endl;
+			tf << "and" << tab << "a value less than '2'" << endl;
+			Mismatch(schar,all_of(equals(integer),less_than(longint)),tf.toVector());
+		}
+	}GPPUNIT_INSTANCE;
+
+	class TestThreeTerms: public TestLogicalMatchersHelper{
+		void test(){
+			int integer=1;
+			long longint=2;
+			signed char schar=-4;
+			std::vector<MatcherHelper*> vec;
+
+			gppUnit::TableFormatter tf;
+			tf << "a match with all of:" << tab << "'1'" << endl;
+			tf << "and" << tab << "a value less than '2'" << endl;
+			tf << "and" << tab << "a value greater than '-4'" << endl;
+			That(integer,all_of(equals(integer),less_than(longint),greater_than(schar)),tf.toVector());
+		}
+	}GPPUNIT_INSTANCE;
+
+	class TestFourTerms: public TestLogicalMatchersHelper{
+		void test(){
+			int integer=1;
+			long longint=2;
+			signed char schar=-4;
+			std::vector<MatcherHelper*> vec;
+
+			gppUnit::TableFormatter tf;
+			tf << "a match with all of:" << tab << "a value greater than '1'" << endl;
+			tf << "and" << tab << "'2'" << endl;
+			tf << "and" << tab << "a value greater than '-4'" << endl;
+			tf << "and" << tab << "a value greater than '0'" << endl;
+			That(longint,all_of(greater_than(integer),equals(longint),greater_than(schar),greater_than(vec.size())),tf.toVector());
+
+			tf.clear();
+			tf << "a match with all of:" << tab << "'1'" << endl;
+			tf << "and" << tab << "a value less than '2'" << endl;
+			tf << "and" << tab << "a value greater than '-4'" << endl;
+			tf << "and" << tab << "'0'" << endl;
+			Mismatch(integer,all_of(equals(integer),less_than(longint),greater_than(schar),equals(vec.size())),tf.toVector());
+		}
+	}GPPUNIT_INSTANCE;
+}
 }

@@ -180,6 +180,11 @@ $024	Implement a more complete set of matchers
 			equals
 			contains
 
+$	Consider a re-architecture of MatcherResult
+	It should contain two streams, one for expected, the other for actual
+	This way, matchers that know how to compare two values, also know how to stream them.
+		Also maybe they could 'program' .that() to display, or not, the actual value.
+
 $	Add whole project elapsed time
 
 $	Doxys documentation
