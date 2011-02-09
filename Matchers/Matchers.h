@@ -23,33 +23,13 @@ THE SOFTWARE.
 #define MATCHERS_H_A1A948B8_4BB3_4E59_8A68_E4E99CC5EEC2
 
 #include "TableFormatting\TableFormatting.h"
-#include "MatcherResult.h"
 #include "ProxyType.h"
+#include "is_not.h"
 
 #include <string>
 #include <sstream>
 
 namespace gppUnit {
-	struct is_not_helper {
-		MatcherResult match(const MatcherResult& fwdresult) const ;
-	};
-	template <typename T>
-	struct is_not_t: is_not_helper {
-		explicit is_not_t(const T& matcher): fwdMatcher(matcher) {}
-
-		template <typename ACTUAL>
-		MatcherResult match(const ACTUAL& actual) const {
-			return is_not_helper::match(fwdMatcher.match(actual));
-		}
-
-		const T fwdMatcher;
-	};
-	template <typename T>
-	is_not_t<T> is_not(const T& matcher) { return is_not_t<T>(matcher); }
-
-	template <typename T>
-	T is_not(const is_not_t<T>& matcher) { return matcher.fwdMatcher; }
-
 	struct is_null {
 		template <typename ACTUAL>
 		MatcherResult match(const ACTUAL& actual) const {

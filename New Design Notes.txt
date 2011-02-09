@@ -169,21 +169,21 @@ New Design Notes
 	Run gcov to produce all output files.
 	Summarise gcov files, removing test modules
 	
-$024	Implement a more complete set of matchers
+#$024	Implement a more complete set of matchers
 	Part Two: Re-check table streaming for more edge cases, or make it simpler
-		all_of
+.		all_of
 .		starts_with
 .		ends_with
 .		contains (string)
-		All the 'not's
-		collections
-			equals
-			contains
+.		All the 'not's
 
 $	Consider a re-architecture of MatcherResult
 	It should contain two streams, one for expected, the other for actual
 	This way, matchers that know how to compare two values, also know how to stream them.
 		Also maybe they could 'program' .that() to display, or not, the actual value.
+		collections
+			equals
+			contains
 
 $	Add whole project elapsed time
 
