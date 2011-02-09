@@ -187,6 +187,8 @@ $	Consider a re-architecture of MatcherResult
 
 $	Add whole project elapsed time
 
+$	Part Two: Re-check table streaming for more edge cases, or make it simpler
+
 $	Doxys documentation
 
 $	Google code wiki documentation
