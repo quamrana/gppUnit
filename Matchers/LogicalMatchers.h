@@ -22,7 +22,7 @@ THE SOFTWARE.
 #ifndef LOGICALMATCHERS_H_01F26AC1_1835_4173_B311_A9E6226CEE7D
 #define LOGICALMATCHERS_H_01F26AC1_1835_4173_B311_A9E6226CEE7D
 
-#include "MatcherResult.h"
+#include "is_not.h"
 
 namespace gppUnit {
 
@@ -53,6 +53,8 @@ namespace gppUnit {
 		MatcherResult nestedMatch(const ACTUAL& actual) const {
 			return any_of_helper::nestedMatch(self::m1.match(actual), self::m2.match(actual));
 		}
+
+		is_not_t<any_of_t> operator!() const { return is_not(*this); }
 	};
 
 	template<typename Matcher1, typename Matcher2, typename Matcher3>
@@ -68,6 +70,8 @@ namespace gppUnit {
 		MatcherResult nestedMatch(const ACTUAL& actual) const {
 			return any_of_helper::nestedMatch(self::m1.match(actual), self::m2.nestedMatch(actual));
 		}
+
+		is_not_t<any_of_t> operator!() const { return is_not(*this); }
 	};
 
 	template<typename Matcher1, typename Matcher2>
@@ -105,6 +109,8 @@ namespace gppUnit {
 		MatcherResult nestedMatch(const ACTUAL& actual) const {
 			return all_of_helper::nestedMatch(self::m1.match(actual), self::m2.match(actual));
 		}
+
+		is_not_t<all_of_t> operator!() const { return is_not(*this); }
 	};
 
 	template<typename Matcher1, typename Matcher2, typename Matcher3>
@@ -120,6 +126,8 @@ namespace gppUnit {
 		MatcherResult nestedMatch(const ACTUAL& actual) const {
 			return all_of_helper::nestedMatch(self::m1.match(actual), self::m2.nestedMatch(actual));
 		}
+
+		is_not_t<all_of_t> operator!() const { return is_not(*this); }
 	};
 
 	template<typename Matcher1, typename Matcher2>

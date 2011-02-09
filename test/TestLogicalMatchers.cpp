@@ -86,6 +86,11 @@ namespace Any_Of{
 			tf << "a match with one of:" << tab << "a value greater than '0'" << endl;
 			tf << "or" << tab << "'1'" << endl;
 			Mismatch(schar,any_of(greater_than(vec.size()),equals(integer)),tf.toVector());
+
+			tf.clear();
+			tf << "not" << tab << "a match with one of:" << tab << "a value less than '0'" << endl;
+			tf << tab << "or" << tab << "'1'" << endl;
+			Mismatch(schar,!any_of(less_than(vec.size()),equals(integer)),tf.toVector());
 		}
 	}GPPUNIT_INSTANCE;
 
@@ -117,6 +122,13 @@ namespace Any_Of{
 			tf << "or" << tab << "a value less than '-4'" << endl;
 			tf << "or" << tab << "a value less than '0'" << endl;
 			That(longint,any_of(less_than(integer),equals(longint),less_than(schar),less_than(vec.size())),tf.toVector());
+
+			tf.clear();
+			tf << "not" << tab << "a match with one of:" << tab << "a value less than '1'" << endl;
+			tf << tab << "or" << tab << "a value less than '2'" << endl;
+			tf << tab << "or" << tab << "a value less than '-4'" << endl;
+			tf << tab << "or" << tab << "a value less than '0'" << endl;
+			That(longint,!any_of(less_than(integer),less_than(longint),less_than(schar),less_than(vec.size())),tf.toVector());
 		}
 	}GPPUNIT_INSTANCE;
 
@@ -143,6 +155,11 @@ namespace TestLogicalAndMatcher{
 			tf << "a match with all of:" << tab << "'1'" << endl;
 			tf << "and" << tab << "a value less than '2'" << endl;
 			Mismatch(schar,all_of(equals(integer),less_than(longint)),tf.toVector());
+
+			tf.clear();
+			tf << "not" << tab << "a match with all of:" << tab << "'1'" << endl;
+			tf << tab << "and" << tab << "a value less than '2'" << endl;
+			Mismatch(integer,!all_of(equals(integer),less_than(longint)),tf.toVector());
 		}
 	}GPPUNIT_INSTANCE;
 
@@ -181,6 +198,13 @@ namespace TestLogicalAndMatcher{
 			tf << "and" << tab << "a value greater than '-4'" << endl;
 			tf << "and" << tab << "'0'" << endl;
 			Mismatch(integer,all_of(equals(integer),less_than(longint),greater_than(schar),equals(vec.size())),tf.toVector());
+
+			tf.clear();
+			tf << "not" << tab << "a match with all of:" << tab << "a value greater than '1'" << endl;
+			tf << tab << "and" << tab << "'2'" << endl;
+			tf << tab << "and" << tab << "a value greater than '-4'" << endl;
+			tf << tab << "and" << tab << "a value greater than '0'" << endl;
+			Mismatch(longint,!all_of(greater_than(integer),equals(longint),greater_than(schar),greater_than(vec.size())),tf.toVector());
 		}
 	}GPPUNIT_INSTANCE;
 }
