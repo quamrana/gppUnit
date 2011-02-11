@@ -404,6 +404,52 @@ namespace AppendTable{
 			thenTableEquals(expected,"Vector of twelve lines - Four nested tables.");
 		}
 	}GPPUNIT_INSTANCE;
+
+	class SecondTableHasUnfinishedLine: public FourthTableBase{
+		void test(void){
+			givenTable();
+			givenSecondTable();
+			//givenThirdTable();
+			//givenFourthTable();
+			f() << "t1r1c1...." << tab << "t1r1c2." << tab << "t1r1c3." << tab << "t1r1c4." << endl;
+			f() << "t1r2c1..." << tab << "t1r2c2" << tab << "t1r2c3" << tab << "t1r2c4" << endl;
+			f() << "t1r3c1.." << tab << "t1r3c2" << tab << "t1r3c3" << tab << "t1r3c4" << endl;
+			f() << "x1c1" << tab;
+
+			f2() << "t2r1c1...." << tab << "t2r1c2" << tab << "t2r1c3" << tab << "t2r1c4" << endl;
+			f2() << "t2r2c1..." << tab << "t2r2c2" << tab << "t2r2c3" << tab << "t2r2c4" << endl;
+			f2() << "t2r3c1.." << tab << "t2r3c2.." << tab << "t2r3c3." << tab << "t2r3c4" << endl;
+			f2() << "x2c1" << tab;
+
+			//f3() << "t3r1c1...." << tab << "t3r1c2" << tab << "t3r1c3" << tab << "t3r1c4" << endl;
+			//f3() << "t3r2c1...." << tab << "t3r2c2" << tab << "t3r2c3" << tab << "t3r2c4" << endl;
+			//f3() << "t3r3c1...." << tab << "t3r3c2" << tab << "t3r3c3" << tab << "t3r3c4" << endl;
+			//f3() << "x3c1" << tab;
+
+			//f4() << "t4r1c1...." << tab << "t4r1c2" << tab << "t4r1c3" << tab << "t4r1c4" << endl;
+			//f4() << "t4r2c1...." << tab << "t4r2c2" << tab << "t4r2c3" << tab << "t4r2c4" << endl;
+			//f4() << "t4r3c1...." << tab << "t4r3c2" << tab << "t4r3c3" << tab << "t4r3c4" << endl;
+
+			//whenAppendFourthToThird();
+			//whenAppendThirdToSecond();
+			whenAppendSecondToFirst();
+
+			strvec expected;
+			expected.push_back("t1r1c1.... t1r1c2. t1r1c3. t1r1c4.");
+			expected.push_back("t1r2c1...  t1r2c2  t1r2c3  t1r2c4");
+			expected.push_back("t1r3c1..   t1r3c2  t1r3c3  t1r3c4");
+			expected.push_back("x1c1       t2r1c1.... t2r1c2   t2r1c3  t2r1c4");
+			expected.push_back("           t2r2c1...  t2r2c2   t2r2c3  t2r2c4");
+			expected.push_back("           t2r3c1..   t2r3c2.. t2r3c3. t2r3c4");
+			expected.push_back("           x2c1");
+			//expected.push_back("                t3r2c1.... t3r2c2 t3r2c3 t3r2c4");
+			//expected.push_back("                t3r3c1.... t3r3c2 t3r3c3 t3r3c4");
+			//expected.push_back("                x3c1 t4r1c1.... t4r1c2 t4r1c3 t4r1c4");
+			//expected.push_back("                     t4r2c1.... t4r2c2 t4r2c3 t4r2c4");
+			//expected.push_back("                     t4r3c1.... t4r3c2 t4r3c3 t4r3c4");
+			thenTableEquals(expected,"Vector of twelve lines - Four nested tables.");
+		}
+	}GPPUNIT_INSTANCE;
 }
 
 }
