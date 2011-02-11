@@ -40,7 +40,7 @@ namespace gppUnit {
 	};
 
 	template<typename Matcher1, typename Matcher2>
-	struct any_of_t: logical_base<Matcher1, Matcher2>,any_of_helper {
+	struct any_of_t: logical_base<Matcher1, Matcher2>, any_of_helper {
 		any_of_t(const Matcher1& m1, const Matcher2& m2): logical_base<Matcher1, Matcher2>(m1, m2) {}
 
 		typedef any_of_t<Matcher1, Matcher2> self;
@@ -58,7 +58,7 @@ namespace gppUnit {
 	};
 
 	template<typename Matcher1, typename Matcher2, typename Matcher3>
-	struct any_of_t<Matcher1, any_of_t<Matcher2, Matcher3> >: logical_base<Matcher1, any_of_t<Matcher2, Matcher3> >,any_of_helper {
+	struct any_of_t<Matcher1, any_of_t<Matcher2, Matcher3> >: logical_base<Matcher1, any_of_t<Matcher2, Matcher3> >, any_of_helper {
 		any_of_t(const Matcher1& m1, const any_of_t<Matcher2, Matcher3>& m2): logical_base<Matcher1, any_of_t<Matcher2, Matcher3> >(m1, m2) {}
 
 		typedef any_of_t<Matcher1, any_of_t<Matcher2, Matcher3> > self;
@@ -96,7 +96,7 @@ namespace gppUnit {
 	};
 
 	template<typename Matcher1, typename Matcher2>
-	struct all_of_t: logical_base<Matcher1, Matcher2>,all_of_helper {
+	struct all_of_t: logical_base<Matcher1, Matcher2>, all_of_helper {
 		all_of_t(const Matcher1& m1, const Matcher2& m2): logical_base<Matcher1, Matcher2>(m1, m2) {}
 
 		typedef all_of_t<Matcher1, Matcher2> self;
@@ -114,7 +114,7 @@ namespace gppUnit {
 	};
 
 	template<typename Matcher1, typename Matcher2, typename Matcher3>
-	struct all_of_t<Matcher1, all_of_t<Matcher2, Matcher3> >: logical_base<Matcher1, all_of_t<Matcher2, Matcher3> >,all_of_helper {
+	struct all_of_t<Matcher1, all_of_t<Matcher2, Matcher3> >: logical_base<Matcher1, all_of_t<Matcher2, Matcher3> >, all_of_helper {
 		all_of_t(const Matcher1& m1, const all_of_t<Matcher2, Matcher3>& m2): logical_base<Matcher1, all_of_t<Matcher2, Matcher3> >(m1, m2) {}
 
 		typedef all_of_t<Matcher1, all_of_t<Matcher2, Matcher3> > self;

@@ -107,15 +107,12 @@ namespace gppUnit {
 		std::for_each(table.prevPages.begin(), table.prevPages.end(), TableFunctors::UpdateTable(this));
 		std::for_each(table.page.begin(), table.page.end(), TableFunctors::UpdateTable(this));
 		if(!table.line.isEmpty()) {
-			size_t i = indentSize();
-			if((i > 0) && ((table.prevPages.size() > 0) || (table.page.size() > 0))) {
-				// TODO: Produce a test case which executes the next line
-				i = 0;
+			if((indentSize() > 0) && ((table.prevPages.size() > 0) || (table.page.size() > 0))) {
+				for(size_t i = 0; i < indentSize(); ++i) {
+					using gppUnit::tab;
+					(*this) << tab;
+				}
 			}
-			//for(size_t i = 0; i < indentSize(); ++i) {
-			//	using gppUnit::tab;
-			//	(*this) << tab;
-			//}
 			(*this) << table.line;
 			endLine();
 		}
