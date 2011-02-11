@@ -23,6 +23,8 @@ THE SOFTWARE.
 
 namespace gppUnit {
 
+	CompositeNotification::CompositeNotification(): collection() {}
+
 	template<typename C, typename N, typename A>
 	void caller1(C& collection, void (N::*f)(const A&), const A* a) {
 		for(typename C::iterator it = collection.begin(), end = collection.end(); it != end; ++it) {

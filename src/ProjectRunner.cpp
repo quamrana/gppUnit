@@ -49,6 +49,7 @@ namespace gppUnit {
 	                             const TestCaseList& cases): notify(notify),
 		timer(timer),
 		cases(cases),
+		classData(),
 		projectData(title) {
 		notify.StartProject(*this);
 	}

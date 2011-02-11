@@ -41,6 +41,7 @@ namespace gppUnit {
 		void EndClass();
 		void EndProject();
 	public:
+		CompositeNotification();
 		void add(Notification& notify) { collection.push_back(&notify); }
 	};
 }

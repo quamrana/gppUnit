@@ -62,6 +62,7 @@ namespace gppUnit {
 		setup(testcase, *this),
 		test(testcase, *this),
 		teardown(testcase, *this),
+		methodData(),
 		classData(demangleTypeName(typeid(testcase).name())) {
 		notify.StartClass(*this);
 	}
