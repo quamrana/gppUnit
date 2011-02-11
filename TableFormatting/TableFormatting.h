@@ -45,7 +45,7 @@ namespace gppUnit {
 		void clearLine();
 		std::vector<std::string> partialVector(std::vector<size_t>& sizes) const;
 	public:
-		TableFormatter(): page(), line(), lineIsEmpty(true) {}
+		TableFormatter();
 		void clear() { clearLine(); page.clear(); }
 		size_t lineSize() { return line.size(); }
 		size_t indentSize() { return summarySizes.size(); }

@@ -32,7 +32,7 @@ namespace gppUnit {
 		}
 	} nullTimer;
 
-	AutoRunner::AutoRunner(): timer(&nullTimer) {}
+	AutoRunner::AutoRunner(): notify(), title(), timer(&nullTimer) {}
 
 	bool AutoRunner::run(const gppUnit::TestCaseList& cases) {
 		ProjectRunner runner(title, notify, *timer, cases);

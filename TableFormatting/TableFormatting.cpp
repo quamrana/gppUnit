@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include <algorithm>
 
 namespace gppUnit {
+	TableFormatter::TableFormatter(): prevPages(), page(), summarySizes(), line(), lineIsEmpty(true) {}
 	void TableFormatter::tab() {
 		line.tab();
 	}
@@ -50,7 +51,7 @@ namespace gppUnit {
 		};
 
 		struct Accumulator {
-			explicit Accumulator(const std::vector<size_t>& sizes): sizes(sizes) {}
+			explicit Accumulator(const std::vector<size_t>& sizes): result(), sizes(sizes) {}
 			std::vector<std::string> result;
 			std::vector<size_t> sizes;
 			void operator()(const TableLine& line) { result.push_back(line.toString(sizes)); }
