@@ -94,29 +94,35 @@ namespace gppUnit {
 		return std::for_each(page.begin(), page.end(), TableFunctors::Accumulator(update.sizes)).result;
 	}
 
-	TableFormatter& TableFormatter::operator<<(const TableFormatter& table) {
-		std::vector<std::string> result = partialVector(summarySizes);
-		std::copy(result.begin(), result.end(), back_inserter(prevPages));
-		page.clear();
-
-		size_t lsize = line.size();
-		size_t ssize = summarySizes.size();
-		if(ssize > lsize) {
-			summarySizes.erase(summarySizes.begin() + std::vector<size_t>::iterator::difference_type(lsize), summarySizes.end());
-		}
-
-		std::for_each(table.prevPages.begin(), table.prevPages.end(), TableFunctors::UpdateTable(this));
-		std::for_each(table.page.begin(), table.page.end(), TableFunctors::UpdateTable(this));
-		if(!table.line.isEmpty()) {
-			if((indentSize() > 0) && ((table.prevPages.size() > 0) || (table.page.size() > 0))) {
+	void TableFormatter::streamSpareLine(const TableLine& line, size_t prevPagesSize, size_t pageSize) {
+		if(!line.isEmpty()) {
+			if((indentSize() > 0) && ((prevPagesSize > 0) || (pageSize > 0))) {
 				for(size_t i = 0; i < indentSize(); ++i) {
 					using gppUnit::tab;
 					(*this) << tab;
 				}
 			}
-			(*this) << table.line;
+			(*this) << line;
 			endLine();
 		}
+	}
+
+	TableFormatter& TableFormatter::operator<<(const TableFormatter& table) {
+		// Move page into prevPages
+		std::vector<std::string> result = partialVector(summarySizes);
+		std::copy(result.begin(), result.end(), back_inserter(prevPages));
+		page.clear();
+
+		// Limit summarySizes to line.size()
+		size_t lsize = line.size();
+		size_t ssize = summarySizes.size();
+		if(ssize > lsize) {
+			summarySizes.resize(lsize);
+		}
+
+		std::for_each(table.prevPages.begin(), table.prevPages.end(), TableFunctors::UpdateTable(this));
+		std::for_each(table.page.begin(), table.page.end(), TableFunctors::UpdateTable(this));
+		streamSpareLine(table.line, table.prevPages.size(), table.page.size());
 		return *this;
 	}
 
