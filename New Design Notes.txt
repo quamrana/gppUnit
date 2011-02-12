@@ -177,6 +177,9 @@ New Design Notes
 .		contains (string)
 .		All the 'not's
 
+#$025	Part Two: Re-check table streaming for more edge cases, or make it simpler
+.	Incomming table has spare line.
+
 $	Consider a re-architecture of MatcherResult
 	It should contain two streams, one for expected, the other for actual
 	This way, matchers that know how to compare two values, also know how to stream them.
@@ -194,8 +197,8 @@ $	Log results to file
 $	Log results to XML file
 	Log on every EndProject()
 
-$	Part Two: Re-check table streaming for more edge cases, or make it simpler
-
+$	Deploy gppUnit
+	Try it out on my computer
 $	Doxys documentation
 
 $	Google code wiki documentation
@@ -208,10 +211,11 @@ $	Allow Exception catchers which describe themselves.
 
 $	Make sure Method and Class Descriptions can be copied and saved in vectors.
 
-$	Performance check matching
+$	Performance check matchers
 	It definitely takes longer to run tests now that matching is used.
 	Is there anyway of speeding it up?
 		Try to avoid run-time where results are not printed?
+			Cache results when they are printed?
 
 $	Socket based GUI front-end
 	Poss. VB6 app which pops up when a test run connects

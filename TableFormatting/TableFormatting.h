@@ -44,6 +44,7 @@ namespace gppUnit {
 		void endLine();
 		void clearLine();
 		std::vector<std::string> partialVector(std::vector<size_t>& sizes) const;
+		void streamSpareLine(const TableLine&, size_t, size_t);
 	public:
 		TableFormatter();
 		void clear() { clearLine(); page.clear(); }
