@@ -44,10 +44,8 @@
 				Optimization="0"
 				AdditionalIncludeDirectories=".."
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
-				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
 				DebugInformationFormat="4"
-				DisableSpecificWarnings="4512;4355"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -107,11 +105,10 @@
 				EnableIntrinsicFunctions="true"
 				AdditionalIncludeDirectories=".."
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
+				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
-				WarningLevel="3"
 				DebugInformationFormat="3"
-				DisableSpecificWarnings="4512;4355"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
