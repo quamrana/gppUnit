@@ -26,6 +26,8 @@ THE SOFTWARE.
 #include "TestResult.h"
 #include "Matchers\Matchers.h"
 
+#include <sstream>
+
 namespace gppUnit {
 	class ConfirmationBase: public ResultSetter {
 		ReportResult* report;
@@ -46,17 +48,16 @@ namespace gppUnit {
 		template<typename ACTUAL, typename MATCHER>
 		void that(const ACTUAL& actual, MATCHER m, const char* message = "Should match") {
 			const MatcherResult& match = m.match(actual);
-			TestResult result(match.result, message);
-
-			const char* aux = (result.result) ? "and got" : "but got";
-			TableFormatter f;
-			f << "Expected" << tab << match.strm;
-			f << aux << tab << "'" << ProxyValue(actual) << "'" << endl;
-			result.description = f.toVector();
-
-			Result(result);
+			std::stringstream strmActual;
+			strmActual << "'" << ProxyValue(actual) << "'";
+			privThat(match, strmActual.str(), message);
 		}
+	private:
+		void privThat(const MatcherResult& match, const std::string& actual, const char* message);
 	};
+
+	extern const char* and_got;
+	extern const char* but_got;
 
 	class Expect: public Confirm {
 		virtual void Result(const TestResult&);

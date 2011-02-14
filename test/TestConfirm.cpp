@@ -161,11 +161,25 @@ namespace TestAsserts{
 		}
 	}GPPUNIT_INSTANCE;
 }
+namespace ConfirmThatDescription{
+	using gppUnit::but_got;
+	using gppUnit::and_got;
+	using gppUnit::equals;
+
+	class ConfirmThatDescriptionElements: public Auto::TestCase{
+		void test(){
+			confirm.that(but_got,equals("but got"));
+			confirm.that(and_got,equals("and got"));
+		}
+	}GPPUNIT_INSTANCE;
+}
 namespace ConfirmThat{
 	using TestAsserts::Base;
 	using gppUnit::TableFormatter;
 	using gppUnit::tab;
 	using gppUnit::endl;
+	using gppUnit::but_got;
+	using gppUnit::and_got;
 
 	class ConfirmThatResult: public TestAsserts::ConfirmBase{
 		void test(){
@@ -181,10 +195,11 @@ namespace ConfirmThat{
 
 			gppUnit::TableFormatter f;
 			f << "Expected" << tab << "'0'" << endl;
-			f << "and got" << tab << "'0'" << endl;
+			f << and_got << tab << "'0'" << endl;
 			thenDescriptionIs(f.toVector());
 		}
 	}GPPUNIT_INSTANCE;
+
 	class ConfirmThatFailDescription: public TestAsserts::ConfirmBase{
 		void test(){
 			givenConfirm();
@@ -193,7 +208,7 @@ namespace ConfirmThat{
 
 			gppUnit::TableFormatter f;
 			f << "Expected" << tab << "'0'" << endl;
-			f << "but got" << tab << "'1'" << endl;
+			f << but_got << tab << "'1'" << endl;
 			thenDescriptionIs(f.toVector());
 		}
 	}GPPUNIT_INSTANCE;
@@ -208,7 +223,7 @@ namespace ConfirmThat{
 
 			gppUnit::TableFormatter f;
 			f << "Expected" << tab << "'2'" << endl;
-			f << "but got" << tab << "'-4'" << endl;
+			f << but_got << tab << "'-4'" << endl;
 			thenDescriptionIs(f.toVector());
 		}
 	}GPPUNIT_INSTANCE;
@@ -223,7 +238,8 @@ namespace ConfirmThat{
 
 			gppUnit::TableFormatter f;
 			f << "Expected" << tab << "string '2'" << endl;
-			f << "but got" << tab << "'1'" << endl;
+			f << tab <<"actual" << tab << "'1'" << endl;
+			//f << but_got << tab << "'1'" << endl;
 			thenDescriptionIs(f.toVector());
 		}
 	}GPPUNIT_INSTANCE;
@@ -238,7 +254,8 @@ namespace ConfirmThat{
 
 			gppUnit::TableFormatter f;
 			f << "Expected" << tab << "string '2'" << endl;
-			f << "but got" << tab << "'1'" << endl;
+			f << tab <<"actual" << tab << "'1'" << endl;
+			//f << but_got << tab << "'1'" << endl;
 			thenDescriptionIs(f.toVector());
 		}
 	}GPPUNIT_INSTANCE;
