@@ -49,6 +49,25 @@ namespace gppUnit {
 		isTrue(!result, message);
 	}
 
+	const char* and_got = "and got";
+	const char* but_got = "but got";
+
+	void Confirm::privThat(const MatcherResult& match, const std::string& actual, const char* message) {
+		TestResult result(match.result, message);
+
+		TableFormatter f;
+		f << "Expected" << tab << match.strm;
+		if(match.hasActual) {
+			f << tab << match.actualStrm;
+		} else {
+			const char* aux = (result.result) ? and_got : but_got;
+			f << aux << tab << actual << endl;
+		}
+		result.description = f.toVector();
+
+		Result(result);
+	}
+
 	void Expect::Result(const TestResult& result) {
 		ConfirmationBase::Result(result);
 		if(!result.result) {

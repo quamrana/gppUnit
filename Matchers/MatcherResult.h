@@ -29,8 +29,11 @@ namespace gppUnit {
 		bool result;
 		TableFormatter strm;
 
-		MatcherResult(): result(false), strm() {}
-		explicit MatcherResult(bool value): result(value), strm() {}
+		bool hasActual;
+		TableFormatter actualStrm;
+
+		MatcherResult(): result(false), strm(), hasActual(false), actualStrm() {}
+		explicit MatcherResult(bool value): result(value), strm(), hasActual(false), actualStrm() {}
 		std::string description() const { return strm.toString();}
 	};
 }

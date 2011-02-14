@@ -88,13 +88,17 @@ namespace gppUnit {
 	MatcherResult equal_to_trait<std::string>::match() {
 		MatcherResult result(equals());
 
-		formatDescription(result.strm, getParams(result.result));
+		formatDescription(result, getParams(result.result));
 		return result;
 	}
-	void equal_to_trait<std::string>::formatDescription(TableFormatter& strm, formatParameters params) {
+	void equal_to_trait<std::string>::formatDescription(MatcherResult& result, formatParameters params) {
+		TableFormatter& strm=result.strm;
+		TableFormatter& actualStrm=result.actualStrm;
 		switch(params.mmType) {
 		case SHORT:
 			strm << "string" << tab << rayString(expectedValue);
+			actualStrm << "actual" << tab << rayString(actualValue) << endl;
+			result.hasActual=true;
 			break;
 		case MEDIUM:
 			strm << "string" << tab << rayString(expectedValue) << endl;

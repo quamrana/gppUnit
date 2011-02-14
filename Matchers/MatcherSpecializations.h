@@ -59,7 +59,7 @@ namespace gppUnit {
 			size_t mismatch;
 		};
 		formatParameters getParams(bool result);
-		void formatDescription(TableFormatter& strm, formatParameters params);
+		void formatDescription(MatcherResult& result, formatParameters params);
 	};
 
 	template <>
