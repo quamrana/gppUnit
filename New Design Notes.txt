@@ -190,9 +190,13 @@ $	Consider a re-architecture of MatcherResult
 
 $	Log results to file
 	Log on every EndProject()
-	Log only successes
-		Tests,Classes,Date, Time,Runtime
-		(unittests,name=gppUnit1.5)
+.	Log only successes
+		'table=1.1
+		'gppUnit.log - Automatically created by gppUnit1.5
+		unittests,name=xxxxxxx
+		Tests,Classes,Date,Time,Runtime
+	Create header when creating the file
+	Append line to file.
 
 $	Log results to XML file
 	Log on every EndProject()

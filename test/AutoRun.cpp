@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "src\ClassDescription.h"
 #include "src\MethodDescription.h"
 #include "src\TestResult.h"
+#include "src\SuccessLogger.h"
 
 #include <iostream>
 #include <sstream>
@@ -62,11 +63,14 @@ namespace {
 			std::cout << out.str();
 		}
 	}tlog;
+
+	gppUnit::SuccessLogger success;
+	gppUnit::FileLoggerNotification fln1("gppUnit.log",success);
 }
 
 namespace gppUnit {
 	void AutoOptions(AutoRunner& runner) {
-		runner << "gppUnit 1.5" << Notifier;
+		runner << "gppUnit 1.5" << Notifier << fln1;
 
 	}
 }
