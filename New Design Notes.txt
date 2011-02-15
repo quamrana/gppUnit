@@ -180,16 +180,9 @@ New Design Notes
 #$025	Part Two: Re-check table streaming for more edge cases, or make it simpler
 .	Incomming table has spare line.
 
-$	Consider a re-architecture of MatcherResult
-	It should contain two streams, one for expected, the other for actual
-	This way, matchers that know how to compare two values, also know how to stream them.
-		Also maybe they could 'program' .that() to display, or not, the actual value from its stream.
-		collections
-			equals
-			contains
-
-$	Log results to file
+$026	Log results to file
 	Log on every EndProject()
+.		Passed,Tests,Classes,Date,Time,Runtime
 .	Log only successes
 		'table=1.1
 		'gppUnit.log - Automatically created by gppUnit1.5
@@ -197,6 +190,15 @@ $	Log results to file
 		Tests,Classes,Date,Time,Runtime
 	Create header when creating the file
 	Append line to file.
+	Refactor both loggers.
+
+$	Consider a re-architecture of MatcherResult
+	It should contain two streams, one for expected, the other for actual
+	This way, matchers that know how to compare two values, also know how to stream them.
+		Also maybe they could 'program' .that() to display, or not, the actual value from its stream.
+		collections
+			equals
+			contains
 
 $	Log results to XML file
 	Log on every EndProject()
