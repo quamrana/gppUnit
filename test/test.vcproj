@@ -221,6 +221,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TestFileLogger.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\TestGreaterThan.cpp"
 				>
 			</File>

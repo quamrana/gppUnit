@@ -224,6 +224,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SuccessLogger.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\TestCaseBase.cpp"
 				>
 			</File>
@@ -339,6 +343,10 @@
 			</File>
 			<File
 				RelativePath=".\StreamNotification.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SuccessLogger.h"
 				>
 			</File>
 			<File

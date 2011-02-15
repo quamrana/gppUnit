@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "AutoMethodTimer.h"
 
 #include <windows.h>
+#include <time.h>
 
 namespace {
 	typedef long long time_interval;
@@ -67,5 +68,17 @@ namespace {
 namespace gppUnit {
 	MethodTimer& MethodTimer::getTimer() {
 		return timer;
+	}
+
+	const char* getNow(void){
+        tm time_now;
+        time_t secs_now;
+        static char str[80];
+        //_tzset();
+        time(&secs_now);
+		localtime_s(&time_now,&secs_now);
+
+        strftime(str, 80, "%Y-%b-%d,%X",&time_now);
+        return str;
 	}
 }

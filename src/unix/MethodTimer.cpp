@@ -72,4 +72,15 @@ namespace gppUnit {
 	MethodTimer& MethodTimer::getTimer() {
 		return timer;
 	}
+	const char* getNow(void){
+        tm time_now;
+        time_t secs_now;
+        static char str[80];
+        tzset();
+        time(&secs_now);
+        time_now = *localtime(&secs_now);
+
+        strftime(str, 80, "%Y-%b-%d,%X",&time_now);
+        return str;
+    }
 }
