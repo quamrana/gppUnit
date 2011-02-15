@@ -74,6 +74,17 @@ namespace gppUnit {
 		virtual void closeFile();
 	};
 
+	class AllRunsLogger: public SuccessLoggerAlgorithm {
+		std::ofstream file;
+		virtual void LogToFile(const std::string& fileName, const ProjectDescription* project);
+		virtual bool fileExists(const std::string& fileName);
+		virtual void openFileForAppend(const std::string& fileName);
+		virtual void openFileForWriting(const std::string& fileName);
+		virtual void writeHeader(const std::string& fileName, const ProjectDescription* project);
+		virtual void writeLog(const ProjectDescription* project);
+		virtual void closeFile();
+	};
+
 	const char* getNow(void);
 }
 #endif // SUCCESSLOGGER_H_C727B3A4_81E2_472C_98A4_C3088B4A7023

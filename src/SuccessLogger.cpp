@@ -71,4 +71,49 @@ namespace gppUnit {
 		file.close();
 	}
 
+// =====================================================================
+	void AllRunsLogger::LogToFile(const std::string& fileName, const ProjectDescription* project) {
+		if(fileExists(fileName)) {
+			openFileForAppend(fileName);
+		} else {
+			openFileForWriting(fileName);
+			writeHeader(fileName,project);
+		}
+		writeLog(project);
+		closeFile();
+	}
+
+	bool AllRunsLogger::fileExists(const std::string& fileName){
+		bool ret;
+		std::ifstream ifile;
+		ifile.open(fileName.c_str(),std::ios::in);
+		ret=ifile.is_open();
+		ifile.close();
+		return ret;
+	}
+	void AllRunsLogger::openFileForAppend(const std::string& fileName){
+		file.open(fileName.c_str(),std::ios::out|std::ios::app);
+	}
+	void AllRunsLogger::openFileForWriting(const std::string& fileName){
+		file.open(fileName.c_str(),std::ios::out);
+	}
+	void AllRunsLogger::writeHeader(const std::string& fileName, const ProjectDescription* project){
+		file << "'table=1.1" << endl;
+		file << "'" << fileName << " - Automatically created by gppUnit1.5" << endl;
+		file << "unittests,name=" << project->name() << endl;
+		file << "passed,tests,units,date,time,runtime" << endl;
+	}
+	void AllRunsLogger::writeLog(const ProjectDescription* project){
+		file << project->hasPassed() << ','
+			<< project->results() << ','
+			<< project->classes() << ','
+			<< getNow() << ','
+			<< project->run_time()
+			<< endl;
+	}
+	void AllRunsLogger::closeFile(){
+		file.close();
+	}
+
+
 }

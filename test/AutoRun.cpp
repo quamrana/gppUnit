@@ -66,11 +66,14 @@ namespace {
 
 	gppUnit::SuccessLogger success;
 	gppUnit::FileLoggerNotification fln1("gppUnit.log",success);
+
+	gppUnit::AllRunsLogger allRuns;
+	gppUnit::FileLoggerNotification fln2("gppUnit-allruns.log",allRuns);
 }
 
 namespace gppUnit {
 	void AutoOptions(AutoRunner& runner) {
-		runner << "gppUnit 1.5" << Notifier << fln1;
+		runner << "gppUnit 1.5" << Notifier << fln1 << fln2;
 
 	}
 }
