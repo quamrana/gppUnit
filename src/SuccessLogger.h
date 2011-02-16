@@ -52,9 +52,10 @@ namespace gppUnit {
 		}
 	};
 
-	class SuccessLoggerAlgorithm: public FileLoggerInterface {
+	class LoggerAlgorithm: public FileLoggerInterface {
 		virtual void LogToFile(const std::string& fileName, const ProjectDescription* project);
 
+		virtual bool allowedToProceed(const ProjectDescription* project)=0;
 		virtual bool fileExists(const std::string& fileName) = 0;
 		virtual void openFileForAppend(const std::string& fileName) = 0;
 		virtual void openFileForWriting(const std::string& fileName) = 0;
@@ -63,26 +64,26 @@ namespace gppUnit {
 		virtual void closeFile() = 0;
 	};
 
-	// TODO:  SuccessLogger is not tested!!
-	class SuccessLogger: public SuccessLoggerAlgorithm {
-		std::ofstream file;
+	// TODO:  Classes below here are not tested!!
+	class FileLogger: public LoggerAlgorithm {
 		virtual bool fileExists(const std::string& fileName);
 		virtual void openFileForAppend(const std::string& fileName);
 		virtual void openFileForWriting(const std::string& fileName);
+		virtual void closeFile();
+	protected:
+		std::ofstream file;
+	};
+	class SuccessLogger: public FileLogger {
+
+		virtual bool allowedToProceed(const ProjectDescription* project);
 		virtual void writeHeader(const std::string& fileName, const ProjectDescription* project);
 		virtual void writeLog(const ProjectDescription* project);
-		virtual void closeFile();
 	};
 
-	class AllRunsLogger: public SuccessLoggerAlgorithm {
-		std::ofstream file;
-		virtual void LogToFile(const std::string& fileName, const ProjectDescription* project);
-		virtual bool fileExists(const std::string& fileName);
-		virtual void openFileForAppend(const std::string& fileName);
-		virtual void openFileForWriting(const std::string& fileName);
+	class AllRunsLogger: public FileLogger {
+		virtual bool allowedToProceed(const ProjectDescription* project);
 		virtual void writeHeader(const std::string& fileName, const ProjectDescription* project);
 		virtual void writeLog(const ProjectDescription* project);
-		virtual void closeFile();
 	};
 
 	const char* getNow(void);

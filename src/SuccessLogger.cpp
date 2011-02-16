@@ -27,8 +27,8 @@ THE SOFTWARE.
 namespace gppUnit {
 	using std::endl;
 
-	void SuccessLoggerAlgorithm::LogToFile(const std::string& fileName, const ProjectDescription* project) {
-		if(project->hasPassed()) {
+	void LoggerAlgorithm::LogToFile(const std::string& fileName, const ProjectDescription* project) {
+		if(allowedToProceed(project)){
 			if(fileExists(fileName)) {
 				openFileForAppend(fileName);
 			} else {
@@ -40,7 +40,7 @@ namespace gppUnit {
 		}
 	}
 
-	bool SuccessLogger::fileExists(const std::string& fileName){
+	bool FileLogger::fileExists(const std::string& fileName){
 		bool ret;
 		std::ifstream ifile;
 		ifile.open(fileName.c_str(),std::ios::in);
@@ -48,11 +48,18 @@ namespace gppUnit {
 		ifile.close();
 		return ret;
 	}
-	void SuccessLogger::openFileForAppend(const std::string& fileName){
+	void FileLogger::openFileForAppend(const std::string& fileName){
 		file.open(fileName.c_str(),std::ios::out|std::ios::app);
 	}
-	void SuccessLogger::openFileForWriting(const std::string& fileName){
+	void FileLogger::openFileForWriting(const std::string& fileName){
 		file.open(fileName.c_str(),std::ios::out);
+	}
+	void FileLogger::closeFile(){
+		file.close();
+	}
+
+	bool SuccessLogger::allowedToProceed(const ProjectDescription* project){
+		return project->hasPassed();
 	}
 	void SuccessLogger::writeHeader(const std::string& fileName, const ProjectDescription* project){
 		file << "'table=1.1" << endl;
@@ -67,35 +74,9 @@ namespace gppUnit {
 			<< project->run_time()
 			<< endl;
 	}
-	void SuccessLogger::closeFile(){
-		file.close();
-	}
 
-// =====================================================================
-	void AllRunsLogger::LogToFile(const std::string& fileName, const ProjectDescription* project) {
-		if(fileExists(fileName)) {
-			openFileForAppend(fileName);
-		} else {
-			openFileForWriting(fileName);
-			writeHeader(fileName,project);
-		}
-		writeLog(project);
-		closeFile();
-	}
-
-	bool AllRunsLogger::fileExists(const std::string& fileName){
-		bool ret;
-		std::ifstream ifile;
-		ifile.open(fileName.c_str(),std::ios::in);
-		ret=ifile.is_open();
-		ifile.close();
-		return ret;
-	}
-	void AllRunsLogger::openFileForAppend(const std::string& fileName){
-		file.open(fileName.c_str(),std::ios::out|std::ios::app);
-	}
-	void AllRunsLogger::openFileForWriting(const std::string& fileName){
-		file.open(fileName.c_str(),std::ios::out);
+	bool AllRunsLogger::allowedToProceed(const ProjectDescription*){
+		return true;
 	}
 	void AllRunsLogger::writeHeader(const std::string& fileName, const ProjectDescription* project){
 		file << "'table=1.1" << endl;
@@ -111,9 +92,4 @@ namespace gppUnit {
 			<< project->run_time()
 			<< endl;
 	}
-	void AllRunsLogger::closeFile(){
-		file.close();
-	}
-
-
 }

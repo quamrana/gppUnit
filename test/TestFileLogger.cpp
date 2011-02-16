@@ -76,12 +76,15 @@ namespace TestFileLogger{
 		}
 	}GPPUNIT_INSTANCE;
 
-	class SuccessLoggerTestBase: public Auto::TestCase, gppUnit::SuccessLoggerAlgorithm{
+	class SuccessLoggerTestBase: public Auto::TestCase, gppUnit::LoggerAlgorithm{
 
 		std::stringstream collect;
 		gppUnit::FileLoggerNotification* fileNotify;
 		bool exists;
 
+		bool allowedToProceed(const gppUnit::ProjectDescription* project){
+			return project->hasPassed();
+		}
 		virtual bool fileExists(const std::string& fileName){ 
 			collect << "e." << fileName << '.';
 			return exists; 
