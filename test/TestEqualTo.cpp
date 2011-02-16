@@ -31,10 +31,10 @@ namespace TestEqualTo{
 		void test(){
 			int actual=1;
 			long expected=1;
-			That(actual,equal_to(expected),"'1'\n");
+			That(actual,equal_to(expected),"'1'\n'1'\n");
 
 			actual=2;
-			MisMatch(actual,equal_to(expected),"'1'\n");
+			MisMatch(actual,equal_to(expected),"'1'\n'2'\n");
 
 			That(actual,is_not(equal_to(expected)),"not '1'\n");
 			That(actual,!equal_to(expected),"not '1'\n");
@@ -44,9 +44,9 @@ namespace TestEqualTo{
 		void test(){
 			int actual=1;
 			long expected=1;
-			That(actual,equal_to(expected),"'1'\n");
+			That(actual,equal_to(expected),"'1'\n'1'\n");
 
-			That(actual,is_not(is_not(equal_to(expected))),"'1'\n");
+			That(actual,is_not(is_not(equal_to(expected))),"'1'\n'1'\n");
 		}
 	}GPPUNIT_INSTANCE;
 
@@ -55,7 +55,7 @@ namespace TestEqualTo{
 			float floatsmall=2.05f;
 			float floatlarge=2.06f;
 
-			That(floatsmall,equal_to(floatlarge).within(0.1),"'2.06' within '0.1'\n");
+			That(floatsmall,equal_to(floatlarge).within(0.1),"'2.06' within '0.1'\n'2.05'\n");
 		}
 	}GPPUNIT_INSTANCE;
 	class TestDoubleEqualsWithin: public MatcherHelper{
@@ -63,7 +63,7 @@ namespace TestEqualTo{
 			double doublesmall=2.05;
 			double doublelarge=2.06;
 
-			That(doublelarge,equal_to(doublesmall).within(0.1),"'2.05' within '0.1'\n");
+			That(doublelarge,equal_to(doublesmall).within(0.1),"'2.05' within '0.1'\n'2.06'\n");
 		}
 	}GPPUNIT_INSTANCE;
 
@@ -72,7 +72,7 @@ namespace TestEqualTo{
 			const char* actual="1";
 			char expected[100];
 			strcpy(expected,actual);
-			That(actual,equal_to(expected),"string '1'\n");
+			That(actual,equal_to(expected),"string '1'\nactual '1'\n");
 		}
 	}GPPUNIT_INSTANCE;
 	class StringTestFails: public MatcherHelper{
@@ -81,7 +81,7 @@ namespace TestEqualTo{
 			char expected[100];
 			strcpy(expected,actual);
 			expected[0]='1';
-			MisMatch(actual,equal_to(expected),"string '1'\n");
+			MisMatch(actual,equal_to(expected),"string '1'\nactual '2'\n");
 			That(actual,!equal_to(expected),"not string '1'\n");
 		}
 	}GPPUNIT_INSTANCE;
@@ -99,7 +99,9 @@ namespace StringMismatchTests {
 			strcpy(expected,sample);
 			for(int i=0;i<10;++i) { strcat(expected,sample); }
 
-			MisMatch(actual,equal_to(expected),"string '1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567...'\n");
+			MisMatch(actual,equal_to(expected),
+				"string '1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567...'\n"
+				"actual '1'\n");
 		}
 	}GPPUNIT_INSTANCE;
 	class TestStringDescriptionTypeMEDIUM1: public MatcherHelper{
