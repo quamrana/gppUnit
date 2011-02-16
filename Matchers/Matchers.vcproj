@@ -160,6 +160,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MatcherResult.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MatcherSpecializations.cpp"
 				>
 			</File>

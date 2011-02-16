@@ -48,7 +48,7 @@ namespace gppUnit {
 		template<typename ACTUAL, typename MATCHER>
 		void that(const ACTUAL& actual, MATCHER m, const char* message = "Should match") {
 			const MatcherResult& match = m.match(actual);
-			privThat(match,message);
+			privThat(match, message);
 		}
 	private:
 		void privThat(const MatcherResult& match, const char* message);
