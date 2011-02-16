@@ -105,8 +105,6 @@ namespace gppUnit {
 			strm << "first mismatch" << tab << std::string(params.mismatch + 1, ' ') << '^' << endl;
 			strm << "index " << params.mismatch << tab << std::string(params.mismatch + 1, '-') << '|' << endl;
 			strm << "actual" << tab << rayString(actualValue) << endl;
-			//actualStrm << "actual" << tab << rayString(actualValue) << endl;
-			//result.hasActual=true;
 			break;
 		case LONG:
 			strm << "string" << tab << segmentString(expectedValue, params.mismatch) << endl;

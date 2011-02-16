@@ -238,7 +238,7 @@ namespace ConfirmThat{
 
 			gppUnit::TableFormatter f;
 			f << "Expected" << tab << "string '2'" << endl;
-			f << tab <<"actual" << tab << "'1'" << endl;
+			f << gppUnit::but_got << tab <<"actual" << tab << "'1'" << endl;
 			thenDescriptionIs(f.toVector());
 		}
 	}GPPUNIT_INSTANCE;
@@ -253,7 +253,7 @@ namespace ConfirmThat{
 
 			gppUnit::TableFormatter f;
 			f << "Expected" << tab << "string '2'" << endl;
-			f << tab <<"actual" << tab << "'1'" << endl;
+			f << gppUnit::but_got << tab <<"actual" << tab << "'1'" << endl;
 			thenDescriptionIs(f.toVector());
 		}
 	}GPPUNIT_INSTANCE;
