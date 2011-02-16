@@ -52,16 +52,15 @@ namespace gppUnit {
 	const char* and_got = "and got";
 	const char* but_got = "but got";
 
-	void Confirm::privThat(const MatcherResult& match, const std::string& actual, const char* message) {
+	//void Confirm::privThat(const MatcherResult& match, const std::string& actual, const char* message) {
+	void Confirm::privThat(const MatcherResult& match, const char* message) {
 		TestResult result(match.result, message);
 
 		TableFormatter f;
 		f << "Expected" << tab << match.strm;
 		if(match.hasActual) {
-			f << tab << match.actualStrm;
-		} else {
 			const char* aux = (result.result) ? and_got : but_got;
-			f << aux << tab << actual << endl;
+			f << aux << tab << match.actualStrm;
 		}
 		result.description = f.toVector();
 

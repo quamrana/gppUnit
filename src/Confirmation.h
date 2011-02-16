@@ -48,12 +48,10 @@ namespace gppUnit {
 		template<typename ACTUAL, typename MATCHER>
 		void that(const ACTUAL& actual, MATCHER m, const char* message = "Should match") {
 			const MatcherResult& match = m.match(actual);
-			std::stringstream strmActual;
-			strmActual << "'" << ProxyValue(actual) << "'";
-			privThat(match, strmActual.str(), message);
+			privThat(match,message);
 		}
 	private:
-		void privThat(const MatcherResult& match, const std::string& actual, const char* message);
+		void privThat(const MatcherResult& match, const char* message);
 	};
 
 	extern const char* and_got;

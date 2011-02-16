@@ -78,6 +78,8 @@ namespace gppUnit {
 		MatcherResult match() {
 			MatcherResult result(equal_to_trait<T>::equals());
 			result.strm << "'" << equal_to_trait<T>::expectedValue << "'";
+			result.actualStrm << "'" << equal_to_trait<T>::actualValue << "'";
+			result.hasActual=true;
 			return result;
 		}
 	};
