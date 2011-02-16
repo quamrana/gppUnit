@@ -205,9 +205,14 @@ $	Log results to XML file
 
 $	Deploy gppUnit
 	Try it out on my computer
+
 $	Doxys documentation
 
 $	Google code wiki documentation
+
+$	Unify method timers and getNow
+	Some parts of these are exactly the same
+	Make getNow() return a std::string
 
 $	Catch exceptions from calls to notify
 

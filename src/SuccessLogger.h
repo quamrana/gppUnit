@@ -55,7 +55,7 @@ namespace gppUnit {
 	class LoggerAlgorithm: public FileLoggerInterface {
 		virtual void LogToFile(const std::string& fileName, const ProjectDescription* project);
 
-		virtual bool allowedToProceed(const ProjectDescription* project)=0;
+		virtual bool allowedToProceed(const ProjectDescription* project) = 0;
 		virtual bool fileExists(const std::string& fileName) = 0;
 		virtual void openFileForAppend(const std::string& fileName) = 0;
 		virtual void openFileForWriting(const std::string& fileName) = 0;
