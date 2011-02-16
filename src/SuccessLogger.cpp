@@ -28,68 +28,67 @@ namespace gppUnit {
 	using std::endl;
 
 	void LoggerAlgorithm::LogToFile(const std::string& fileName, const ProjectDescription* project) {
-		if(allowedToProceed(project)){
+		if(allowedToProceed(project)) {
 			if(fileExists(fileName)) {
 				openFileForAppend(fileName);
 			} else {
 				openFileForWriting(fileName);
-				writeHeader(fileName,project);
+				writeHeader(fileName, project);
 			}
 			writeLog(project);
 			closeFile();
 		}
 	}
 
-	bool FileLogger::fileExists(const std::string& fileName){
-		bool ret;
+	bool FileLogger::fileExists(const std::string& fileName) {
 		std::ifstream ifile;
-		ifile.open(fileName.c_str(),std::ios::in);
-		ret=ifile.is_open();
+		ifile.open(fileName.c_str(), std::ios::in);
+		bool ret = ifile.is_open();
 		ifile.close();
 		return ret;
 	}
-	void FileLogger::openFileForAppend(const std::string& fileName){
-		file.open(fileName.c_str(),std::ios::out|std::ios::app);
+	void FileLogger::openFileForAppend(const std::string& fileName) {
+		file.open(fileName.c_str(), std::ios::out | std::ios::app);
 	}
-	void FileLogger::openFileForWriting(const std::string& fileName){
-		file.open(fileName.c_str(),std::ios::out);
+	void FileLogger::openFileForWriting(const std::string& fileName) {
+		file.open(fileName.c_str(), std::ios::out);
 	}
-	void FileLogger::closeFile(){
+	void FileLogger::closeFile() {
 		file.close();
 	}
 
-	bool SuccessLogger::allowedToProceed(const ProjectDescription* project){
+	bool SuccessLogger::allowedToProceed(const ProjectDescription* project) {
 		return project->hasPassed();
 	}
-	void SuccessLogger::writeHeader(const std::string& fileName, const ProjectDescription* project){
+	void SuccessLogger::writeHeader(const std::string& fileName, const ProjectDescription* project) {
 		file << "'table=1.1" << endl;
 		file << "'" << fileName << " - Automatically created by gppUnit1.5" << endl;
 		file << "unittests,name=" << project->name() << endl;
 		file << "tests,units,date,time,runtime" << endl;
 	}
-	void SuccessLogger::writeLog(const ProjectDescription* project){
+	void SuccessLogger::writeLog(const ProjectDescription* project) {
 		file << project->results() << ','
-			<< project->classes() << ','
-			<< getNow() << ','
-			<< project->run_time()
-			<< endl;
+		     << project->classes() << ','
+		     << getNow() << ','
+		     << project->run_time()
+		     << endl;
 	}
 
-	bool AllRunsLogger::allowedToProceed(const ProjectDescription*){
+	bool AllRunsLogger::allowedToProceed(const ProjectDescription*) {
 		return true;
 	}
-	void AllRunsLogger::writeHeader(const std::string& fileName, const ProjectDescription* project){
+	void AllRunsLogger::writeHeader(const std::string& fileName, const ProjectDescription* project) {
 		file << "'table=1.1" << endl;
 		file << "'" << fileName << " - Automatically created by gppUnit1.5" << endl;
 		file << "unittests,name=" << project->name() << endl;
 		file << "passed,tests,units,date,time,runtime" << endl;
 	}
-	void AllRunsLogger::writeLog(const ProjectDescription* project){
+	void AllRunsLogger::writeLog(const ProjectDescription* project) {
 		file << project->hasPassed() << ','
-			<< project->results() << ','
-			<< project->classes() << ','
-			<< getNow() << ','
-			<< project->run_time()
-			<< endl;
+		     << project->results() << ','
+		     << project->classes() << ','
+		     << getNow() << ','
+		     << project->run_time()
+		     << endl;
 	}
 }

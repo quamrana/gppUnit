@@ -70,15 +70,15 @@ namespace gppUnit {
 		return timer;
 	}
 
-	const char* getNow(void){
-        tm time_now;
-        time_t secs_now;
-        static char str[80];
-        //_tzset();
-        time(&secs_now);
-		localtime_s(&time_now,&secs_now);
+	const char* getNow(void) {
+		tm time_now;
+		time_t secs_now;
+		static char str[80];
+		_tzset();
+		time(&secs_now);
+		localtime_s(&time_now, &secs_now);
 
-        strftime(str, 80, "%Y-%b-%d,%X",&time_now);
-        return str;
+		strftime(str, 80, "%Y-%b-%d,%X", &time_now);
+		return str;
 	}
 }
