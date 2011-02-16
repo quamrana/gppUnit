@@ -180,7 +180,7 @@ New Design Notes
 #$025	Part Two: Re-check table streaming for more edge cases, or make it simpler
 .	Incomming table has spare line.
 
-$026	Log results to file
+#$026	Log results to file
 	Log on every EndProject()
 .		Passed,Tests,Classes,Date,Time,Runtime
 .	Log only successes
@@ -190,7 +190,7 @@ $026	Log results to file
 		Tests,Classes,Date,Time,Runtime
 	Create header when creating the file
 	Append line to file.
-	Refactor both loggers.
+.	Refactor both loggers.
 
 $	Consider a re-architecture of MatcherResult
 	It should contain two streams, one for expected, the other for actual
