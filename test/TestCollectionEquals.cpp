@@ -39,15 +39,15 @@ namespace TestCollectionEquals{
 	};
 	class EmptyIntVector: public VectorHelper<int>{
 		void test(void){
-			That(v1,equals(v2),"Empty Vector\nEmpty Vector\n");
+			That(v1,equals(v2),"Empty Container\nEmpty Container\n");
 		}
 	}GPPUNIT_INSTANCE;
 
 	class UnequalIntVector: public VectorHelper<int>{
 		void test(void){
 			v1.push_back(1);
-			That(v1,!equals(v2),"not Empty Vector\n");
-			MisMatch(v1,equals(v2),"Empty Vector\n[1]\n");
+			That(v1,!equals(v2),"not Empty Container\n");
+			MisMatch(v1,equals(v2),"Empty Container\n[1]\n");
 		}
 	}GPPUNIT_INSTANCE;
 

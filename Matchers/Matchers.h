@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "TableFormatting\TableFormatting.h"
 #include "ProxyType.h"
 #include "is_not.h"
+#include "is_container.h"
 
 #include <string>
 #include <sstream>
@@ -85,19 +86,31 @@ namespace gppUnit {
 	};
 
 	template <typename T>
+	struct equal_to_container_trait;
+
+	template <typename T>
 	struct equal_to_t: value_matcher<T, equal_to_t<T> > {
 		explicit equal_to_t(const T& expected): value_matcher<T, equal_to_t<T> >(expected) {}
 
 		template<typename V>
 		MatcherResult operator()(const V& actual, const V& expected) const {
-			equal_to_trait<V> helper(actual, expected);
+
+			typename Loki::Select <
+			is_string<V>::result,
+			          equal_to_trait<V>,
+			          typename Loki::Select <
+			          stackoverflow::is_container<V>::result,
+			          equal_to_container_trait<V>,
+			          equal_to_trait<V>
+			          >::Result
+			          >::Result helper(actual, expected);
 			return helper.match();
 		}
 	};
 	template <typename T>
-	equal_to_t<T> equal_to(const T& expected) { return equal_to_t<T>(expected); }
-	template <typename T>
 	equal_to_t<T> equals(const T& expected) { return equal_to_t<T>(expected); }
+	template <typename T>
+	equal_to_t<T> equal_to(const T& expected) { return equals<T>(expected); }
 
 	template <typename T>
 	struct greater_than_t: value_matcher<T, greater_than_t<T> > {
