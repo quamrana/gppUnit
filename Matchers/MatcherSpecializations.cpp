@@ -133,6 +133,5 @@ namespace gppUnit {
 	equal_to_t<float>::equal_to_t(const float& expected): equal_to_t<double>(floatExpected),
 		floatExpected(expected)
 	{}
-
 }
 
