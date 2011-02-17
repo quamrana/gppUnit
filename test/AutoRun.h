@@ -24,7 +24,6 @@ THE SOFTWARE.
 
 #include "src\TestCaseBase.h"
 #include "src\AutoTest.h"
-#include "Matchers\Matchers.h"
 #include "Matchers\ProxyTypeSpecializations.h"
 #include "Matchers\MatcherSpecializations.h"
 
