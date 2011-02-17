@@ -52,7 +52,6 @@ namespace gppUnit {
 	const char* and_got = "and got";
 	const char* but_got = "but got";
 
-	//void Confirm::privThat(const MatcherResult& match, const std::string& actual, const char* message) {
 	void Confirm::privThat(const MatcherResult& match, const char* message) {
 		TestResult result(match.result, message);
 
