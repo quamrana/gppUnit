@@ -23,12 +23,13 @@ THE SOFTWARE.
 #define CONFIRMATION_H_77E45C37_62F1_45A6_A19B_0733ED0735EF
 
 #include "TestCase.h"
-#include "TestResult.h"
-#include "Matchers\Matchers.h"
 
 #include <sstream>
 
 namespace gppUnit {
+	struct TestResult;
+	struct MatcherResult;
+
 	class ConfirmationBase: public ResultSetter {
 		ReportResult* report;
 		void setReport(ReportResult* reporter) { report = reporter; }

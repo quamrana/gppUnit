@@ -23,6 +23,7 @@ THE SOFTWARE.
 
 #include "src\ReportResult.h"
 #include "src\AssertException.h"
+#include "src\TestResult.h"
 
 #include "AutoRun.h"
 
