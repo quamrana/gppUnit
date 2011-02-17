@@ -126,7 +126,7 @@ namespace gppUnit {
 		);
 		result.strm << "'" << expected << "'" << " within '"  << withinValue << "'" ;
 		result.actualStrm << "'" << actual << "'";
-		result.hasActual=true;
+		result.hasActual = true;
 		return result;
 	}
 
