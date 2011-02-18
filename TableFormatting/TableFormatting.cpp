@@ -25,6 +25,11 @@ THE SOFTWARE.
 #include <algorithm>
 
 namespace gppUnit {
+	void insertTabs(TableFormatter& table, size_t size) {
+		for(size_t i = 0; i < size; ++i) {
+			table << tab;
+		}
+	}
 	TableFormatter::TableFormatter(): prevPages(), page(), summarySizes(), line(), lineIsEmpty(true) {}
 	void TableFormatter::tab() {
 		line.tab();
@@ -70,9 +75,7 @@ namespace gppUnit {
 				if(firstLine) {
 					firstLine = false;
 				} else {
-					for(size_t i = 0; i < size; ++i) {
-						(*table) << tab;
-					}
+					insertTabs(*table, size);
 				}
 				(*table) << line << endl;
 			}
@@ -97,10 +100,7 @@ namespace gppUnit {
 	void TableFormatter::streamSpareLine(const TableLine& line, size_t prevPagesSize, size_t pageSize) {
 		if(!line.isEmpty()) {
 			if((indentSize() > 0) && ((prevPagesSize > 0) || (pageSize > 0))) {
-				for(size_t i = 0; i < indentSize(); ++i) {
-					using gppUnit::tab;
-					(*this) << tab;
-				}
+				insertTabs(*this, indentSize());
 			}
 			(*this) << line;
 			endLine();
