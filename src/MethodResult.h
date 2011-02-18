@@ -59,6 +59,8 @@ namespace gppUnit {
 			strm << what;
 			Exception(strm.str());
 		}
+		bool protectMethodFromAssertException();
+		bool protectMethodFromCommonExceptions();
 	public:
 		MethodResult(TestCaseMethodCaller& method, Notification& notify, MethodTimer& timer);
 		~MethodResult();
