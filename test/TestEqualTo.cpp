@@ -23,6 +23,14 @@ THE SOFTWARE.
 
 #include <string.h>
 
+namespace TestMatcherResult{
+	class MatcherResultConstructor: public Auto::TestCase{
+		void test(){
+			gppUnit::MatcherResult result;
+			confirm.isFalse(result.result,"Default constructor gives a false result");
+		}
+	}GPPUNIT_INSTANCE;
+}
 namespace TestEqualTo{
 	using gppUnit::equal_to;
 	using Utilities::MatcherHelper;
@@ -91,6 +99,19 @@ namespace StringMismatchTests {
 	using gppUnit::equal_to;
 	using Utilities::MatcherHelper;
 
+	class TestStringDescriptionTypeSHORT1: public MatcherHelper{
+		void test(void){
+			const char* expected="1";
+			const char* sample="1234567890";
+			char actual[150];
+			strcpy(actual,sample);
+			for(int i=0;i<10;++i) { strcat(actual,sample); }
+
+			MisMatch(actual,equal_to(expected),
+				"string '1'\n"
+				"actual '1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567...'\n");
+		}
+	}GPPUNIT_INSTANCE;
 	class TestStringDescriptionTypeSHORT2: public MatcherHelper{
 		void test(void){
 			const char* actual="1";

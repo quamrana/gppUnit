@@ -42,6 +42,9 @@ namespace TestFileLogger{
 		virtual double run_time() const { return 0; }
 	}mp2;
 
+	class FileLoggerThatCanBeDeletedForCoverage: public gppUnit::FileLoggerInterface {
+		void LogToFile(const std::string&, const gppUnit::ProjectDescription*){}
+	};
 	class TestNotification: public Auto::TestCase, gppUnit::FileLoggerInterface{
 		std::string fileName;
 		const gppUnit::ProjectDescription* project;
@@ -73,6 +76,7 @@ namespace TestFileLogger{
 			givenNotification();
 			whenStartAndEndProjectCalled();
 			thenDetailsPassedToInterface();
+			FileLoggerThatCanBeDeletedForCoverage d;
 		}
 	}GPPUNIT_INSTANCE;
 
