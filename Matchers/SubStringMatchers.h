@@ -23,13 +23,53 @@ THE SOFTWARE.
 #define SUBSTRINGMATCHERS_H_EA3AE2EC_560A_4648_932E_C2B399560CC3
 
 #include "Matchers.h"
+#include "ContainerFormatter.h"
+
+#include <algorithm>
 
 namespace gppUnit {
 	namespace SubStringMatchers {
 		MatcherResult starts_with(const std::string& actual, const std::string& expected);
 		MatcherResult ends_with(const std::string& actual, const std::string& expected);
 		MatcherResult contains(const std::string& actual, const std::string& expected);
+
+		//template<typename CONTAINER, typename T>
+		//MatcherResult contains(const CONTAINER& actual, const T& expected) {
+		//	bool found=(std::find(actual.begin(), actual.end(), expected) != actual.end());
+		//	MatcherResult result(found);
+		//	result.strm << "a container that contains '" << expected << "'";
+		//	return result;
+		//}
+		template<typename CONTAINER, typename T>
+		struct Contains {
+			MatcherResult operator()(const CONTAINER& actual, const T& expected) {
+				bool found = (std::find(actual.begin(), actual.end(), expected) != actual.end());
+				MatcherResult result(found);
+				result.strm << "a container that contains '" << expected << "'";
+				ContainerFormatter::describe(actual, result.actualStrm);
+				result.hasActual = true;
+				return result;
+			}
+		};
+
+		template<typename T, typename U>
+		struct StringContains {
+			MatcherResult operator()(const T& actual, const U& expected) {
+				return contains(ProxyValue(actual), ProxyValue(expected));
+			}
+		};
 	}
+
+	template <typename T, typename DERIVED>
+	struct container_matcher {
+		explicit container_matcher(const T& expected): expectedValue(expected) {}
+
+		const DERIVED& derivedMatcher() const { return static_cast<const DERIVED&>(*this); }
+
+		is_not_t<DERIVED> operator!() const { return is_not(derivedMatcher()); }
+
+		const T& expectedValue;
+	};
 
 	template <typename T>
 	struct starts_with_t: value_matcher<T, starts_with_t<T> > {
@@ -54,11 +94,24 @@ namespace gppUnit {
 	ends_with_t<T> ends_with(const T& expected) { return ends_with_t<T>(expected); }
 
 	template <typename T>
-	struct contains_t: value_matcher<T, contains_t<T> > {
-		explicit contains_t(const T& expected): value_matcher<T, contains_t<T> >(expected) {}
+	struct contains_t: container_matcher<T, contains_t<T> > {
+		explicit contains_t(const T& expected): container_matcher<T, contains_t<T> >(expected) {}
+		typedef contains_t<T> self;
 
-		MatcherResult operator()(const std::string& actual, const std::string& expected) const {
-			return SubStringMatchers::contains(actual, expected);
+		MatcherResult match(const std::string& actual) const {
+			return SubStringMatchers::contains(actual, self::expectedValue);
+		}
+		template<typename CONTAINER>
+		MatcherResult match(const CONTAINER& actual) const {
+			//typename Loki::Select<is_array<CONTAINER>::result || is_array<T>::result,
+			//	SubStringMatchers::StringContains<CONTAINER,T>, Loki::Select<is_string<CONTAINER>::result,
+			//	SubStringMatchers::StringContains<CONTAINER,T>,SubStringMatchers::Contains<CONTAINER,T>
+			//	>::Result
+			//>::Result helper;
+			typename Loki::Select < is_array<CONTAINER>::result || is_array<T>::result,
+			         SubStringMatchers::StringContains<CONTAINER, T>, SubStringMatchers::Contains<CONTAINER, T>
+			         >::Result helper;
+			return helper(actual, self::expectedValue);
 		}
 	};
 	template <typename T>

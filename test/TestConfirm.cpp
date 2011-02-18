@@ -24,6 +24,7 @@ THE SOFTWARE.
 #include "src\ReportResult.h"
 #include "src\AssertException.h"
 #include "src\TestResult.h"
+#include "Matchers\SubStringMatchers.h"
 
 #include "AutoRun.h"
 
@@ -255,6 +256,20 @@ namespace ConfirmThat{
 			gppUnit::TableFormatter f;
 			f << "Expected" << tab << "string '2'" << endl;
 			f << gppUnit::but_got << tab <<"actual" << tab << "'1'" << endl;
+			thenDescriptionIs(f.toVector());
+		}
+	}GPPUNIT_INSTANCE;
+	class ConfirmThatFailDescriptionVectorContains: public TestAsserts::ConfirmBase{
+		void test(){
+			givenConfirm();
+			std::vector<int> v;
+
+			conf.that(v,gppUnit::contains(1));
+			thenResultIsFalse("Should match");
+
+			gppUnit::TableFormatter f;
+			f << "Expected" << tab << "a container that contains '1'" << endl;
+			f << but_got << tab << "an empty container" << endl;
 			thenDescriptionIs(f.toVector());
 		}
 	}GPPUNIT_INSTANCE;

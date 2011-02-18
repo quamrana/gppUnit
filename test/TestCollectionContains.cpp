@@ -20,52 +20,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #include "TestMatchersHelpers.h"
+#include "Matchers\SubStringMatchers.h"
 
-#include <sstream>
-
-namespace TestCollectionEquals{
-	using gppUnit::equals;
+namespace TestCollectionContains{
 	using Utilities::MatcherHelper;
+	using gppUnit::contains;
 
-	template<typename T>
-	class VectorHelper: public MatcherHelper{
-		void setup(){
-			v1.clear();
-			v2.clear();
-		}
-	protected:
-		std::vector<T> v1;
-		std::vector<T> v2;
-	};
-	class EmptyIntVector: public VectorHelper<int>{
-		void test(void){
-			That(v1,equals(v2),"an empty container\nan empty container\n");
-		}
-	}GPPUNIT_INSTANCE;
+	class VectorContains: public MatcherHelper{
+		void test(){
+			std::vector<int> v;
+			That(v,!contains(0),"not a container that contains '0'\n");
 
-	class UnequalIntVector: public VectorHelper<int>{
-		void test(void){
-			v1.push_back(1);
-			That(v1,!equals(v2),"not an empty container\n");
-			MisMatch(v1,equals(v2),"an empty container\n[1]\n");
-		}
-	}GPPUNIT_INSTANCE;
+			v.push_back(1);
+			That(v,contains(1),"a container that contains '1'\n[1]\n");
+			That(v,!contains(2),"not a container that contains '2'\n");
 
-	class EqualIntVector: public VectorHelper<int>{
-		void test(void){
-			v1.push_back(1);
-			v2.push_back(1);
-			That(v1,equals(v2),"[1]\n[1]\n");
-		}
-	}GPPUNIT_INSTANCE;
-
-	class EqualIntVectorTwoElements: public VectorHelper<int>{
-		void test(void){
-			v1.push_back(1);
-			v2.push_back(1);
-			v1.push_back(2);
-			v2.push_back(2);
-			That(v1,equals(v2),"[1 2]\n[1 2]\n");
+			v.push_back(2);
+			v.push_back(3);
+			That(v,contains(2),"a container that contains '2'\n[1 2 3]\n");
 		}
 	}GPPUNIT_INSTANCE;
 }

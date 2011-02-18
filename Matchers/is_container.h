@@ -84,15 +84,18 @@ namespace stackoverflow {
 	};
 }
 namespace gppUnit {
-	template <typename T>
-	struct is_string {
-		typedef Loki::ConversionHelper<T> H;
-		static typename H::Big Test(...);
+	struct false_type { enum { result = false }; };
+	struct true_type { enum { result = true }; };
 
-		static typename H::Small Test(const std::string& u);
+	template <typename>
+	struct is_string: false_type {};
+	template <>
+	struct is_string<std::string>: true_type { };
 
-		enum { result = (sizeof(typename H::Small) == sizeof Test(H::MakeT())) };
-	};
+	template <typename>
+	struct is_array: false_type {};
+	template <typename T, size_t SIZE>
+	struct is_array<T[SIZE]>: true_type { };
 }
 
 #endif // IS_CONTAINER_H_5E6D4350_35BB_45E9_93C2_B2F0C124D89E

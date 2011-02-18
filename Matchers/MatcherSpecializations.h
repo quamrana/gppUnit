@@ -23,6 +23,7 @@ THE SOFTWARE.
 #define MATCHERSPECIALIZATIONS_H_A2C47514_540D_4DD4_8484_ACE6142B81F7
 
 #include "Matchers.h"
+#include "ContainerFormatter.h"
 
 namespace gppUnit {
 	class StringFormatting {
@@ -77,35 +78,6 @@ namespace gppUnit {
 		double floatExpected;
 	};
 
-	template<class STREAM, class DELIM>
-	struct format_iterator_t: std::iterator<std::output_iterator_tag, void, void, void, void> {
-		format_iterator_t(STREAM& strm, const DELIM* delim): strm(&strm),
-			delim(delim),
-			first(true)
-		{}
-		template<class VALUE>
-		format_iterator_t& operator=(const VALUE& value) {
-			if(!first) {
-				if(delim != 0) {
-					*strm << delim;
-				}
-			}
-			first = false;
-			*strm << value;
-			return (*this);
-		}
-		// operator* and operator++ to satisfy std::copy
-		format_iterator_t& operator*() {	return (*this);	}
-		format_iterator_t& operator++() { return (*this); }
-
-	protected:
-		STREAM* strm;
-		const DELIM* delim;
-		bool first;
-	};
-	template<class STREAM, class DELIM>
-	format_iterator_t<STREAM, DELIM> format_iterator(STREAM& strm, const DELIM* delim) { return format_iterator_t<STREAM, DELIM>(strm, delim); }
-
 	template <typename T>
 	struct equal_to_container_trait: equal_to_trait_base<T> {
 		equal_to_container_trait(const T& actual, const T& expected): equal_to_trait_base<T>(actual, expected) {}
@@ -113,21 +85,10 @@ namespace gppUnit {
 
 		MatcherResult match() {
 			MatcherResult result(self::equals());
-			describe(self::expectedValue, result.strm);
-			describe(self::actualValue, result.actualStrm);
+			ContainerFormatter::describe(self::expectedValue, result.strm);
+			ContainerFormatter::describe(self::actualValue, result.actualStrm);
 			result.hasActual = true;
 			return result;
-		}
-
-	private:
-		void describe(const T& value, TableFormatter& strm) {
-			if(value.size() == 0) {
-				strm << "Empty Container";
-			} else {
-				strm << '[';
-				std::copy(value.begin(), value.end(), format_iterator(strm, " "));
-				strm << ']';
-			}
 		}
 	};
 }

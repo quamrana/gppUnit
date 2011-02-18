@@ -198,7 +198,7 @@ $027	Consider a re-architecture of MatcherResult
 		Also maybe they could 'program' .that() to display, or not, the actual value from its stream.
 		collections
 .			equals
-			contains
+.			contains
 
 $	Log results to XML file
 	Log on every EndProject()
@@ -255,3 +255,15 @@ Infrastructure
 		
 
 cppcheck --enable=all --quiet -I src --xml src 2>cppcheck-result.xml
+
+
+			typename Loki::Select <
+				is_string<V>::result,
+				equal_to_trait<V>,
+				typename Loki::Select <
+					stackoverflow::is_container<V>::result,
+					equal_to_container_trait<V>,
+					equal_to_trait<V>
+					>::Result
+				>::Result helper(actual, expected);
+			return helper.match();
