@@ -33,13 +33,6 @@ namespace gppUnit {
 		MatcherResult ends_with(const std::string& actual, const std::string& expected);
 		MatcherResult contains(const std::string& actual, const std::string& expected);
 
-		//template<typename CONTAINER, typename T>
-		//MatcherResult contains(const CONTAINER& actual, const T& expected) {
-		//	bool found=(std::find(actual.begin(), actual.end(), expected) != actual.end());
-		//	MatcherResult result(found);
-		//	result.strm << "a container that contains '" << expected << "'";
-		//	return result;
-		//}
 		template<typename CONTAINER, typename T>
 		struct Contains {
 			MatcherResult operator()(const CONTAINER& actual, const T& expected) {
@@ -103,11 +96,6 @@ namespace gppUnit {
 		}
 		template<typename CONTAINER>
 		MatcherResult match(const CONTAINER& actual) const {
-			//typename Loki::Select<is_array<CONTAINER>::result || is_array<T>::result,
-			//	SubStringMatchers::StringContains<CONTAINER,T>, Loki::Select<is_string<CONTAINER>::result,
-			//	SubStringMatchers::StringContains<CONTAINER,T>,SubStringMatchers::Contains<CONTAINER,T>
-			//	>::Result
-			//>::Result helper;
 			typename Loki::Select < is_array<CONTAINER>::result || is_array<T>::result,
 			         SubStringMatchers::StringContains<CONTAINER, T>, SubStringMatchers::Contains<CONTAINER, T>
 			         >::Result helper;
