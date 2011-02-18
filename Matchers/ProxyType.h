@@ -50,9 +50,6 @@ namespace gppUnit {
 	template<typename T>
 	typename ProxyType<T>::conversion_type ProxyValue(const T& value) { return ProxyType<T>::create(value).value; }
 
-	//template<typename T, size_t size>
-	//typename ProxyType<const T*>::conversion_type ProxyValue(const T(&value)[size]) { return ProxyType<const T*>::create(value).value; }
-
 	template<typename T>
 	typename ProxyType<const T*>::conversion_type ProxyValue(const T(value)[]) { return ProxyType<const T*>::create(value).value; }
 }
