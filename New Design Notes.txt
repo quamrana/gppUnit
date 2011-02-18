@@ -210,6 +210,11 @@ $	Doxys documentation
 
 $	Google code wiki documentation
 
+$	Improve Metrics
+	Reduce complexity of:
+		MethodResult::protectMethod()
+		TableFormatter::streamSpareLine()
+
 $	Unify method timers and getNow
 	Some parts of these are exactly the same
 	Make getNow() return a std::string

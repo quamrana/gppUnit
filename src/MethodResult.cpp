@@ -38,7 +38,7 @@ namespace gppUnit {
 	}
 	MethodResult::~MethodResult() { notify.EndMethod(); }
 
-	bool MethodResult::protectMethod() {
+	bool MethodResult::protectMethodFromAssertException(){
 		bool result = false;
 		try {
 			timer.timeMethod(method, *this);
@@ -47,6 +47,13 @@ namespace gppUnit {
 			//
 			// Deliberately catch, then ignore exception
 			//
+		}
+		return result;
+	}
+	bool MethodResult::protectMethodFromCommonExceptions(){
+		bool result = false;
+		try {
+			result=protectMethodFromAssertException();
 		} catch(std::exception& e) {
 			reportException(e.what());
 		} catch(std::string& e) {
@@ -55,6 +62,14 @@ namespace gppUnit {
 			reportException(e);
 		} catch(int e) {
 			reportException(e);
+		}
+		return result;
+	}
+
+	bool MethodResult::protectMethod() {
+		bool result = false;
+		try {
+			result=protectMethodFromCommonExceptions();
 		} catch(...) {
 			reportException("Unknown Exception");
 		}
