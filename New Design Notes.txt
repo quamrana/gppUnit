@@ -192,7 +192,7 @@ New Design Notes
 	Append line to file.
 .	Refactor both loggers.
 
-$027	Consider a re-architecture of MatcherResult
+#$027	Consider a re-architecture of MatcherResult
 	It should contain two streams, one for expected, the other for actual
 	This way, matchers that know how to compare two values, also know how to stream them.
 		Also maybe they could 'program' .that() to display, or not, the actual value from its stream.
@@ -213,6 +213,10 @@ $	Google code wiki documentation
 $	Unify method timers and getNow
 	Some parts of these are exactly the same
 	Make getNow() return a std::string
+
+$	More work on containers
+	Add tests for specific containers:
+		list, deque(?), set, map
 
 $	Catch exceptions from calls to notify
 
