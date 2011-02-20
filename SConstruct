@@ -1,5 +1,3 @@
-path=['C:\DJGPP\BIN','C:\Python27\Scripts','.\Scripts']
-DJGPP='C:\DJGPP\DJGPP.ENV'
 
 compiler=ARGUMENTS.get('compiler','djgpp')
 cov=ARGUMENTS.get('cov','-')
@@ -17,6 +15,8 @@ def microsoft():
 		)
 
 def djgpp():
+	path=['C:\DJGPP\BIN','C:\Python27\Scripts','.\Scripts']
+	DJGPP='C:\DJGPP\DJGPP.ENV'
 	cppflags=getGccflags()
 	return DefaultEnvironment(tools = ['c++','gnulink','ar'],
 		ENV={'PATH':path,'DJGPP':DJGPP},
@@ -35,7 +35,6 @@ def gcc():
 		)
 
 def mingw():
-	global path
 	path=['C:\MINGW\BIN','C:\Python27\Scripts','.\Scripts']
 	cppflags=getGccflags()
 	return DefaultEnvironment(tools = ['g++','gnulink','ar'],
