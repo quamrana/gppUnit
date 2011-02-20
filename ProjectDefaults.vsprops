@@ -7,6 +7,7 @@
 	<Tool
 		Name="VCCLCompilerTool"
 		AdditionalOptions="/Wall"
+		PreprocessorDefinitions="PRESSRETURN"
 		MinimalRebuild="false"
 		ExceptionHandling="2"
 		WarningLevel="4"

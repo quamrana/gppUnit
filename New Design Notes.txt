@@ -212,8 +212,8 @@ $	Google code wiki documentation
 
 $	Improve Metrics
 	Reduce complexity of:
-		MethodResult::protectMethod()
-		TableFormatter::streamSpareLine()
+.		MethodResult::protectMethod()
+.		TableFormatter::streamSpareLine()
 
 $	Unify method timers and getNow
 	Some parts of these are exactly the same
@@ -276,3 +276,16 @@ cppcheck --enable=all --quiet -I src --xml src 2>cppcheck-result.xml
 					>::Result
 				>::Result helper(actual, expected);
 			return helper.match();
+
+=======================================================================
+Developers should consider that they are subclassing TestCase, that is they must override test() and optionally setup() and/or teardown().
+
+Instances of test classes are automatically collected by the framework and run after other options are set by the programmer.
+
+The warning here is that the programmer must take care about member variables - they are instantiated along with their parent class, before main is called, and should avoid referring to other global instances, or take steps to ensure their prior construction.
+
+An ideal is to have member variables as pointers and to use setup() to create new instances and teardown() to delete them.
+
+The xUnit pattern allows a test class to have multiple test methods - which are usually discovered through the reflection mechanism of the implementation language.  Unfortunately C++ doesn't have native reflection (although I'm sure it would be easy to implement), so I've opted to just do without multiple test methods.  However, that might render setup() and teardown() as redundant, except that I can point out that multiple test methods can be synthesized by inheritance.  That is, move setup() and teardown() into a super class and write multiple subclasses, each with a single test method.
+
+
