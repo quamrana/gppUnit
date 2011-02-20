@@ -34,6 +34,17 @@ def gcc():
 		COV=cov
 		)
 
+def mingw():
+	global path
+	path=['C:\MINGW\BIN','C:\Python27\Scripts','.\Scripts']
+	cppflags=getGccflags()
+	return DefaultEnvironment(tools = ['g++','gnulink','ar'],
+		ENV={'PATH':path},
+		CPPFLAGS=cppflags,
+		EXTRA='unix',
+		COV=cov
+		)
+
 def Env(key):
 	try:
 		return env[key]
@@ -44,6 +55,8 @@ if compiler=='msvc':
 	env=microsoft()
 elif compiler=='gcc':
 	env=gcc()
+elif compiler=='mingw':
+	env=mingw()
 else:
 	env=djgpp()
 
@@ -52,12 +65,12 @@ print "cov is:", cov
 print "CXX is:", Env('CXX')
 print "CPP is:", Env('CPP')
 print "CC is:", Env('CC')
-print "LINK is:", env['LINK']
-print "LIB is:", env['AR']
-#print "CCFLAGS is:", env['CCFLAGS']
-#print "CPPPATH is:", env['CPPPATH']
-#print "LIBPATH is:", env['LIBPATH']
-#print "BUILDERS: ", env['BUILDERS']
+print "LINK is:", Env('LINK')
+print "LIB is:", Env('AR')
+#print "CCFLAGS is:", Env('CCFLAGS')
+#print "CPPPATH is:", Env('CPPPATH')
+#print "LIBPATH is:", Env('LIBPATH')
+#print "BUILDERS: ", Env('BUILDERS')
 #print env.Dump()
 
 env.SConscript(['src/SConscript','test/SConscript','Matchers/SConscript','TableFormatting/SConscript'])
