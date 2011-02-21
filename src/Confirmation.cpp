@@ -70,7 +70,7 @@ namespace gppUnit {
 	}
 
 	void Expect::Result(const TestResult& result) {
-		ConfirmationBase::Result(result);
+		Confirm::Result(result);
 		if(!result.result) {
 			throw gppUnit::assertException;
 		}
