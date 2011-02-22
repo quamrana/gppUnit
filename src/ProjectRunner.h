@@ -45,13 +45,13 @@ namespace gppUnit {
 		size_t results() const { return projectData.results; }
 		double run_time() const { return projectData.reportedTime; }
 
-		void call(gppUnit::PrototypeTestCase* testcase);
+		void call(PrototypeTestCase* testcase);
 		void calculateProjectData();
 	public:
 		ProjectRunner(const std::string& title,
-		              gppUnit::Notification& notify,
-		              gppUnit::MethodTimer& timer,
-		              const gppUnit::TestCaseList& cases);
+		              Notification& notify,
+		              MethodTimer& timer,
+		              const TestCaseList& cases);
 		~ProjectRunner();
 
 		bool run();
