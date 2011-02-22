@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 namespace gppUnit {
 
-	void ProjectRunner::call(gppUnit::PrototypeTestCase* testcase) {
+	void ProjectRunner::call(PrototypeTestCase* testcase) {
 		ClassRunner runner(notify, *testcase, timer);
 
 		runner.run();
