@@ -278,11 +278,11 @@ cppcheck --enable=all --quiet -I src --xml src 2>cppcheck-result.xml
 			return helper.match();
 
 =======================================================================
-Developers should consider that they are subclassing TestCase, that is they must override test() and optionally setup() and/or teardown().
+Developers should consider that they are subclassing TestCase, that is they must implement test() and optionally override setup() and/or teardown().
 
 Instances of test classes are automatically collected by the framework and run after other options are set by the programmer.
 
-The warning here is that the programmer must take care about member variables - they are instantiated along with their parent class, before main is called, and should avoid referring to other global instances, or take steps to ensure their prior construction.
+The warning here is that the programmer must take care about member variables - they are instantiated along with their parent class, before main() is called, and should avoid referring to other global instances, or take steps to ensure their prior construction.
 
 An ideal is to have member variables as pointers and to use setup() to create new instances and teardown() to delete them.
 

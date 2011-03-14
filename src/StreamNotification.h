@@ -49,11 +49,12 @@ namespace gppUnit {
 		bool methodShown;
 
 		void BeforeFailure();
-		void ShowFailure(const TestResult&);
-
 		void ShowClass();
 		void ShowMethod();
+		void BeforeMessage();
+
 		void ShowDescription(std::string) const ;
+		void ShowFailure(const TestResult&);
 
 		void StartProject(const ProjectDescription&);
 		void StartClass(const ClassDescription&);

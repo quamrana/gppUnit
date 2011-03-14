@@ -108,7 +108,6 @@ namespace gppUnit {
 	}
 	void StreamNotification::Result(const TestResult& result) {
 		if(!result.result) {
-			BeforeFailure();
 			ShowFailure(result);
 		}
 	}
@@ -136,13 +135,17 @@ namespace gppUnit {
 			methodShown = true;
 		}
 	}
+	void StreamNotification::BeforeMessage() {
+		BeforeFailure();
+		ShowClass();
+		ShowMethod();
+		out << MessagePrefix;
+	}
 	void StreamNotification::ShowDescription(std::string output) const {
 		out << DescriptionPrefix << output << std::endl;
 	}
 	void StreamNotification::ShowFailure(const TestResult& result) {
-		ShowClass();
-		ShowMethod();
-		out << MessagePrefix;
+		BeforeMessage();
 		if(result.message.empty()) {
 			out << "Failure" << std::endl;
 		} else {
@@ -156,10 +159,8 @@ namespace gppUnit {
 		             );
 	}
 	void StreamNotification::Exception(const std::string& what) {
-		BeforeFailure();
-		ShowClass();
-		ShowMethod();
-		out << MessagePrefix << what << std::endl;
+		BeforeMessage();
+		out << what << std::endl;
 	}
 	void StreamNotification::EndProject() {
 		if(!hasFailed) {
