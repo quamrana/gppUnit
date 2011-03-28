@@ -114,6 +114,18 @@ namespace TestAsserts{
 			thenResultIsTrue("Should be True");
 		}
 	}GPPUNIT_INSTANCE;
+	class ConfirmIsFalse: public ConfirmBase{
+		void whenIsFalseCalled(bool value){
+			conf.isFalse(value);
+		}
+		void test(){
+			givenConfirm();
+			whenIsFalseCalled(true);
+			thenResultIsFalse("Should be False");
+			whenIsFalseCalled(false);
+			thenResultIsTrue("Should be False");
+		}
+	}GPPUNIT_INSTANCE;
 
 	class CatchExceptionsFromExpect: public Base{
 		gppUnit::Expect exp;

@@ -44,7 +44,7 @@ namespace gppUnit {
 		void fail(const char* message = "fail");
 		void pass(const char* message = "pass");
 		void isTrue(bool result, const char* message = "Should be True");
-		void isFalse(bool result, const char* message = "Should be True");
+		void isFalse(bool result, const char* message = "Should be False");
 
 		template<typename ACTUAL, typename MATCHER>
 		void that(const ACTUAL& actual, MATCHER m, const char* message = "Should match") {
