@@ -200,6 +200,11 @@ New Design Notes
 .			equals
 .			contains
 
+#$028	Improve Metrics
+	Reduce complexity of:
+.		MethodResult::protectMethod()
+.		TableFormatter::streamSpareLine()
+
 $	Log results to XML file
 	Log on every EndProject()
 
@@ -209,11 +214,6 @@ $	Deploy gppUnit
 $	Doxys documentation
 
 $	Google code wiki documentation
-
-$	Improve Metrics
-	Reduce complexity of:
-.		MethodResult::protectMethod()
-.		TableFormatter::streamSpareLine()
 
 $	Unify method timers and getNow
 	Some parts of these are exactly the same

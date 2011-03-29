@@ -65,6 +65,20 @@ namespace gppUnit {
 	};
 
 	template <>
+	struct equal_to_trait<bool>: equal_to_trait_base<bool> {
+		equal_to_trait(const bool& actual, const bool& expected): equal_to_trait_base<bool>(actual, expected) {}
+		MatcherResult match(){
+			MatcherResult result(equal_to_trait<bool>::equals());
+			result.strm << "'" << toString(equal_to_trait<bool>::expectedValue) << "'";
+			result.actualStrm << "'" << toString(equal_to_trait<bool>::actualValue) << "'";
+			result.hasActual = true;
+			return result;
+		}
+	private:
+		const char* toString(bool value){ return value ? "true":"false"; }
+	};
+
+	template <>
 	struct equal_to_t<double>: value_matcher<double, equal_to_t<double> > {
 		explicit equal_to_t(const double& expected);
 

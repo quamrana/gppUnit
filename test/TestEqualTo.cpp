@@ -48,6 +48,17 @@ namespace TestEqualTo{
 			That(actual,!equal_to(expected),"not '1'\n");
 		}
 	}GPPUNIT_INSTANCE;
+
+	class TrueAndFalse: public MatcherHelper{
+		void test(){
+			That(true,equal_to(true),"'true'\n'true'\n");
+			That(false,equal_to(false),"'false'\n'false'\n");
+
+			MisMatch(false,equal_to(true),"'true'\n'false'\n");
+			MisMatch(true,equal_to(false),"'false'\n'true'\n");
+		}
+	}GPPUNIT_INSTANCE;
+
 	class DoubleNegative: public MatcherHelper{
 		void test(){
 			int actual=1;
