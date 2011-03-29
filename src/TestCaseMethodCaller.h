@@ -39,27 +39,32 @@ namespace gppUnit {
 		const char* name;
 	protected:
 		PrototypeTestCase& testcase;
-		Runner& runner;
 	public:
-		TestCaseMethodCaller(PrototypeTestCase& testcase, Runner& runner, const char* name): name(name), testcase(testcase), runner(runner) {}
+		TestCaseMethodCaller(PrototypeTestCase& testcase, const char* name): name(name), testcase(testcase) {}
 		const char* methodName(void) const { return name; }
 		void setReport(ReportResult* report) { testcase.setReport(report); }
+	};
+
+	class TestCaseMethodCallerHelper: public TestCaseMethodCaller {
+		Runner& runner;
+	public:
+		TestCaseMethodCallerHelper(PrototypeTestCase& testcase, Runner& runner, const char* name): TestCaseMethodCaller(testcase, name), runner(runner) {}
 		bool operator()() { return runner.run(this); }
 	};
-	class SetupCaller: public TestCaseMethodCaller {
+	class SetupCaller: public TestCaseMethodCallerHelper {
 		void forward() { testcase.setup(); }
 	public:
-		SetupCaller(PrototypeTestCase& fwd, Runner& runner): TestCaseMethodCaller(fwd, runner, setupMethodName()) {}
+		SetupCaller(PrototypeTestCase& fwd, Runner& runner): TestCaseMethodCallerHelper(fwd, runner, setupMethodName()) {}
 	};
-	class TestCaller: public TestCaseMethodCaller {
+	class TestCaller: public TestCaseMethodCallerHelper {
 		void forward() { testcase.test(); }
 	public:
-		TestCaller(PrototypeTestCase& fwd, Runner& runner): TestCaseMethodCaller(fwd, runner, testMethodName()) {}
+		TestCaller(PrototypeTestCase& fwd, Runner& runner): TestCaseMethodCallerHelper(fwd, runner, testMethodName()) {}
 	};
-	class TeardownCaller: public TestCaseMethodCaller {
+	class TeardownCaller: public TestCaseMethodCallerHelper {
 		void forward() { testcase.teardown(); }
 	public:
-		TeardownCaller(PrototypeTestCase& fwd, Runner& runner): TestCaseMethodCaller(fwd, runner, teardownMethodName()) {}
+		TeardownCaller(PrototypeTestCase& fwd, Runner& runner): TestCaseMethodCallerHelper(fwd, runner, teardownMethodName()) {}
 	};
 }
 
