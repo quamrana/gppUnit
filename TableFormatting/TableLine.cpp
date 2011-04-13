@@ -26,9 +26,8 @@ THE SOFTWARE.
 
 namespace gppUnit {
 	TableLine::TableLine(const TableLine& other): columns(other.columns),
-		stream(),
+		stream(other.stream.str()),
 		streamIsEmpty(other.streamIsEmpty) {
-		stream << other.stream.str();
 	}
 	TableLine& TableLine::operator=(TableLine const&) {
 		/*

@@ -23,7 +23,6 @@ THE SOFTWARE.
 #include "TimeReport.h"
 #include "AutoMethodTimer.h"
 
-// #include <iostream>
 #include <sys/time.h>
 
 
@@ -41,13 +40,9 @@ namespace {
 		result = ts.tv_sec;
 		result *= Internal::scale_long;
 		result += ts.tv_usec;
-		// std::cout << result << "u " << ts.tv_sec << "s " << ts.tv_usec << 'u' << std::endl;
 		return result;
 	}
 	double timeDifference(time_interval first, time_interval second) {
-		// double result=double(second - first) / Internal::scale_double;
-		// std::cout << result << "s" << std::endl;
-		// return result;
 		return double(second - first) / Internal::scale_double;
 	}
 
