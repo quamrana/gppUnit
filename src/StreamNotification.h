@@ -37,6 +37,7 @@ namespace gppUnit {
 	};
 
 	class StreamNotification: public Notification {
+    protected:
 		std::ostream& out;
 		PrintFormatter formatter;
 		const ProjectDescription* proj;
