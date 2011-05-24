@@ -30,13 +30,11 @@ namespace gppUnit {
 		streamIsEmpty(other.streamIsEmpty) {
 	}
 	TableLine& TableLine::operator=(const TableLine& other) {
-		///*
-			if(this == &other) { return *this; }
+		if(this == &other) { return *this; }
 
-			columns = other.columns;
-			stream.str(other.stream.str());
-			streamIsEmpty = other.streamIsEmpty;
-		//*/
+		columns = other.columns;
+		stream.str(other.stream.str());
+		streamIsEmpty = other.streamIsEmpty;
 
 		return *this;
 	}
