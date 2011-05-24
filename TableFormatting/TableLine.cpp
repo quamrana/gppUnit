@@ -29,14 +29,14 @@ namespace gppUnit {
 		stream(other.stream.str()),
 		streamIsEmpty(other.streamIsEmpty) {
 	}
-	TableLine& TableLine::operator=(TableLine const&) {
-		/*
+	TableLine& TableLine::operator=(const TableLine& other) {
+		///*
 			if(this == &other) { return *this; }
 
 			columns = other.columns;
 			stream.str(other.stream.str());
 			streamIsEmpty = other.streamIsEmpty;
-		*/
+		//*/
 
 		return *this;
 	}

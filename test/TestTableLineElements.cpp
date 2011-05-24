@@ -122,6 +122,18 @@ namespace TestTableLineElements {
 			confirm.that(copy(line),equals("line"),"Copy retains contents");
 		}
 	}GPPUNIT_INSTANCE;
+	class LineAssigning: public Auto::TestCase{
+		std::string copy(const gppUnit::TableLine& line){
+			gppUnit::TableLine line2;
+            line2=line;
+			return line2.toString();
+		}
+		void test(void){
+			gppUnit::TableLine line;
+			line.append("line");
+			confirm.that(copy(line),equals("line"),"Copy retains contents");
+		}
+	}GPPUNIT_INSTANCE;
 	class AppendLine: public LineHelper{
 		void test(void){
 			givenLine();
