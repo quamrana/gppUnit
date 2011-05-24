@@ -36,6 +36,10 @@ namespace gppUnit {
 		// Platform specific timer implementation
 		static MethodTimer& getTimer();
 	};
+
+	class NullTimer: public MethodTimer {
+		void timeMethod(MethodCaller& caller, TimeReport&);
+	};
 }
 
 #endif // METHODTIMER_H_49D8BBA3_EEBD_4789_9ABE_6FE8687E9BD7

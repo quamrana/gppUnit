@@ -19,49 +19,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-#include "src\MethodTimer.h"
-#include "src\MethodCaller.h"
-#include "src\TimeReport.h"
-
-#include "AutoRun.h"
-
-#include <sstream>
+#include "TestMethodTimers.h"
 
 namespace TestWin32MethodTimer{
 	using gppUnit::greater_than;
 	using gppUnit::equal_to;
 
-	class Test: public Auto::TestCase, gppUnit::MethodCaller, gppUnit::TimeReport{
+    class Test: TestMethodTimers::MethodTimerTestHelper{
 
-		gppUnit::MethodTimer* win32Timer;
-		bool methodCalled;
-		bool timeReported;
-		double runtimeReport;
-
-		std::stringstream strm;
-
-		virtual void forward(){ 
-			methodCalled=true; 
-			strm << "fwd.";
-		}
-		virtual void reportTime(double run_time){
-			timeReported=true;
-			runtimeReport=run_time;
-			strm << "time.";
-		}
-		void givenTimer(){
-			win32Timer=&gppUnit::MethodTimer::getTimer();
-			methodCalled=false;
-			timeReported=false;
-			runtimeReport=-1;
-			strm.str("");
-		}
-		void whenCalled(){
-			win32Timer->timeMethod(*this,*this);
-		}
-		void thenMethodCalled(){
-			confirm.isTrue(methodCalled,"Forward should be called");
-		}
 		void thenTimeReported(){
 			confirm.isTrue(timeReported,"Time should be reported");
 		}
@@ -70,10 +35,11 @@ namespace TestWin32MethodTimer{
 			confirm.that(runtimeReport,!greater_than(50e-6),"Time should be not too large");
 		}
 		void thenMethodCalledBeforeTimeReported(){
-			confirm.that(strm.str(),equal_to("fwd.time."),"forward before time");
+			confirm.that(methodCallLog.str(),equal_to("fwd.time."),"forward before time");
 		}
-		void test(){
-			givenTimer();
+
+        void test(){
+			givenTimer(gppUnit::MethodTimer::getTimer());
 			whenCalled();
 			thenMethodCalled();
 			thenTimeReported();

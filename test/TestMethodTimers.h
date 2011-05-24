@@ -19,41 +19,33 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-#include "AutoRunner.h"
-#include "MethodTimer.h"
-#include "MethodCaller.h"
-#include "ProjectRunner.h"
+#ifndef TESTMETHODTIMERS_H_5119E4AA_7A61_49FF_80C1_048CC165F549
+#define TESTMETHODTIMERS_H_5119E4AA_7A61_49FF_80C1_048CC165F549
 
-namespace {
-	gppUnit::NullTimer nullTimer;
+#include "src\MethodTimer.h"
+#include "src\MethodCaller.h"
+#include "src\TimeReport.h"
+
+#include "AutoRun.h"
+
+#include <sstream>
+
+namespace TestMethodTimers{
+    class MethodTimerTestHelper: public Auto::TestCase, gppUnit::MethodCaller, gppUnit::TimeReport{
+		gppUnit::MethodTimer* aTimer;
+
+    protected:
+		bool methodCalled;
+		bool timeReported;
+		double runtimeReport;
+
+		std::stringstream methodCallLog;
+
+		void forward();
+		void reportTime(double run_time);
+		void givenTimer(gppUnit::MethodTimer& given);
+		void whenCalled();
+		void thenMethodCalled();
+    };
 }
-
-namespace gppUnit {
-
-	AutoRunner::AutoRunner(): notify(), title(), timer(&nullTimer) {}
-
-	bool AutoRunner::run(const gppUnit::TestCaseList& cases) {
-		ProjectRunner runner(title, notify, *timer, cases);
-		return runner.run();
-	}
-
-	AutoRunner& AutoRunner::operator<<(const std::string& name) {
-		title = name;
-		return *this;
-	}
-
-	// Add a notification
-	AutoRunner& AutoRunner::operator<<(Notification& notifier) {
-		notify.add(notifier);
-		return *this;
-	}
-
-	// Set the timer to be used
-	AutoRunner& AutoRunner::operator<<(MethodTimer& methodTimer) {
-		timer = &methodTimer;
-		return *this;
-
-	}
-
-}
-
+#endif // TESTMETHODTIMERS_H_5119E4AA_7A61_49FF_80C1_048CC165F549
