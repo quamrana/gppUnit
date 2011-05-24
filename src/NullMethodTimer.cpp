@@ -19,41 +19,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-#include "AutoRunner.h"
 #include "MethodTimer.h"
 #include "MethodCaller.h"
-#include "ProjectRunner.h"
-
-namespace {
-	gppUnit::NullTimer nullTimer;
-}
 
 namespace gppUnit {
-
-	AutoRunner::AutoRunner(): notify(), title(), timer(&nullTimer) {}
-
-	bool AutoRunner::run(const gppUnit::TestCaseList& cases) {
-		ProjectRunner runner(title, notify, *timer, cases);
-		return runner.run();
+	void NullTimer::timeMethod(MethodCaller& caller, TimeReport&) {
+		caller.forward();
 	}
-
-	AutoRunner& AutoRunner::operator<<(const std::string& name) {
-		title = name;
-		return *this;
-	}
-
-	// Add a notification
-	AutoRunner& AutoRunner::operator<<(Notification& notifier) {
-		notify.add(notifier);
-		return *this;
-	}
-
-	// Set the timer to be used
-	AutoRunner& AutoRunner::operator<<(MethodTimer& methodTimer) {
-		timer = &methodTimer;
-		return *this;
-
-	}
-
 }
-

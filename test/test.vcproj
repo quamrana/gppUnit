@@ -265,6 +265,14 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\TestMethodTimers.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\TestNullMethodTimer.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Win32\TestQuotesToParentheses.cpp"
 				>
 				<FileConfiguration
@@ -344,6 +352,10 @@
 			</File>
 			<File
 				RelativePath=".\TestMatchersHelpers.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TestMethodTimers.h"
 				>
 			</File>
 			<File
