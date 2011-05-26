@@ -41,15 +41,13 @@ namespace gppUnit {
 		FileLoggerInterface& fileLogger;
 		const ProjectDescription* proj;
 		void StartProject(const ProjectDescription& desc) { proj = &desc; }
+		void EndProject() { fileLogger.LogToFile(fileName, proj); }
 	public:
 		FileLoggerNotification(const std::string& fileName,
 		                       FileLoggerInterface& fileLogger): fileName(fileName),
 			fileLogger(fileLogger),
 			proj(0)
 		{}
-		void EndProject() {
-			fileLogger.LogToFile(fileName, proj);
-		}
 	};
 
 	class LoggerAlgorithm: public FileLoggerInterface {
