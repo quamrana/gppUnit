@@ -286,3 +286,10 @@ namespace ConfirmThat{
 		}
 	}GPPUNIT_INSTANCE;
 }
+namespace ConfirmationCoverage{
+	class InstantiateConfirmationBase: public Auto::TestCase{
+		void test(){
+            gppUnit::ConfirmationBase cb;
+		}
+	}GPPUNIT_INSTANCE;
+}
