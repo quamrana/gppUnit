@@ -30,7 +30,7 @@ namespace gppUnit {
 	protected:
 		Confirm confirm;
 		Expect expect;
-	public:
+
 		TestCaseBase(): confirm(), expect() {}
 	};
 }
