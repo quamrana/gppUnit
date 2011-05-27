@@ -110,6 +110,7 @@ def walkDir(dir):
         print root
         [dirs.remove(d) for d in dirs if d.startswith('.') ]
         [dirs.remove(d) for d in dirs if d=='Debug' ]
+        [dirs.remove(d) for d in dirs if d=='Release' ]
         processFiles(root,files)
 
 #TODO: filter specific lines also
