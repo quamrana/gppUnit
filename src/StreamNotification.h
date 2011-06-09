@@ -37,7 +37,18 @@ namespace gppUnit {
 	};
 
 	class StreamNotification: public Notification {
-    protected:
+	private:
+		void StartProject(const ProjectDescription&);
+		void StartClass(const ClassDescription&);
+		void StartMethod(const MethodDescription&);
+		void Result(const TestResult&);
+		void Exception(const std::string& /* what */);
+
+		void EndMethod();
+
+		void EndProject();
+
+	protected:
 		std::ostream& out;
 		PrintFormatter formatter;
 		const ProjectDescription* proj;
@@ -56,16 +67,6 @@ namespace gppUnit {
 
 		void ShowDescription(std::string) const ;
 		void ShowFailure(const TestResult&);
-
-		void StartProject(const ProjectDescription&);
-		void StartClass(const ClassDescription&);
-		void StartMethod(const MethodDescription&);
-		void Result(const TestResult&);
-		void Exception(const std::string& /* what */);
-
-		void EndMethod();
-
-		void EndProject();
 	public:
 		explicit StreamNotification(std::ostream& out);
 	};
