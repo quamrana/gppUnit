@@ -11,11 +11,14 @@ cov=Env('COV')
 cppIncludes=[Dir('#')]
 libIncludes=[Dir('#/src'),Dir('#/TableFormatting'),Dir('#/Matchers')]
 libs=['gppUnit1.5','TableFormatting','Matchers']
+
+linkflags=[]
 if cov!='-':
-	libs+=['gcov']
+	linkflags+=['-fprofile-arcs']
 
 env.Program('test', Glob('*.cpp'),
 	LIBS=libs, 
 	LIBPATH=libIncludes,
+	LINKFLAGS=linkflags,
 	CPPPATH=cppIncludes
 	)
