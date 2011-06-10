@@ -1,5 +1,5 @@
 
-compiler=ARGUMENTS.get('compiler','djgpp')
+compiler=ARGUMENTS.get('compiler','mingw')
 cov=ARGUMENTS.get('cov','-')
 
 def getGccflags():
@@ -56,8 +56,10 @@ elif compiler=='gcc':
 	env=gcc()
 elif compiler=='mingw':
 	env=mingw()
-else:
+elif compiler=='djgpp':
 	env=djgpp()
+else:
+	env=mingw()
 
 print "compiler is:", compiler
 print "cov is:", cov
