@@ -200,9 +200,12 @@ namespace TestStreamNotification{
 		void whenSecondProjectRun(){
 			notify->StartProject(mp2);
 		}
-		void whenResultFailed(const char* message=""){
+        void whenResultFailed(const char* message="", const std::string& description=""){
 			gppUnit::TestResult result;
 			result.message=message;
+            if (description.size()>0) {
+                result.description.push_back(description);
+            }
 			notify->Result(result);
 		}
 		void whenException(const std::string& what){
@@ -262,6 +265,16 @@ namespace TestStreamNotification{
 				" In Class: MockClass1\n"
 				"  In Method: MockMethod1\n"
 				"   Message: message\n";
+			confirm.that(out,equals(expected));
+		}
+		void thenMessageAndDescriptionPrinted(){
+			const char* expected=
+				"\n"
+				" In Class: MockClass1\n"
+				"  In Method: MockMethod1\n"
+				"   Message: message\n"
+                "    Description\n"
+                ;
 			confirm.that(out,equals(expected));
 		}
 		void thenTwoMessagesPrinted(){
@@ -335,6 +348,16 @@ namespace TestStreamNotification{
 			thenFullResultPrinted();
 		}
 	}GPPUNIT_INSTANCE;
+
+	class ResultIsMessageAndDescription: StreamNotificationHelper{
+		void test(){
+			givenStreamNotification();
+			givenStartMethod();
+			whenResultFailed("message","Description");
+			thenMessageAndDescriptionPrinted();
+		}
+	}GPPUNIT_INSTANCE;
+
 	class TwoFailures: StreamNotificationHelper{
 		void test(){
 			givenStreamNotification();
