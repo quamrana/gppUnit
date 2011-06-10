@@ -14,7 +14,7 @@ libs=['gppUnit1.5','TableFormatting','Matchers']
 
 linkflags=[]
 if cov!='-':
-	linkflags+=['-fprofile-arcs']
+	linkflags+=['--coverage']
 
 env.Program('test', Glob('*.cpp'),
 	LIBS=libs, 
