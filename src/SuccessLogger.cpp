@@ -53,7 +53,7 @@ namespace gppUnit {
 	void FileLogger::openFileForWriting(const std::string& fileName) {
         openFile(fileName, std::ios::out);
 	}
-    void FileLogger::openFile(const std::string& fileName, std::ios_base::open_mode mode){
+    void FileLogger::openFile(const std::string& fileName, std::ios_base::openmode mode){
         file.open(fileName.c_str(), mode);
     }
 
