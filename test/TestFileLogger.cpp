@@ -30,7 +30,7 @@ namespace TestFileLogger{
 	class MockProject1: public gppUnit::ProjectDescription{
 		virtual std::string name() const { return "MockProject1"; }
 		virtual size_t classes() const { return 0; }
-		virtual bool hasPassed() const { return 0; }
+		virtual bool hasPassed() const { return false; }
 		virtual size_t results() const { return 0; }
 		virtual double run_time() const { return 0; }
 	}mp1;
@@ -82,14 +82,14 @@ namespace TestFileLogger{
 
 	class SuccessLoggerTestBase: public Auto::TestCase, gppUnit::LoggerAlgorithm{
 
-		std::stringstream collect;
+		mutable std::stringstream collect;
 		gppUnit::FileLoggerNotification* fileNotify;
 		bool exists;
 
-		bool allowedToProceed(const gppUnit::ProjectDescription* project){
+		bool allowedToProceed(const gppUnit::ProjectDescription* project) const {
 			return project->hasPassed();
 		}
-		virtual bool fileExists(const std::string& fileName){ 
+		virtual bool fileExists(const std::string& fileName) const { 
 			collect << "e." << fileName << '.';
 			return exists; 
 		}
@@ -102,6 +102,7 @@ namespace TestFileLogger{
 		virtual void writeHeader(const std::string& fileName, const gppUnit::ProjectDescription* /*project*/){ 
 			collect << "h." << fileName << '.'; 
 		}
+        virtual std::ostream& getFile(){ return collect; }
 
 		void writeLog(const gppUnit::ProjectDescription* /*project*/){ collect << "w."; }
 		void closeFile(){ collect << "c."; }
@@ -146,6 +147,34 @@ namespace TestFileLogger{
 			givenNotification();
 			whenStartAndEndProjectCalled(mp2,false);
 			thenActionTakenIs("e.foo.o.foo.h.foo.w.c.");
+		}
+	}GPPUNIT_INSTANCE;
+
+    class TestLoggerImplementations: public Auto::TestCase, public virtual gppUnit::LoggerAlgorithm{
+		mutable std::stringstream collect;
+        virtual std::ostream& getFile(){ return collect; }
+        // nop implementations!!
+        bool fileExists(const std::string&) const { return false; }
+        void openFileForAppend(const std::string&){}
+		void openFileForWriting(const std::string&){}
+		void closeFile(){}
+
+    protected:
+        void thenAllowedToProceed(const gppUnit::ProjectDescription& project, bool expected){
+            confirm.that(allowedToProceed(&project),equals(expected),"Should be allowed to proceed");
+        }
+
+	};
+    class TestSuccessLoggerImplementation: public TestLoggerImplementations, gppUnit::SuccessLoggerImplementation{
+        void test(){
+            thenAllowedToProceed(mp1,false);
+            thenAllowedToProceed(mp2,true);
+		}
+	}GPPUNIT_INSTANCE;
+    class TestAllRunsLoggerImplementation: public TestLoggerImplementations, gppUnit::AllRunsLoggerImplementation{
+        void test(){
+            thenAllowedToProceed(mp1,true);
+            thenAllowedToProceed(mp2,true);
 		}
 	}GPPUNIT_INSTANCE;
 
