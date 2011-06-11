@@ -48,11 +48,15 @@ namespace gppUnit {
 		return ret;
 	}
 	void FileLogger::openFileForAppend(const std::string& fileName) {
-		file.open(fileName.c_str(), std::ios::out | std::ios::app);
+        openFile(fileName, std::ios::out | std::ios::app);
 	}
 	void FileLogger::openFileForWriting(const std::string& fileName) {
-		file.open(fileName.c_str(), std::ios::out);
+        openFile(fileName, std::ios::out);
 	}
+    void FileLogger::openFile(const std::string& fileName, std::ios_base::open_mode mode){
+        file.open(fileName.c_str(), mode);
+    }
+
 	void FileLogger::closeFile() {
 		file.close();
 	}
