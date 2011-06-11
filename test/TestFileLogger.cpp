@@ -208,5 +208,16 @@ namespace TestFileLogger{
             thenAllowedToProceed(mp2,true);
 		}
 	}GPPUNIT_INSTANCE;
+    class TestAllRunsLoggerImplementationWriteHeader: public TestLoggerImplementations, gppUnit::AllRunsLoggerImplementation{
+        void test(){
+            whenHeaderWritten(mp1);
+            thenOutputIs(
+                "'table=1.1\n"
+                "'filename - Automatically created by gppUnit1.5\n"
+                "unittests,name=MockProject1\n"
+                "passed,tests,units,date,time,runtime\n"
+                ,"Success Header");
+		}
+	}GPPUNIT_INSTANCE;
 
 }
