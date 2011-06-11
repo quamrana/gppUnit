@@ -53,36 +53,39 @@ namespace gppUnit {
 	class LoggerAlgorithm: public FileLoggerInterface {
 		virtual void LogToFile(const std::string& fileName, const ProjectDescription* project);
 
-		virtual bool allowedToProceed(const ProjectDescription* project) = 0;
-		virtual bool fileExists(const std::string& fileName) = 0;
+	protected:
+		virtual bool allowedToProceed(const ProjectDescription* project) const = 0;
+		virtual bool fileExists(const std::string& fileName) const = 0;
 		virtual void openFileForAppend(const std::string& fileName) = 0;
 		virtual void openFileForWriting(const std::string& fileName) = 0;
 		virtual void writeHeader(const std::string& fileName, const ProjectDescription* project) = 0;
 		virtual void writeLog(const ProjectDescription* project) = 0;
 		virtual void closeFile() = 0;
+		virtual std::ostream& getFile() = 0;
 	};
 
 	// TODO:  Classes below here are not tested!!
-	class FileLogger: public LoggerAlgorithm {
-		virtual bool fileExists(const std::string& fileName);
-		virtual void openFileForAppend(const std::string& fileName);
-		virtual void openFileForWriting(const std::string& fileName);
-		virtual void closeFile();
-	protected:
+	class FileLogger: public virtual LoggerAlgorithm {
+		bool fileExists(const std::string& fileName) const;
+		void openFileForAppend(const std::string& fileName);
+		void openFileForWriting(const std::string& fileName);
+		void closeFile();
+		std::ostream& getFile() { return file; }
 		std::ofstream file;
 	};
-	class SuccessLogger: public FileLogger {
-
-		virtual bool allowedToProceed(const ProjectDescription* project);
+	class SuccessLoggerImplementation: public virtual LoggerAlgorithm {
+		virtual bool allowedToProceed(const ProjectDescription* project) const;
 		virtual void writeHeader(const std::string& fileName, const ProjectDescription* project);
 		virtual void writeLog(const ProjectDescription* project);
 	};
 
-	class AllRunsLogger: public FileLogger {
-		virtual bool allowedToProceed(const ProjectDescription* project);
+	class AllRunsLoggerImplementation: public virtual LoggerAlgorithm {
+		virtual bool allowedToProceed(const ProjectDescription* project) const;
 		virtual void writeHeader(const std::string& fileName, const ProjectDescription* project);
 		virtual void writeLog(const ProjectDescription* project);
 	};
+	class SuccessLogger: public FileLogger, SuccessLoggerImplementation {};
+	class AllRunsLogger: public FileLogger, AllRunsLoggerImplementation {};
 
 	const char* getNow(void);
 }
