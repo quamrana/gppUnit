@@ -76,9 +76,10 @@ namespace gppUnit {
 		std::ostream& getFile() { return file; }
 		std::ofstream file;
 
-        virtual void openFile(const std::string& fileName, std::ios_base::open_mode mode);
+        virtual void openFile(const std::string& fileName, std::ios_base::openmode mode);
 	};
-	class SuccessLoggerImplementation: public virtual LoggerAlgorithm {
+
+    class SuccessLoggerImplementation: public virtual LoggerAlgorithm {
 		virtual bool allowedToProceed(const ProjectDescription* project) const;
 		virtual void writeHeader(const std::string& fileName, const ProjectDescription* project);
 		virtual void writeLog(const ProjectDescription* project);

@@ -234,21 +234,21 @@ namespace TestFileLogger{
         void writeHeader(const std::string&, const gppUnit::ProjectDescription*){}
         void writeLog(const gppUnit::ProjectDescription*){}
     protected:
-        std::ios_base::open_mode mode;
-        void givenLogger(){ mode=99; }
+        std::ios_base::openmode mode;
+        void givenLogger(){ mode=std::ios_base::openmode(0); }
         void whenOpenForAppend(){
             openFileForAppend("");
         }
         void whenOpenForWriting(){
             openFileForWriting("");
         }
-        void thenMode(std::ios_base::open_mode expected, const char* message){
+        void thenMode(std::ios_base::openmode expected, const char* message){
             confirm.that(mode,equals(expected),message);
         }
     };
 
     class TestFileLoggerForCoverage: public MockFileLoggerForCoverage, gppUnit::FileLogger{
-        void openFile(const std::string&, std::ios_base::open_mode mode){
+        void openFile(const std::string&, std::ios_base::openmode mode){
             this->mode=mode;
         }
         void test(){
