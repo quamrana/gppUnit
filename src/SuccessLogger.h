@@ -50,7 +50,9 @@ namespace gppUnit {
 		{}
 	};
 
-	class LoggerAlgorithm: public FileLoggerInterface {
+	const char* getNow(void);
+
+    class LoggerAlgorithm: public FileLoggerInterface {
 		virtual void LogToFile(const std::string& fileName, const ProjectDescription* project);
 
 	protected:
@@ -62,6 +64,7 @@ namespace gppUnit {
 		virtual void writeLog(const ProjectDescription* project) = 0;
 		virtual void closeFile() = 0;
 		virtual std::ostream& getFile() = 0;
+        virtual const char* getNow(){ return gppUnit::getNow(); }
 	};
 
 	// TODO:  Classes below here are not tested!!
@@ -87,6 +90,5 @@ namespace gppUnit {
 	class SuccessLogger: public FileLogger, SuccessLoggerImplementation {};
 	class AllRunsLogger: public FileLogger, AllRunsLoggerImplementation {};
 
-	const char* getNow(void);
 }
 #endif // SUCCESSLOGGER_H_C727B3A4_81E2_472C_98A4_C3088B4A7023

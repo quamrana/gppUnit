@@ -153,6 +153,8 @@ namespace TestFileLogger{
     class TestLoggerImplementations: public Auto::TestCase, public virtual gppUnit::LoggerAlgorithm{
 		mutable std::stringstream collect;
         virtual std::ostream& getFile(){ return collect; }
+        // delibreate override of getNow()
+        const char* getNow(){ return "date,time"; }
         // nop implementations!!
         bool fileExists(const std::string&) const { return false; }
         void openFileForAppend(const std::string&){}
@@ -162,6 +164,9 @@ namespace TestFileLogger{
     protected:
         void whenHeaderWritten(const gppUnit::ProjectDescription& project){
             writeHeader("filename",&project);
+        }
+        void whenLogWritten(const gppUnit::ProjectDescription& project){
+            writeLog(&project);
         }
         void thenAllowedToProceed(const gppUnit::ProjectDescription& project, bool expected){
             confirm.that(allowedToProceed(&project),equals(expected),"Should be allowed to proceed");
@@ -188,6 +193,15 @@ namespace TestFileLogger{
                 ,"Success Header");
 		}
 	}GPPUNIT_INSTANCE;
+    class TestSuccessLoggerImplementationWriteLog: public TestLoggerImplementations, gppUnit::SuccessLoggerImplementation{
+        void test(){
+            whenLogWritten(mp1);
+            thenOutputIs(
+                "0,0,date,time,0\n"
+                ,"Success Header");
+		}
+	}GPPUNIT_INSTANCE;
+
     class TestAllRunsLoggerImplementation: public TestLoggerImplementations, gppUnit::AllRunsLoggerImplementation{
         void test(){
             thenAllowedToProceed(mp1,true);
