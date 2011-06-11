@@ -160,15 +160,32 @@ namespace TestFileLogger{
 		void closeFile(){}
 
     protected:
+        void whenHeaderWritten(const gppUnit::ProjectDescription& project){
+            writeHeader("filename",&project);
+        }
         void thenAllowedToProceed(const gppUnit::ProjectDescription& project, bool expected){
             confirm.that(allowedToProceed(&project),equals(expected),"Should be allowed to proceed");
         }
+        void thenOutputIs(const std::string& expected, const char* message){
+            confirm.that(collect.str(),equals(expected),message);
+        }
 
 	};
-    class TestSuccessLoggerImplementation: public TestLoggerImplementations, gppUnit::SuccessLoggerImplementation{
+    class TestSuccessLoggerImplementationAllowedToProceed: public TestLoggerImplementations, gppUnit::SuccessLoggerImplementation{
         void test(){
             thenAllowedToProceed(mp1,false);
             thenAllowedToProceed(mp2,true);
+		}
+	}GPPUNIT_INSTANCE;
+    class TestSuccessLoggerImplementationWriteHeader: public TestLoggerImplementations, gppUnit::SuccessLoggerImplementation{
+        void test(){
+            whenHeaderWritten(mp1);
+            thenOutputIs(
+                "'table=1.1\n"
+                "'filename - Automatically created by gppUnit1.5\n"
+                "unittests,name=MockProject1\n"
+                "tests,units,date,time,runtime\n"
+                ,"Success Header");
 		}
 	}GPPUNIT_INSTANCE;
     class TestAllRunsLoggerImplementation: public TestLoggerImplementations, gppUnit::AllRunsLoggerImplementation{
