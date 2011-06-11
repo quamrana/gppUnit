@@ -219,5 +219,13 @@ namespace TestFileLogger{
                 ,"Success Header");
 		}
 	}GPPUNIT_INSTANCE;
+    class TestAllRunsLoggerImplementationWriteLog: public TestLoggerImplementations, gppUnit::AllRunsLoggerImplementation{
+        void test(){
+            whenLogWritten(mp1);
+            thenOutputIs(
+                "0,0,0,date,time,0\n"
+                ,"Success Header");
+		}
+	}GPPUNIT_INSTANCE;
 
 }
