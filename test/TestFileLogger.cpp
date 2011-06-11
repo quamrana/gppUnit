@@ -153,7 +153,7 @@ namespace TestFileLogger{
     class TestLoggerImplementations: public Auto::TestCase, public virtual gppUnit::LoggerAlgorithm{
 		mutable std::stringstream collect;
         virtual std::ostream& getFile(){ return collect; }
-        // delibreate override of getNow()
+        // deliberate override of getNow()
         const char* getNow(){ return "date,time"; }
         // nop implementations!!
         bool fileExists(const std::string&) const { return false; }
@@ -228,4 +228,36 @@ namespace TestFileLogger{
 		}
 	}GPPUNIT_INSTANCE;
 
+    class MockFileLoggerForCoverage: public Auto::TestCase, public virtual gppUnit::LoggerAlgorithm{
+        // nop implementations!!
+        bool allowedToProceed(const gppUnit::ProjectDescription*) const { return false; }
+        void writeHeader(const std::string&, const gppUnit::ProjectDescription*){}
+        void writeLog(const gppUnit::ProjectDescription*){}
+    protected:
+        std::ios_base::open_mode mode;
+        void givenLogger(){ mode=99; }
+        void whenOpenForAppend(){
+            openFileForAppend("");
+        }
+        void whenOpenForWriting(){
+            openFileForWriting("");
+        }
+        void thenMode(std::ios_base::open_mode expected, const char* message){
+            confirm.that(mode,equals(expected),message);
+        }
+    };
+
+    class TestFileLoggerForCoverage: public MockFileLoggerForCoverage, gppUnit::FileLogger{
+        void openFile(const std::string&, std::ios_base::open_mode mode){
+            this->mode=mode;
+        }
+        void test(){
+            givenLogger();
+            whenOpenForAppend();
+            thenMode(std::ios::out | std::ios::app,"OpenForAppend");
+            givenLogger();
+            whenOpenForWriting();
+            thenMode(std::ios::out,"OpenForWriting");
+        }
+    }GPPUNIT_INSTANCE;
 }

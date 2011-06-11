@@ -75,6 +75,8 @@ namespace gppUnit {
 		void closeFile();
 		std::ostream& getFile() { return file; }
 		std::ofstream file;
+
+        virtual void openFile(const std::string& fileName, std::ios_base::open_mode mode);
 	};
 	class SuccessLoggerImplementation: public virtual LoggerAlgorithm {
 		virtual bool allowedToProceed(const ProjectDescription* project) const;
