@@ -52,7 +52,7 @@ namespace gppUnit {
 
 	const char* getNow(void);
 
-    class LoggerAlgorithm: public FileLoggerInterface {
+	class LoggerAlgorithm: public FileLoggerInterface {
 		virtual void LogToFile(const std::string& fileName, const ProjectDescription* project);
 
 	protected:
@@ -64,7 +64,7 @@ namespace gppUnit {
 		virtual void writeLog(const ProjectDescription* project) = 0;
 		virtual void closeFile() = 0;
 		virtual std::ostream& getFile() = 0;
-        virtual const char* getNow(){ return gppUnit::getNow(); }
+		virtual const char* getNow() { return gppUnit::getNow(); }
 	};
 
 	// TODO:  Classes below here are not tested!!
@@ -76,10 +76,10 @@ namespace gppUnit {
 		std::ostream& getFile() { return file; }
 		std::ofstream file;
 
-        virtual void openFile(const std::string& fileName, std::ios_base::openmode mode);
+		virtual void openFile(const std::string& fileName, std::ios_base::openmode mode);
 	};
 
-    class SuccessLoggerImplementation: public virtual LoggerAlgorithm {
+	class SuccessLoggerImplementation: public virtual LoggerAlgorithm {
 		virtual bool allowedToProceed(const ProjectDescription* project) const;
 		virtual void writeHeader(const std::string& fileName, const ProjectDescription* project);
 		virtual void writeLog(const ProjectDescription* project);
