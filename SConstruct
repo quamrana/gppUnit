@@ -3,7 +3,7 @@ compiler=ARGUMENTS.get('compiler','mingw')
 cov=ARGUMENTS.get('cov','-')
 
 def getGccflags():
-	cppflags=['-Wall','-Wextra'] #,'-Weffc++']
+	cppflags=['-Wall','-Wextra']  #,'-Weffc++','-pedantic','-std=c++0x']
 	if cov!='-':
 		cppflags+=['--coverage','-fno-elide-constructors','-fno-default-inline']
 	return cppflags
