@@ -1,8 +1,12 @@
-rem sconsg.bat
 @echo off
+
 echo Building...
 call sconsq.bat cov=gcov
+
 echo running gcov...
-call all-gcov.bat
-echo running summ-gcov.py...
-python summ-gcov.py
+python gcovr.py -o gcovr-summary.log -r . -e test
+type gcovr-summary.log
+
+@echo cleaning...
+python clean-gcov.py
+call sconsc.bat -s
