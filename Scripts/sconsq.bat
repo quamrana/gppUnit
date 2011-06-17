@@ -5,7 +5,7 @@ SET ENDBATCH=0
 SET STARTBATCH=%TIME::=%
 
 REM call scons -Q --debug=presub %*
-call scons -Q %*
+call scons -Q -j 3 %*
 
 rem run unit tests
 IF ERRORLEVEL 1 GOTO QUIT
