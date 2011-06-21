@@ -7,5 +7,6 @@
 	<Tool
 		Name="VCCLCompilerTool"
 		RuntimeLibrary="1"
+		ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 	/>
 </VisualStudioPropertySheet>
