@@ -69,7 +69,7 @@ namespace gppUnit {
 	struct equal_to_trait_base: value_trait_base<T> {
 		equal_to_trait_base(const T& actual, const T& expected): value_trait_base<T>(actual, expected) {}
 
-		bool equals() { return (equal_to_trait_base<T>::actualValue == equal_to_trait_base<T>::expectedValue); }
+		bool equals() const { return (equal_to_trait_base<T>::actualValue == equal_to_trait_base<T>::expectedValue); }
 
 	};
 	template <typename T>
