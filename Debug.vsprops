@@ -2,10 +2,13 @@
 <VisualStudioPropertySheet
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="StaticLibrary"
+	Name="Debug"
 	>
 	<Tool
 		Name="VCCLCompilerTool"
-		ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
+		Optimization="0"
+		BasicRuntimeChecks="3"
+		RuntimeLibrary="1"
+		DebugInformationFormat="4"
 	/>
 </VisualStudioPropertySheet>
