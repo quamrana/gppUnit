@@ -26,10 +26,8 @@ namespace gppUnit {
 	MatcherResult is_not_helper::match(const MatcherResult& fwdresult) const {
 		MatcherResult result(!fwdresult.result);
 		result.strm << "not" << tab << fwdresult.strm;
-        result.hasActual=fwdresult.hasActual;
-        if (result.hasActual) {
-        result.actualStrm=fwdresult.actualStrm;
-        }
+		result.hasActual = fwdresult.hasActual;
+		result.actualStrm = fwdresult.actualStrm;
 		return result;
 	}
 }

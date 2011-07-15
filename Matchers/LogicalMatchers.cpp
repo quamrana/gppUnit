@@ -26,7 +26,7 @@ namespace gppUnit {
 		MatcherResult result(left.result || right.result);
 		result.strm << "a match with one of:" << tab << left.strm;
 		result.strm << "or" << tab << patch(right.strm);
-        result.hasActual=true;
+		result.hasActual = true;
 		return result;
 	}
 	MatcherResult any_of_helper::nestedMatch(const MatcherResult& left, const MatcherResult& right) const {
@@ -40,7 +40,7 @@ namespace gppUnit {
 		MatcherResult result(left.result && right.result);
 		result.strm << "a match with all of:" << tab << left.strm;
 		result.strm << "and" << tab << patch(right.strm);
-        result.hasActual=true;
+		result.hasActual = true;
 		return result;
 	}
 	MatcherResult all_of_helper::nestedMatch(const MatcherResult& left, const MatcherResult& right) const {
