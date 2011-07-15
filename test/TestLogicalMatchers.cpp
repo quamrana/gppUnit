@@ -36,7 +36,7 @@ namespace TestLogicalMatchers{
 
 	class TestLogicalMatchersHelper: public Auto::TestCase{
 		template<typename MATCHER, typename ACTUAL>
-		void That(bool booleanResult, const ACTUAL& actual, MATCHER m, const strvec& desc){
+		void That(bool booleanResult, const ACTUAL& actual, MATCHER m, const strvec& desc, bool hasActual){
 			gppUnit::MatcherResult result=m.match(actual);
 			if (booleanResult){
 				confirm.isTrue(result.result,"result is true");
@@ -52,16 +52,17 @@ namespace TestLogicalMatchers{
 			for(strvec::const_iterator it=desc.begin(), end=desc.end(); it!=end; ++it){
 				confirm.that(*test++,equals(*it),(*it).c_str());
 			}
+            confirm.that(result.hasActual,equals(hasActual),"has Actual");
 		}
 
 	protected:
 		template<typename MATCHER, typename ACTUAL>
 		void That(const ACTUAL& actual, MATCHER m, const strvec& desc){
-			That(true,actual,m,desc);
+			That(true,actual,m,desc,true);
 		}
 		template<typename MATCHER, typename ACTUAL>
 		void Mismatch(const ACTUAL& actual, MATCHER m, const strvec& desc){
-			That(false,actual,m,desc);
+			That(false,actual,m,desc,true);
 		}
 	};
 namespace Any_Of{

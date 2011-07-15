@@ -29,11 +29,11 @@ namespace TestCollectionContains{
 	class VectorContains: public MatcherHelper{
 		void test(){
 			std::vector<int> v;
-			That(v,!contains(0),"not a container that contains '0'\n");
+			That(v,!contains(0),"not a container that contains '0'\nan empty container\n");
 
 			v.push_back(1);
 			That(v,contains(1),"a container that contains '1'\n[1]\n");
-			That(v,!contains(2),"not a container that contains '2'\n");
+			That(v,!contains(2),"not a container that contains '2'\n[1]\n");
 
 			v.push_back(2);
 			v.push_back(3);

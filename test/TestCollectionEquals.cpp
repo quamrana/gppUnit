@@ -46,7 +46,7 @@ namespace TestCollectionEquals{
 	class UnequalIntVector: public VectorHelper<int>{
 		void test(void){
 			v1.push_back(1);
-			That(v1,!equals(v2),"not an empty container\n");
+			That(v1,!equals(v2),"not an empty container\n[1]\n");
 			MisMatch(v1,equals(v2),"an empty container\n[1]\n");
 		}
 	}GPPUNIT_INSTANCE;

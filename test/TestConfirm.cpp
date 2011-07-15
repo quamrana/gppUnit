@@ -226,6 +226,19 @@ namespace ConfirmThat{
 			thenDescriptionIs(f.toVector());
 		}
 	}GPPUNIT_INSTANCE;
+	class ConfirmNotThatFailDescription: public TestAsserts::ConfirmBase{
+		void test(){
+			givenConfirm();
+			conf.that(0,is_not(gppUnit::equal_to(0)));
+			thenResultIsFalse("Should match");
+
+			gppUnit::TableFormatter f;
+			f << "Expected" << tab << "not" << tab << "'0'" << endl;
+			f << but_got << tab << "'0'" << endl;
+			thenDescriptionIs(f.toVector());
+
+		}
+	}GPPUNIT_INSTANCE;
 	class ConfirmThatFailDescriptionIntChar: public TestAsserts::ConfirmBase{
 		void test(){
 			givenConfirm();
