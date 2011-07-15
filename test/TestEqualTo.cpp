@@ -44,8 +44,8 @@ namespace TestEqualTo{
 			actual=2;
 			MisMatch(actual,equal_to(expected),"'1'\n'2'\n");
 
-			That(actual,is_not(equal_to(expected)),"not '1'\n");
-			That(actual,!equal_to(expected),"not '1'\n");
+			That(actual,is_not(equal_to(expected)),"not '1'\n'2'\n");
+			That(actual,!equal_to(expected),"not '1'\n'2'\n");
 		}
 	}GPPUNIT_INSTANCE;
 
@@ -101,7 +101,7 @@ namespace TestEqualTo{
 			strcpy(expected,actual);
 			expected[0]='1';
 			MisMatch(actual,equal_to(expected),"string '1'\nactual '2'\n");
-			That(actual,!equal_to(expected),"not string '1'\n");
+			That(actual,!equal_to(expected),"not string '1'\nactual '2'\n");
 		}
 	}GPPUNIT_INSTANCE;
 }
