@@ -138,6 +138,7 @@ namespace TestStreamNotification{
 	}mp1;
 	class MockProject2: public MockProject1{
 		virtual std::string name() const { return "MockProject2"; }
+		virtual size_t results() const { return 1; }
 		virtual double run_time() const { return 1; }
 	}mp2;
 	class MockClass1: public gppUnit::ClassDescription{
@@ -222,7 +223,7 @@ namespace TestStreamNotification{
 			const char* expected=
 				"\n"
 				"100% tests passed!\n"
-                "1 Assert\n"
+                //"1 Assert\n"
 				"**************************************************\n";
 			confirm.that(out,equals(expected));
 		}
@@ -232,18 +233,19 @@ namespace TestStreamNotification{
 				"5 classes to run.\n"
 				"\n"
 				"100% tests passed!\n"
+                "1 Assert\n"
 				"run time: 1\n"
 				"**************************************************\n";
 			confirm.that(out,equals(expected));
 		}
         void thenNumberOfAssertsPrinted(){
 			const char* expected=
-				//"****************** MockProject2 ******************\n"
-				//"5 classes to run.\n"
+				"****************** MockProject2 ******************\n"
+				"5 classes to run.\n"
 				"\n"
 				"100% tests passed!\n"
                 "1 Assert\n"
-				//"run time: 1\n"
+				"run time: 1\n"
 				"**************************************************\n";
 			confirm.that(out,equals(expected));
         }
@@ -348,7 +350,7 @@ namespace TestStreamNotification{
 		void test(){
 			givenStreamNotification();
 			whenSecondProjectRun();
-            whenResultPass();
+            //whenResultPass();
 			whenEndProjectCalled();
 			thenNumberOfAssertsPrinted();
 		}
