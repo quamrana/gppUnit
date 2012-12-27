@@ -68,9 +68,9 @@ namespace gppUnit {
 
 	PrintFormatter::PrintFormatter(size_t size): size(size), asteriskCounter(0) {}
 
-	StreamNotification::StreamNotification(std::ostream& out): 
-        resultCount(0),
-        out(out),
+	StreamNotification::StreamNotification(std::ostream& out):
+		resultCount(0),
+		out(out),
 		formatter(50),
 		proj(0),
 		desc(0),
@@ -109,7 +109,7 @@ namespace gppUnit {
 		methodShown = false;
 	}
 	void StreamNotification::Result(const TestResult& result) {
-        ++resultCount;
+		++resultCount;
 		if(!result.result) {
 			ShowFailure(result);
 		}
@@ -169,9 +169,9 @@ namespace gppUnit {
 		if(!hasFailed) {
 			out << std::endl;
 			out << "100% tests passed!" << std::endl;
-            if(resultCount){
-                out << resultCount << " Asserts" << std::endl;
-            }
+			if(resultCount) {
+				out << resultCount << " Asserts" << std::endl;
+			}
 			if(proj->run_time()) {
 				out << "run time: " << proj->run_time() << std::endl;
 			}
