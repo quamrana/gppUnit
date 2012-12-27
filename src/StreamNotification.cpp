@@ -81,11 +81,10 @@ namespace gppUnit {
 		methodShown(false)
 	{}
 
-	/*
+	
 	const char* plural(size_t n) {
 		return (n == 1) ? "" : "s";
 	}
-	*/
 	const char* plurale(size_t n) {
 		return (n == 1) ? "" : "es";
 	}
@@ -170,7 +169,7 @@ namespace gppUnit {
 			out << std::endl;
 			out << "100% tests passed!" << std::endl;
 			if(resultCount) {
-				out << resultCount << " Asserts" << std::endl;
+				out << resultCount << " Assert" << plural(resultCount) << std::endl;
 			}
 			if(proj->run_time()) {
 				out << "run time: " << proj->run_time() << std::endl;

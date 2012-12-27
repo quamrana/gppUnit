@@ -222,7 +222,7 @@ namespace TestStreamNotification{
 			const char* expected=
 				"\n"
 				"100% tests passed!\n"
-                "1 Asserts\n"
+                "1 Assert\n"
 				"**************************************************\n";
 			confirm.that(out,equals(expected));
 		}
@@ -242,7 +242,7 @@ namespace TestStreamNotification{
 				//"5 classes to run.\n"
 				"\n"
 				"100% tests passed!\n"
-                "1 Asserts\n"
+                "1 Assert\n"
 				//"run time: 1\n"
 				"**************************************************\n";
 			confirm.that(out,equals(expected));
