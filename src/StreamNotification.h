@@ -41,6 +41,8 @@ namespace gppUnit {
 		void StartProject(const ProjectDescription&);
 		void StartClass(const ClassDescription&);
 		void StartMethod(const MethodDescription&);
+
+        size_t resultCount;
 		void Result(const TestResult&);
 		void Exception(const std::string& /* what */);
 
