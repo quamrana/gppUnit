@@ -222,6 +222,7 @@ namespace TestStreamNotification{
 			const char* expected=
 				"\n"
 				"100% tests passed!\n"
+                "1 Asserts\n"
 				"**************************************************\n";
 			confirm.that(out,equals(expected));
 		}
@@ -235,6 +236,17 @@ namespace TestStreamNotification{
 				"**************************************************\n";
 			confirm.that(out,equals(expected));
 		}
+        void thenNumberOfAssertsPrinted(){
+			const char* expected=
+				//"****************** MockProject2 ******************\n"
+				//"5 classes to run.\n"
+				"\n"
+				"100% tests passed!\n"
+                "1 Asserts\n"
+				//"run time: 1\n"
+				"**************************************************\n";
+			confirm.that(out,equals(expected));
+        }
 
 		void thenAsteriskPrinted(){
 			const char* expected="**********";
@@ -332,6 +344,16 @@ namespace TestStreamNotification{
 			thenRunTimeIsOne();
 		}
 	}GPPUNIT_INSTANCE;
+    class ResultPassedAndNumberOfAsserts: StreamNotificationHelper{
+		void test(){
+			givenStreamNotification();
+			whenSecondProjectRun();
+            whenResultPass();
+			whenEndProjectCalled();
+			thenNumberOfAssertsPrinted();
+		}
+	}GPPUNIT_INSTANCE;
+
 	class ResultIsFailure: StreamNotificationHelper{
 		void test(){
 			givenStreamNotification();
