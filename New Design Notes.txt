@@ -241,6 +241,8 @@ $	Socket based GUI front-end
 	Poss. VB6 app which pops up when a test run connects
 	Display summary which can be browsed
 
+	Notification which reports test names as documentation
+
 Infrastructure
 #	Hudson
 		Create a new job (copy previous one)
