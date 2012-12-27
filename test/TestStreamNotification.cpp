@@ -223,7 +223,6 @@ namespace TestStreamNotification{
 			const char* expected=
 				"\n"
 				"100% tests passed!\n"
-                //"1 Assert\n"
 				"**************************************************\n";
 			confirm.that(out,equals(expected));
 		}
@@ -350,7 +349,6 @@ namespace TestStreamNotification{
 		void test(){
 			givenStreamNotification();
 			whenSecondProjectRun();
-            //whenResultPass();
 			whenEndProjectCalled();
 			thenNumberOfAssertsPrinted();
 		}
