@@ -80,7 +80,6 @@ namespace gppUnit {
 		methodShown(false)
 	{}
 
-	
 	const char* plural(size_t n) {
 		return (n == 1) ? "" : "s";
 	}
