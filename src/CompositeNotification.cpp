@@ -36,7 +36,7 @@ namespace gppUnit {
 	}
 	template<typename C, typename N>
 	void caller(C& collection, void (N::*f)()) {
-        std::for_each(collection.begin(),collection.end(),std::mem_fun(f));
+		std::for_each(collection.begin(), collection.end(), std::mem_fun(f));
 	}
 
 	void CompositeNotification::StartProject(const ProjectDescription& desc) {
