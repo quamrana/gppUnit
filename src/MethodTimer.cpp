@@ -76,7 +76,7 @@ namespace gppUnit {
 		_tzset();
 		time(&secs_now);
 
-		tm* time_now=localtime(&secs_now);
+		tm* time_now = localtime(&secs_now);
 		strftime(str, 80, "%Y-%b-%d,%X", time_now);
 		return str;
 	}
