@@ -10,9 +10,11 @@ namespace gppUnit{
 		void StartClass(const ClassDescription& aClass) {
             collect.push_back(aClass.name());
         }
-        void format(const std::string& spacing, vecstr::const_iterator it, std::stringstream& str){
+        void format(const std::string& spacing, vecstr::const_iterator it,std::string head, std::stringstream& str){
             for(;it!=collect.end();++it){
-                str << spacing << *it << std::endl;
+                std::string tail=*it;
+                std::string item=tail.substr(head.size());
+                str << spacing << item << std::endl;
             }
         }
     protected:
@@ -20,7 +22,18 @@ namespace gppUnit{
     public:
         std::string getFormattedDocumentation(){
             std::stringstream str;
-            format("",collect.begin(),str);
+            std::string spacing="";
+            std::string head=collect.front();
+            std::string::size_type jt=head.find("::");
+            if(jt!=std::string::npos){
+                head=head.substr(0,jt);
+                str << spacing << head << std::endl;
+                spacing+=' ';
+                head+="::";
+            } else{
+                head="";
+            }
+            format(spacing,collect.begin(),head,str);
             return str.str();
         }
     };
@@ -96,9 +109,10 @@ namespace TestClassNameDocumentation{
 			givenProject();
             whenRun();
             thenDocumentationIs(
+                "TestClassNameDocumentation\n"
                 " Case1\n"
                 " Case2\n"
                 );
 		}
-	}; //GPPUNIT_INSTANCE;
+	}GPPUNIT_INSTANCE;
 }
