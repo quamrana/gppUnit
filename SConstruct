@@ -40,7 +40,7 @@ def mingw():
 	return DefaultEnvironment(tools = ['g++','gnulink','ar'],
 		ENV={'PATH':path},
 		CPPFLAGS=cppflags,
-		EXTRA='unix',
+		#EXTRA='unix',
 		COV=cov
 		)
 
