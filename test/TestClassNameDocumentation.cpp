@@ -10,31 +10,44 @@ namespace gppUnit{
 		void StartClass(const ClassDescription& aClass) {
             collect.push_back(aClass.name());
         }
-        void format(const std::string& spacing, vecstr::const_iterator it,std::string head, std::stringstream& str){
-            for(;it!=collect.end();++it){
-                std::string tail=*it;
-                std::string item=tail.substr(head.size());
-                str << spacing << item << std::endl;
-            }
-        }
     protected:
         vecstr collect;
     public:
         std::string getFormattedDocumentation(){
             std::stringstream str;
-            std::string spacing="";
-            std::string head=collect.front();
-            std::string::size_type jt=head.find("::");
-            if(jt!=std::string::npos){
-                head=head.substr(0,jt);
-                str << spacing << head << std::endl;
-                spacing+=' ';
-                head+="::";
-            } else{
-                head="";
+            std::string spacing;
+            std::string head;
+            std::string tail;
+
+            vecstr::const_iterator it=collect.begin();
+            vecstr::const_iterator end=collect.end();
+
+
+            for(;;){
+                if(tail.empty()){
+                    if (it==end){
+                        return str.str();
+                    } else {
+                        tail=*it++;
+                    }
+                }
+                std::string::size_type jt=tail.find(head);
+                if(jt==0){
+                    tail=tail.substr(head.size());
+                }
+
+                std::string::size_type ct=tail.find("::");
+                if(ct!=std::string::npos){
+                    std::string nexthead=tail.substr(0,ct);
+                    head+=nexthead+"::";
+                    tail=tail.substr(head.size());
+                    str << spacing << nexthead << std::endl;
+                    spacing+=' ';
+                    // stack head
+                }
+                str << spacing << tail << std::endl;
+                tail="";
             }
-            format(spacing,collect.begin(),head,str);
-            return str.str();
         }
     };
 }
