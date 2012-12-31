@@ -224,6 +224,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ClassDocumentation.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ClassRunner.cpp"
 				>
 			</File>
@@ -331,6 +335,10 @@
 			</File>
 			<File
 				RelativePath=".\ClassDescription.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ClassDocumentation.h"
 				>
 			</File>
 			<File
