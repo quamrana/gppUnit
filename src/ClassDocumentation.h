@@ -26,21 +26,21 @@ THE SOFTWARE.
 
 #include <vector>
 
-namespace gppUnit{
-    class ClassDescription;
+namespace gppUnit {
+	class ClassDescription;
 
-    class ClassDocumentation: public Notification{
-        struct Head{
-            std::string spacing;
-            std::string head;
-        };
-        typedef std::vector<std::string> vecstr;
+	class ClassDocumentation: public Notification {
+		struct Head {
+			std::string spacing;
+			std::string head;
+		};
+		typedef std::vector<std::string> vecstr;
 		void StartClass(const ClassDescription&);
-    protected:
-        vecstr collect;
-    public:
-        std::string getFormattedDocumentation() const ;
-    };
+	protected:
+		vecstr collect;
+	public:
+		std::string getFormattedDocumentation() const ;
+	};
 }
 
 #endif // CLASSDOCUMENTATION_H_37B4CC72_D39B_4B9F_BCA4_F4F2515937CD
