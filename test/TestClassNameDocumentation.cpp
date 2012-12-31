@@ -157,4 +157,28 @@ namespace TestClassNameDocumentation{
                 );
 		}
 	}GPPUNIT_INSTANCE;
+	class IncreasingNamespacedTestCases: public TestDocumentation{
+        void givenProject(){
+            push_back(gc1);
+            push_back(gc2);
+            push_back(c1);
+            push_back(c2);
+            push_back(nc1);
+            push_back(nc2);
+        }
+		void test(){
+			givenProject();
+            whenRun();
+            thenDocumentationIs(
+                "GCase1\n"
+                "GCase2\n"
+                "TestClassNameDocumentation\n"
+                " Case1\n"
+                " Case2\n"
+                " NextLevel\n"
+                "  Case1\n"
+                "  Case2\n"
+                );
+		}
+	}GPPUNIT_INSTANCE;
 }
