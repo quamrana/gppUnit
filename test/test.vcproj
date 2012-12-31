@@ -260,6 +260,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TestClassNameDocumentation.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\TestCollectionContains.cpp"
 				>
 			</File>
