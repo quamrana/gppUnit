@@ -35,15 +35,20 @@ namespace gppUnit{
                 if(jt==0){
                     tail=tail.substr(head.size());
                 }
-
+                
+                for(;;){
                 std::string::size_type ct=tail.find("::");
                 if(ct!=std::string::npos){
                     std::string nexthead=tail.substr(0,ct);
-                    head+=nexthead+"::";
-                    tail=tail.substr(head.size());
+                    std::string tmphead=nexthead+"::";
+                    tail=tail.substr(tmphead.size());
+                    head+=tmphead;
                     str << spacing << nexthead << std::endl;
                     spacing+=' ';
                     // stack head
+                } else{
+                    break;
+                }
                 }
                 str << spacing << tail << std::endl;
                 tail="";
@@ -74,6 +79,14 @@ namespace TestClassNameDocumentation{
     } c1;
     class Case2: public NopTestCase{
     } c2;
+
+    namespace NextLevel{
+        class Case1: public NopTestCase{
+        } nc1;
+        class Case2: public NopTestCase{
+        } nc2;
+    }
+    using namespace NextLevel;
 
     class MockDoc: public gppUnit::ClassDocumentation{
     //public:
@@ -125,6 +138,22 @@ namespace TestClassNameDocumentation{
                 "TestClassNameDocumentation\n"
                 " Case1\n"
                 " Case2\n"
+                );
+		}
+	}GPPUNIT_INSTANCE;
+	class NextLevelNamespacedTestCases: public TestDocumentation{
+        void givenProject(){
+            push_back(nc1);
+            push_back(nc2);
+        }
+		void test(){
+			givenProject();
+            whenRun();
+            thenDocumentationIs(
+                "TestClassNameDocumentation\n"
+                " NextLevel\n"
+                "  Case1\n"
+                "  Case2\n"
                 );
 		}
 	}GPPUNIT_INSTANCE;
