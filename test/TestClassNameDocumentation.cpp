@@ -3,9 +3,14 @@
 
 #include <vector>
 #include <sstream>
+#include <stack>
 
 namespace gppUnit{
     class ClassDocumentation: public Notification{
+        struct Head{
+            std::string spacing;
+            std::string head;
+        };
         typedef std::vector<std::string> vecstr;
 		void StartClass(const ClassDescription& aClass) {
             collect.push_back(aClass.name());
@@ -15,13 +20,13 @@ namespace gppUnit{
     public:
         std::string getFormattedDocumentation(){
             std::stringstream str;
-            std::string spacing;
-            std::string head;
+
+            Head head;
+            std::stack<Head> headstack;
             std::string tail;
 
             vecstr::const_iterator it=collect.begin();
             vecstr::const_iterator end=collect.end();
-
 
             for(;;){
                 if(tail.empty()){
@@ -31,26 +36,33 @@ namespace gppUnit{
                         tail=*it++;
                     }
                 }
-                std::string::size_type jt=tail.find(head);
-                if(jt==0){
-                    tail=tail.substr(head.size());
+
+                for(;;){
+                    std::string::size_type jt=tail.find(head.head);
+                    if(jt==0){
+                        tail=tail.substr(head.head.size());
+                        break;
+                    } else {
+                        head=headstack.top();
+                        headstack.pop();
+                    }
                 }
                 
                 for(;;){
-                std::string::size_type ct=tail.find("::");
-                if(ct!=std::string::npos){
-                    std::string nexthead=tail.substr(0,ct);
-                    std::string tmphead=nexthead+"::";
-                    tail=tail.substr(tmphead.size());
-                    head+=tmphead;
-                    str << spacing << nexthead << std::endl;
-                    spacing+=' ';
-                    // stack head
-                } else{
-                    break;
+                    std::string::size_type ct=tail.find("::");
+                    if(ct!=std::string::npos){
+                        std::string nexthead=tail.substr(0,ct);
+                        std::string tmphead=nexthead+"::";
+                        tail=tail.substr(tmphead.size());
+                        headstack.push(head);
+                        head.head+=tmphead;
+                        str << head.spacing << nexthead << std::endl;
+                        head.spacing+=' ';
+                    } else{
+                        break;
+                    }
                 }
-                }
-                str << spacing << tail << std::endl;
+                str << head.spacing << tail << std::endl;
                 tail="";
             }
         }
@@ -72,6 +84,15 @@ class GCase1: public NopTestCase{
 class GCase2: public NopTestCase{
 } gc2;
 
+namespace Alt1{
+    namespace Alt2{
+        class Case1: public NopTestCase{
+        } ac1;
+        class Case2: public NopTestCase{
+        } ac2;
+    }
+}
+
 namespace TestClassNameDocumentation{
 	using gppUnit::equals;
 
@@ -87,6 +108,7 @@ namespace TestClassNameDocumentation{
         } nc2;
     }
     using namespace NextLevel;
+    using namespace Alt1::Alt2;
 
     class MockDoc: public gppUnit::ClassDocumentation{
     //public:
@@ -179,6 +201,30 @@ namespace TestClassNameDocumentation{
                 "  Case1\n"
                 "  Case2\n"
                 );
+		}
+	}GPPUNIT_INSTANCE;
+	class DecreasingNamespacedTestCases: public TestDocumentation{
+        void givenProject(){
+            push_back(nc1);
+            push_back(nc2);
+            push_back(c1);
+            push_back(c2);
+            push_back(gc1);
+            push_back(gc2);
+       }
+		void test(){
+			givenProject();
+            whenRun();
+            thenDocumentationIs(
+                "TestClassNameDocumentation\n"
+                " NextLevel\n"
+                "  Case1\n"
+                "  Case2\n"
+                " Case1\n"
+                " Case2\n"
+                "GCase1\n"
+                "GCase2\n"
+               );
 		}
 	}GPPUNIT_INSTANCE;
 }
