@@ -60,7 +60,9 @@ namespace gppUnit {
 			stream << (*it++).toString();
 			tab();
 		}
-		std::copy(it, end, back_inserter(columns));
+		for(; it != end; ++it) {
+			columns.push_back(*it);
+		}
 		if(!line.streamIsEmpty) {
 			append(line.stream.str());
 		}

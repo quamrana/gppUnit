@@ -87,22 +87,22 @@ namespace gppUnit {
 		return (n == 1) ? "" : "es";
 	}
 
-	void StreamNotification::StartProject(const ProjectDescription& desc) {
+	void StreamNotification::StartProject(const ProjectDescription& projDesc) {
 		classCount = 0;
-		proj = &desc;
+		proj = &projDesc;
 		out << formatter.centreInAsterisks(proj->name()) << std::endl;
 		out << proj->classes() << " class" << plurale(proj->classes()) << " to run." << std::endl;
 	}
-	void StreamNotification::StartClass(const ClassDescription& desc) {
-		this->desc = &desc;
+	void StreamNotification::StartClass(const ClassDescription& classDesc) {
+		desc = &classDesc;
 		classShown = false;
 		classCount += 1;
 		if(!hasFailed) {
 			out << formatter.updateRunningAsterisks(proj->classes(), classCount);
 		}
 	}
-	void StreamNotification::StartMethod(const MethodDescription& desc) {
-		method = &desc;
+	void StreamNotification::StartMethod(const MethodDescription& methodDesc) {
+		method = &methodDesc;
 		methodShown = false;
 	}
 	void StreamNotification::Result(const TestResult& result) {

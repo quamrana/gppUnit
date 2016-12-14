@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="OptimisedDebug|Win32">
+      <Configuration>OptimisedDebug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>gppUnit1.5</ProjectName>
+    <ProjectGuid>{9D5B0AA8-247E-4C50-B086-E47DC18B05A6}</ProjectGuid>
+    <RootNamespace>src</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='OptimisedDebug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='OptimisedDebug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\StaticLibrary.props" />
+    <Import Project="..\ProjectDefaults.props" />
+    <Import Project="..\DebugOptimisations.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\StaticLibrary.props" />
+    <Import Project="..\ProjectDefaults.props" />
+    <Import Project="..\ReleaseOptimisations.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\StaticLibrary.props" />
+    <Import Project="..\ProjectDefaults.props" />
+    <Import Project="..\Debug.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>14.0.25431.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='OptimisedDebug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='OptimisedDebug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TableFormatting\TableFormatting.vcxproj">
+      <Project>{b48bac4e-dd31-4cbb-9804-8f56a4af076a}</Project>
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AssertException.cpp" />
+    <ClCompile Include="AutoMain.cpp" />
+    <ClCompile Include="AutoOptions.cpp" />
+    <ClCompile Include="AutoRunner.cpp" />
+    <ClCompile Include="AutoTest.cpp" />
+    <ClCompile Include="ClassDocumentation.cpp" />
+    <ClCompile Include="ClassRunner.cpp" />
+    <ClCompile Include="CompositeNotification.cpp" />
+    <ClCompile Include="Confirmation.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="MethodNames.cpp" />
+    <ClCompile Include="MethodResult.cpp" />
+    <ClCompile Include="MethodTimer.cpp" />
+    <ClCompile Include="NullMethodTimer.cpp" />
+    <ClCompile Include="ProjectRunner.cpp" />
+    <ClCompile Include="StreamNotification.cpp" />
+    <ClCompile Include="SuccessLogger.cpp" />
+    <ClCompile Include="TestCaseBase.cpp" />
+    <ClCompile Include="Win32\TypeInformation.cpp">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='OptimisedDebug|Win32'">.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AssertException.h" />
+    <ClInclude Include="AutoMain.h" />
+    <ClInclude Include="AutoMethodTimer.h" />
+    <ClInclude Include="AutoOptions.h" />
+    <ClInclude Include="AutoRunner.h" />
+    <ClInclude Include="AutoTest.h" />
+    <ClInclude Include="ClassDescription.h" />
+    <ClInclude Include="ClassDocumentation.h" />
+    <ClInclude Include="ClassRunner.h" />
+    <ClInclude Include="CompositeNotification.h" />
+    <ClInclude Include="Confirmation.h" />
+    <ClInclude Include="DataStructures.h" />
+    <ClInclude Include="Helpers.h" />
+    <ClInclude Include="MethodCaller.h" />
+    <ClInclude Include="MethodDescription.h" />
+    <ClInclude Include="MethodNames.h" />
+    <ClInclude Include="MethodResult.h" />
+    <ClInclude Include="MethodTimer.h" />
+    <ClInclude Include="Notification.h" />
+    <ClInclude Include="ProjectDescription.h" />
+    <ClInclude Include="ProjectRunner.h" />
+    <ClInclude Include="ReportResult.h" />
+    <ClInclude Include="StreamNotification.h" />
+    <ClInclude Include="SuccessLogger.h" />
+    <ClInclude Include="TestCase.h" />
+    <ClInclude Include="TestCaseBase.h" />
+    <ClInclude Include="TestCaseMethodCaller.h" />
+    <ClInclude Include="TestResult.h" />
+    <ClInclude Include="TimeReport.h" />
+    <ClInclude Include="TypeInformation.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -30,23 +30,23 @@ THE SOFTWARE.
 
 #include <sstream>
 
-namespace Utilities{
-	class DestructableNotification: public gppUnit::Notification{};
+namespace Utilities {
+	class DestructableNotification: public gppUnit::Notification {};
 
 	void reportTimeDividedByTen(gppUnit::TimeReport& report, int Time);
 
 	template<int TIME>
-	class MockAuto{
+	class MockAuto {
 		gppUnit::TimeReport& report;
 	public:
-		explicit MockAuto(gppUnit::TimeReport& report):report(report){}
-		~MockAuto(){
+		explicit MockAuto(gppUnit::TimeReport& report): report(report) {}
+		~MockAuto() {
 			reportTimeDividedByTen(report, TIME);
 		}
 		//int timeParameter(){ return TIME; }
 	};
 
-	class TestCaseCaller: public Auto::TestCase{
+	class TestCaseCaller: public Auto::TestCase {
 		gppUnit::TestCaseList cases;
 
 		void privateTimeMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report);
@@ -59,23 +59,23 @@ namespace Utilities{
 
 		bool projectReturn;
 	protected:
-		void add(gppUnit::PrototypeTestCase& testcase){
+		void add(gppUnit::PrototypeTestCase& testcase) {
 			cases.push_back(&testcase);
 		}
 
-		void givenNotification(gppUnit::Notification* notified){ notify=notified; }
-		void givenTimer(gppUnit::MethodTimer* timed){ timer=timed; }
+		void givenNotification(gppUnit::Notification* notified) { notify = notified; }
+		void givenTimer(gppUnit::MethodTimer* timed) { timer = timed; }
 		void whenCalled();
-		bool projectSummary(){ return projectReturn; }
+		bool projectSummary() { return projectReturn;	}
 
-		TestCaseCaller():cases(),notify(&emptyNotification),timer(&autoTimer){}
+		TestCaseCaller(): cases(), notify(&emptyNotification), timer(&autoTimer), projectReturn(false) {}
 	};
-	class MockTestCase: public virtual gppUnit::PrototypeTestCase{
-		void setReport(gppUnit::ReportResult*report){ reporter=report; }
+	class MockTestCase: public virtual gppUnit::PrototypeTestCase {
+		void setReport(gppUnit::ReportResult* report) { reporter = report; }
 	protected:
 		gppUnit::ReportResult* reporter;
 	};
-	class ReportingMockTestCase: public MockTestCase{
+	class ReportingMockTestCase: public MockTestCase {
 		void test();
 	};
 
