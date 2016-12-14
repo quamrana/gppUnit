@@ -58,14 +58,10 @@ namespace gppUnit {
 	// TODO: Turn run() inside out.
 	// Make a ClassRunner a member, then hand it a testcase in each iteration.
 	bool ProjectRunner::run() {
-		std::for_each(cases.begin(), cases.end(),
-		              std::bind1st(
-		                  std::mem_fun(&ProjectRunner::call),
-		                  this
-		              )
-		             );
+		for(auto testcase : cases) {
+			call(testcase);
+		}
 		calculateProjectData();
 		return projectData.goodReport;
 	}
 }
-

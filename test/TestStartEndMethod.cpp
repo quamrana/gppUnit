@@ -29,95 +29,89 @@ THE SOFTWARE.
 
 #include <sstream>
 
-namespace TestStartEndMethod{
+namespace TestStartEndMethod {
 	using gppUnit::equals;
 
-	class MockTestCaseVariableResults: public Utilities::MockTestCase{
+	class MockTestCaseVariableResults: public Utilities::MockTestCase {
 		int number;
-		void test(){ 
+		void test() {
 			gppUnit::TestResult result;
-			for(int i=0;i<number;++i){
-				reporter->Report(result); 
+			for(int i = 0; i < number; ++i) {
+				reporter->Report(result);
 			}
 		}
 	public:
-		explicit MockTestCaseVariableResults(int n):number(n){}
+		explicit MockTestCaseVariableResults(int n): number(n) {}
 	};
 
-	std::string setuptestteardownString(int results){
+	std::string setuptestteardownString(int results) {
 		std::stringstream strm;
 		strm << gppUnit::setupMethodName() << ".0.end." <<
-			gppUnit::testMethodName() << '.' << results << ".end." <<
-			gppUnit::teardownMethodName() << ".0.end."; 
+		     gppUnit::testMethodName() << '.' << results << ".end." <<
+		     gppUnit::teardownMethodName() << ".0.end.";
 		return strm.str();
 	}
 
-	class TestNumResultsBase: public Utilities::TestCaseCaller, gppUnit::Notification{
+	class TestNumResultsBase: public Utilities::TestCaseCaller, gppUnit::Notification {
 	protected:
 		std::stringstream collect;
 	private:
 		MockTestCaseVariableResults* testcase;
 		const gppUnit::MethodDescription* description;
 
-		void StartMethod(const gppUnit::MethodDescription& desc){
-			description=&desc;
+		void StartMethod(const gppUnit::MethodDescription& desc) {
+			description = &desc;
 			collect << desc.name();
 		}
-		void EndMethod(){
+		void EndMethod() {
 			collect << '.' << description->results() << '.' << "end.";
 		}
-		void teardown(){
+		void teardown() {
 			delete testcase;
 		}
 	protected:
-		void givenMockTestCase(int n){
-			testcase=new MockTestCaseVariableResults(n);
+		void givenMockTestCase(int n) {
+			testcase = new MockTestCaseVariableResults(n);
 			add(*testcase);
 			givenNotification(this);
 		}
-		void thenEachMethodStartedAndEndedWithNumResults(int results){
-			confirm.that(collect,equals(setuptestteardownString(results)),"Should have called three methods");
+		void thenEachMethodStartedAndEndedWithNumResults(int results) {
+			confirm.that(collect, equals(setuptestteardownString(results)), "Should have called three methods");
 		}
-		void thenResultRecordedInTest(){
-			confirm.that(collect.str().find("test.0.1.end"),!equals(std::string::npos),"Test result is 0.1");
+		void thenResultRecordedInTest() {
+			confirm.that(collect.str().find("test.0.1.end"), !equals(std::string::npos), "Test result is 0.1");
 		}
 	};
 	template<int NUM>
-	class TestNumResults: TestNumResultsBase{
+	class TestNumResults: protected TestNumResultsBase {
 	protected:
-		void test(){
+		void test() {
 			givenMockTestCase(NUM);
 			whenCalled();
 			thenEachMethodStartedAndEndedWithNumResults(NUM);
 		}
-	public:
-		~TestNumResults(){}
 	};
 
-	class TestNoResults: public TestNumResults<0>{
+	class TestNoResults: public TestNumResults<0> {
 	public:
-		~TestNoResults(){}
-	}GPPUNIT_INSTANCE;
+	} GPPUNIT_INSTANCE;
 
-	class TestOneResult: public TestNumResults<1>{
+	class TestOneResult: public TestNumResults<1> {
 	public:
-		~TestOneResult(){}
-	}GPPUNIT_INSTANCE;
+	} GPPUNIT_INSTANCE;
 
-	class TestTwoResults: public TestNumResults<2>{
+	class TestTwoResults: public TestNumResults<2> {
 	public:
-		~TestTwoResults(){}
-	}GPPUNIT_INSTANCE;
+	} GPPUNIT_INSTANCE;
 
-	class TestResultContentTrue: public TestNumResultsBase{
-		virtual void Result(const gppUnit::TestResult& result){
+	class TestResultContentTrue: public TestNumResultsBase {
+		virtual void Result(const gppUnit::TestResult& result) {
 			collect << '.' << result.result;
 		}
-		void test(){
+		void test() {
 			givenMockTestCase(1);
 			whenCalled();
 			thenResultRecordedInTest();
 		}
-	}GPPUNIT_INSTANCE;
+	} GPPUNIT_INSTANCE;
 }
-
