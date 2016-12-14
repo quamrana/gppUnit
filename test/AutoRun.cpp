@@ -34,33 +34,35 @@ THE SOFTWARE.
 namespace {
 	gppUnit::StreamNotification Notifier(std::cout);
 
-	class TimeLogging: public gppUnit::Notification{
+	class TimeLogging: public gppUnit::Notification {
 		std::stringstream out;
 		const gppUnit::ClassDescription* desc;
 		const gppUnit::MethodDescription* method;
 
-		void StartClass(const gppUnit::ClassDescription&desc){
-					this->desc = &desc;
-					out << desc.name() << std::endl;
+		void StartClass(const gppUnit::ClassDescription& classDesc) {
+			desc = &classDesc;
+			out << classDesc.name() << std::endl;
 		}
-		void StartMethod(const gppUnit::MethodDescription&desc){
-					method = &desc;
-					out << " " << desc.name();
+		void StartMethod(const gppUnit::MethodDescription& methodDesc) {
+			method = &methodDesc;
+			out << " " << methodDesc.name();
 		}
 
-		void EndMethod(){
+		void EndMethod() {
 			out << " " << method->run_time() << std::endl;
 		}
-		void EndProject(){
+		void EndProject() {
 			std::cout << out.str();
 		}
-	}tlog;
+	public:
+		TimeLogging(): desc(0), method(0) {}
+	} tlog;
 
 	gppUnit::SuccessLogger success;
-	gppUnit::FileLoggerNotification fln1("gppUnit.log",success);
+	gppUnit::FileLoggerNotification fln1("gppUnit.log", success);
 
 	gppUnit::AllRunsLogger allRuns;
-	gppUnit::FileLoggerNotification fln2("gppUnit-allruns.log",allRuns);
+	gppUnit::FileLoggerNotification fln2("gppUnit-allruns.log", allRuns);
 }
 
 namespace gppUnit {
