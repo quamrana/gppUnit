@@ -1,4 +1,6 @@
---brackets=attach
+--dry-run
+
+--style=java
 
 --indent=tab=4
 
@@ -15,4 +17,4 @@
 
 --suffix=none
 
---recursive
+--formatted
