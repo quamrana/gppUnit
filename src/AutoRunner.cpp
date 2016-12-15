@@ -20,8 +20,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #include "AutoRunner.h"
+
 #include "MethodTimer.h"
-#include "MethodCaller.h"
 #include "ProjectRunner.h"
 
 namespace {

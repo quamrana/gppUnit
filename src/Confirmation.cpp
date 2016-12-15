@@ -21,6 +21,7 @@ THE SOFTWARE.
 */
 
 #include "Confirmation.h"
+
 #include "AssertException.h"
 #include "ReportResult.h"
 #include "TestResult.h"

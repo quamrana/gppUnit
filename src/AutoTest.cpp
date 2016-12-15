@@ -45,5 +45,4 @@ namespace gppUnit {
 
 	// AutoTest registers itself with autoTests()
 	AutoTest::AutoTest() { autoTests().push_back(this); }
-
 }
