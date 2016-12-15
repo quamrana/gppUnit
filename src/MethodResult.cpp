@@ -39,21 +39,19 @@ namespace gppUnit {
 	MethodResult::~MethodResult() { notify.EndMethod(); }
 
 	bool MethodResult::protectMethodFromAssertException() {
-		bool result = false;
 		try {
 			timer.timeMethod(method, *this);
-			result = true;
+			return true;
 		} catch(AssertException&) {
 			//
 			// Deliberately catch, then ignore exception
 			//
 		}
-		return result;
+		return false;
 	}
 	bool MethodResult::protectMethodFromCommonExceptions() {
-		bool result = false;
 		try {
-			result = protectMethodFromAssertException();
+			return protectMethodFromAssertException();
 		} catch(std::exception& e) {
 			reportException(e.what());
 		} catch(std::string& e) {
@@ -63,7 +61,7 @@ namespace gppUnit {
 		} catch(int e) {
 			reportException(e);
 		}
-		return result;
+		return false;
 	}
 
 	bool MethodResult::protectMethod() {
@@ -85,5 +83,4 @@ namespace gppUnit {
 	void MethodResult::Exception(const std::string& what) {
 		notify.Exception(what);
 	}
-
 }

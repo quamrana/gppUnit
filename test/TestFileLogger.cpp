@@ -23,6 +23,7 @@ THE SOFTWARE.
 #include "src\ProjectDescription.h"
 
 #include "AutoRun.h"
+#include "src\AssertException.h"
 
 namespace TestFileLogger {
 	using gppUnit::equals;
@@ -77,6 +78,43 @@ namespace TestFileLogger {
 			whenStartAndEndProjectCalled();
 			thenDetailsPassedToInterface();
 			FileLoggerThatCanBeDeletedForCoverage d;
+
+			throw gppUnit::AssertException();
+		}
+	} GPPUNIT_INSTANCE;
+
+	class TestMethodBase : public Auto::TestCase {
+		bool testHasRun;
+		void setup() {
+			testHasRun = false;
+		}
+		void test() {
+			testHasRun = true;
+		}
+	protected:
+		void givenTestHasNotRun() {
+			testHasRun = false;
+		}
+		void thenTestMethodHasNotRun() {
+			confirm.isFalse(testHasRun, "test method should not have run");
+		}
+		void thenTestMethodHasRun() {
+			confirm.isTrue(testHasRun, "test method should have run");
+		}
+	} GPPUNIT_INSTANCE;
+
+	class SetupThrows : public TestMethodBase {
+		void setup() {
+			givenTestHasNotRun();
+			throw gppUnit::AssertException();
+		}
+		void teardown() {
+			thenTestMethodHasNotRun();
+		}
+	} GPPUNIT_INSTANCE;
+	class SetupDoesNotThrow : public TestMethodBase {
+		void teardown() {
+			thenTestMethodHasRun();
 		}
 	} GPPUNIT_INSTANCE;
 
