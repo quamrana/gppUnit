@@ -36,4 +36,3 @@ namespace gppUnit {
 		return runner.run(autoTests());
 	}
 }
-

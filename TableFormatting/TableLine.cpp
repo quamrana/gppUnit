@@ -131,5 +131,4 @@ namespace gppUnit {
 
 		std::transform(columns.begin(), columns.end(), sizes.begin(), sizes.begin(), LineFunctors::Update());
 	}
-
 }

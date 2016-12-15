@@ -31,4 +31,3 @@ int main(int , char* []) {
 #endif
 	return !result;
 }
-

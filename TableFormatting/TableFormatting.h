@@ -23,8 +23,6 @@ THE SOFTWARE.
 #define TABLEFORMATTING_H_108BF9D9_0404_4F82_8E5F_0C16A9C9B355
 
 #include <string>
-#include <vector>
-#include <sstream>
 
 #include "TableLine.h"
 

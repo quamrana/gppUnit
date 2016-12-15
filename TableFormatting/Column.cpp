@@ -31,4 +31,3 @@ namespace gppUnit {
 		return result;
 	}
 }
-
