@@ -75,7 +75,7 @@ namespace gppUnit {
 			return result;
 		}
 	private:
-		const char* toString(bool value) { return value ? "true" : "false"; }
+		static const char* toString(bool value) { return value ? "true" : "false"; }
 	};
 
 	template <>

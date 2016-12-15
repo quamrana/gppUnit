@@ -25,19 +25,19 @@ THE SOFTWARE.
 namespace gppUnit {
 	template<typename T>
 	struct Report {
-		bool operator()(bool init, const T& description) {
-			return init & description.goodReport;
+		bool operator()(bool init, const T& description) const {
+			return init && description.goodReport;
 		}
 	};
 	template<typename T>
 	struct Results {
-		size_t operator()(size_t init, const T& description) {
+		size_t operator()(size_t init, const T& description) const {
 			return init + description.results;
 		}
 	};
 	template<typename T>
 	struct RunTime {
-		double operator()(double init, const T& description) {
+		double operator()(double init, const T& description) const {
 			return init + description.reportedTime;
 		}
 	};

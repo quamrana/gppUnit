@@ -46,8 +46,8 @@ namespace gppUnit {
 	public:
 		TableFormatter();
 		void clear() { clearLine(); page.clear(); }
-		size_t lineSize() { return line.size(); }
-		size_t indentSize() { return summarySizes.size(); }
+		size_t lineSize() const { return line.size(); }
+		size_t indentSize() const { return summarySizes.size(); }
 		template<typename ValueArgument>
 		TableFormatter& operator<<(const ValueArgument& str) {
 			line.append(str);

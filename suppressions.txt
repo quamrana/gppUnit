@@ -1,0 +1,8 @@
+missingIncludeSystem
+unmatchedSuppression
+
+functionStatic:Matchers\Matchers.h:36
+functionStatic:Matchers\MatcherSpecializations.h:48
+functionStatic:Matchers\MatcherSpecializations.h:69
+functionStatic:Matchers\MatcherSpecializations.h:83
+functionStatic:Matchers\MatcherSpecializations.h:91

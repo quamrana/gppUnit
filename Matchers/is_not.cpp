@@ -22,7 +22,7 @@ THE SOFTWARE.
 #include "is_not.h"
 
 namespace gppUnit {
-	MatcherResult is_not_helper::match(const MatcherResult& fwdresult) const {
+	MatcherResult is_not_helper::match(const MatcherResult& fwdresult) {
 		MatcherResult result(!fwdresult.result);
 		result.strm << "not" << tab << fwdresult.strm;
 		result.hasActual = fwdresult.hasActual;
