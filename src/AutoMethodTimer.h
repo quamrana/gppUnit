@@ -29,8 +29,8 @@ namespace gppUnit {
 	class TimeReport;
 
 	template<typename AUTO>
-	class AutoMethodTimer: public gppUnit::MethodTimer {
-		void timeMethod(gppUnit::MethodCaller& caller, gppUnit::TimeReport& report) {
+	class AutoMethodTimer: public MethodTimer {
+		void timeMethod(MethodCaller& caller, TimeReport& report) {
 			AUTO timer_(report);
 			caller.forward();
 		}

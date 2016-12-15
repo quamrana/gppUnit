@@ -141,7 +141,7 @@ namespace gppUnit {
 		ShowMethod();
 		out << MessagePrefix;
 	}
-	void StreamNotification::ShowDescription(std::string output) const {
+	void StreamNotification::ShowDescription(const std::string& output) const {
 		out << DescriptionPrefix << output << std::endl;
 	}
 	void StreamNotification::ShowFailure(const TestResult& result) {
@@ -151,12 +151,9 @@ namespace gppUnit {
 		} else {
 			out << "Message: " << result.message << std::endl;
 		}
-		std::for_each(result.description.begin(), result.description.end(),
-		              std::bind1st(
-		                  std::mem_fun(&StreamNotification::ShowDescription),
-		                  this
-		              )
-		             );
+		for(const auto& output : result.description) {
+			ShowDescription(output);
+		}
 	}
 	void StreamNotification::Exception(const std::string& what) {
 		BeforeMessage();

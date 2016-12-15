@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 namespace gppUnit {
 	struct is_not_helper {
-		MatcherResult match(const MatcherResult& fwdresult) const ;
+		static MatcherResult match(const MatcherResult& fwdresult) ;
 	};
 	template <typename T>
 	struct is_not_t: is_not_helper {

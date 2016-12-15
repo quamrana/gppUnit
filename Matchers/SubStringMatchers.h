@@ -35,7 +35,7 @@ namespace gppUnit {
 
 		template<typename CONTAINER, typename T>
 		struct Contains {
-			MatcherResult operator()(const CONTAINER& actual, const T& expected) {
+			MatcherResult operator()(const CONTAINER& actual, const T& expected) const {
 				bool found = (std::find(actual.begin(), actual.end(), expected) != actual.end());
 				MatcherResult result(found);
 				result.strm << "a container that contains '" << expected << "'";
@@ -47,7 +47,7 @@ namespace gppUnit {
 
 		template<typename T, typename U>
 		struct StringContains {
-			MatcherResult operator()(const T& actual, const U& expected) {
+			MatcherResult operator()(const T& actual, const U& expected) const {
 				return contains(ProxyValue(actual), ProxyValue(expected));
 			}
 		};

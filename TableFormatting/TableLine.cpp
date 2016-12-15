@@ -70,7 +70,7 @@ namespace gppUnit {
 
 	namespace LineFunctors {
 		struct Accumulator {
-			std::string operator()(const std::string& value, const Column& column) {
+			std::string operator()(const std::string& value, const Column& column) const {
 				return value + column.toString();
 			}
 		};
@@ -82,7 +82,7 @@ namespace gppUnit {
 			}
 		};
 		struct Update {
-			size_t operator()(const Column& column, size_t size) {
+			size_t operator()(const Column& column, size_t size) const {
 				size_t other = column.size() + 1;
 				return (size >= other) ? size : other;
 			}

@@ -306,3 +306,4 @@ namespace ConfirmationCoverage {
 		}
 	} GPPUNIT_INSTANCE;
 }
+

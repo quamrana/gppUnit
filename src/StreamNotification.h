@@ -65,7 +65,7 @@ namespace gppUnit {
 		void ShowMethod();
 		void BeforeMessage();
 
-		void ShowDescription(std::string) const ;
+		void ShowDescription(const std::string&) const ;
 		void ShowFailure(const TestResult&);
 	public:
 		explicit StreamNotification(std::ostream& out);

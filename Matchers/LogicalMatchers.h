@@ -35,8 +35,8 @@ namespace gppUnit {
 
 	};
 	struct any_of_helper {
-		MatcherResult match(const MatcherResult& left, const MatcherResult& right) const ;
-		MatcherResult nestedMatch(const MatcherResult& left, const MatcherResult& right) const ;
+		static MatcherResult match(const MatcherResult& left, const MatcherResult& right);
+		static MatcherResult nestedMatch(const MatcherResult& left, const MatcherResult& right);
 	};
 
 	template<typename Matcher1, typename Matcher2>
@@ -91,8 +91,8 @@ namespace gppUnit {
 
 //==========================================================================================
 	struct all_of_helper {
-		MatcherResult match(const MatcherResult& left, const MatcherResult& right) const ;
-		MatcherResult nestedMatch(const MatcherResult& left, const MatcherResult& right) const ;
+		static MatcherResult match(const MatcherResult& left, const MatcherResult& right);
+		static MatcherResult nestedMatch(const MatcherResult& left, const MatcherResult& right);
 	};
 
 	template<typename Matcher1, typename Matcher2>
