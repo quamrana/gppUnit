@@ -35,14 +35,16 @@ def gcc():
 		)
 
 def mingw():
-	path=['C:\MINGW\BIN','C:\Python27\Scripts','.\Scripts']
+	path=['D:\MINGW\BIN','C:\Python27\Scripts','.\Scripts']
 	cppflags=getGccflags()
 	return DefaultEnvironment(tools = ['g++','gnulink','ar'],
-		ENV={'PATH':path},
+		ENV={'PATH':path, 'TEMP':'C:\Temp'},
 		CPPFLAGS=cppflags,
 		#EXTRA='unix',
 		COV=cov
 		)
+
+env = None
 
 def Env(key):
 	try:
@@ -64,14 +66,17 @@ else:
 print "compiler is:", compiler
 print "cov is:", cov
 print "CXX is:", Env('CXX')
-print "CPP is:", Env('CPP')
-print "CC is:", Env('CC')
+#print "CPP is:", Env('CPP')
+#print "CC is:", Env('CC')
 print "LINK is:", Env('LINK')
 print "LIB is:", Env('AR')
 #print "CCFLAGS is:", Env('CCFLAGS')
 #print "CPPPATH is:", Env('CPPPATH')
 #print "LIBPATH is:", Env('LIBPATH')
 #print "BUILDERS: ", Env('BUILDERS')
+#print "TEMP is:", Env('TEMP')
+#print "TMP is:", Env('TMP')
+
 #print env.Dump()
 
 env.SConscript(['src/SConscript','test/SConscript','Matchers/SConscript','TableFormatting/SConscript'])
