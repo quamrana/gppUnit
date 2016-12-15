@@ -43,7 +43,7 @@ namespace gppUnit {
 			return (*this);
 		}
 		// operator* and operator++ to satisfy std::copy
-		format_iterator_t& operator*() {	return (*this);	}
+		format_iterator_t& operator*() { return (*this);	}
 		format_iterator_t& operator++() { return (*this); }
 
 	protected:

@@ -1,0 +1,4 @@
+syntax: glob
+*.idb
+*.tlog
+Backup/*

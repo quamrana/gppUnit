@@ -178,5 +178,4 @@ namespace gppUnit {
 	void StreamNotification::EndMethod() {
 		//out << method->run_time() << std::endl;
 	}
-
 }
