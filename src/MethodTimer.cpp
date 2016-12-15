@@ -20,8 +20,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #include "MethodTimer.h"
+
 #include "TimeReport.h"
-#include "MethodCaller.h"
 #include "AutoMethodTimer.h"
 
 #include <windows.h>
@@ -52,7 +52,6 @@ namespace {
 	class AutoTimer {
 		gppUnit::TimeReport& report;
 		time_interval time;
-		AutoTimer& operator=(const AutoTimer&);
 	public:
 		explicit AutoTimer(gppUnit::TimeReport& report): report(report),
 			time(getTime())

@@ -20,6 +20,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #include "StreamNotification.h"
+
 #include "ProjectDescription.h"
 #include "ClassDescription.h"
 #include "MethodDescription.h"

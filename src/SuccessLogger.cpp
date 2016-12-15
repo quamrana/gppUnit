@@ -23,7 +23,6 @@ THE SOFTWARE.
 
 #include "ProjectDescription.h"
 
-
 namespace gppUnit {
 	using std::endl;
 
