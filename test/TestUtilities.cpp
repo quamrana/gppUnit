@@ -26,18 +26,18 @@ THE SOFTWARE.
 
 #include "TestUtilities.h"
 
-namespace Utilities{
+namespace Utilities {
 
-	void reportTimeDividedByTen(gppUnit::TimeReport& report, int Time){
-		double time=Time;
-		report.reportTime(time/10);
+	void reportTimeDividedByTen(gppUnit::TimeReport& report, int Time) {
+		double time = Time;
+		report.reportTime(time / 10);
 	}
 
-	void TestCaseCaller::whenCalled(){
-		gppUnit::ProjectRunner runner("TestCaseCaller",*notify,*timer,cases);
-		projectReturn=runner.run();
+	void TestCaseCaller::whenCalled() {
+		gppUnit::ProjectRunner runner("TestCaseCaller", *notify, *timer, cases);
+		projectReturn = runner.run();
 	}
-	void ReportingMockTestCase::test(){
+	void ReportingMockTestCase::test() {
 		gppUnit::TestResult result;
 		reporter->Report(result);
 	}

@@ -21,39 +21,39 @@ THE SOFTWARE.
 */
 #include "TestMatchersHelpers.h"
 
-namespace TestGreaterThan{
+namespace TestGreaterThan {
 	using Utilities::MatcherHelper;
 	using gppUnit::greater_than;
 	using gppUnit::equal_to;
 
-	class TestIntegers: public MatcherHelper{
-		void test(){
-			int integer=1;
-			long longint=2;
-			signed char schar=-4;
+	class TestIntegers: public MatcherHelper {
+		void test() {
+			int integer = 1;
+			long longint = 2;
+			signed char schar = -4;
 			std::vector<MatcherHelper*> vec;
 
-			That(longint,greater_than(integer),"a value greater than '1'\n");
-			That(integer,greater_than(vec.size()),"a value greater than '0'\n");
-			That(longint,greater_than(schar),"a value greater than '-4'\n");
-			That(vec.size(),greater_than(schar),"a value greater than '-4'\n");
+			That(longint, greater_than(integer), "a value greater than '1'\n");
+			That(integer, greater_than(vec.size()), "a value greater than '0'\n");
+			That(longint, greater_than(schar), "a value greater than '-4'\n");
+			That(vec.size(), greater_than(schar), "a value greater than '-4'\n");
 
-			That(integer,!greater_than(longint),"not a value greater than '2'\n");
-			That(vec.size(),!greater_than(integer),"not a value greater than '1'\n");
-			That(schar,!greater_than(longint),"not a value greater than '2'\n");
-			That(schar,!greater_than(vec.size()),"not a value greater than '0'\n");
+			That(integer, !greater_than(longint), "not a value greater than '2'\n");
+			That(vec.size(), !greater_than(integer), "not a value greater than '1'\n");
+			That(schar, !greater_than(longint), "not a value greater than '2'\n");
+			That(schar, !greater_than(vec.size()), "not a value greater than '0'\n");
 		}
-	}GPPUNIT_INSTANCE;
+	} GPPUNIT_INSTANCE;
 
-	class TestReal: public MatcherHelper{
-		void test(){
-			float floater=2;
-			double dubble=3;
+	class TestReal: public MatcherHelper {
+		void test() {
+			float floater = 2;
+			double dubble = 3;
 
-			That(dubble,!greater_than(dubble),"not a value greater than '3'\n");
-			That(dubble,greater_than(floater),"a value greater than '2'\n");
-			That(floater,!greater_than(floater),"not a value greater than '2'\n");
-			That(floater,!greater_than(dubble),"not a value greater than '3'\n");
+			That(dubble, !greater_than(dubble), "not a value greater than '3'\n");
+			That(dubble, greater_than(floater), "a value greater than '2'\n");
+			That(floater, !greater_than(floater), "not a value greater than '2'\n");
+			That(floater, !greater_than(dubble), "not a value greater than '3'\n");
 		}
-	}GPPUNIT_INSTANCE;
+	} GPPUNIT_INSTANCE;
 }

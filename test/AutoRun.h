@@ -28,13 +28,13 @@ THE SOFTWARE.
 #include "Matchers\MatcherSpecializations.h"
 
 namespace Auto {
-	class TestCase: public gppUnit::TestCaseBase, gppUnit::AutoTest{};
+	class TestCase: public gppUnit::TestCaseBase, gppUnit::AutoTest {};
 }
 
 #define  _CONCAT(a, b) _XCAT(a, b)
 #define  _XCAT(a, b)   a ## b
 
-#define GPPUNIT_INSTANCE  _CONCAT(gppUnit_Instance_,__LINE__) 
+#define GPPUNIT_INSTANCE  _CONCAT(gppUnit_Instance_,__LINE__)
 
 
 /*

@@ -27,36 +27,36 @@ THE SOFTWARE.
 
 #include <sstream>
 
-namespace TestAutoMethodTimer{
+namespace TestAutoMethodTimer {
 	using gppUnit::equals;
 
-	class Test: public Auto::TestCase, gppUnit::MethodCaller, gppUnit::TimeReport{
+	class Test: public Auto::TestCase, gppUnit::MethodCaller, gppUnit::TimeReport {
 		gppUnit::AutoMethodTimer<Utilities::MockAuto<0> >* mockauto;
 		gppUnit::MethodTimer* caller;
 		std::stringstream strm;
 
-		void setup(){ mockauto=new gppUnit::AutoMethodTimer<Utilities::MockAuto<0> >; }
+		void setup() { mockauto = new gppUnit::AutoMethodTimer<Utilities::MockAuto<0> >; }
 		void teardown() { delete mockauto; }
-		virtual void forward(){ 
+		virtual void forward() {
 			strm << "fwd.";
 		}
-		virtual void reportTime(double /* run_time */){
+		virtual void reportTime(double /* run_time */) {
 			strm << "time.";
 		}
 
-		void givenAutoMethodTimer(){
-			caller=mockauto;
+		void givenAutoMethodTimer() {
+			caller = mockauto;
 		}
-		void whenCalled(){
-			caller->timeMethod(*this,*this);
+		void whenCalled() {
+			caller->timeMethod(*this, *this);
 		}
-		void thenMethodCalledBeforeTimeReported(){
-			confirm.that("fwd.time.",equals(strm),"forward before time");
+		void thenMethodCalledBeforeTimeReported() {
+			confirm.that("fwd.time.", equals(strm), "forward before time");
 		}
-		void test(){
+		void test() {
 			givenAutoMethodTimer();
 			whenCalled();
 			thenMethodCalledBeforeTimeReported();
 		}
-	}GPPUNIT_INSTANCE;
+	} GPPUNIT_INSTANCE;
 }

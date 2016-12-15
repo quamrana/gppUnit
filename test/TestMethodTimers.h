@@ -30,11 +30,11 @@ THE SOFTWARE.
 
 #include <sstream>
 
-namespace TestMethodTimers{
-    class MethodTimerTestHelper: public Auto::TestCase, gppUnit::MethodCaller, gppUnit::TimeReport{
+namespace TestMethodTimers {
+	class MethodTimerTestHelper: public Auto::TestCase, gppUnit::MethodCaller, gppUnit::TimeReport {
 		gppUnit::MethodTimer* aTimer;
 
-    protected:
+	protected:
 		bool methodCalled;
 		bool timeReported;
 		double runtimeReport;
@@ -46,6 +46,6 @@ namespace TestMethodTimers{
 		void givenTimer(gppUnit::MethodTimer& given);
 		void whenCalled();
 		void thenMethodCalled();
-    };
+	};
 }
 #endif // TESTMETHODTIMERS_H_5119E4AA_7A61_49FF_80C1_048CC165F549

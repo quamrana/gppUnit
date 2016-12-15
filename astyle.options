@@ -1,5 +1,3 @@
---dry-run
-
 --style=java
 
 --indent=tab=4
@@ -18,3 +16,5 @@
 --suffix=none
 
 --formatted
+
+--recursive

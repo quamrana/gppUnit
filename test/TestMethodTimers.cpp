@@ -21,28 +21,28 @@ THE SOFTWARE.
 */
 #include "TestMethodTimers.h"
 
-namespace TestMethodTimers{
+namespace TestMethodTimers {
 
-    void MethodTimerTestHelper::forward(){ 
-        methodCalled=true; 
-        methodCallLog << "fwd.";
-    }
-    void MethodTimerTestHelper::reportTime(double run_time){
-        timeReported=true;
-        runtimeReport=run_time;
-        methodCallLog << "time.";
-    }
-    void MethodTimerTestHelper::givenTimer(gppUnit::MethodTimer& given){
-        aTimer=&given;
-        methodCalled=false;
-        timeReported=false;
-        runtimeReport=-1;
-        methodCallLog.str("");
-    }
-    void MethodTimerTestHelper::whenCalled(){
-        aTimer->timeMethod(*this,*this);
-    }
-    void MethodTimerTestHelper::thenMethodCalled(){
-        confirm.isTrue(methodCalled,"Forward should be called");
-    }
+	void MethodTimerTestHelper::forward() {
+		methodCalled = true;
+		methodCallLog << "fwd.";
+	}
+	void MethodTimerTestHelper::reportTime(double run_time) {
+		timeReported = true;
+		runtimeReport = run_time;
+		methodCallLog << "time.";
+	}
+	void MethodTimerTestHelper::givenTimer(gppUnit::MethodTimer& given) {
+		aTimer = &given;
+		methodCalled = false;
+		timeReported = false;
+		runtimeReport = -1;
+		methodCallLog.str("");
+	}
+	void MethodTimerTestHelper::whenCalled() {
+		aTimer->timeMethod(*this, *this);
+	}
+	void MethodTimerTestHelper::thenMethodCalled() {
+		confirm.isTrue(methodCalled, "Forward should be called");
+	}
 }
