@@ -26,17 +26,17 @@ THE SOFTWARE.
 #include "TestMethodTimers.h"
 
 namespace TestNullMethodTimer {
-    class Test: TestMethodTimers::MethodTimerTestHelper{
-        gppUnit::NullTimer nullTimer;
-        void givenNullTimer(){ givenTimer(nullTimer); }
-		void thenTimeNotReported(){
-			confirm.isFalse(timeReported,"Time should not be reported");
+	class Test: TestMethodTimers::MethodTimerTestHelper {
+		gppUnit::NullTimer nullTimer;
+		void givenNullTimer() { givenTimer(nullTimer); }
+		void thenTimeNotReported() {
+			confirm.isFalse(timeReported, "Time should not be reported");
 		}
-        void test(){
-            givenNullTimer();
-            whenCalled();
-            thenMethodCalled();
-            thenTimeNotReported();
+		void test() {
+			givenNullTimer();
+			whenCalled();
+			thenMethodCalled();
+			thenTimeNotReported();
 		}
-	}GPPUNIT_INSTANCE;
+	} GPPUNIT_INSTANCE;
 }

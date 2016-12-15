@@ -23,177 +23,177 @@ THE SOFTWARE.
 
 #include <string.h>
 
-namespace TestMatcherResult{
-	class MatcherResultConstructor: public Auto::TestCase{
-		void test(){
+namespace TestMatcherResult {
+	class MatcherResultConstructor: public Auto::TestCase {
+		void test() {
 			gppUnit::MatcherResult result;
-			confirm.isFalse(result.result,"Default constructor gives a false result");
+			confirm.isFalse(result.result, "Default constructor gives a false result");
 		}
-	}GPPUNIT_INSTANCE;
+	} GPPUNIT_INSTANCE;
 }
-namespace TestEqualTo{
+namespace TestEqualTo {
 	using gppUnit::equal_to;
 	using Utilities::MatcherHelper;
 
-	class IntAndLong: public MatcherHelper{
-		void test(){
-			int actual=1;
-			long expected=1;
-			That(actual,equal_to(expected),"'1'\n'1'\n");
+	class IntAndLong: public MatcherHelper {
+		void test() {
+			int actual = 1;
+			long expected = 1;
+			That(actual, equal_to(expected), "'1'\n'1'\n");
 
-			actual=2;
-			MisMatch(actual,equal_to(expected),"'1'\n'2'\n");
+			actual = 2;
+			MisMatch(actual, equal_to(expected), "'1'\n'2'\n");
 
-			That(actual,is_not(equal_to(expected)),"not '1'\n'2'\n");
-			That(actual,!equal_to(expected),"not '1'\n'2'\n");
+			That(actual, is_not(equal_to(expected)), "not '1'\n'2'\n");
+			That(actual, !equal_to(expected), "not '1'\n'2'\n");
 		}
-	}GPPUNIT_INSTANCE;
+	} GPPUNIT_INSTANCE;
 
-	class TrueAndFalse: public MatcherHelper{
-		void test(){
-			That(true,equal_to(true),"'true'\n'true'\n");
-			That(false,equal_to(false),"'false'\n'false'\n");
+	class TrueAndFalse: public MatcherHelper {
+		void test() {
+			That(true, equal_to(true), "'true'\n'true'\n");
+			That(false, equal_to(false), "'false'\n'false'\n");
 
-			MisMatch(false,equal_to(true),"'true'\n'false'\n");
-			MisMatch(true,equal_to(false),"'false'\n'true'\n");
+			MisMatch(false, equal_to(true), "'true'\n'false'\n");
+			MisMatch(true, equal_to(false), "'false'\n'true'\n");
 		}
-	}GPPUNIT_INSTANCE;
+	} GPPUNIT_INSTANCE;
 
-	class DoubleNegative: public MatcherHelper{
-		void test(){
-			int actual=1;
-			long expected=1;
-			That(actual,equal_to(expected),"'1'\n'1'\n");
+	class DoubleNegative: public MatcherHelper {
+		void test() {
+			int actual = 1;
+			long expected = 1;
+			That(actual, equal_to(expected), "'1'\n'1'\n");
 
-			That(actual,is_not(is_not(equal_to(expected))),"'1'\n'1'\n");
+			That(actual, is_not(is_not(equal_to(expected))), "'1'\n'1'\n");
 		}
-	}GPPUNIT_INSTANCE;
+	} GPPUNIT_INSTANCE;
 
-	class TestFloatEqualsWithin: public MatcherHelper{
-		void test(){
-			float floatsmall=2.05f;
-			float floatlarge=2.06f;
+	class TestFloatEqualsWithin: public MatcherHelper {
+		void test() {
+			float floatsmall = 2.05f;
+			float floatlarge = 2.06f;
 
-			That(floatsmall,equal_to(floatlarge).within(0.1),"'2.06' within '0.1'\n'2.05'\n");
+			That(floatsmall, equal_to(floatlarge).within(0.1), "'2.06' within '0.1'\n'2.05'\n");
 		}
-	}GPPUNIT_INSTANCE;
-	class TestDoubleEqualsWithin: public MatcherHelper{
-		void test(){
-			double doublesmall=2.05;
-			double doublelarge=2.06;
+	} GPPUNIT_INSTANCE;
+	class TestDoubleEqualsWithin: public MatcherHelper {
+		void test() {
+			double doublesmall = 2.05;
+			double doublelarge = 2.06;
 
-			That(doublelarge,equal_to(doublesmall).within(0.1),"'2.05' within '0.1'\n'2.06'\n");
+			That(doublelarge, equal_to(doublesmall).within(0.1), "'2.05' within '0.1'\n'2.06'\n");
 		}
-	}GPPUNIT_INSTANCE;
+	} GPPUNIT_INSTANCE;
 
-	class StringTest: public MatcherHelper{
-		void test(void){
-			const char* actual="1";
+	class StringTest: public MatcherHelper {
+		void test(void) {
+			const char* actual = "1";
 			char expected[100];
-			strcpy(expected,actual);
-			That(actual,equal_to(expected),"string '1'\nactual '1'\n");
+			strcpy(expected, actual);
+			That(actual, equal_to(expected), "string '1'\nactual '1'\n");
 		}
-	}GPPUNIT_INSTANCE;
-	class StringTestFails: public MatcherHelper{
-		void test(void){
-			const char* actual="2";
+	} GPPUNIT_INSTANCE;
+	class StringTestFails: public MatcherHelper {
+		void test(void) {
+			const char* actual = "2";
 			char expected[100];
-			strcpy(expected,actual);
-			expected[0]='1';
-			MisMatch(actual,equal_to(expected),"string '1'\nactual '2'\n");
-			That(actual,!equal_to(expected),"not string '1'\nactual '2'\n");
+			strcpy(expected, actual);
+			expected[0] = '1';
+			MisMatch(actual, equal_to(expected), "string '1'\nactual '2'\n");
+			That(actual, !equal_to(expected), "not string '1'\nactual '2'\n");
 		}
-	}GPPUNIT_INSTANCE;
+	} GPPUNIT_INSTANCE;
 }
 
 namespace StringMismatchTests {
 	using gppUnit::equal_to;
 	using Utilities::MatcherHelper;
 
-	class TestStringDescriptionTypeSHORT1: public MatcherHelper{
-		void test(void){
-			const char* expected="1";
-			const char* sample="1234567890";
+	class TestStringDescriptionTypeSHORT1: public MatcherHelper {
+		void test(void) {
+			const char* expected = "1";
+			const char* sample = "1234567890";
 			char actual[150];
-			strcpy(actual,sample);
-			for(int i=0;i<10;++i) { strcat(actual,sample); }
+			strcpy(actual, sample);
+			for(int i = 0; i < 10; ++i) { strcat(actual, sample); }
 
-			MisMatch(actual,equal_to(expected),
-				"string '1'\n"
-				"actual '1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567...'\n");
+			MisMatch(actual, equal_to(expected),
+			         "string '1'\n"
+			         "actual '1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567...'\n");
 		}
-	}GPPUNIT_INSTANCE;
-	class TestStringDescriptionTypeSHORT2: public MatcherHelper{
-		void test(void){
-			const char* actual="1";
-			const char* sample="1234567890";
+	} GPPUNIT_INSTANCE;
+	class TestStringDescriptionTypeSHORT2: public MatcherHelper {
+		void test(void) {
+			const char* actual = "1";
+			const char* sample = "1234567890";
 			char expected[150];
-			strcpy(expected,sample);
-			for(int i=0;i<10;++i) { strcat(expected,sample); }
+			strcpy(expected, sample);
+			for(int i = 0; i < 10; ++i) { strcat(expected, sample); }
 
-			MisMatch(actual,equal_to(expected),
-				"string '1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567...'\n"
-				"actual '1'\n");
+			MisMatch(actual, equal_to(expected),
+			         "string '1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567...'\n"
+			         "actual '1'\n");
 		}
-	}GPPUNIT_INSTANCE;
-	class TestStringDescriptionTypeMEDIUM1: public MatcherHelper{
-		void test(void){
-			const char* actual="abcdefghijkl";
+	} GPPUNIT_INSTANCE;
+	class TestStringDescriptionTypeMEDIUM1: public MatcherHelper {
+		void test(void) {
+			const char* actual = "abcdefghijkl";
 			char expected[100];
-			strcpy(expected,actual);
-			expected[6]='h';
-			MisMatch(actual,equal_to(expected),
-				"string         'abcdefhhijkl'\n"
-				"first mismatch        ^\n"
-				"index 6        -------|\n"
-				"actual         'abcdefghijkl'\n"
-				);
+			strcpy(expected, actual);
+			expected[6] = 'h';
+			MisMatch(actual, equal_to(expected),
+			         "string         'abcdefhhijkl'\n"
+			         "first mismatch        ^\n"
+			         "index 6        -------|\n"
+			         "actual         'abcdefghijkl'\n"
+			        );
 		}
-	}GPPUNIT_INSTANCE;
-	class TestStringDescriptionTypeMEDIUM2: public MatcherHelper{
-		void test(void){
-			const char* actual="abcdefghijkl";
+	} GPPUNIT_INSTANCE;
+	class TestStringDescriptionTypeMEDIUM2: public MatcherHelper {
+		void test(void) {
+			const char* actual = "abcdefghijkl";
 			char expected[130];
-			strcpy(expected,actual);
-			for(int i=0;i<9;++i) { strcat(expected,actual); }
+			strcpy(expected, actual);
+			for(int i = 0; i < 9; ++i) { strcat(expected, actual); }
 
-			MisMatch(actual,equal_to(expected),
-							//            1         2         3         4         5         6         7         8         9        10
-							//   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
-				"string         'abcdefghijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcdefghijkla...'\n"
-				"first mismatch              ^\n"
-				"index 12       -------------|\n"
-				"actual         'abcdefghijkl'\n"
-				);
+			MisMatch(actual, equal_to(expected),
+			         //            1         2         3         4         5         6         7         8         9        10
+			         //   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
+			         "string         'abcdefghijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcdefghijkla...'\n"
+			         "first mismatch              ^\n"
+			         "index 12       -------------|\n"
+			         "actual         'abcdefghijkl'\n"
+			        );
 		}
-	}GPPUNIT_INSTANCE;
-	class TestStringDescriptionTypeLONG: public MatcherHelper{
-		void test(void){
-			const char* sample="abcdefghijkl";
+	} GPPUNIT_INSTANCE;
+	class TestStringDescriptionTypeLONG: public MatcherHelper {
+		void test(void) {
+			const char* sample = "abcdefghijkl";
 			char actual[250];
 			char expected[250];
-			strcpy(actual,sample);
-			for(int i=0;i<19;++i) { strcat(actual,sample); }
-			strcpy(expected,actual);
-			expected[150]='x';
+			strcpy(actual, sample);
+			for(int i = 0; i < 19; ++i) { strcat(actual, sample); }
+			strcpy(expected, actual);
+			expected[150] = 'x';
 
-			MisMatch(actual,equal_to(expected),
-							//            1         2         3         4         5         6         7         8         9        10
-							//   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
-				"string         '...hijklabcdefghijklabcdefghijklabcdefghijklabcdefxhijklabcdefghijklabcdefghijklabcdefghijklabcde...'\n"
-				"first mismatch                                                    ^\n"
-				"index 150      ---------------------------------------------------|\n"
-				"actual         '...hijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcde...'\n"
-				);
-			That(actual,!equal_to(expected),
-							//            1         2         3         4         5         6         7         8         9        10
-							//   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
-				"not string         '...hijklabcdefghijklabcdefghijklabcdefghijklabcdefxhijklabcdefghijklabcdefghijklabcdefghijklabcde...'\n"
-				"    first mismatch                                                    ^\n"
-				"    index 150      ---------------------------------------------------|\n"
-				"    actual         '...hijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcde...'\n"
-				);
+			MisMatch(actual, equal_to(expected),
+			         //            1         2         3         4         5         6         7         8         9        10
+			         //   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
+			         "string         '...hijklabcdefghijklabcdefghijklabcdefghijklabcdefxhijklabcdefghijklabcdefghijklabcdefghijklabcde...'\n"
+			         "first mismatch                                                    ^\n"
+			         "index 150      ---------------------------------------------------|\n"
+			         "actual         '...hijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcde...'\n"
+			        );
+			That(actual, !equal_to(expected),
+			     //            1         2         3         4         5         6         7         8         9        10
+			     //   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
+			     "not string         '...hijklabcdefghijklabcdefghijklabcdefghijklabcdefxhijklabcdefghijklabcdefghijklabcdefghijklabcde...'\n"
+			     "    first mismatch                                                    ^\n"
+			     "    index 150      ---------------------------------------------------|\n"
+			     "    actual         '...hijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcdefghijklabcde...'\n"
+			    );
 		}
-	}GPPUNIT_INSTANCE;
+	} GPPUNIT_INSTANCE;
 }
 

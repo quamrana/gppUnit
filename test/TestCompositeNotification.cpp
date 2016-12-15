@@ -26,31 +26,31 @@ THE SOFTWARE.
 
 #include <sstream>
 
-namespace TestCompositeNotification{
+namespace TestCompositeNotification {
 	using gppUnit::equals;
 
-	class TestCompositeUtility: public Auto::TestCase, public gppUnit::Notification{
-		virtual void StartProject(const gppUnit::ProjectDescription&){ wasCalled+=1; }
-		virtual void EndProject(){ wasCalled+=1; }
+	class TestCompositeUtility: public Auto::TestCase, public gppUnit::Notification {
+		virtual void StartProject(const gppUnit::ProjectDescription&) { wasCalled += 1; }
+		virtual void EndProject() { wasCalled += 1; }
 		gppUnit::CompositeNotification composite;
 	protected:
-		void add(){ composite.add(*this); }
+		void add() { composite.add(*this); }
 		size_t wasCalled;
 
-		void call(Notification& notify){
-			notify.StartProject( *(gppUnit::ProjectDescription*)0);
+		void call(Notification& notify) {
+			notify.StartProject(*(gppUnit::ProjectDescription*)0);
 		}
-		void whenCalled(){
+		void whenCalled() {
 			call(composite);
 		}
-		void callEnd(Notification& notify){
+		void callEnd(Notification& notify) {
 			notify.EndProject();
 		}
-		void whenEndCalled(){
+		void whenEndCalled() {
 			callEnd(composite);
 		}
-		void whenAllCalled(){
-			gppUnit::Notification* notify=&composite;
+		void whenAllCalled() {
+			gppUnit::Notification* notify = &composite;
 			notify->StartProject(*(gppUnit::ProjectDescription*)0);
 			notify->StartClass(*(gppUnit::ClassDescription*)0);
 			notify->StartMethod(*(gppUnit::MethodDescription*)0);
@@ -62,95 +62,95 @@ namespace TestCompositeNotification{
 
 		}
 	};
-	class NoComponents: public TestCompositeUtility{
+	class NoComponents: public TestCompositeUtility {
 
-		void givenComposite(){
-			wasCalled=0;
+		void givenComposite() {
+			wasCalled = 0;
 		}
-		void thenNoCallsReceived(){
-			confirm.that(wasCalled,equals(0),"thenNoCallsReceived");
+		void thenNoCallsReceived() {
+			confirm.that(wasCalled, equals(0), "thenNoCallsReceived");
 		}
-		void test(){
+		void test() {
 			givenComposite();
 			whenCalled();
 			thenNoCallsReceived();
 		}
-	}GPPUNIT_INSTANCE;
+	} GPPUNIT_INSTANCE;
 
-	class OneComponent: public TestCompositeUtility{
+	class OneComponent: public TestCompositeUtility {
 
-		void givenComposite(){
-			wasCalled=0;
+		void givenComposite() {
+			wasCalled = 0;
 			add();
 		}
-		void thenOneCallReceived(){
-			confirm.that(wasCalled,equals(1),"thenOneCallReceived");
+		void thenOneCallReceived() {
+			confirm.that(wasCalled, equals(1), "thenOneCallReceived");
 		}
-		void test(){
+		void test() {
 			givenComposite();
 			whenCalled();
 			thenOneCallReceived();
 		}
-	}GPPUNIT_INSTANCE;
+	} GPPUNIT_INSTANCE;
 
-	class TwiceSelf: public TestCompositeUtility{
+	class TwiceSelf: public TestCompositeUtility {
 
-		void givenComposite(){
-			wasCalled=0;
+		void givenComposite() {
+			wasCalled = 0;
 			add();
 			add();
 		}
-		void thenTwoCallsReceived(){
-			confirm.that(wasCalled,equals(2),"thenTwoCallsReceived");
+		void thenTwoCallsReceived() {
+			confirm.that(wasCalled, equals(2), "thenTwoCallsReceived");
 		}
-		void test(){
+		void test() {
 			givenComposite();
 			whenCalled();
 			thenTwoCallsReceived();
 		}
-	}GPPUNIT_INSTANCE;
+	} GPPUNIT_INSTANCE;
 
-	class ThriceSelf: public TestCompositeUtility{
+	class ThriceSelf: public TestCompositeUtility {
 
-		void givenComposite(){
-			wasCalled=0;
+		void givenComposite() {
+			wasCalled = 0;
 			add();
 			add();
 			add();
 		}
-		void thenThreeCallsReceived(){
-			confirm.that(wasCalled,equals(3),"thenThreeCallsReceived");
+		void thenThreeCallsReceived() {
+			confirm.that(wasCalled, equals(3), "thenThreeCallsReceived");
 		}
-		void test(){
+		void test() {
 			givenComposite();
 			whenEndCalled();
 			thenThreeCallsReceived();
 		}
-	}GPPUNIT_INSTANCE;
+	} GPPUNIT_INSTANCE;
 
-	class AllMethodsCalled: public TestCompositeUtility{
+	class AllMethodsCalled: public TestCompositeUtility {
 		std::stringstream collect;
 
-		virtual void StartProject(const gppUnit::ProjectDescription&){collect << "SP.";}
-		virtual void StartClass(const gppUnit::ClassDescription&){collect << "SC.";}
-		virtual void StartMethod(const gppUnit::MethodDescription&){collect << "SM.";}
-		virtual void Result(const gppUnit::TestResult&){collect << "TR.";}
-		virtual void Exception(const std::string& what){collect << what << '.';}
-		virtual void EndMethod(){collect << "EM.";}
-		virtual void EndClass(){collect << "EC.";}
-		virtual void EndProject(){collect << "EP.";}
+		virtual void StartProject(const gppUnit::ProjectDescription&) {collect << "SP.";}
+		virtual void StartClass(const gppUnit::ClassDescription&) {collect << "SC.";}
+		virtual void StartMethod(const gppUnit::MethodDescription&) {collect << "SM.";}
+		virtual void Result(const gppUnit::TestResult&) {collect << "TR.";}
+		virtual void Exception(const std::string& what) {collect << what << '.';}
+		virtual void EndMethod() {collect << "EM.";}
+		virtual void EndClass() {collect << "EC.";}
+		virtual void EndProject() {collect << "EP.";}
 
-		void givenComposite(){
+		void givenComposite() {
 			collect.str("");
 			add();
 		}
-		void thenAllMethodsCalled(){
-			confirm.that(collect,equals("SP.SC.SM.TR.EX.EM.EC.EP."),"thenAllMethodsCalled");
+		void thenAllMethodsCalled() {
+			confirm.that(collect, equals("SP.SC.SM.TR.EX.EM.EC.EP."), "thenAllMethodsCalled");
 		}
-		void test(){
+		void test() {
 			givenComposite();
 			whenAllCalled();
 			thenAllMethodsCalled();
 		}
-	}GPPUNIT_INSTANCE;
+	} GPPUNIT_INSTANCE;
 }

@@ -23,13 +23,13 @@ THE SOFTWARE.
 
 #include <sstream>
 
-namespace TestCollectionEquals{
+namespace TestCollectionEquals {
 	using gppUnit::equals;
 	using Utilities::MatcherHelper;
 
 	template<typename T>
-	class VectorHelper: public MatcherHelper{
-		void setup(){
+	class VectorHelper: public MatcherHelper {
+		void setup() {
 			v1.clear();
 			v2.clear();
 		}
@@ -37,35 +37,35 @@ namespace TestCollectionEquals{
 		std::vector<T> v1;
 		std::vector<T> v2;
 	};
-	class EmptyIntVector: public VectorHelper<int>{
-		void test(void){
-			That(v1,equals(v2),"an empty container\nan empty container\n");
+	class EmptyIntVector: public VectorHelper<int> {
+		void test(void) {
+			That(v1, equals(v2), "an empty container\nan empty container\n");
 		}
-	}GPPUNIT_INSTANCE;
+	} GPPUNIT_INSTANCE;
 
-	class UnequalIntVector: public VectorHelper<int>{
-		void test(void){
+	class UnequalIntVector: public VectorHelper<int> {
+		void test(void) {
 			v1.push_back(1);
-			That(v1,!equals(v2),"not an empty container\n[1]\n");
-			MisMatch(v1,equals(v2),"an empty container\n[1]\n");
+			That(v1, !equals(v2), "not an empty container\n[1]\n");
+			MisMatch(v1, equals(v2), "an empty container\n[1]\n");
 		}
-	}GPPUNIT_INSTANCE;
+	} GPPUNIT_INSTANCE;
 
-	class EqualIntVector: public VectorHelper<int>{
-		void test(void){
+	class EqualIntVector: public VectorHelper<int> {
+		void test(void) {
 			v1.push_back(1);
 			v2.push_back(1);
-			That(v1,equals(v2),"[1]\n[1]\n");
+			That(v1, equals(v2), "[1]\n[1]\n");
 		}
-	}GPPUNIT_INSTANCE;
+	} GPPUNIT_INSTANCE;
 
-	class EqualIntVectorTwoElements: public VectorHelper<int>{
-		void test(void){
+	class EqualIntVectorTwoElements: public VectorHelper<int> {
+		void test(void) {
 			v1.push_back(1);
 			v2.push_back(1);
 			v1.push_back(2);
 			v2.push_back(2);
-			That(v1,equals(v2),"[1 2]\n[1 2]\n");
+			That(v1, equals(v2), "[1 2]\n[1 2]\n");
 		}
-	}GPPUNIT_INSTANCE;
+	} GPPUNIT_INSTANCE;
 }

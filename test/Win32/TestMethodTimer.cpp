@@ -21,24 +21,24 @@ THE SOFTWARE.
 */
 #include "TestMethodTimers.h"
 
-namespace TestWin32MethodTimer{
+namespace TestWin32MethodTimer {
 	using gppUnit::greater_than;
 	using gppUnit::equal_to;
 
-    class Test: TestMethodTimers::MethodTimerTestHelper{
+	class Test: TestMethodTimers::MethodTimerTestHelper {
 
-		void thenTimeReported(){
-			confirm.isTrue(timeReported,"Time should be reported");
+		void thenTimeReported() {
+			confirm.isTrue(timeReported, "Time should be reported");
 		}
-		void thenRuntimeIsReasonable(){
-			confirm.that(runtimeReport,greater_than(0.5e-6),"Time should be not too small");
-			confirm.that(runtimeReport,!greater_than(50e-6),"Time should be not too large");
+		void thenRuntimeIsReasonable() {
+			confirm.that(runtimeReport, greater_than(0.5e-6), "Time should be not too small");
+			confirm.that(runtimeReport, !greater_than(50e-6), "Time should be not too large");
 		}
-		void thenMethodCalledBeforeTimeReported(){
-			confirm.that(methodCallLog.str(),equal_to("fwd.time."),"forward before time");
+		void thenMethodCalledBeforeTimeReported() {
+			confirm.that(methodCallLog.str(), equal_to("fwd.time."), "forward before time");
 		}
 
-        void test(){
+		void test() {
 			givenTimer(gppUnit::MethodTimer::getTimer());
 			whenCalled();
 			thenMethodCalled();
@@ -46,5 +46,5 @@ namespace TestWin32MethodTimer{
 			thenRuntimeIsReasonable();
 			thenMethodCalledBeforeTimeReported();
 		}
-	}GPPUNIT_INSTANCE;
+	} GPPUNIT_INSTANCE;
 }

@@ -24,10 +24,10 @@ THE SOFTWARE.
 
 #include "TestUtilities.h"
 
-namespace TestStartEndClass{
+namespace TestStartEndClass {
 	using gppUnit::equals;
 
-	class TestOneClass: public Utilities::TestCaseCaller, gppUnit::Notification{
+	class TestOneClass: public Utilities::TestCaseCaller, gppUnit::Notification {
 		Utilities::ReportingMockTestCase testcase;
 
 		const gppUnit::ClassDescription* classDesc;
@@ -36,42 +36,42 @@ namespace TestStartEndClass{
 		double run_time;
 	protected:
 		std::stringstream collect;
-		virtual void StartClass(const gppUnit::ClassDescription& desc){
+		virtual void StartClass(const gppUnit::ClassDescription& desc) {
 			collect << desc.name() << '.';
-			classDesc=&desc;
+			classDesc = &desc;
 		}
-		virtual void EndClass(){
+		virtual void EndClass() {
 			collect << "end.";
-			methods=classDesc->methods();
-			results=classDesc->results();
-			run_time=classDesc->run_time();
-			classDesc=0;
+			methods = classDesc->methods();
+			results = classDesc->results();
+			run_time = classDesc->run_time();
+			classDesc = 0;
 		}
 	private:
-		void givenTestCase(){
+		void givenTestCase() {
 			add(testcase);
 			givenNotification(this);
-			methods=0;
-			results=0;
-			run_time=-1;
+			methods = 0;
+			results = 0;
+			run_time = -1;
 		}
-		void thenEachClassStartedAndEnded(){
-			confirm.that(collect,equals("Utilities::ReportingMockTestCase.end."),"Should have recorded test");
+		void thenEachClassStartedAndEnded() {
+			confirm.that(collect, equals("Utilities::ReportingMockTestCase.end."), "Should have recorded test");
 		}
-		void thenThreeMethodsCalled(){
-			confirm.that(methods,equals(3),"thenThreeMethodsCalled");
+		void thenThreeMethodsCalled() {
+			confirm.that(methods, equals(3), "thenThreeMethodsCalled");
 		}
-		void thenOneTestResult(){
-			confirm.that(results,equals(1),"thenOneTestResult");
+		void thenOneTestResult() {
+			confirm.that(results, equals(1), "thenOneTestResult");
 		}
-		void thenRunTimeIsThreeTimesStandard(){
-			double expected=0.3;
-			bool result=
-				(expected-0.001<run_time) &&
-				(run_time<expected+0.001);
-			confirm.isTrue(result,"thenRunTimeIsThreeTimesStandard");
+		void thenRunTimeIsThreeTimesStandard() {
+			double expected = 0.3;
+			bool result =
+			    (expected - 0.001 < run_time) &&
+			    (run_time < expected + 0.001);
+			confirm.isTrue(result, "thenRunTimeIsThreeTimesStandard");
 		}
-		void test(){
+		void test() {
 			givenTestCase();
 			whenCalled();
 			thenEachClassStartedAndEnded();
@@ -79,5 +79,5 @@ namespace TestStartEndClass{
 			thenOneTestResult();
 			thenRunTimeIsThreeTimesStandard();
 		}
-	}GPPUNIT_INSTANCE;
+	} GPPUNIT_INSTANCE;
 }
