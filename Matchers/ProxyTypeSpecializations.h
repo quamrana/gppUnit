@@ -35,10 +35,11 @@ namespace gppUnit {
 	};
 
 	// Sample Proxy Specializations
-	template<> struct ProxyType<int>: ProxyTypeBase<int, long> {};
+	template<> struct ProxyType<int>: ProxyTypeBase<int, int64_t> {};
+	template<> struct ProxyType<long> : ProxyTypeBase<long, int64_t> {};
 	template<> struct ProxyType<const char*>: ProxyTypeBase<const char*, std::string> {};
-	template<> struct ProxyType<size_t>: ProxyTypeBase<size_t, long> {};
-	template<> struct ProxyType<signed char>: ProxyTypeBase<signed char, long> {};
+	template<> struct ProxyType<size_t>: ProxyTypeBase<size_t, int64_t> {};
+	template<> struct ProxyType<signed char>: ProxyTypeBase<signed char, int64_t> {};
 	template<> struct ProxyType<float>: ProxyTypeBase<float, double> {};
 	template<typename T> struct ProxyType<T*>: ProxyTypeBase<void*> {};
 
