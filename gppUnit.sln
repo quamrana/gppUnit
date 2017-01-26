@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "test\test.vcxproj", "{71700194-1921-4BD1-85DC-1A0D0FE9C62A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "src", "src\src.vcxproj", "{9D5B0AA8-247E-4C50-B086-E47DC18B05A6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gppUnit1.5", "src\src.vcxproj", "{9D5B0AA8-247E-4C50-B086-E47DC18B05A6}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TableFormatting", "TableFormatting\TableFormatting.vcxproj", "{B48BAC4E-DD31-4CBB-9804-8F56A4AF076A}"
 EndProject
@@ -14,30 +14,39 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
+		DebugDLL|Win32 = DebugDLL|Win32
 		OptimisedDebug|Win32 = OptimisedDebug|Win32
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{71700194-1921-4BD1-85DC-1A0D0FE9C62A}.Debug|Win32.ActiveCfg = Debug|Win32
 		{71700194-1921-4BD1-85DC-1A0D0FE9C62A}.Debug|Win32.Build.0 = Debug|Win32
+		{71700194-1921-4BD1-85DC-1A0D0FE9C62A}.DebugDLL|Win32.ActiveCfg = DebugDLL|Win32
+		{71700194-1921-4BD1-85DC-1A0D0FE9C62A}.DebugDLL|Win32.Build.0 = DebugDLL|Win32
 		{71700194-1921-4BD1-85DC-1A0D0FE9C62A}.OptimisedDebug|Win32.ActiveCfg = OptimisedDebug|Win32
 		{71700194-1921-4BD1-85DC-1A0D0FE9C62A}.OptimisedDebug|Win32.Build.0 = OptimisedDebug|Win32
 		{71700194-1921-4BD1-85DC-1A0D0FE9C62A}.Release|Win32.ActiveCfg = Release|Win32
 		{71700194-1921-4BD1-85DC-1A0D0FE9C62A}.Release|Win32.Build.0 = Release|Win32
 		{9D5B0AA8-247E-4C50-B086-E47DC18B05A6}.Debug|Win32.ActiveCfg = Debug|Win32
 		{9D5B0AA8-247E-4C50-B086-E47DC18B05A6}.Debug|Win32.Build.0 = Debug|Win32
+		{9D5B0AA8-247E-4C50-B086-E47DC18B05A6}.DebugDLL|Win32.ActiveCfg = DebugDLL|Win32
+		{9D5B0AA8-247E-4C50-B086-E47DC18B05A6}.DebugDLL|Win32.Build.0 = DebugDLL|Win32
 		{9D5B0AA8-247E-4C50-B086-E47DC18B05A6}.OptimisedDebug|Win32.ActiveCfg = OptimisedDebug|Win32
 		{9D5B0AA8-247E-4C50-B086-E47DC18B05A6}.OptimisedDebug|Win32.Build.0 = OptimisedDebug|Win32
 		{9D5B0AA8-247E-4C50-B086-E47DC18B05A6}.Release|Win32.ActiveCfg = Release|Win32
 		{9D5B0AA8-247E-4C50-B086-E47DC18B05A6}.Release|Win32.Build.0 = Release|Win32
 		{B48BAC4E-DD31-4CBB-9804-8F56A4AF076A}.Debug|Win32.ActiveCfg = Debug|Win32
 		{B48BAC4E-DD31-4CBB-9804-8F56A4AF076A}.Debug|Win32.Build.0 = Debug|Win32
+		{B48BAC4E-DD31-4CBB-9804-8F56A4AF076A}.DebugDLL|Win32.ActiveCfg = DebugDLL|Win32
+		{B48BAC4E-DD31-4CBB-9804-8F56A4AF076A}.DebugDLL|Win32.Build.0 = DebugDLL|Win32
 		{B48BAC4E-DD31-4CBB-9804-8F56A4AF076A}.OptimisedDebug|Win32.ActiveCfg = OptimisedDebug|Win32
 		{B48BAC4E-DD31-4CBB-9804-8F56A4AF076A}.OptimisedDebug|Win32.Build.0 = OptimisedDebug|Win32
 		{B48BAC4E-DD31-4CBB-9804-8F56A4AF076A}.Release|Win32.ActiveCfg = Release|Win32
 		{B48BAC4E-DD31-4CBB-9804-8F56A4AF076A}.Release|Win32.Build.0 = Release|Win32
 		{00DE743A-E807-4293-A71A-25EC53DE6F66}.Debug|Win32.ActiveCfg = Debug|Win32
 		{00DE743A-E807-4293-A71A-25EC53DE6F66}.Debug|Win32.Build.0 = Debug|Win32
+		{00DE743A-E807-4293-A71A-25EC53DE6F66}.DebugDLL|Win32.ActiveCfg = DebugDLL|Win32
+		{00DE743A-E807-4293-A71A-25EC53DE6F66}.DebugDLL|Win32.Build.0 = DebugDLL|Win32
 		{00DE743A-E807-4293-A71A-25EC53DE6F66}.OptimisedDebug|Win32.ActiveCfg = OptimisedDebug|Win32
 		{00DE743A-E807-4293-A71A-25EC53DE6F66}.OptimisedDebug|Win32.Build.0 = OptimisedDebug|Win32
 		{00DE743A-E807-4293-A71A-25EC53DE6F66}.Release|Win32.ActiveCfg = Release|Win32
