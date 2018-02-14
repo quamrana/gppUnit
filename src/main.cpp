@@ -23,7 +23,7 @@ THE SOFTWARE.
 
 #include <iostream>
 
-int main(int , char* []) {
+int main(int, char* []) {
 	bool result = gppUnit::AutoMain();
 #ifdef PRESSRETURN
 	std::cout << "Press return...";
