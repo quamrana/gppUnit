@@ -1,0 +1,1 @@
+call d:\mingw\set_distro_paths.bat

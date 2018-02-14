@@ -12,6 +12,6 @@ def getSeconds(time):
 start=os.getenv("STARTBATCH")
 end=os.getenv("ENDBATCH")
 
-print start
-print end
-print str(round(getSeconds(end)-getSeconds(start),3))+" seconds."
+#print(start)
+#print(end)
+print(str(round(getSeconds(end)-getSeconds(start),3))+" seconds.")
