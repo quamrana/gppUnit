@@ -31,8 +31,10 @@ namespace Auto {
 	class TestCase: public gppUnit::TestCaseBase, gppUnit::AutoTest {};
 }
 
+#ifndef _CONCAT
 #define  _CONCAT(a, b) _XCAT(a, b)
 #define  _XCAT(a, b)   a ## b
+#endif
 
 #define GPPUNIT_INSTANCE  _CONCAT(gppUnit_Instance_,__LINE__)
 

@@ -8,3 +8,6 @@ Backup/*
 *.o
 *.a
 *.tws
+Debug/*
+.vs/*
+*.log
