@@ -37,20 +37,20 @@ namespace gppUnit {
 		return runner.run();
 	}
 
-	AutoRunner& AutoRunner::operator<<(const std::string& name) {
-		title = name;
+	AutoRunner& AutoRunner::operator<<(const std::string& title_) {
+		title = title_;
 		return *this;
 	}
 
 	// Add a notification
-	AutoRunner& AutoRunner::operator<<(Notification& notifier) {
-		notify.add(notifier);
+	AutoRunner& AutoRunner::operator<<(Notification& notify_) {
+		notify.add(notify_);
 		return *this;
 	}
 
 	// Set the timer to be used
-	AutoRunner& AutoRunner::operator<<(MethodTimer& methodTimer) {
-		timer = &methodTimer;
+	AutoRunner& AutoRunner::operator<<(MethodTimer& timer_) {
+		timer = &timer_;
 		return *this;
 
 	}

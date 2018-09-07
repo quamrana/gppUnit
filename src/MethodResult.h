@@ -44,12 +44,12 @@ namespace gppUnit {
 		MethodTimer& timer;
 		MethodData methodData;
 
-		void Report(const TestResult& result);
-		void reportTime(double run_time) { methodData.reportedTime = run_time; }
+		void Report(const TestResult& result) override;
+		void reportTime(double run_time) override { methodData.reportedTime = run_time; }
 
-		std::string name() const { return methodData.title; }
-		size_t results() const { return methodData.results; }
-		virtual double run_time() const { return methodData.reportedTime; }
+		std::string name() const override { return methodData.title; }
+		size_t results() const override { return methodData.results; }
+		virtual double run_time() const override { return methodData.reportedTime; }
 
 		void Exception(const std::string& /* what */);
 

@@ -38,13 +38,13 @@ namespace gppUnit {
 		bool run(const TestCaseList& cases);
 
 		// Set the title of project being run
-		AutoRunner& operator<<(const std::string& title);
+		AutoRunner& operator<<(const std::string& title_);
 
 		// Add a notification
-		AutoRunner& operator<<(Notification& notify);
+		AutoRunner& operator<<(Notification& notify_);
 
 		// Set the timer to be used
-		AutoRunner& operator<<(MethodTimer& timer);
+		AutoRunner& operator<<(MethodTimer& timer_);
 	};
 }
 #endif // AUTORUNNER_H_ED89D4F6_3B20_4FC1_9808_929558CF9D98

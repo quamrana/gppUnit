@@ -38,15 +38,15 @@ namespace gppUnit {
 
 	class StreamNotification: public Notification {
 	private:
-		void StartProject(const ProjectDescription&);
-		void StartClass(const ClassDescription&);
-		void StartMethod(const MethodDescription&);
-		void Result(const TestResult&);
-		void Exception(const std::string& /* what */);
+		void StartProject(const ProjectDescription&) override;
+		void StartClass(const ClassDescription&) override;
+		void StartMethod(const MethodDescription&) override;
+		void Result(const TestResult&) override;
+		void Exception(const std::string& /* what */) override;
 
-		void EndMethod();
+		void EndMethod() override;
 
-		void EndProject();
+		void EndProject() override;
 
 	protected:
 		std::ostream& out;

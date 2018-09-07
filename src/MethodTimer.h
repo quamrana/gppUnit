@@ -38,7 +38,7 @@ namespace gppUnit {
 	};
 
 	class NullTimer: public MethodTimer {
-		void timeMethod(MethodCaller& caller, TimeReport&);
+		void timeMethod(MethodCaller& caller, TimeReport&) override;
 	};
 }
 

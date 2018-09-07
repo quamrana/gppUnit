@@ -39,11 +39,11 @@ namespace gppUnit {
 		std::vector<ClassData> classData;
 		ClassData projectData;
 
-		std::string name() const { return projectData.title; }
-		size_t classes() const { return cases.size(); }
-		bool hasPassed() const { return projectData.goodReport; }
-		size_t results() const { return projectData.results; }
-		double run_time() const { return projectData.reportedTime; }
+		std::string name() const override { return projectData.title; }
+		size_t classes() const override { return cases.size(); }
+		bool hasPassed() const override { return projectData.goodReport; }
+		size_t results() const override { return projectData.results; }
+		double run_time() const override { return projectData.reportedTime; }
 
 		void call(PrototypeTestCase* testcase);
 		void calculateProjectData();

@@ -32,14 +32,14 @@ namespace gppUnit {
 		typedef std::vector<Notification*> NotificationCollection;
 		NotificationCollection collection;
 
-		void StartProject(const ProjectDescription&);
-		void StartClass(const ClassDescription&);
-		void StartMethod(const MethodDescription&);
-		void Result(const TestResult&);
-		void Exception(const std::string& /* what */);
-		void EndMethod();
-		void EndClass();
-		void EndProject();
+		void StartProject(const ProjectDescription&) override;
+		void StartClass(const ClassDescription&) override;
+		void StartMethod(const MethodDescription&) override;
+		void Result(const TestResult&) override;
+		void Exception(const std::string& /* what */) override;
+		void EndMethod() override;
+		void EndClass() override;
+		void EndProject() override;
 	public:
 		CompositeNotification();
 		void add(Notification& notify) { collection.push_back(&notify); }

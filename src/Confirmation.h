@@ -32,7 +32,7 @@ namespace gppUnit {
 
 	class ConfirmationBase: public ResultSetter {
 		ReportResult* report;
-		void setReport(ReportResult* reporter) { report = reporter; }
+		void setReport(ReportResult* reporter) override { report = reporter; }
 	protected:
 		virtual void Result(const TestResult&);
 	public:
@@ -59,7 +59,7 @@ namespace gppUnit {
 	extern const char* but_got;
 
 	class Expect: public Confirm {
-		virtual void Result(const TestResult&);
+		virtual void Result(const TestResult&) override;
 	};
 }
 
