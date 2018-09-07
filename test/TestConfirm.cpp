@@ -138,14 +138,14 @@ namespace TestAsserts {
 		void whenFailCalled() {
 			try {
 				exp.fail("fail");
-			} catch(gppUnit::AssertException e) {
+			} catch(gppUnit::AssertException&) {
 				caughtException = true;
 			}
 		}
 		void whenThatCalled() {
 			try {
 				exp.that(this, gppUnit::is_null(), "fail");
-			} catch(gppUnit::AssertException e) {
+			} catch(gppUnit::AssertException&) {
 				caughtException = true;
 			}
 		}
