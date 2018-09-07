@@ -3,7 +3,7 @@ compiler=ARGUMENTS.get('compiler','mingw')
 cov=ARGUMENTS.get('cov','-')
 
 def getGccflags():
-	cppflags=['-Wall','-Wextra']  #,'-Weffc++','-pedantic','-std=c++0x']
+	cppflags=['-Wall','-Wextra','-std=c++17']  #,'-Weffc++','-pedantic','-std=c++0x']
 	if cov!='-':
 		cppflags+=['--coverage','-fno-elide-constructors','-fno-default-inline']
 	return cppflags
@@ -35,7 +35,7 @@ def gcc():
 		)
 
 def mingw():
-	path=['D:\MINGW\BIN','C:\Python27\Scripts','.\Scripts']
+	path=['D:\MinGW16_0\\bin','C:\Python27\Scripts','.\Scripts']
 	cppflags=getGccflags()
 	return DefaultEnvironment(tools = ['g++','gnulink','ar'],
 		ENV={'PATH':path, 'TEMP':'C:\Temp'},
@@ -63,19 +63,19 @@ elif compiler=='djgpp':
 else:
 	env=mingw()
 
-print "compiler is:", compiler
-print "cov is:", cov
-print "CXX is:", Env('CXX')
-#print "CPP is:", Env('CPP')
-#print "CC is:", Env('CC')
-print "LINK is:", Env('LINK')
-print "LIB is:", Env('AR')
-#print "CCFLAGS is:", Env('CCFLAGS')
-#print "CPPPATH is:", Env('CPPPATH')
-#print "LIBPATH is:", Env('LIBPATH')
-#print "BUILDERS: ", Env('BUILDERS')
-#print "TEMP is:", Env('TEMP')
-#print "TMP is:", Env('TMP')
+print ("compiler is:", compiler)
+print ("cov is:", cov)
+print ("CXX is:", Env('CXX'))
+#print ("CPP is:", Env('CPP'))
+#print ("CC is:", Env('CC'))
+print ("LINK is:", Env('LINK'))
+print ("LIB is:", Env('AR'))
+#print ("CCFLAGS is:", Env('CCFLAGS'))
+#print ("CPPPATH is:", Env('CPPPATH'))
+#print ("LIBPATH is:", Env('LIBPATH'))
+#print ("BUILDERS: ", Env('BUILDERS'))
+#print ("TEMP is:", Env('TEMP'))
+#print ("TMP is:", Env('TMP'))
 
 #print env.Dump()
 
