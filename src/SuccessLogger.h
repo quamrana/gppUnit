@@ -40,8 +40,8 @@ namespace gppUnit {
 		std::string fileName;
 		FileLoggerInterface& fileLogger;
 		const ProjectDescription* proj;
-		void StartProject(const ProjectDescription& desc) { proj = &desc; }
-		void EndProject() { fileLogger.LogToFile(fileName, proj); }
+		void StartProject(const ProjectDescription& desc) override { proj = &desc; }
+		void EndProject() override { fileLogger.LogToFile(fileName, proj); }
 	public:
 		FileLoggerNotification(const std::string& fileName,
 		                       FileLoggerInterface& fileLogger): fileName(fileName),
@@ -53,7 +53,7 @@ namespace gppUnit {
 	const char* getNow(void);
 
 	class LoggerAlgorithm: public FileLoggerInterface {
-		virtual void LogToFile(const std::string& fileName, const ProjectDescription* project);
+		virtual void LogToFile(const std::string& fileName, const ProjectDescription* project) override;
 
 	protected:
 		virtual bool allowedToProceed(const ProjectDescription* project) const = 0;
@@ -69,26 +69,26 @@ namespace gppUnit {
 
 	// TODO:  Classes below here are not tested!!
 	class FileLogger: public virtual LoggerAlgorithm {
-		bool fileExists(const std::string& fileName) const;
-		void openFileForAppend(const std::string& fileName);
-		void openFileForWriting(const std::string& fileName);
-		void closeFile();
-		std::ostream& getFile() { return file; }
+		bool fileExists(const std::string& fileName) const override;
+		void openFileForAppend(const std::string& fileName) override;
+		void openFileForWriting(const std::string& fileName) override;
+		void closeFile() override;
+		std::ostream& getFile() override { return file; }
 		std::ofstream file;
 
 		virtual void openFile(const std::string& fileName, std::ios_base::openmode mode);
 	};
 
 	class SuccessLoggerImplementation: public virtual LoggerAlgorithm {
-		virtual bool allowedToProceed(const ProjectDescription* project) const;
-		virtual void writeHeader(const std::string& fileName, const ProjectDescription* project);
-		virtual void writeLog(const ProjectDescription* project);
+		virtual bool allowedToProceed(const ProjectDescription* project) const override;
+		virtual void writeHeader(const std::string& fileName, const ProjectDescription* project) override;
+		virtual void writeLog(const ProjectDescription* project) override;
 	};
 
 	class AllRunsLoggerImplementation: public virtual LoggerAlgorithm {
-		virtual bool allowedToProceed(const ProjectDescription* project) const;
-		virtual void writeHeader(const std::string& fileName, const ProjectDescription* project);
-		virtual void writeLog(const ProjectDescription* project);
+		virtual bool allowedToProceed(const ProjectDescription* project) const override;
+		virtual void writeHeader(const std::string& fileName, const ProjectDescription* project) override;
+		virtual void writeLog(const ProjectDescription* project) override;
 	};
 	class SuccessLogger: public FileLogger, SuccessLoggerImplementation {};
 	class AllRunsLogger: public FileLogger, AllRunsLoggerImplementation {};

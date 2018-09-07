@@ -35,7 +35,7 @@ namespace gppUnit {
 			std::string head;
 		};
 		typedef std::vector<std::string> vecstr;
-		void StartClass(const ClassDescription&);
+		void StartClass(const ClassDescription&) override;
 	protected:
 		vecstr collect;
 	public:

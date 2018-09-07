@@ -42,10 +42,10 @@ namespace gppUnit {
 		std::vector<MethodData> methodData;
 		ClassData classData;
 
-		std::string name() const { return classData.title; }
-		size_t methods() const { return methodData.size(); }
-		size_t results() const { return classData.results; }
-		double run_time() const { return classData.reportedTime; }
+		std::string name() const override { return classData.title; }
+		size_t methods() const override { return methodData.size(); }
+		size_t results() const override { return classData.results; }
+		double run_time() const override { return classData.reportedTime; }
 
 		MethodData callMethod(gppUnit::TestCaseMethodCaller& method);
 		bool add(const MethodData& data);

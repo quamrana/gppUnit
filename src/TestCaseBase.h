@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 namespace gppUnit {
 	class TestCaseBase: public virtual PrototypeTestCase {
-		void setReport(ReportResult*);
+		void setReport(ReportResult*) override;
 	protected:
 		Confirm confirm;
 		Expect expect;

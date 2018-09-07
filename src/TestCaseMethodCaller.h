@@ -52,17 +52,17 @@ namespace gppUnit {
 		bool operator()() { return runner.run(this); }
 	};
 	class SetupCaller: public TestCaseMethodCallerHelper {
-		void forward() { testcase.setup(); }
+		void forward() override { testcase.setup(); }
 	public:
 		SetupCaller(PrototypeTestCase& fwd, Runner& runner): TestCaseMethodCallerHelper(fwd, runner, setupMethodName()) {}
 	};
 	class TestCaller: public TestCaseMethodCallerHelper {
-		void forward() { testcase.test(); }
+		void forward() override { testcase.test(); }
 	public:
 		TestCaller(PrototypeTestCase& fwd, Runner& runner): TestCaseMethodCallerHelper(fwd, runner, testMethodName()) {}
 	};
 	class TeardownCaller: public TestCaseMethodCallerHelper {
-		void forward() { testcase.teardown(); }
+		void forward() override { testcase.teardown(); }
 	public:
 		TeardownCaller(PrototypeTestCase& fwd, Runner& runner): TestCaseMethodCallerHelper(fwd, runner, teardownMethodName()) {}
 	};
