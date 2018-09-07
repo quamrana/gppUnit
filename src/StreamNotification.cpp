@@ -53,12 +53,14 @@ namespace gppUnit {
 		return strm.str();
 	}
 	std::string PrintFormatter::updateRunningAsterisks(size_t max, size_t current) {
-		size_t target = (size * current) / max;
-		if(target <= size) {
-			if(target > asteriskCounter) {
-				size_t count = target - asteriskCounter;
-				asteriskCounter = target;
-				return asterisks(count);
+		if(max > 0) {
+			size_t target = (size * current) / max;
+			if(target <= size) {
+				if(target > asteriskCounter) {
+					size_t count = target - asteriskCounter;
+					asteriskCounter = target;
+					return asterisks(count);
+				}
 			}
 		}
 		return "";
