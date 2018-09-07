@@ -7,7 +7,7 @@ def Env(key):
 		return '???'
 
 extra=Env('EXTRA')
-print "EXTRA is:", extra
+print ("EXTRA is:", extra)
 
 cppIncludes=[Dir('#/src'),Dir('#')]
 env.StaticLibrary('gppUnit1.5', Glob('*.cpp')+Glob(extra+'/*.cpp'),CPPPATH=cppIncludes)

@@ -1,1 +1,1 @@
-call d:\mingw\set_distro_paths.bat
+call D:\MinGW_16.0\set_distro_paths.bat

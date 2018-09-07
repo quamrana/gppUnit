@@ -8,7 +8,7 @@ SET STARTBATCH=%TIME::=%
 
 rem build test app
 gcc --version | find "gcc"
-call scons -Q compiler=mingw %*
+python D:\scons-local-3.0.1\scons.py -Q compiler=mingw %*
 
 IF ERRORLEVEL 1 GOTO QUIT
 
