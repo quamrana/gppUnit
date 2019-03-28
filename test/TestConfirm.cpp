@@ -35,9 +35,10 @@ namespace TestAsserts {
 
 	class Base: public Auto::TestCase, gppUnit::ReportResult {
 		gppUnit::TestResult testResult;
-		virtual void Report(const gppUnit::TestResult& result) {
+		void Report(const gppUnit::TestResult& result) override {
 			testResult = result;
 		}
+		std::string className() override { return ""; }
 		const strvec& description() { return testResult.description; }
 		size_t descriptionSize() { return testResult.description.size(); }
 	protected:

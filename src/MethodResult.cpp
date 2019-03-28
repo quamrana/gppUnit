@@ -29,10 +29,10 @@ THE SOFTWARE.
 
 namespace gppUnit {
 
-	MethodResult::MethodResult(TestCaseMethodCaller& method, Notification& notify, MethodTimer& timer): method(method),
+	MethodResult::MethodResult(const ClassData& c, TestCaseMethodCaller& method, Notification& notify, MethodTimer& timer): method(method),
 		notify(notify),
 		timer(timer),
-		methodData(method.methodName()) {
+		methodData(c, method.methodName()) {
 		method.setReport(this);
 		notify.StartMethod(*this);
 	}

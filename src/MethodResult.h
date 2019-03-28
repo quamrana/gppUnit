@@ -33,6 +33,7 @@ namespace gppUnit {
 	class TestCaseMethodCaller;
 	class Notification;
 	class MethodTimer;
+	struct ClassData;
 
 
 	class MethodResult: public MethodDescription,
@@ -45,6 +46,7 @@ namespace gppUnit {
 		MethodData methodData;
 
 		void Report(const TestResult& result) override;
+		std::string className() override { return methodData.classData.title; }
 		void reportTime(double run_time) override { methodData.reportedTime = run_time; }
 
 		std::string name() const override { return methodData.title; }
@@ -62,7 +64,7 @@ namespace gppUnit {
 		bool protectMethodFromAssertException();
 		bool protectMethodFromCommonExceptions();
 	public:
-		MethodResult(TestCaseMethodCaller& method, Notification& notify, MethodTimer& timer);
+		MethodResult(const ClassData& c, TestCaseMethodCaller& method, Notification& notify, MethodTimer& timer);
 		~MethodResult();
 		bool protectMethod();
 		const MethodData& methodSummary() const { return methodData; }

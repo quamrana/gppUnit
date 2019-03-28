@@ -32,7 +32,7 @@ THE SOFTWARE.
 
 namespace gppUnit {
 	MethodData ClassRunner::callMethod(TestCaseMethodCaller& method) {
-		MethodResult desc(method, notify, timer);
+		MethodResult desc(classData, method, notify, timer);
 
 		desc.protectMethod();
 

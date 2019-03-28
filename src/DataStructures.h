@@ -25,8 +25,9 @@ THE SOFTWARE.
 #include <string>
 
 namespace gppUnit {
-
+	struct ClassData;
 	struct MethodData {
+		const ClassData& classData;
 		std::string title;
 		size_t results;
 		bool goodReport;
@@ -39,7 +40,7 @@ namespace gppUnit {
 		void checkForExceptions(bool noExceptions) {
 			goodReport &= noExceptions;
 		}
-		explicit MethodData(const std::string& name): title(name),
+		explicit MethodData(const ClassData& c, const std::string& name): classData(c), title(name),
 			results(0),
 			goodReport(true),
 			reportedTime(0)
