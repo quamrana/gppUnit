@@ -98,7 +98,6 @@
       <AdditionalIncludeDirectories>..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4738;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -150,6 +149,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ApprovalsTest\ApprovalsTest.vcxproj">
+      <Project>{dd98ddde-e2a7-4557-8f48-72203ff9d445}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Matchers\Matchers.vcxproj">
       <Project>{00de743a-e807-4293-a71a-25ec53de6f66}</Project>
       <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
