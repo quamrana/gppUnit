@@ -63,13 +63,13 @@ elif compiler=='djgpp':
 else:
 	env=mingw()
 
-print ("compiler is:", compiler)
-print ("cov is:", cov)
+#print ("compiler is:", compiler)
+#print ("cov is:", cov)
 print ("CXX is:", Env('CXX'))
 #print ("CPP is:", Env('CPP'))
 #print ("CC is:", Env('CC'))
-print ("LINK is:", Env('LINK'))
-print ("LIB is:", Env('AR'))
+#print ("LINK is:", Env('LINK'))
+#print ("LIB is:", Env('AR'))
 #print ("CCFLAGS is:", Env('CCFLAGS'))
 #print ("CPPPATH is:", Env('CPPPATH'))
 #print ("LIBPATH is:", Env('LIBPATH'))
