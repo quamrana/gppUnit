@@ -79,4 +79,4 @@ print ("LIB is:", Env('AR'))
 
 #print env.Dump()
 
-env.SConscript(['src/SConscript','test/SConscript','Matchers/SConscript','TableFormatting/SConscript'])
+env.SConscript(['src/SConscript','test/SConscript','Matchers/SConscript','TableFormatting/SConscript','ApprovalsTest/SConscript'])
