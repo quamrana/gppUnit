@@ -110,11 +110,7 @@ namespace gppUnit {
 	TableFormatter& TableFormatter::operator<<(const TableFormatter& table) {
 		// Move page into prevPages
 		std::vector<std::string> result = partialVector(summarySizes);
-
-		for(const auto& each : result) {
-			prevPages.push_back(each);
-
-		}
+		prevPages.insert(std::end(prevPages), std::begin(result), std::end(result));
 		page.clear();
 
 		// Limit summarySizes to line.size()
@@ -148,16 +144,9 @@ namespace gppUnit {
 		if(!lineIsEmpty) { result.push_back(line.toString(sizes)); }
 
 		std::vector<std::string> allLines;
+		allLines.insert(std::end(allLines), std::begin(prevPages), std::end(prevPages));
 
-		for(const auto& each : prevPages) {
-			allLines.push_back(each);
-
-		}
-
-		for(const auto& each : result) {
-			allLines.push_back(each);
-
-		}
+		allLines.insert(std::end(allLines), std::begin(result), std::end(result));
 
 		return allLines;
 	}
