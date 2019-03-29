@@ -29,8 +29,8 @@ namespace gppUnit {
 		//template<typename T>
 		//explicit SimpleNamer(const T& base): SimpleNamer(gppUnit::demangleTypeName(typeid(base).name())) {}
 		explicit SimpleNamer(const std::string& fullClassName) { makeNames(fullClassName); }
-		std::string getApprovedFile() const override { return approvedFileName; }
-		std::string getReceivedFile() const override { return receivedFileName; }
+		std::string getApprovedFilename() const override { return approvedFileName; }
+		std::string getReceivedFilename() const override { return receivedFileName; }
 
 	private:
 		void makeNames(const std::string& fullClassName);
