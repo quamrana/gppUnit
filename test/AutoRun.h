@@ -45,6 +45,7 @@ Code Sample of a complete new module with a failing test
 #include "AutoRun.h"
 
 namespace {
+    using gppUnit::equals;
 	class Test: public Auto::TestCase{
 		void test(){
 			expect.fail("First Failing Test");

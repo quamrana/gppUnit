@@ -30,7 +30,7 @@ namespace gppUnit {
 
 	template<typename AUTO>
 	class AutoMethodTimer: public MethodTimer {
-		void timeMethod(MethodCaller& caller, TimeReport& report) {
+		void timeMethod(MethodCaller& caller, TimeReport& report) override {
 			AUTO timer_(report);
 			caller.forward();
 		}

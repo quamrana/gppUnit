@@ -29,7 +29,10 @@ THE SOFTWARE.
 class ClassInGlobalNamespace {};
 
 namespace {
-	class ClassInEmptyNamespace {};
+	class ClassInEmptyNamespace { public: int c{ 0 }; };
+
+	class InterfaceInEmptyNamespace { public: virtual int getValue() { return 0; } };
+	class DerivedClassInEmptyNamespace: public InterfaceInEmptyNamespace { public: virtual int getValue() { return 42; } };
 }
 
 namespace TestTypeInformation {
@@ -37,11 +40,27 @@ namespace TestTypeInformation {
 
 	class ClassInNamespace {};
 	class ActualNames: public Auto::TestCase {
+		DerivedClassInEmptyNamespace der;
+
+		void thenBaseIs(const InterfaceInEmptyNamespace& base, const std::string& expected, const char* message) {
+			const auto actual = gppUnit::demangleTypeName(typeid(base).name());
+			confirm.that(actual, equals(expected), message);
+		}
+		void thenDerivedIs(const std::string& expected) {
+			const auto actual = gppUnit::demangleTypeName(typeid(der).name());
+			confirm.that(actual, equals(expected), __FUNCTION__);
+		}
+		void thenDerivedAsBaseIs(const std::string& expected) {
+			thenBaseIs(der, expected, __FUNCTION__);
+		}
 		void test() {
 			confirm.that(gppUnit::demangleTypeName(typeid(ClassInNamespace).name()), equals("TestTypeInformation::ClassInNamespace"));
 			confirm.that(gppUnit::demangleTypeName(typeid(ClassInEmptyNamespace).name()), equals("(anonymous namespace)::ClassInEmptyNamespace"));
 			confirm.that(gppUnit::demangleTypeName(typeid(ClassInGlobalNamespace).name()), equals("ClassInGlobalNamespace"));
 			confirm.that(gppUnit::demangleTypeName(typeid(int).name()), equals("int"));
+
+			thenDerivedIs("(anonymous namespace)::DerivedClassInEmptyNamespace");
+			thenDerivedAsBaseIs("(anonymous namespace)::DerivedClassInEmptyNamespace");
 		}
 	} GPPUNIT_INSTANCE;
 	class ArbitraryNames: public Auto::TestCase {
