@@ -9,8 +9,8 @@ def Env(key):
 cov=Env('COV')
 
 cppIncludes=[Dir('#')]
-libIncludes=[Dir('#/src'),Dir('#/TableFormatting'),Dir('#/Matchers')]
-libs=['gppUnit1.5','TableFormatting','Matchers']
+libIncludes=[Dir('#/src'),Dir('#/TableFormatting'),Dir('#/Matchers'),Dir('#/ApprovalsTest')]
+libs=['gppUnit1.5','TableFormatting','Matchers','ApprovalsTest']
 
 linkflags=[]
 if cov!='-':
