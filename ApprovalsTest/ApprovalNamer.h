@@ -25,8 +25,8 @@ THE SOFTWARE.
 namespace gppUnit {
 	class ApprovalNamer {
 	public:
-		virtual std::string getApprovedFile() const = 0;
-		virtual std::string getReceivedFile() const = 0;
+		virtual std::string getApprovedFilename() const = 0;
+		virtual std::string getReceivedFilename() const = 0;
 		virtual ~ApprovalNamer() {}
 	};
 }
