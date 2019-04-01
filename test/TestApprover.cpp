@@ -17,8 +17,8 @@ namespace gppUnit {
 		virtual ~TextFileApprover() {}
 	private:
 		bool actualAndApprovedMatch() {
-			auto approved = getApprovedContents();
-			if(actual == approved) {
+			approvedContents = getApprovedContents();
+			if(actual == approvedContents) {
 				removeReceived();
 				return true;
 			}
@@ -31,7 +31,7 @@ namespace gppUnit {
 
 		ApprovalNamer& namer;
 		const std::string actual;		// received
-		//const std::string approved;
+		std::string approvedContents;
 
 		virtual std::string getFileContents(const std::string& filename) const = 0;
 		virtual void makeFileWithContents(const std::string& filename, const std::string& contents) const = 0;
@@ -41,16 +41,13 @@ namespace gppUnit {
 			startDiff(namer.getReceivedFilename(), namer.getApprovedFilename());
 		}
 		void ensureApprovedFile() const {
-			auto approved = namer.getApprovedFilename();
-			if(getFileContents(approved).length() == 0) {
-				makeFileWithContents(approved, "");
+			if(approvedContents.length() == 0) {  // When string is empty, we don't know whether the file actually exists or not.
+				makeFileWithContents(namer.getApprovedFilename(), "");
 			}
 		}
 		virtual void startDiff(const std::string& lhsFilename, const std::string& rhsFilename) const = 0;
 	};
 }
-
-
 
 
 #include "ApprovalsTest\SimpleNamer.h"
@@ -70,22 +67,26 @@ namespace ApproverComponents {
 		using TextFileApprover::TextFileApprover;
 
 		std::string getFileContents(const std::string& filename) const override {
-			return fileSys[filename];
+			if(fileExists(filename)) {
+				return fileSys[filename];
+			}
+			return "";
 		}
 		void makeFileWithContents(const std::string& filename, const std::string& contents) const override {
 			fileSys[filename] = contents;
 		}
 		virtual void remove(const std::string& filename)const override { fileSys.erase(filename); }
 
-		mutable std::map<std::string, std::string> fileSys;
 		bool fileExists(const std::string& filename) const {
 			return fileSys.count(filename) > 0;
 		}
-		virtual void startDiff(const std::string& /*lhsFilename*/, const std::string& /*rhsFilename*/) const override {
-			userRequest(*this);
+		mutable std::map<std::string, std::string> fileSys;
+
+		virtual void startDiff(const std::string& lhsFilename, const std::string& rhsFilename) const override {
+			userRequest(*this, lhsFilename, rhsFilename);
 		}
 
-		std::function<void(const MockApprover&)> userRequest{ [](const MockApprover&) {} };
+		std::function<void(const MockApprover&, const std::string&, const std::string&)> userRequest{ [](const MockApprover&, const std::string& /*lhsFilename*/, const std::string& /*rhsFilename*/) {} };
 	};
 	class TestSimpleNamer: public Auto::TestCase {
 		gppUnit::ApprovalNamer* namer{ nullptr };
@@ -129,6 +130,7 @@ namespace ApproverComponents {
 		std::string getReceivedFilename() const override { return "r"; }
 
 		// TODO: make file system
+		bool pleaseCreateApproved{ false };
 		std::string approvedContents;
 		bool userWillAcceptReceived{ false };
 		bool verifyResult{ false };
@@ -141,21 +143,32 @@ namespace ApproverComponents {
 		}
 		void givenApprovedContents(const std::string& contents) {
 			approvedContents = contents;
+			pleaseCreateApproved = true;
 		}
 		void givenUserWillAcceptReceived() {
 			userWillAcceptReceived = true;
 		}
-
+		void thenTheseFilesExist(const std::string& lhs, const std::string& rhs) {
+			expect.isTrue(mockApprover->fileExists(lhs), "During report lhs file should exist");
+			expect.isTrue(mockApprover->fileExists(rhs), "During report rhs file should exist");
+		}
 
 		template<typename T>
 		void whenVerifiedWith(const T& actual) {
 			std::stringstream str;
 			str << actual;
 			givenApproverWithContents(str.str());
-			mockApprover->fileSys[getApprovedFilename()] = approvedContents;
+			if(pleaseCreateApproved) {
+				mockApprover->fileSys[getApprovedFilename()] = approvedContents;
+			}
 			if(userWillAcceptReceived) {
-				mockApprover->userRequest = [this](const MockApprover & mock) {
+				mockApprover->userRequest = [this](const MockApprover & mock, const std::string & lhs, const std::string & rhs) {
+					thenTheseFilesExist(lhs, rhs);
 					mock.makeFileWithContents(getApprovedFilename(), mock.getFileContents(getReceivedFilename()));
+				};
+			} else {
+				mockApprover->userRequest = [this](const MockApprover& /*mock*/, const std::string & lhs, const std::string & rhs) {
+					thenTheseFilesExist(lhs, rhs);
 				};
 			}
 			verifyResult = approver->verify();
@@ -163,8 +176,18 @@ namespace ApproverComponents {
 		void thenApproved() {
 			confirm.isTrue(verifyResult, __FUNCTION__);
 		}
+		void thenNotApproved() {
+			confirm.isFalse(verifyResult, __FUNCTION__);
+		}
 		void thenReceivedFileDoesNotExist() {
 			confirm.isFalse(mockApprover->fileExists(getReceivedFilename()), __FUNCTION__);
+		}
+		void thenReceivedFileDoesExist() {
+			confirm.isTrue(mockApprover->fileExists(getReceivedFilename()), __FUNCTION__);
+		}
+		void thenApprovedFileIsEmpty() {
+			expect.isTrue(mockApprover->fileExists(getApprovedFilename()), "Approved file should exist");
+			confirm.that(mockApprover->getFileContents(getApprovedFilename()), equals(""), "Approved file should be empty");
 		}
 	};
 	class ActualAndApprovedMatch: public TestTextFileApprover {
@@ -182,6 +205,22 @@ namespace ApproverComponents {
 			whenVerifiedWith(43);
 			thenApproved();
 			thenReceivedFileDoesNotExist();
+		}
+	} GPPUNIT_INSTANCE;
+	class MismatchAndUserAgrees: public TestTextFileApprover {
+		void test() {
+			givenApprovedContents("42");
+			whenVerifiedWith(43);
+			thenNotApproved();
+			thenReceivedFileDoesExist();
+		}
+	} GPPUNIT_INSTANCE;
+	class MismatchDueToMissingApprovedFileUserAgrees: public TestTextFileApprover {
+		void test() {
+			whenVerifiedWith(43);
+			thenNotApproved();
+			thenReceivedFileDoesExist();
+			thenApprovedFileIsEmpty();
 		}
 	} GPPUNIT_INSTANCE;
 
