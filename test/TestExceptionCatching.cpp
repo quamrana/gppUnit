@@ -47,7 +47,7 @@ namespace TestExceptionCatching {
 			throw "charstar";
 		}
 	};
-	class IntStarThrowingTestCase: public Utilities::MockTestCase {
+	class IntThrowingTestCase: public Utilities::MockTestCase {
 		void test() {
 			throw 1;
 		}
@@ -67,7 +67,7 @@ namespace TestExceptionCatching {
 		RTEThrowingTestCase testcase1;
 		StringThrowingTestCase testcase2;
 		CharStarThrowingTestCase testcase3;
-		IntStarThrowingTestCase testcase4;
+		IntThrowingTestCase testcase4;
 		SelfThrowingTestCase testcase5;
 
 	protected:
@@ -138,11 +138,10 @@ namespace TestExceptionCatching {
 		}
 	} GPPUNIT_INSTANCE;
 
-	class SetupThrowingTestCase: public Utilities::MockTestCase {
+	class SetupThrowingTestCase: public IntThrowingTestCase {
 		void setup() {
 			throw std::runtime_error("rte");
 		}
-		void test() {}
 	};
 	class ExceptionInSetup: public Utilities::TestCaseCaller, gppUnit::Notification {
 		SetupThrowingTestCase testcase1;
@@ -167,13 +166,12 @@ namespace TestExceptionCatching {
 		}
 	} GPPUNIT_INSTANCE;
 
-	class SetupFailTestCase: public Utilities::MockTestCase {
+	class SetupFailTestCase: public IntThrowingTestCase {
 		void setup() {
 			gppUnit::TestResult result;
 			result.message = "setup fails";
 			reporter->Report(result);
 		}
-		void test() {}
 	};
 	class FailInSetup: public Utilities::TestCaseCaller, gppUnit::Notification {
 		SetupFailTestCase testcase1;

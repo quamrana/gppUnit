@@ -34,6 +34,7 @@ THE SOFTWARE.
 namespace {
 	gppUnit::StreamNotification Notifier(std::cout);
 
+	/*
 	class TimeLogging: public gppUnit::Notification {
 		std::stringstream out;
 		const gppUnit::ClassDescription* desc;
@@ -57,6 +58,7 @@ namespace {
 	public:
 		TimeLogging(): desc(0), method(0) {}
 	} tlog;
+	*/
 
 	gppUnit::SuccessLogger success;
 	gppUnit::FileLoggerNotification fln1("gppUnit.log", success);
