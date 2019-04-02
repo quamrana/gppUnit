@@ -176,7 +176,7 @@ namespace ApproverComponents {
 			thenApprovedFileIsEmpty();
 		}
 	} GPPUNIT_INSTANCE;
-	/*
+	///*
 	class VerifyString: public Auto::TestCase {
 		std::string launch(std::vector<std::string> argv) {
 			//if (!exists(argv.front())) {
@@ -190,11 +190,11 @@ namespace ApproverComponents {
 		}
 
 		void test() {
-			confirm.that(launch({ "merge","f1.txt","f2.txt" }), equals(""), "merge command");
-			//confirm.verify("A String");
+			confirm.that(launch({ "merge", "f1.txt", "f2.txt" }), equals(""), "merge command");
+			confirm.verify("A String2");
 		}
 	} GPPUNIT_INSTANCE;
-	*/
+	//*/
 	/*
 	class Int42Matches: public Auto::TestCase {
 		void givenApprover() {

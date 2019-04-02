@@ -24,6 +24,7 @@ THE SOFTWARE.
 #include <fstream>
 #include <vector>
 #include <numeric>
+#include <sstream>
 
 namespace gppUnit {
 	bool TextFileApprover::verify() {
@@ -62,27 +63,32 @@ namespace gppUnit {
 
 	// Implementations:
 
+	std::string getFileContentsWithoutDelimiters(const std::string& filename);
 	std::string TextFileApprover::getFileContents(const std::string& filename) const {
-		std::ifstream ifs(filename, std::ios::in | std::ios::binary);
+		/*
+		std::ifstream ifs(filename, std::ios::in | std::ios::binary | std::ios::ate);
 		if(!ifs.good()) { return ""; }
 
-		std::ifstream::pos_type fileSize = ifs.tellg();
+		auto fileSize = static_cast<int>(ifs.tellg());
 		ifs.seekg(0, std::ios::beg);
 
 		std::vector<char> bytes(fileSize);
 		ifs.read(bytes.data(), fileSize);
 
 		return std::string(bytes.data(), fileSize);
+		*/
+		return getFileContentsWithoutDelimiters(filename);
 	}
 	void TextFileApprover::makeFileWithContents(const std::string& filename, const std::string& contents) const {
 		std::ofstream file(filename);
 		file << contents;
-
 	}
+
 	void TextFileApprover::remove(const std::string& filename)const { std::remove(filename.c_str()); }
 	void TextFileApprover::startDiff(const std::string& lhsFilename, const std::string& rhsFilename) const {
 		//"C:\Program Files\TortoiseHg\lib"
-		std::string mergeProgram = "C:\\Program Files\\TortoiseHg\\lib\\TortoiseMerge.exe";
+		//std::string mergeProgram = "C:\\Program Files\\TortoiseHg\\lib\\TortoiseMerge.exe";
+		std::string mergeProgram = "D:\\Program Files\\Tortoise\\TortoiseMerge.exe";
 		auto argv = { mergeProgram, lhsFilename, rhsFilename };
 		launch(argv);
 	}
@@ -92,12 +98,31 @@ namespace gppUnit {
 		//}
 
 		std::string command = std::accumulate(argv.begin(), argv.end(), std::string(""), [](std::string total, std::string next_part) {return total + " " + "\"" + next_part + "\""; });
-		std::string startCommand = "start \"\" " + command;
+		std::string startCommand = "start \"\" /W" + command;
 		system(startCommand.c_str());
 	}
 
 	std::string TextFileApprover::makeBoundedContents(const std::string& contents) {
 		static std::string bounds = "\n--\n";
-		return bounds + contents + bounds;
+		std::stringstream out;
+		out << bounds << contents << bounds;
+		return out.str();
+	}
+	std::string getFileContentsWithoutDelimiters(const std::string& filename) {
+		std::ifstream ifs(filename, std::ios::in | std::ios::ate);
+		if(!ifs.good()) { return ""; }
+
+		auto fileSize = static_cast<int>(ifs.tellg());
+		ifs.seekg(0, std::ios::beg);
+
+		std::string ret;
+		ret.reserve(fileSize);
+
+		std::string str;
+		// Read the next line from File until it reaches the end.
+		while(std::getline(ifs, str)) {
+			ret += str + '\n';
+		}
+		return ret;
 	}
 }
