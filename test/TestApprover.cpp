@@ -1,54 +1,4 @@
-#include "ApprovalsTest/ApprovalNamer.h"
-
-#include <string>
-
-namespace gppUnit {
-	class TextFileApprover {
-	public:
-		TextFileApprover(const std::string& data, ApprovalNamer& n): namer(n), actual(data) {}
-		bool verify() {
-			if(actualAndApprovedMatch()) {
-				return true;
-			}
-			writeReceived();
-			reportToUser();
-			return actualAndApprovedMatch();
-		}
-		virtual ~TextFileApprover() {}
-	private:
-		bool actualAndApprovedMatch() {
-			approvedContents = getApprovedContents();
-			if(actual == approvedContents) {
-				removeReceived();
-				return true;
-			}
-			return false;
-		}
-
-		std::string getApprovedContents() { return getFileContents(namer.getApprovedFilename()); }
-		void writeReceived() { makeFileWithContents(namer.getReceivedFilename(), actual); }
-		void removeReceived() { remove(namer.getReceivedFilename()); }
-
-		ApprovalNamer& namer;
-		const std::string actual;		// received
-		std::string approvedContents;
-
-		virtual std::string getFileContents(const std::string& filename) const = 0;
-		virtual void makeFileWithContents(const std::string& filename, const std::string& contents) const = 0;
-		virtual void remove(const std::string& filename)const = 0;
-		void reportToUser() const {
-			ensureApprovedFile();
-			startDiff(namer.getReceivedFilename(), namer.getApprovedFilename());
-		}
-		void ensureApprovedFile() const {
-			if(approvedContents.length() == 0) {  // When string is empty, we don't know whether the file actually exists or not.
-				makeFileWithContents(namer.getApprovedFilename(), "");
-			}
-		}
-		virtual void startDiff(const std::string& lhsFilename, const std::string& rhsFilename) const = 0;
-	};
-}
-
+#include "ApprovalsTest\TextFileApprover.h"
 
 #include "ApprovalsTest\SimpleNamer.h"
 
@@ -58,6 +8,7 @@ namespace gppUnit {
 
 #include <map>
 #include <functional>
+#include <numeric>
 
 namespace ApproverComponents {
 	using gppUnit::equals;
@@ -66,6 +17,7 @@ namespace ApproverComponents {
 	public:
 		using TextFileApprover::TextFileApprover;
 
+		// Mock implementations of file system
 		std::string getFileContents(const std::string& filename) const override {
 			if(fileExists(filename)) {
 				return fileSys[filename];
@@ -88,6 +40,7 @@ namespace ApproverComponents {
 
 		std::function<void(const MockApprover&, const std::string&, const std::string&)> userRequest{ [](const MockApprover&, const std::string& /*lhsFilename*/, const std::string& /*rhsFilename*/) {} };
 	};
+
 	class TestSimpleNamer: public Auto::TestCase {
 		gppUnit::ApprovalNamer* namer{ nullptr };
 
@@ -142,7 +95,7 @@ namespace ApproverComponents {
 			approver = mockApprover;
 		}
 		void givenApprovedContents(const std::string& contents) {
-			approvedContents = contents;
+			approvedContents = gppUnit::TextFileApprover::makeBoundedContents(contents);
 			pleaseCreateApproved = true;
 		}
 		void givenUserWillAcceptReceived() {
@@ -223,7 +176,25 @@ namespace ApproverComponents {
 			thenApprovedFileIsEmpty();
 		}
 	} GPPUNIT_INSTANCE;
+	/*
+	class VerifyString: public Auto::TestCase {
+		std::string launch(std::vector<std::string> argv) {
+			//if (!exists(argv.front())) {
+			//	return false;
+			//}
 
+			std::string command = std::accumulate(argv.begin(), argv.end(), std::string(""), [](std::string a, std::string b) {return a + " " + "\"" + b + "\""; });
+			std::string startCommand = "start \"\" " + command;
+			//system(startCommand.c_str());
+			return startCommand;
+		}
+
+		void test() {
+			confirm.that(launch({ "merge","f1.txt","f2.txt" }), equals(""), "merge command");
+			//confirm.verify("A String");
+		}
+	} GPPUNIT_INSTANCE;
+	*/
 	/*
 	class Int42Matches: public Auto::TestCase {
 		void givenApprover() {

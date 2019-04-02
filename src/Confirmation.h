@@ -35,6 +35,7 @@ namespace gppUnit {
 		void setReport(ReportResult* reporter) override { report = reporter; }
 	protected:
 		virtual void Result(const TestResult&);
+		const std::string getClassName() const;
 	public:
 		ConfirmationBase(): report(0) {}
 	};
@@ -51,6 +52,8 @@ namespace gppUnit {
 			const MatcherResult& match = m.match(actual);
 			privThat(match, message);
 		}
+
+		void verify(const std::string& actual, const char* message = "Should match approved data");
 	private:
 		void privThat(const MatcherResult& match, const char* message);
 	};

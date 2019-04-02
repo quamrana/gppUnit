@@ -26,12 +26,18 @@ THE SOFTWARE.
 #include "ReportResult.h"
 #include "TestResult.h"
 #include "Matchers\MatcherResult.h"
+#include "ApprovalsTest\SimpleNamer.h"
+#include "ApprovalsTest\TextFileApprover.h"
 
 namespace gppUnit {
 	void ConfirmationBase::Result(const TestResult& result) {
 		if(report) {
 			report->Report(result);
 		}
+	}
+	const std::string ConfirmationBase::getClassName() const {
+		return report->className();
+
 	}
 
 	void Confirm::fail(const char* message) {
@@ -51,6 +57,15 @@ namespace gppUnit {
 	}
 	void Confirm::isFalse(bool result, const char* message) {
 		isTrue(!result, message);
+	}
+
+	void Confirm::verify(const std::string& actual, const char* message) {
+		SimpleNamer namer(getClassName());
+		TextFileApprover approver(actual, namer);
+		TestResult result(approver.verify(), message);
+		//result.description = (result.result ? "verify passed" : "verify failed");
+
+		Result(result);
 	}
 
 	const char* and_got = "and got";
