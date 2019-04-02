@@ -63,7 +63,7 @@ namespace gppUnit {
 		SimpleNamer namer(getClassName());
 		TextFileApprover approver(actual, namer);
 		TestResult result(approver.verify(), message);
-		//result.description = (result.result ? "verify passed" : "verify failed");
+		result.description.push_back((result.result ? "verify passed" : "verify failed"));
 
 		Result(result);
 	}

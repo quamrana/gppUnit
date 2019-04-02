@@ -15,7 +15,9 @@ IF ERRORLEVEL 1 GOTO QUIT
 rem run unit tests
 @echo ------------------------------------
 if not exist test\test.exe GOTO QUIT
-test\test
+PUSHD test
+test
+POPD
 
 :QUIT
 SET ENDBATCH=%TIME::=%
