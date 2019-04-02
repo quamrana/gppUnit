@@ -32,11 +32,14 @@ namespace TestNullMethodTimer {
 		void thenTimeNotReported() {
 			confirm.isFalse(timeReported, "Time should not be reported");
 		}
+		void coverReportTime() { reportTime(0.0); }
 		void test() {
 			givenNullTimer();
 			whenCalled();
 			thenMethodCalled();
 			thenTimeNotReported();
+
+			coverReportTime();
 		}
 	} GPPUNIT_INSTANCE;
 }

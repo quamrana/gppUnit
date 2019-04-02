@@ -22,5 +22,5 @@ THE SOFTWARE.
 #include "AutoOptions.h"
 
 namespace gppUnit {
-	void AutoOptions(AutoRunner&) {}
+	void AutoOptions(AutoRunner&) {}  // summ-gcov:ignore
 }

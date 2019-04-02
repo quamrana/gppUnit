@@ -45,6 +45,9 @@ namespace TestAutoTest {
 			expect.that(mockList.size(), equals(1), "A test is registered with mockList");
 			confirm.that(gppUnit::autoTests().size(), equals(1), "A test is registered with mockList");
 			confirm.that(mockList.front(), equals(mock), "mock is at front");
+
+			//COVERAGE: Actually need to run the test method
+			mock->test();
 		}
 		void teardown() {
 			gppUnit::globalAutoList().autoTests(Utilities::dummyTestCaseList);
@@ -52,4 +55,3 @@ namespace TestAutoTest {
 		}
 	} GPPUNIT_INSTANCE;
 }
-
