@@ -21,9 +21,15 @@
     <ClInclude Include="SimpleNamer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TextFileApprover.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SimpleNamer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextFileApprover.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
