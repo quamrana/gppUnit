@@ -164,5 +164,8 @@
     <ClInclude Include="TypeInformation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ProjectContext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

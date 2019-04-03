@@ -13,3 +13,6 @@ Debug/*
 *.log
 *.user
 *.exe
+*.gcov
+*.gcno
+*.gcda

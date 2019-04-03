@@ -25,15 +25,17 @@ THE SOFTWARE.
 #include "ClassDescription.h"
 #include "TestCaseMethodCaller.h"
 #include "DataStructures.h"
+#include "ProjectContext.h"
 
 namespace gppUnit {
 	class Notification;
 	class MethodTimer;
 
 	class ClassRunner: public ClassDescription, public Runner {
+		ProjectContext& context;
 		Notification& notify;
 		PrototypeTestCase& testcase;
-		MethodTimer& timer;
+		//MethodTimer& timer;
 
 		SetupCaller setup;
 		TestCaller test;
@@ -54,9 +56,7 @@ namespace gppUnit {
 		void runMethods();
 		void calculateClassData();
 	public:
-		ClassRunner(gppUnit::Notification& notify,
-		            gppUnit::PrototypeTestCase& testcase,
-		            gppUnit::MethodTimer& timer);
+		ClassRunner(ProjectContext&, PrototypeTestCase& testcase);
 		~ClassRunner();
 		void run() {
 			runMethods();

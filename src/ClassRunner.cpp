@@ -32,9 +32,9 @@ THE SOFTWARE.
 
 namespace gppUnit {
 	MethodData ClassRunner::callMethod(TestCaseMethodCaller& method) {
-		MethodResult desc(classData, method, notify, timer);
+		MethodResult desc(context, classData, method);
 
-		desc.protectMethod();
+		desc.run();
 
 		return desc.methodSummary();
 	}
@@ -55,11 +55,10 @@ namespace gppUnit {
 		classData.reportedTime = std::accumulate(methodData.begin(), methodData.end(), double(), RunTime<MethodData>());
 	}
 
-	ClassRunner::ClassRunner(Notification& notify,
-	                         PrototypeTestCase& testcase,
-	                         MethodTimer& timer): notify(notify),
-		testcase(testcase),
-		timer(timer),
+	ClassRunner::ClassRunner(ProjectContext& context_, PrototypeTestCase& testcase_):
+		context(context_),
+	    notify(context.notify),
+		testcase(testcase_),
 		setup(testcase, *this),
 		test(testcase, *this),
 		teardown(testcase, *this),

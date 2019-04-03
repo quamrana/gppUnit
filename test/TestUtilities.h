@@ -27,13 +27,12 @@ THE SOFTWARE.
 #include "src\Notification.h"
 #include "src\AutoMethodTimer.h"
 #include "src\TestCase.h"
+#include "src\ProjectContext.h"
 
 #include <sstream>
 
 namespace Utilities {
-	class DestructableNotification: public gppUnit::Notification {};
-
-	void reportTimeDividedByTen(gppUnit::TimeReport& report, int Time);
+		void reportTimeDividedByTen(gppUnit::TimeReport& report, int Time);
 
 	template<int TIME>
 	class MockAuto {
@@ -43,19 +42,14 @@ namespace Utilities {
 		~MockAuto() {
 			reportTimeDividedByTen(report, TIME);
 		}
-		//int timeParameter(){ return TIME; }
 	};
 
 	class TestCaseCaller: public Auto::TestCase {
 		gppUnit::TestCaseList cases;
 
-		void privateTimeMethod(gppUnit::MethodCaller& method, gppUnit::TimeReport& report);
+		gppUnit::ProjectContext context;
 
-		gppUnit::Notification* notify;
-		DestructableNotification emptyNotification;
-		gppUnit::MethodTimer* timer;
-
-		gppUnit::AutoMethodTimer<MockAuto<1> > autoTimer;
+		gppUnit::AutoMethodTimer<MockAuto<1>> autoTimer;
 
 		bool projectReturn;
 	protected:
@@ -63,12 +57,15 @@ namespace Utilities {
 			cases.push_back(&testcase);
 		}
 
-		void givenNotification(gppUnit::Notification* notified) { notify = notified; }
-		void givenTimer(gppUnit::MethodTimer* timed) { timer = timed; }
+		void givenNotification(gppUnit::Notification* notified) { 
+			context.notify = gppUnit::CompositeNotification();
+			context.notify.add(*notified); 
+		}
+		void givenTimer(gppUnit::MethodTimer* timed) { context.timer = timed; }
 		void whenCalled();
 		bool projectSummary() { return projectReturn;	}
 
-		TestCaseCaller(): cases(), notify(&emptyNotification), timer(&autoTimer), projectReturn(false) {}
+		TestCaseCaller(): cases(), context(&autoTimer), projectReturn(false) {}
 	};
 	class MockTestCase: public virtual gppUnit::PrototypeTestCase {
 		void setReport(gppUnit::ReportResult* report) { reporter = report; }

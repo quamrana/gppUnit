@@ -25,15 +25,15 @@ THE SOFTWARE.
 #include "ProjectDescription.h"
 #include "TestCase.h"
 #include "DataStructures.h"
-
+#include "ProjectContext.h"
 
 namespace gppUnit {
 	class Notification;
 	class MethodTimer;
 
 	class ProjectRunner: public ProjectDescription {
+		ProjectContext& context;
 		Notification& notify;
-		MethodTimer& timer;
 		TestCaseList cases;
 
 		std::vector<ClassData> classData;
@@ -48,10 +48,7 @@ namespace gppUnit {
 		void call(PrototypeTestCase* testcase);
 		void calculateProjectData();
 	public:
-		ProjectRunner(const std::string& title,
-		              Notification& notify,
-		              MethodTimer& timer,
-		              const TestCaseList& cases);
+		ProjectRunner(const std::string& title, ProjectContext&, const TestCaseList& cases);
 		~ProjectRunner();
 
 		bool run();

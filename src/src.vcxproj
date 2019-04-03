@@ -171,6 +171,7 @@
     <ClInclude Include="MethodResult.h" />
     <ClInclude Include="MethodTimer.h" />
     <ClInclude Include="Notification.h" />
+    <ClInclude Include="ProjectContext.h" />
     <ClInclude Include="ProjectDescription.h" />
     <ClInclude Include="ProjectRunner.h" />
     <ClInclude Include="ReportResult.h" />
