@@ -35,7 +35,6 @@ namespace gppUnit {
 		ProjectContext& context;
 		Notification& notify;
 		PrototypeTestCase& testcase;
-		//MethodTimer& timer;
 
 		SetupCaller setup;
 		TestCaller test;
