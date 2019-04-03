@@ -24,16 +24,17 @@ THE SOFTWARE.
 #include "MethodTimer.h"
 #include "ProjectRunner.h"
 
+
 namespace {
 	gppUnit::NullTimer nullTimer;
 }
 
 namespace gppUnit {
 
-	AutoRunner::AutoRunner(): timer(&nullTimer) {}
+	AutoRunner::AutoRunner(): context(&nullTimer) {}
 
 	bool AutoRunner::run(const gppUnit::TestCaseList& cases) {
-		ProjectRunner runner(title, notify, *timer, cases);
+		ProjectRunner runner(title, context, cases);
 		return runner.run();
 	}
 
@@ -44,13 +45,13 @@ namespace gppUnit {
 
 	// Add a notification
 	AutoRunner& AutoRunner::operator<<(Notification& notify_) {
-		notify.add(notify_);
+		context.notify.add(notify_);
 		return *this;
 	}
 
 	// Set the timer to be used
 	AutoRunner& AutoRunner::operator<<(MethodTimer& timer_) {
-		timer = &timer_;
+		context.timer = &timer_;
 		return *this;
 
 	}

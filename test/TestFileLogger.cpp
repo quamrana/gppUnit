@@ -35,12 +35,9 @@ namespace TestFileLogger {
 		virtual size_t results() const { return 0; }
 		virtual double run_time() const { return 0; }
 	} mp1;
-	class MockProject2: public gppUnit::ProjectDescription {
-		virtual std::string name() const { return "MockProject2"; }
-		virtual size_t classes() const { return 0; }
+	class MockProject2: public MockProject1 {
+		//virtual std::string name() const { return "MockProject2"; }
 		virtual bool hasPassed() const { return true; }
-		virtual size_t results() const { return 0; }
-		virtual double run_time() const { return 0; }
 	} mp2;
 
 	class FileLoggerThatCanBeDeletedForCoverage: public gppUnit::FileLoggerInterface {

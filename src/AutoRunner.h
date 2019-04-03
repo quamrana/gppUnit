@@ -22,16 +22,14 @@ THE SOFTWARE.
 #ifndef AUTORUNNER_H_ED89D4F6_3B20_4FC1_9808_929558CF9D98
 #define AUTORUNNER_H_ED89D4F6_3B20_4FC1_9808_929558CF9D98
 
-#include "CompositeNotification.h"
+#include "ProjectContext.h"
 #include "TestCase.h"
 
 namespace gppUnit {
-	class MethodTimer;
 
 	class AutoRunner {
-		CompositeNotification notify;
+		ProjectContext context;
 		std::string title;
-		MethodTimer* timer;
 
 	public:
 		AutoRunner();

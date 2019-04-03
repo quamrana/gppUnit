@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "MethodDescription.h"
 #include "ReportResult.h"
 #include "DataStructures.h"
+#include "ProjectContext.h"
 
 #include <sstream>
 
@@ -40,9 +41,9 @@ namespace gppUnit {
 		public ReportResult,
 		public TimeReport {
 
+		ProjectContext& context;
 		TestCaseMethodCaller& method;
 		Notification& notify;
-		MethodTimer& timer;
 		MethodData methodData;
 
 		void Report(const TestResult& result) override;
@@ -63,10 +64,11 @@ namespace gppUnit {
 		}
 		bool protectMethodFromAssertException();
 		bool protectMethodFromCommonExceptions();
-	public:
-		MethodResult(const ClassData& c, TestCaseMethodCaller& method, Notification& notify, MethodTimer& timer);
-		~MethodResult();
 		bool protectMethod();
+	public:
+		MethodResult(ProjectContext&, const ClassData& c, TestCaseMethodCaller& method);
+		~MethodResult();
+		bool run() { return protectMethod(); }
 		const MethodData& methodSummary() const { return methodData; }
 	};
 }

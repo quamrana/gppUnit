@@ -29,9 +29,10 @@ THE SOFTWARE.
 
 namespace gppUnit {
 
-	MethodResult::MethodResult(const ClassData& c, TestCaseMethodCaller& method, Notification& notify, MethodTimer& timer): method(method),
-		notify(notify),
-		timer(timer),
+	MethodResult::MethodResult(ProjectContext& context_, const ClassData& c, TestCaseMethodCaller& method): 
+		context(context_),
+		method(method),
+		notify(context.notify),
 		methodData(c, method.methodName()) {
 		method.setReport(this);
 		notify.StartMethod(*this);
@@ -40,7 +41,7 @@ namespace gppUnit {
 
 	bool MethodResult::protectMethodFromAssertException() {
 		try {
-			timer.timeMethod(method, *this);
+			context.timer->timeMethod(method, *this);
 			return true;
 		} catch(AssertException&) {
 			//

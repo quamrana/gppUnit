@@ -32,7 +32,7 @@ THE SOFTWARE.
 namespace gppUnit {
 
 	void ProjectRunner::call(PrototypeTestCase* testcase) {
-		ClassRunner runner(notify, *testcase, timer);
+		ClassRunner runner(context, *testcase);
 
 		runner.run();
 
@@ -44,11 +44,9 @@ namespace gppUnit {
 		projectData.results = std::accumulate(classData.begin(), classData.end(), size_t(), Results<ClassData>());
 		projectData.reportedTime = std::accumulate(classData.begin(), classData.end(), double(), RunTime<ClassData>());
 	}
-	ProjectRunner::ProjectRunner(const std::string& title,
-	                             Notification& notify,
-	                             MethodTimer& timer,
-	                             const TestCaseList& cases): notify(notify),
-		timer(timer),
+	ProjectRunner::ProjectRunner(const std::string& title, ProjectContext& context_, const TestCaseList& cases):
+		context(context_),
+		notify(context.notify),
 		cases(cases),
 		classData(),
 		projectData(title) {
@@ -56,8 +54,6 @@ namespace gppUnit {
 	}
 	ProjectRunner::~ProjectRunner() { notify.EndProject(); }
 
-	// TODO: Turn run() inside out.
-	// Make a ClassRunner a member, then hand it a testcase in each iteration.
 	bool ProjectRunner::run() {
 		for(auto testcase : cases) {
 			call(testcase);
