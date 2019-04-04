@@ -22,8 +22,10 @@ THE SOFTWARE.
 #ifndef AUTOMAIN_H_E042FFAD_8D98_453C_8716_A0518DD4DE0F
 #define AUTOMAIN_H_E042FFAD_8D98_453C_8716_A0518DD4DE0F
 
+#include "ProjectContext.h"
+
 namespace gppUnit {
-	bool AutoMain();
+	bool AutoMain(const CommandLineOptions&);
 }
 
 #endif // AUTOMAIN_H_E042FFAD_8D98_453C_8716_A0518DD4DE0F

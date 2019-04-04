@@ -55,7 +55,7 @@ namespace gppUnit {
 		void runMethods();
 		void calculateClassData();
 	public:
-		ClassRunner(ProjectContext&, PrototypeTestCase& testcase);
+		ClassRunner(ProjectContext&, PrototypeTestCase&);
 		~ClassRunner();
 		void run() {
 			runMethods();

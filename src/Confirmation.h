@@ -23,6 +23,7 @@ THE SOFTWARE.
 #define CONFIRMATION_H_77E45C37_62F1_45A6_A19B_0733ED0735EF
 
 #include "TestCase.h"
+#include "ApprovalsTest/CommandLineOptions.h"
 
 #include <sstream>
 
@@ -36,6 +37,7 @@ namespace gppUnit {
 	protected:
 		virtual void Result(const TestResult&);
 		const std::string getClassName() const;
+		const CommandLineOptions& getOptions() const;
 	public:
 		ConfirmationBase(): report(0) {}
 	};

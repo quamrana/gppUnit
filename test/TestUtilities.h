@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include <sstream>
 
 namespace Utilities {
-		void reportTimeDividedByTen(gppUnit::TimeReport& report, int Time);
+	void reportTimeDividedByTen(gppUnit::TimeReport& report, int Time);
 
 	template<int TIME>
 	class MockAuto {
@@ -47,6 +47,8 @@ namespace Utilities {
 	class TestCaseCaller: public Auto::TestCase {
 		gppUnit::TestCaseList cases;
 
+		gppUnit::CommandLineOptions options;
+
 		gppUnit::ProjectContext context;
 
 		gppUnit::AutoMethodTimer<MockAuto<1>> autoTimer;
@@ -57,15 +59,15 @@ namespace Utilities {
 			cases.push_back(&testcase);
 		}
 
-		void givenNotification(gppUnit::Notification* notified) { 
+		void givenNotification(gppUnit::Notification* notified) {
 			context.notify = gppUnit::CompositeNotification();
-			context.notify.add(*notified); 
+			context.notify.add(*notified);
 		}
 		void givenTimer(gppUnit::MethodTimer* timed) { context.timer = timed; }
 		void whenCalled();
 		bool projectSummary() { return projectReturn;	}
 
-		TestCaseCaller(): cases(), context(&autoTimer), projectReturn(false) {}
+		TestCaseCaller(): cases(), context(&autoTimer, options), projectReturn(false) {}
 	};
 	class MockTestCase: public virtual gppUnit::PrototypeTestCase {
 		void setReport(gppUnit::ReportResult* report) { reporter = report; }

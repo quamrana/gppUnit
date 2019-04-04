@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 namespace gppUnit {
 
-	MethodResult::MethodResult(ProjectContext& context_, const ClassData& c, TestCaseMethodCaller& method): 
+	MethodResult::MethodResult(ProjectContext& context_, const ClassData& c, TestCaseMethodCaller& method):
 		context(context_),
 		method(method),
 		notify(context.notify),

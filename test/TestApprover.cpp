@@ -34,11 +34,11 @@ namespace ApproverComponents {
 		}
 		mutable std::map<std::string, std::string> fileSys;
 
-		virtual void startDiff(const std::string& lhsFilename, const std::string& rhsFilename) const override {
-			userRequest(*this, lhsFilename, rhsFilename);
+		virtual void launch(const std::string& startCommand) const override {
+			userRequest(*this, startCommand);
 		}
 
-		std::function<void(const MockApprover&, const std::string&, const std::string&)> userRequest{ [](const MockApprover&, const std::string& /*lhsFilename*/, const std::string& /*rhsFilename*/) {} };
+		std::function<void(const MockApprover&, const std::string&)> userRequest{ [](const MockApprover&, const std::string& /*startCommand*/) {} };
 	};
 
 	class TestSimpleNamer: public Auto::TestCase {
@@ -79,6 +79,8 @@ namespace ApproverComponents {
 		gppUnit::TextFileApprover* approver{ nullptr };
 		MockApprover* mockApprover{ nullptr };
 
+		gppUnit::CommandLineOptions options;
+
 		std::string getApprovedFilename() const override { return "a"; }
 		std::string getReceivedFilename() const override { return "r"; }
 
@@ -87,11 +89,13 @@ namespace ApproverComponents {
 		std::string approvedContents;
 		bool userWillAcceptReceived{ false };
 		bool verifyResult{ false };
+		std::string commandUsed;
 
+		void setup() { options['m']; }
 		void teardown() { delete approver; }
 	protected:
 		void givenApproverWithContents(const std::string& contents) {
-			mockApprover = new MockApprover(contents, *this);
+			mockApprover = new MockApprover(options, contents, *this);
 			approver = mockApprover;
 		}
 		void givenApprovedContents(const std::string& contents) {
@@ -115,13 +119,15 @@ namespace ApproverComponents {
 				mockApprover->fileSys[getApprovedFilename()] = approvedContents;
 			}
 			if(userWillAcceptReceived) {
-				mockApprover->userRequest = [this](const MockApprover & mock, const std::string & lhs, const std::string & rhs) {
-					thenTheseFilesExist(lhs, rhs);
+				mockApprover->userRequest = [this](const MockApprover & mock, const std::string & command) {
+					commandUsed = command;
+					thenTheseFilesExist(getReceivedFilename(), getApprovedFilename());
 					mock.makeFileWithContents(getApprovedFilename(), mock.getFileContents(getReceivedFilename()));
 				};
 			} else {
-				mockApprover->userRequest = [this](const MockApprover& /*mock*/, const std::string & lhs, const std::string & rhs) {
-					thenTheseFilesExist(lhs, rhs);
+				mockApprover->userRequest = [this](const MockApprover& /*mock*/, const std::string & command) {
+					commandUsed = command;
+					thenTheseFilesExist(getReceivedFilename(), getApprovedFilename());
 				};
 			}
 			verifyResult = approver->verify();
@@ -142,6 +148,9 @@ namespace ApproverComponents {
 			expect.isTrue(mockApprover->fileExists(getApprovedFilename()), "Approved file should exist");
 			confirm.that(mockApprover->getFileContents(getApprovedFilename()), equals(""), "Approved file should be empty");
 		}
+		void thenVerifyCommand() {
+			confirm.verify(commandUsed);
+		}
 	};
 	class ActualAndApprovedMatch: public TestTextFileApprover {
 		void test() {
@@ -158,6 +167,7 @@ namespace ApproverComponents {
 			whenVerifiedWith(43);
 			thenApproved();
 			thenReceivedFileDoesNotExist();
+			thenVerifyCommand();
 		}
 	} GPPUNIT_INSTANCE;
 	class MismatchAndUserAgrees: public TestTextFileApprover {
@@ -176,25 +186,29 @@ namespace ApproverComponents {
 			thenApprovedFileIsEmpty();
 		}
 	} GPPUNIT_INSTANCE;
-	/*
+
+	using namespace gppUnit::TextFileUtilities;
 	class VerifyString: public Auto::TestCase {
-		std::string launch(std::vector<std::string> argv) {
-			//if (!exists(argv.front())) {
-			//	return false;
-			//}
-
-			std::string command = std::accumulate(argv.begin(), argv.end(), std::string(""), [](std::string a, std::string b) {return a + " " + "\"" + b + "\""; });
-			std::string startCommand = "start \"\" " + command;
-			//system(startCommand.c_str());
-			return startCommand;
-		}
-
 		void test() {
-			confirm.that(launch({ "merge", "f1.txt", "f2.txt" }), equals(""), "merge command");
-			confirm.verify("A String2");
+			confirm.verify(createWindowsCommandLine({ "merge", "f1.txt", "f2.txt" }), "Should be start command line");
 		}
 	} GPPUNIT_INSTANCE;
-	*/
+
+	class CheckFileContents: public Auto::TestCase {
+		void test() {
+			expect.isTrue(fileExists("CheckFileContents.txt"));
+			auto contents = getFileContentsWithNewlines("CheckFileContents.txt");
+			confirm.that(contents, equals("Just\nContents\n"), "File should contain these two words");
+
+			expect.isFalse(fileExists("JustTemporary.txt"));
+			makeFileWithContents("JustTemporary.txt", "temp");
+			expect.isTrue(fileExists("JustTemporary.txt"));
+			contents = getFileContentsWithNewlines("JustTemporary.txt");
+			confirm.that(contents, equals("temp\n"), "File should contain temp");
+			removeFile("JustTemporary.txt");
+			expect.isFalse(fileExists("JustTemporary.txt"));
+		}
+	} GPPUNIT_INSTANCE;
 	/*
 	class Int42Matches: public Auto::TestCase {
 		void givenApprover() {

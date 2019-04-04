@@ -48,6 +48,7 @@ namespace gppUnit {
 
 		void Report(const TestResult& result) override;
 		std::string className() override { return methodData.classData.title; }
+		const CommandLineOptions& getOptions() override { return context.options; }
 		void reportTime(double run_time) override { methodData.reportedTime = run_time; }
 
 		std::string name() const override { return methodData.title; }

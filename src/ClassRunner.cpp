@@ -57,7 +57,7 @@ namespace gppUnit {
 
 	ClassRunner::ClassRunner(ProjectContext& context_, PrototypeTestCase& testcase_):
 		context(context_),
-	    notify(context.notify),
+		notify(context.notify),
 		testcase(testcase_),
 		setup(testcase, *this),
 		test(testcase, *this),
