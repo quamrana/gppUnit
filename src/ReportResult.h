@@ -22,7 +22,7 @@ THE SOFTWARE.
 #ifndef REPORTRESULT_H_4241BF2A_7CEF_47C1_8BEF_6911CD34852F
 #define REPORTRESULT_H_4241BF2A_7CEF_47C1_8BEF_6911CD34852F
 
-#include <string>
+#include "ApprovalsTest/CommandLineOptions.h"
 
 namespace gppUnit {
 	struct TestResult;
@@ -33,6 +33,7 @@ namespace gppUnit {
 	public:
 		virtual void Report(const TestResult&) = 0;
 		virtual std::string className() = 0;
+		virtual const CommandLineOptions& getOptions() = 0;
 	};
 }
 

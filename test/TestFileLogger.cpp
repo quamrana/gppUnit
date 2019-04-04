@@ -195,7 +195,14 @@ namespace TestFileLogger {
 		void openFileForAppend(const std::string&) {}
 		void openFileForWriting(const std::string&) {}
 		void closeFile() {}
-
+		void setup() {
+			//COVERAGE:
+			std::string name;
+			fileExists(name);
+			openFileForAppend(name);
+			openFileForWriting(name);
+			closeFile();
+		}
 	protected:
 		void whenHeaderWritten(const gppUnit::ProjectDescription& project) {
 			writeHeader("filename", &project);
@@ -209,7 +216,6 @@ namespace TestFileLogger {
 		void thenOutputIs(const std::string& expected, const char* message) {
 			confirm.that(collect.str(), equals(expected), message);
 		}
-
 	};
 	class TestSuccessLoggerImplementationAllowedToProceed: public TestLoggerImplementations, gppUnit::SuccessLoggerImplementation {
 		void test() {

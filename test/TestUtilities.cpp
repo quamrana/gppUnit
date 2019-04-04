@@ -34,8 +34,8 @@ namespace Utilities {
 	}
 
 	void TestCaseCaller::whenCalled() {
-		
-		gppUnit::ProjectRunner runner("TestCaseCaller",context, cases);
+
+		gppUnit::ProjectRunner runner("TestCaseCaller", context, cases);
 		projectReturn = runner.run();
 	}
 	void ReportingMockTestCase::test() {

@@ -152,10 +152,8 @@ namespace TestStreamNotification {
 		virtual size_t results() const { return 0; }
 		virtual double run_time() const { return 0; }
 	} mm1;
-	class MockMethod2: public gppUnit::MethodDescription {
+	class MockMethod2: public MockMethod1 {
 		virtual std::string name() const { return "MockMethod2"; }
-		virtual size_t results() const { return 0; }
-		virtual double run_time() const { return 0; }
 	} mm2;
 	class StreamNotificationHelper: public Auto::TestCase {
 		std::stringstream out;

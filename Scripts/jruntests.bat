@@ -11,7 +11,7 @@ rem run unit tests
 @echo ------------------------------------
 if not exist test\test.exe GOTO QUIT
 PUSHD test
-test
+test  -m="D:\Program Files\Tortoise\TortoiseMerge.exe"
 POPD
 
 :QUIT

@@ -21,13 +21,27 @@ THE SOFTWARE.
 */
 #pragma once
 #include "ApprovalNamer.h"
+#include "CommandLineOptions.h"
 
 #include <vector>
 
 namespace gppUnit {
+	namespace TextFileUtilities {
+		bool fileExists(const std::string& filename);
+		void removeFile(const std::string& filename);
+
+		std::string getFileContentsWithNewlines(const std::string& filename);
+		void makeFileWithContents(const std::string& filename, const std::string& contents);
+
+		std::string createWindowsCommandLine(const std::vector<std::string>& argv);
+	}
 	class TextFileApprover {
 	public:
-		TextFileApprover(const std::string& data, ApprovalNamer& n): namer(n), actual(makeBoundedContents(data)) {}
+		TextFileApprover(const CommandLineOptions& options_, const std::string& data, ApprovalNamer& n):
+			namer(n),
+			actual(makeBoundedContents(data)),
+			options(options_)
+		{}
 		bool verify();
 		virtual ~TextFileApprover() {}
 		static std::string makeBoundedContents(const std::string&);
@@ -41,15 +55,16 @@ namespace gppUnit {
 
 		ApprovalNamer& namer;
 		const std::string actual;		// received
+		const CommandLineOptions& options;
 		std::string approvedContents;
 
 		virtual std::string getFileContents(const std::string& filename) const;
 		virtual void makeFileWithContents(const std::string& filename, const std::string& contents) const;
-		virtual void remove(const std::string& filename)const;
+		virtual void remove(const std::string& filename) const;
 		void reportToUser() const;
 		void ensureApprovedFile() const;
-		virtual void startDiff(const std::string& lhsFilename, const std::string& rhsFilename) const;
+		void startDiff(const std::string& lhsFilename, const std::string& rhsFilename) const;
 
-		static void launch(const std::vector<std::string>& argv);
+		virtual void launch(const std::string& startCommand) const;
 	};
 }

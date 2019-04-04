@@ -38,7 +38,7 @@ def mingw():
 	path=['D:\MinGW16_0\\bin','C:\Python27\Scripts','.\Scripts']
 	cppflags=getGccflags()
 	return DefaultEnvironment(tools = ['g++','gnulink','ar'],
-		ENV={'PATH':path, 'TEMP':'C:\Temp'},
+		ENV={'PATH':path, 'TEMP':'C:\Temp','CPLUS_INCLUDE_PATH':r'D:\MinGW16_0\include'},
 		CPPFLAGS=cppflags,
 		#EXTRA='unix',
 		COV=cov

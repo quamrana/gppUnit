@@ -63,42 +63,27 @@ namespace gppUnit {
 
 	// Implementations:
 
-	std::string getFileContentsWithoutDelimiters(const std::string& filename);
 	std::string TextFileApprover::getFileContents(const std::string& filename) const {
-		/*
-		std::ifstream ifs(filename, std::ios::in | std::ios::binary | std::ios::ate);
-		if(!ifs.good()) { return ""; }
-
-		auto fileSize = static_cast<int>(ifs.tellg());
-		ifs.seekg(0, std::ios::beg);
-
-		std::vector<char> bytes(fileSize);
-		ifs.read(bytes.data(), fileSize);
-
-		return std::string(bytes.data(), fileSize);
-		*/
-		return getFileContentsWithoutDelimiters(filename);
+		return TextFileUtilities::getFileContentsWithNewlines(filename);
 	}
 	void TextFileApprover::makeFileWithContents(const std::string& filename, const std::string& contents) const {
-		std::ofstream file(filename);
-		file << contents;
+		TextFileUtilities::makeFileWithContents(filename, contents);
+	}
+	void TextFileApprover::remove(const std::string& filename) const {
+		TextFileUtilities::removeFile(filename.c_str());
 	}
 
-	void TextFileApprover::remove(const std::string& filename)const { std::remove(filename.c_str()); }
 	void TextFileApprover::startDiff(const std::string& lhsFilename, const std::string& rhsFilename) const {
-		//"C:\Program Files\TortoiseHg\lib"
-		//std::string mergeProgram = "C:\\Program Files\\TortoiseHg\\lib\\TortoiseMerge.exe";
-		std::string mergeProgram = "D:\\Program Files\\Tortoise\\TortoiseMerge.exe";
-		auto argv = { mergeProgram, lhsFilename, rhsFilename };
-		launch(argv);
-	}
-	void TextFileApprover::launch(const std::vector<std::string>& argv) {
-		//if (!exists(argv.front())) {
+		char key = 'm';
+		auto mergeProgram = options.at(key);
+		//if (!exists(mergeProgram)) {
 		//	return;
 		//}
-
-		std::string command = std::accumulate(argv.begin(), argv.end(), std::string(""), [](std::string total, std::string next_part) {return total + " " + "\"" + next_part + "\""; });
-		std::string startCommand = "start \"\" /W" + command;
+		auto argv = { mergeProgram, lhsFilename, rhsFilename };
+		std::string startCommand = TextFileUtilities::createWindowsCommandLine(argv);
+		launch(startCommand);
+	}
+	void TextFileApprover::launch(const std::string& startCommand) const {
 		system(startCommand.c_str());
 	}
 
@@ -108,21 +93,43 @@ namespace gppUnit {
 		out << bounds << contents << bounds;
 		return out.str();
 	}
-	std::string getFileContentsWithoutDelimiters(const std::string& filename) {
-		std::ifstream ifs(filename, std::ios::in | std::ios::ate);
-		if(!ifs.good()) { return ""; }
 
-		auto fileSize = static_cast<int>(ifs.tellg());
-		ifs.seekg(0, std::ios::beg);
-
-		std::string ret;
-		ret.reserve(fileSize);
-
-		std::string str;
-		// Read the next line from File until it reaches the end.
-		while(std::getline(ifs, str)) {
-			ret += str + '\n';
+	namespace TextFileUtilities {
+		bool fileExists(const std::string& filename) {
+			std::ifstream ifile;
+			ifile.open(filename.c_str(), std::ios::in);
+			bool ret = ifile.is_open();
+			ifile.close();
+			return ret;
 		}
-		return ret;
+		void removeFile(const std::string& filename) {
+			std::remove(filename.c_str());
+		}
+		std::string getFileContentsWithNewlines(const std::string& filename) {
+			std::ifstream ifs(filename, std::ios::in | std::ios::ate);
+			if(!ifs.good()) { return ""; }
+
+			auto fileSize = static_cast<int>(ifs.tellg());
+			ifs.seekg(0, std::ios::beg);
+
+			std::string ret;
+			ret.reserve(fileSize);
+
+			std::string str;
+			// Read the next line from File until it reaches the end.
+			while(std::getline(ifs, str)) {
+				ret += str + '\n';
+			}
+			return ret;
+		}
+		void makeFileWithContents(const std::string& filename, const std::string& contents) {
+			std::ofstream file(filename);
+			file << contents;
+		}
+		std::string createWindowsCommandLine(const std::vector<std::string>& argv) {
+			std::string command = std::accumulate(argv.begin(), argv.end(), std::string(""), [](std::string total, std::string next_part) {return total + " " + "\"" + next_part + "\""; });
+			std::string startCommand = "start \"\" /W" + command;
+			return startCommand;
+		}
 	}
 }

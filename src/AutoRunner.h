@@ -32,7 +32,7 @@ namespace gppUnit {
 		std::string title;
 
 	public:
-		AutoRunner();
+		explicit AutoRunner(const CommandLineOptions&);
 		bool run(const TestCaseList& cases);
 
 		// Set the title of project being run

@@ -31,7 +31,7 @@ namespace {
 
 namespace gppUnit {
 
-	AutoRunner::AutoRunner(): context(&nullTimer) {}
+	AutoRunner::AutoRunner(const CommandLineOptions& options): context(&nullTimer, options) {}
 
 	bool AutoRunner::run(const gppUnit::TestCaseList& cases) {
 		ProjectRunner runner(title, context, cases);

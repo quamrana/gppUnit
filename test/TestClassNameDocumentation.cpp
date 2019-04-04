@@ -46,7 +46,8 @@ namespace TestClassNameDocumentation {
 		//    using gppUnit::ClassDocumentation::collect;
 	};
 	class TestDocumentation: public Auto::TestCase {
-		gppUnit::AutoRunner runner;
+		gppUnit::CommandLineOptions options;
+		gppUnit::AutoRunner runner{ options };
 		MockDoc doc;
 
 		gppUnit::TestCaseList cases;

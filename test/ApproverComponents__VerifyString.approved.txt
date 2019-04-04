@@ -1,4 +1,4 @@
 
 --
-A String2
+start "" /W "merge" "f1.txt" "f2.txt"
 --

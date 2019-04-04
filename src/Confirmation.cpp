@@ -37,7 +37,9 @@ namespace gppUnit {
 	}
 	const std::string ConfirmationBase::getClassName() const {
 		return report->className();
-
+	}
+	const CommandLineOptions& ConfirmationBase::getOptions() const {
+		return report->getOptions();
 	}
 
 	void Confirm::fail(const char* message) {
@@ -61,7 +63,7 @@ namespace gppUnit {
 
 	void Confirm::verify(const std::string& actual, const char* message) {
 		SimpleNamer namer(getClassName());
-		TextFileApprover approver(actual, namer);
+		TextFileApprover approver(getOptions(), actual, namer);
 		TestResult result(approver.verify(), message);
 		result.description.push_back((result.result ? "verify passed" : "verify failed"));
 

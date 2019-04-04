@@ -19,33 +19,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-#include "AutoMain.h"
-#include "ApprovalsTest/CommandLineOptions.h"
+#pragma once
+#include <map>
+#include <string>
 
-#include <iostream>
-
-int main(int argc, char* argv[]) {
-	gppUnit::CommandLineOptions options;
-	for(int i = 0; i < argc; ++i) {
-		std::string arg = argv[i];
-		if(arg.length() > 1) {
-			if(arg[0] == '-') {
-				char key = arg[1];
-				std::string val = &arg[2];
-				if(val.length() > 1) {
-					if(val[0] == '=') {
-						val.erase(0, 1);
-					}
-				}
-				options[key] = val;
-			}
-		}
-	}
-
-	bool result = gppUnit::AutoMain(options);
-	if(options.count('p') > 0) {
-		std::cout << "Press return...";		// summ-gcov:ignore
-		std::cin.get();						// summ-gcov:ignore
-	}
-	return !result;
+namespace gppUnit {
+	using CommandLineOptions = std::map<char, std::string>;
 }

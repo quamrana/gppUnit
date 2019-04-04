@@ -35,12 +35,19 @@ namespace TestAsserts {
 
 	class Base: public Auto::TestCase, gppUnit::ReportResult {
 		gppUnit::TestResult testResult;
+		gppUnit::CommandLineOptions options;
 		void Report(const gppUnit::TestResult& result) override {
 			testResult = result;
 		}
 		std::string className() override { return ""; }
+		const gppUnit::CommandLineOptions& getOptions() override { return options; }
 		const strvec& description() { return testResult.description; }
 		size_t descriptionSize() { return testResult.description.size(); }
+		void setup() {
+			//COVERAGE:
+			className();
+			getOptions();
+		}
 	protected:
 		void setReportOnSetter(gppUnit::ResultSetter& setter) {
 			setter.setReport(this);
