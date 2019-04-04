@@ -69,6 +69,6 @@ namespace {
 
 namespace gppUnit {
 	void AutoOptions(AutoRunner& runner) {
-		runner << "gppUnit 1.5" << Notifier << fln1 << fln2;
+		runner << "gppUnit 1.6" << Notifier << fln1 << fln2;
 	}
 }

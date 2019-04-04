@@ -77,6 +77,7 @@
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
     <LinkIncremental>true</LinkIncremental>
+    <CustomBuildAfterTargets />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
@@ -104,6 +105,10 @@
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <PostBuildEvent>
+      <Command>LIB.exe /OUT:$(OutDir)gppUnit.lib $(OutDir)gppUnit1.5.lib $(OutDir)ApprovalsTest.lib $(OutDir)Matchers.lib $(OutDir)TableFormatting.lib</Command>
+      <Message>Combine all library files</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
     <ClCompile>
