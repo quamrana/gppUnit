@@ -101,6 +101,7 @@
     </ClCompile>
     <ProjectReference />
     <Lib />
+    <ProjectReference />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
     <ClCompile>

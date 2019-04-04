@@ -16,3 +16,4 @@ Debug/*
 *.gcov
 *.gcno
 *.gcda
+Released/*
