@@ -14,6 +14,7 @@ xcopy src\*.h Released\vs2017\gppUnit1.5\include\gppUnit /I /Q /Y >nul 2>&1
 echo copy .a files
 mkdir Released\mingw\temp >nul 2>&1
 mkdir Released\mingw\lib >nul 2>&1
+xcopy Released\vs2017\gppUnit1.5\include\*.* Released\mingw\include /S /E /I /Q /Y >nul 2>&1
 xcopy src\lib*.a Released\mingw\temp /I /Q /Y >nul 2>&1
 xcopy ApprovalsTest\lib*.a Released\mingw\temp /I /Q /Y >nul 2>&1
 xcopy Matchers\lib*.a Released\mingw\temp /I /Q /Y >nul 2>&1
@@ -38,3 +39,5 @@ move /Y libgppUnit.a ..\lib >nul 2>&1
 POPD
 
 rmdir Released\mingw\temp /Q /S
+echo gppUnit in Released:
+dir Released /b
